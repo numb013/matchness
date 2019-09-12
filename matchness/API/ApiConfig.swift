@@ -44,30 +44,34 @@ public struct ApiConfig {
     static let REQUEST_URL_API_USER_FOOTPRINT: String = REQUEST_URL_API + "/footprint/user_footprint";
     //自分の足跡
     static let REQUEST_URL_API_MY_FOOTPRINT: String = REQUEST_URL_API + "/footprint/my_footprint";
-
     //いいね
-    static let REQUEST_URL_API_ADD_LIKE: String = REQUEST_URL_API + "/like/add_like";
-
+    static let REQUEST_URL_API_ADD_LIKE: String = REQUEST_URL_API + "/like/create_like";
     //グループ取得
-    static let REQUEST_URL_API_GET_GROUP: String = REQUEST_URL_API + "/get_group";
-    static let REQUEST_URL_API_ADD_GROUP: String = REQUEST_URL_API + "/add_group";
-    static let REQUEST_URL_API_GET_JOIN_AND_END_GROUP: String = REQUEST_URL_API + "/select_join_and_end_group";
-    
-    static let REQUEST_URL_API_SELECT_GROUP_EVENT: String = REQUEST_URL_API + "/select_group_event";
+    static let REQUEST_URL_API_SELECT_GROUP: String = REQUEST_URL_API + "/select_group";
+    static let REQUEST_URL_API_ADD_GROUP: String = REQUEST_URL_API + "/create_group";
+    static let REQUEST_URL_API_SELECT_JOIN_AND_END_GROUP: String = REQUEST_URL_API + "/select_join_and_end_group";
 
+    static let REQUEST_URL_API_SELECT_GROUP_EVENT: String = REQUEST_URL_API + "/select_group_event";
     static let REQUEST_URL_API_SELECT_REQUEST_GROUP_EVENT: String = REQUEST_URL_API + "/select_request_group_event";
     static let REQUEST_URL_API_REQUEST_GROUP_EVENT: String = REQUEST_URL_API + "/request_group_event";
 
     static let REQUEST_URL_API_DELETE_POINT: String = REQUEST_URL_API + "/delete_point";
     static let REQUEST_URL_API_UPDATE_POINT: String = REQUEST_URL_API + "/update_point";
-    static let REQUEST_URL_API_ADD_POINT: String = REQUEST_URL_API + "/add_point";
+
+    static let REQUEST_URL_API_ADD_POINT: String = REQUEST_URL_API + "/create_point";
     static let REQUEST_URL_API_SELECT_POINT: String = REQUEST_URL_API + "/select_point";
 
+    static let REQUEST_URL_API_ADD_MATCHE: String = REQUEST_URL_API + "/create_matche";
+    static let REQUEST_URL_API_SELECT_MATCHE: String = REQUEST_URL_API + "/select_matche";
+
     static let REQUEST_URL_API_ADD_MESSAGE: String = REQUEST_URL_API + "/create_message";
-    static let REQUEST_URL_API_SELECT_MESSAGE: String = REQUEST_URL_API + "/search_message";
+    static let REQUEST_URL_API_SELECT_MESSAGE: String = REQUEST_URL_API + "/select_message";
 
-    static let REQUEST_URL_API_SELECT_MATCHE: String = REQUEST_URL_API + "/search_matche";
+    static let REQUEST_URL_API_ADD_GROUP_CHAT: String = REQUEST_URL_API + "/create_group_chat";
+    static let REQUEST_URL_API_SELECT_GROUP_CHAT: String = REQUEST_URL_API + "/select_group_chat";
 
+    static let REQUEST_URL_API_SELECT_NOTICE: String = REQUEST_URL_API + "/select_Notice";
+    static let REQUEST_URL_API_SELECT_NOTICE_TEXT_BODY: String = REQUEST_URL_API + "/select_Notice_text_body";
     
 
     static let WORK_LIST: [String] = ["未選択", "クリエイティブ", "コンピューター","出版", "放送", "流通", "金融", "医療・福祉", "教育・語学", "国家・自治体", "旅行関係", "料理関係", "動物・自然", "オフィス", "サービス", "エンターテイメント", "美容・ファッション", "建築・インテリア", "モノづくり", "交通機関", "冠婚葬祭", "自由業", "学生"]

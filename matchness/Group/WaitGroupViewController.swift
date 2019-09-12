@@ -41,7 +41,7 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         let requestGroupModel = GroupModel();
         requestGroupModel.delegate = self as! GroupModelDelegate;
         //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_GET_GROUP;
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_GROUP;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
