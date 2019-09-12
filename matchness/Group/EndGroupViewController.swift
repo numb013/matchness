@@ -31,7 +31,7 @@ class EndGroupViewController: UIViewController, UITableViewDelegate , UITableVie
         let requestGroupModel = GroupModel();
         requestGroupModel.delegate = self as! GroupModelDelegate;
         //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_GET_JOIN_AND_END_GROUP;
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_JOIN_AND_END_GROUP;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String

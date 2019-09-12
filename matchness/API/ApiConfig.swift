@@ -21,9 +21,9 @@ public struct ApiConfig {
      let SITE_BASIC_AUTHENTICATION_ACCOUNT_PASSWORD: String = "52011k";
      */
     #if DEBUG
-    static var SITE_DOMAIN: String = "fef254fe.ngrok.io";
+    static var SITE_DOMAIN: String = "8df95704.ngrok.io";
     #else
-    static var SITE_DOMAIN: String = "fef254fe.ngrok.io";
+    static var SITE_DOMAIN: String = "8df95704.ngrok.io";
     #endif
     
     //

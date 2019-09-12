@@ -1,5 +1,5 @@
 //
-//  CahtFirstModel.swift
+//  MyDataModel.swift
 //  matchness
 //
 //  Created by RW on 2019/07/10.
@@ -18,6 +18,7 @@ protocol CahtFirstModelDelegate {
     func onComplete(model: CahtFirstModel, count: Int);
     func onFailed(model: CahtFirstModel);
 }
+
 /*
  プロトコル判定用
  */
@@ -46,7 +47,7 @@ class CahtFirstModel: NSObject {
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
     //IDをキーにしてデータを保持
-    public var responseData: Dictionary<String, ApiChatRoom> = [String: ApiChatRoom]();
+    public var responseData: Dictionary<String, ApiGroupEventList> = [String: ApiGroupEventList]();
     
     var request_mode: String!;
     
@@ -74,11 +75,11 @@ class CahtFirstModel: NSObject {
         //
         var params:[String: String] = condition.queryParams;
         //ページ番号
-        params["page"] = String(self.page);
+        //        params["page"] = String(self.page);
         //
-        params["action"] = String("search");
+        //        params["action"] = String("search");
         //件数
-        params["limit"] = isRequestFirst ? REQUEST_ITEM_COUNT_DEFAULT : REQUEST_ITEM_COUNT_ADD;
+        //        params["limit"] = isRequestFirst ? REQUEST_ITEM_COUNT_DEFAULT : REQUEST_ITEM_COUNT_ADD;
         
         //追加パラメーターが設定されていたら
         if( query != nil ){
@@ -111,13 +112,13 @@ class CahtFirstModel: NSObject {
     
     /*
      */
-    func getData(row: Int) -> ApiChatRoom? {
+    func getData(row: Int) -> ApiGroupEventList? {
         let count: Int = row + 1;
         if( count > responseDataOrder.count || responseDataOrder.isEmpty ){
             return nil;
         }
         let key: String = responseDataOrder[row];
-        if let info: ApiChatRoom = responseData[key] {
+        if let info: ApiGroupEventList = responseData[key] {
             return info;
         }
         return nil;
@@ -129,20 +130,32 @@ extension CahtFirstModel : ApiRequestDelegate {
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         print("22222222222222222222222222")
-        json.forEach { (key, json) in
+        
+        //        print(json)
+        
+        let items: JSON = json;
+        let recommend: JSON = items["list"];
+        for (key, item):(String, JSON) in json {
             //データを変換
-            let data: ApiChatRoom? = ApiChatRoom(json: json);
+            let data: ApiGroupEventList? = ApiGroupEventList(json: item);
             //Optionalチェック
-            //            guard let info: ApiUserDate = data else {
+            guard let info: ApiGroupEventList = data else {
+                continue;
+            }
+            print(info)
+            print("111111")
+            //
+            //            guard let code = info.id else {
             //                continue;
             //            }
-            //            guard let name = info.name else {
-            //                continue;
-            //            }
+            print("222222")
+            //
+            
+            
             //並び順を保持
             responseDataOrder.append(key);
             //サブカテゴリーIDをキーにして保存
-            responseData[key] = data;
+            responseData[key] = info;
         }
     }
     

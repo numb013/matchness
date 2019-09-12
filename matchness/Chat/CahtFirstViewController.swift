@@ -15,7 +15,7 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
     let stepInstance = TodayStep()
 
     var cellCount: Int = 0
-    var dataSource: Dictionary<String, ApiChatRoom> = [:]
+    var dataSource: Dictionary<String, ApiGroupEventList> = [:]
     var dataSourceOrder: Array<String> = []
 
     @IBOutlet weak var ChatTabkeView: UITableView!

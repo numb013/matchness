@@ -12,7 +12,7 @@ import XLPagerTabStrip
 class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITableViewDelegate , UITableViewDataSource {
     //ここがボタンのタイトルに利用されます
     var itemInfo: IndicatorInfo = "やりとり"
-
+    
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiChatRoom> = [:]
     var dataSourceOrder: Array<String> = []
@@ -26,14 +26,14 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
         // Do any additional setup after loading the view.
         apiRequest()
     }
-
+    
     func apiRequest() {
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
         //ロジック生成
-        let requestCahtFirstModel = CahtFirstModel();
-        requestCahtFirstModel.delegate = self as! CahtFirstModelDelegate;
+        let requestCahtSecondModel = CahtSecondModel();
+        requestCahtSecondModel.delegate = self as! CahtSecondModelDelegate;
         //リクエスト先
         let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_MATCHE;
         //パラメーター
@@ -43,7 +43,7 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
         query["user_id"] = matchness_user_id
         query["status"] = "0"
         //リクエスト実行
-        if( !requestCahtFirstModel.requestApi(url: requestUrl, addQuery: query) ){
+        if( !requestCahtSecondModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
     }
@@ -86,7 +86,7 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
         let setteing_status:[String:Any] = ["status":"2", "indexPath":indexPath]
         self.performSegue(withIdentifier: "toMessage", sender: setteing_status)
     }
-
+    
     
     
     //必須
@@ -115,7 +115,7 @@ extension CahtSecondViewController : CahtSecondModelDelegate {
         print(self.dataSource)
         print(self.dataSourceOrder)
         
-//        self.pointView()
+        //        self.pointView()
     }
     func onFailed(model: CahtSecondModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")
