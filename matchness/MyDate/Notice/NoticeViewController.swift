@@ -90,7 +90,7 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("タップ")
-        
+        print("\(indexPath.row)番目の行が選択されました。")
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

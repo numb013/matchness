@@ -42,10 +42,6 @@
 		848A333C2325E86A00144950 /* CahtFirstModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A333A2325E86900144950 /* CahtFirstModel.swift */; };
 		848A336C232A699900144950 /* GroupChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A336B232A699900144950 /* GroupChatModel.swift */; };
 		848A3374232A7C6A00144950 /* CahtRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A3373232A7C6A00144950 /* CahtRoomModel.swift */; };
-		84E56F112330B7F8002B0890 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E56F0F2330B7F7002B0890 /* NoticeViewController.swift */; };
-		84E56F122330B7F8002B0890 /* NoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E56F102330B7F8002B0890 /* NoticeModel.swift */; };
-		84E56F172330B9BC002B0890 /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E56F152330B9BC002B0890 /* GroupChatViewController.swift */; };
-		84E56F182330B9BC002B0890 /* GroupChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E56F162330B9BC002B0890 /* GroupChatModel.swift */; };
 		B40A33FE232A5AD700583CCC /* ApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EB232A5AD500583CCC /* ApiConfig.swift */; };
 		B40A33FF232A5AD700583CCC /* ApiGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EC232A5AD500583CCC /* ApiGroupList.swift */; };
 		B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33ED232A5AD500583CCC /* ApiRequest.swift */; };
@@ -65,7 +61,13 @@
 		B40A340E232A5AD700583CCC /* ApiMatcheList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33FB232A5AD600583CCC /* ApiMatcheList.swift */; };
 		B40A340F232A5AD700583CCC /* ApiUserDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33FC232A5AD600583CCC /* ApiUserDate.swift */; };
 		B40A3410232A5AD700583CCC /* ApiMyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33FD232A5AD600583CCC /* ApiMyData.swift */; };
+		B45677112330DC6300E0E9B7 /* NoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B456770F2330DC6300E0E9B7 /* NoticeModel.swift */; };
+		B45677122330DC6300E0E9B7 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45677102330DC6300E0E9B7 /* NoticeViewController.swift */; };
+		B45677162330DC9D00E0E9B7 /* GroupChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45677142330DC9D00E0E9B7 /* GroupChatModel.swift */; };
+		B45677172330DC9D00E0E9B7 /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45677152330DC9D00E0E9B7 /* GroupChatViewController.swift */; };
 		B49CCD9522D592AD00F793F1 /* UserSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49CCD9422D592AD00F793F1 /* UserSearchModel.swift */; };
+		B4D1ECF52330EB07008760A2 /* NoticeDitailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D1ECF32330EB07008760A2 /* NoticeDitailModel.swift */; };
+		B4D1ECF62330EB07008760A2 /* NoticeDitailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D1ECF42330EB07008760A2 /* NoticeDitailViewController.swift */; };
 		CE05740F22A3AD9F0082182F /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05740E22A3AD9F0082182F /* GroupViewController.swift */; };
 		CE05741122A3ADF50082182F /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05741022A3ADF50082182F /* PageViewController.swift */; };
 		CE05741522A3BA960082182F /* CahtFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05741422A3BA960082182F /* CahtFirstViewController.swift */; };
@@ -165,10 +167,6 @@
 		848A333A2325E86900144950 /* CahtFirstModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CahtFirstModel.swift; sourceTree = "<group>"; };
 		848A336B232A699900144950 /* GroupChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChatModel.swift; path = ../../../../../Downloads/apilist/GroupChatModel.swift; sourceTree = "<group>"; };
 		848A3373232A7C6A00144950 /* CahtRoomModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CahtRoomModel.swift; path = ../../../../../Downloads/apilist/CahtRoomModel.swift; sourceTree = "<group>"; };
-		84E56F0F2330B7F7002B0890 /* NoticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoticeViewController.swift; path = matchness/MyDate/Notice/NoticeViewController.swift; sourceTree = SOURCE_ROOT; };
-		84E56F102330B7F8002B0890 /* NoticeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoticeModel.swift; path = matchness/MyDate/Notice/NoticeModel.swift; sourceTree = SOURCE_ROOT; };
-		84E56F152330B9BC002B0890 /* GroupChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatViewController.swift; sourceTree = "<group>"; };
-		84E56F162330B9BC002B0890 /* GroupChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatModel.swift; sourceTree = "<group>"; };
 		946D3AF11F4FBEBAFE993661 /* Pods_matchness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_matchness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD66A8BE7976CA8BC6F822EA /* Pods-matchnessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matchnessTests.debug.xcconfig"; path = "Target Support Files/Pods-matchnessTests/Pods-matchnessTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B40A33EB232A5AD500583CCC /* ApiConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiConfig.swift; path = matchness/API/ApiConfig.swift; sourceTree = "<group>"; };
@@ -190,7 +188,13 @@
 		B40A33FB232A5AD600583CCC /* ApiMatcheList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiMatcheList.swift; path = matchness/API/ApiMatcheList.swift; sourceTree = "<group>"; };
 		B40A33FC232A5AD600583CCC /* ApiUserDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiUserDate.swift; path = matchness/API/ApiUserDate.swift; sourceTree = "<group>"; };
 		B40A33FD232A5AD600583CCC /* ApiMyData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiMyData.swift; path = matchness/API/ApiMyData.swift; sourceTree = "<group>"; };
+		B456770F2330DC6300E0E9B7 /* NoticeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeModel.swift; sourceTree = "<group>"; };
+		B45677102330DC6300E0E9B7 /* NoticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
+		B45677142330DC9D00E0E9B7 /* GroupChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatModel.swift; sourceTree = "<group>"; };
+		B45677152330DC9D00E0E9B7 /* GroupChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatViewController.swift; sourceTree = "<group>"; };
 		B49CCD9422D592AD00F793F1 /* UserSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchModel.swift; sourceTree = "<group>"; };
+		B4D1ECF32330EB07008760A2 /* NoticeDitailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeDitailModel.swift; sourceTree = "<group>"; };
+		B4D1ECF42330EB07008760A2 /* NoticeDitailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeDitailViewController.swift; sourceTree = "<group>"; };
 		C90F43327F8A755420BBB2F9 /* Pods-matchnessTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matchnessTests.release.xcconfig"; path = "Target Support Files/Pods-matchnessTests/Pods-matchnessTests.release.xcconfig"; sourceTree = "<group>"; };
 		CE05740E22A3AD9F0082182F /* GroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
 		CE05741022A3ADF50082182F /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
@@ -331,21 +335,21 @@
 			path = profileEdit;
 			sourceTree = "<group>";
 		};
-		84E56EFB232FD0CA002B0890 /* Notice */ = {
+		B456770E2330DC6300E0E9B7 /* Notice */ = {
 			isa = PBXGroup;
 			children = (
-				84E56F102330B7F8002B0890 /* NoticeModel.swift */,
-				84E56F0F2330B7F7002B0890 /* NoticeViewController.swift */,
+				B4D1ECF22330EB07008760A2 /* NoticeDitail */,
+				B456770F2330DC6300E0E9B7 /* NoticeModel.swift */,
+				B45677102330DC6300E0E9B7 /* NoticeViewController.swift */,
 			);
-			name = Notice;
-			path = Step/Notice;
+			path = Notice;
 			sourceTree = "<group>";
 		};
-		84E56F142330B940002B0890 /* GroupChat */ = {
+		B45677132330DC9D00E0E9B7 /* GroupChat */ = {
 			isa = PBXGroup;
 			children = (
-				84E56F162330B9BC002B0890 /* GroupChatModel.swift */,
-				84E56F152330B9BC002B0890 /* GroupChatViewController.swift */,
+				B45677142330DC9D00E0E9B7 /* GroupChatModel.swift */,
+				B45677152330DC9D00E0E9B7 /* GroupChatViewController.swift */,
 			);
 			path = GroupChat;
 			sourceTree = "<group>";
@@ -377,6 +381,15 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		B4D1ECF22330EB07008760A2 /* NoticeDitail */ = {
+			isa = PBXGroup;
+			children = (
+				B4D1ECF32330EB07008760A2 /* NoticeDitailModel.swift */,
+				B4D1ECF42330EB07008760A2 /* NoticeDitailViewController.swift */,
+			);
+			path = NoticeDitail;
+			sourceTree = "<group>";
+		};
 		CE1D51E922CDD5290093DC58 /* UserSearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,10 +408,10 @@
 				848A331D231A895800144950 /* Setting */,
 				848A331A2319F99100144950 /* pointChange */,
 				CE1D51EF22CDD6540093DC58 /* Step */,
+				B456770E2330DC6300E0E9B7 /* Notice */,
 				CE4B09BE2209D2A000F8A430 /* MyDataViewController.swift */,
-				84E56EFB232FD0CA002B0890 /* Notice */,
-				848A32C4230AA57900144950 /* MultipleModel.swift */,
 				CE0F9EEB22DE348900D320F5 /* MultipleViewController.swift */,
+				848A32C4230AA57900144950 /* MultipleModel.swift */,
 				848A32D6230DA7A300144950 /* MyDataModel.swift */,
 				CE0F9EED22DE34D500D320F5 /* MultipleTableViewCell.swift */,
 				CE0F9EEE22DE34D500D320F5 /* MultipleTableViewCell.xib */,
@@ -443,7 +456,7 @@
 		CE1D51ED22CDD5E70093DC58 /* GroupEvent */ = {
 			isa = PBXGroup;
 			children = (
-				84E56F142330B940002B0890 /* GroupChat */,
+				B45677132330DC9D00E0E9B7 /* GroupChat */,
 				CEAF954C22BDF33600F37A6E /* GroupEventViewController.swift */,
 				848A3331231D542300144950 /* GroupEventModel.swift */,
 				CEAF954822BDEB7400F37A6E /* GroupEventCollectionViewCell.swift */,
@@ -809,7 +822,6 @@
 				CE0F9EEF22DE34D500D320F5 /* MultipleTableViewCell.swift in Sources */,
 				B40A3404232A5AD700583CCC /* ApiUserDetailDate.swift in Sources */,
 				848A32CF230D73D600144950 /* GroupModel.swift in Sources */,
-				84E56F122330B7F8002B0890 /* NoticeModel.swift in Sources */,
 				848A3374232A7C6A00144950 /* CahtRoomModel.swift in Sources */,
 				CE05740F22A3AD9F0082182F /* GroupViewController.swift in Sources */,
 				CE05743622AB6F7E0082182F /* UserDetailTableViewCell.swift in Sources */,
@@ -818,17 +830,18 @@
 				848A33192319F91000144950 /* PointChangeModel.swift in Sources */,
 				848A336C232A699900144950 /* GroupChatModel.swift in Sources */,
 				B40A340B232A5AD700583CCC /* ApiProfileData.swift in Sources */,
+				B4D1ECF52330EB07008760A2 /* NoticeDitailModel.swift in Sources */,
 				CE05742422A6CF3E0082182F /* UserSearchCollectionViewCell.swift in Sources */,
 				CE4B09C12209D2EA00F8A430 /* UserDetailViewController.swift in Sources */,
 				848A333823216B1200144950 /* PreferredGroupListModel.swift in Sources */,
 				CE0F9EEC22DE348900D320F5 /* MultipleViewController.swift in Sources */,
 				CE05741D22A439330082182F /* JoinGroupViewController.swift in Sources */,
-				84E56F112330B7F8002B0890 /* NoticeViewController.swift in Sources */,
 				8405839122F4097D00FAB292 /* RegistCompViewController.swift in Sources */,
 				845956AB22FC71F300B79278 /* ProfileEditTableViewCell.swift in Sources */,
 				848A32CD230AF96700144950 /* UserDetailInfoTableViewCell.swift in Sources */,
 				848A333B2325E86A00144950 /* MessageModel.swift in Sources */,
 				B40A3408232A5AD700583CCC /* ApiChangePoint.swift in Sources */,
+				B45677122330DC6300E0E9B7 /* NoticeViewController.swift in Sources */,
 				B40A33FF232A5AD700583CCC /* ApiGroupList.swift in Sources */,
 				848A332C231BA37600144950 /* TextFiledTableViewCell.swift in Sources */,
 				CE05741522A3BA960082182F /* CahtFirstViewController.swift in Sources */,
@@ -837,13 +850,14 @@
 				B49CCD9522D592AD00F793F1 /* UserSearchModel.swift in Sources */,
 				8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */,
 				CE4B09BF2209D2A000F8A430 /* MyDataViewController.swift in Sources */,
-				84E56F172330B9BC002B0890 /* GroupChatViewController.swift in Sources */,
 				B40A3405232A5AD700583CCC /* ApiUserDateParam.swift in Sources */,
 				8432F2BB22F16B1100A60EC5 /* ProfileAddViewController.swift in Sources */,
 				CE05742122A5E9350082182F /* ChatViewController.swift in Sources */,
 				CE1D51F922D015D10093DC58 /* MessageViewController.swift in Sources */,
 				848A3315231504E200144950 /* GroupEventAddModel.swift in Sources */,
 				848A333C2325E86A00144950 /* CahtFirstModel.swift in Sources */,
+				B45677172330DC9D00E0E9B7 /* GroupChatViewController.swift in Sources */,
+				B4D1ECF62330EB07008760A2 /* NoticeDitailViewController.swift in Sources */,
 				CE05741F22A439420082182F /* WaitGroupViewController.swift in Sources */,
 				848A32C5230AA57900144950 /* MultipleModel.swift in Sources */,
 				B40A340A232A5AD700583CCC /* ApiNoticeList.swift in Sources */,
@@ -862,8 +876,10 @@
 				B40A3409232A5AD700583CCC /* ApiGroupEventList.swift in Sources */,
 				CE4B0987220942DE00F8A430 /* ViewController.swift in Sources */,
 				B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */,
+				B45677162330DC9D00E0E9B7 /* GroupChatModel.swift in Sources */,
 				B40A340F232A5AD700583CCC /* ApiUserDate.swift in Sources */,
 				CE0F9EF422E0529F00D320F5 /* PointChangeViewController.swift in Sources */,
+				B45677112330DC6300E0E9B7 /* NoticeModel.swift in Sources */,
 				848A3330231BCA4000144950 /* TodayStep.swift in Sources */,
 				CE05742822A8EB0C0082182F /* GroupTableViewCell.swift in Sources */,
 				848A3325231A8B9D00144950 /* SettingEditViewController.swift in Sources */,
@@ -874,7 +890,6 @@
 				CE4B09B72209499A00F8A430 /* UserSearchViewController.swift in Sources */,
 				CE0F9EF222DEFAD000D320F5 /* GroupEventAddViewController.swift in Sources */,
 				CE05741122A3ADF50082182F /* PageViewController.swift in Sources */,
-				84E56F182330B9BC002B0890 /* GroupChatModel.swift in Sources */,
 				845956A822FBF75000B79278 /* ProfileEditViewController.swift in Sources */,
 				CE05743022AA3A3A0082182F /* ChatTableViewCell.swift in Sources */,
 				CE1D51F722D0158B0093DC58 /* testViewController.swift in Sources */,

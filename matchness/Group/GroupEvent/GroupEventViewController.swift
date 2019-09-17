@@ -167,7 +167,15 @@ print("ログイン時間ログイン時間ログイン時間")
         
         return cell
     }
-    
+
+
+    @IBAction func groupChatButtom(_ sender: Any) {
+        var group_id = group_param["group_id"] as! String
+        performSegue(withIdentifier: "toGroupChat", sender: group_id)
+    }
+
+
+
     /*
      // MARK: - Navigation
      

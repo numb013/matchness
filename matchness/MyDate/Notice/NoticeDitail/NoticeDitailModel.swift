@@ -1,5 +1,5 @@
 //
-//  MyDataModel.swift
+//  UserSearchModel.swift
 //  matchness
 //
 //  Created by RW on 2019/07/10.
@@ -13,24 +13,24 @@ import SwiftyJSON;
 /*
  プロトコル
  */
-protocol CahtFirstModelDelegate {
-    func onStart(model: CahtFirstModel);
-    func onComplete(model: CahtFirstModel, count: Int);
-    func onFailed(model: CahtFirstModel);
+protocol NoticeDetailModelDelegate {
+    func onStart(model: NoticeDetailModel);
+    func onComplete(model: NoticeDetailModel, count: Int);
+    func onFailed(model: NoticeDetailModel);
 }
 
 /*
  プロトコル判定用
  */
-enum CahtFirstModelDelegateError : Error {
+enum NoticeDetailModelDelegateError : Error {
     case start;
     case complete;
     case failed;
 }
 
-class CahtFirstModel: NSObject {
+class NoticeDetailModel: NSObject {
     //プロトコル
-    var delegate: CahtFirstModelDelegate?;
+    var delegate: NoticeDetailModelDelegate?;
     var request: ApiRequest!;
     //初回リクエストか
     var isRequestFirst: Bool = false;
@@ -47,10 +47,10 @@ class CahtFirstModel: NSObject {
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
     //IDをキーにしてデータを保持
-    public var responseData: Dictionary<String, ApiGroupMatcheList> = [String: ApiGroupMatcheList]();
-    
+    public var responseData: Dictionary<String, ApiNoticeList> = [String: ApiNoticeList]();
+
     var request_mode: String!;
-    
+
     func requestApi(url: String, addQuery query: Dictionary<String,String>! = nil) -> Bool {
         if( isRequest ){
             if( self.request != nil ){
@@ -71,7 +71,7 @@ class CahtFirstModel: NSObject {
                 condition.keyword = "";
             }
         }
-        
+
         //
         var params:[String: String] = condition.queryParams;
         //ページ番号
@@ -80,7 +80,7 @@ class CahtFirstModel: NSObject {
         //        params["action"] = String("search");
         //件数
         //        params["limit"] = isRequestFirst ? REQUEST_ITEM_COUNT_DEFAULT : REQUEST_ITEM_COUNT_ADD;
-        
+
         //追加パラメーターが設定されていたら
         if( query != nil ){
             for (key, value) in query {
@@ -89,14 +89,14 @@ class CahtFirstModel: NSObject {
                 params.updateValue(value, forKey: key);
             }
         }
-        
+
         if let request: ApiRequest = ApiRequest(delegate: self) {
             self.request = request;
             request.request(url: url, params: params, method: .post);
         }
         return true;
     }
-    
+
     /*
      リクエストのキャンセル
      */
@@ -105,41 +105,43 @@ class CahtFirstModel: NSObject {
             self.request.cancel();
         }
     }
-    
+
     func getDataCount() -> Int {
         return responseDataOrder.count;
     }
-    
+
     /*
      */
-    func getData(row: Int) -> ApiGroupEventList? {
+    func getData(row: Int) -> ApiNoticeList? {
         let count: Int = row + 1;
         if( count > responseDataOrder.count || responseDataOrder.isEmpty ){
             return nil;
         }
         let key: String = responseDataOrder[row];
-        if let info: ApiGroupEventList = responseData[key] {
+        if let info: ApiNoticeList = responseData[key] {
             return info;
         }
         return nil;
     }
 }
 
-extension CahtFirstModel : ApiRequestDelegate {
-    
+extension NoticeDetailModel : ApiRequestDelegate {
+
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         print("22222222222222222222222222")
-        
+
         //        print(json)
-        
+
         let items: JSON = json;
         let recommend: JSON = items["list"];
         for (key, item):(String, JSON) in json {
             //データを変換
-            let data: ApiGroupMatcheList? = ApiGroupMatcheList(json: item);
+            let data: ApiNoticeList? = ApiNoticeList(json: item);
+
+
             //Optionalチェック
-            guard let info: ApiGroupEventList = data else {
+            guard let info: ApiNoticeList = data else {
                 continue;
             }
             print(info)
@@ -150,25 +152,27 @@ extension CahtFirstModel : ApiRequestDelegate {
             //            }
             print("222222")
             //
-            
-            
+            guard let title = info.title else {
+                continue;
+            }
+
             //並び順を保持
             responseDataOrder.append(key);
             //サブカテゴリーIDをキーにして保存
             responseData[key] = info;
         }
     }
-    
+
     public func onComplete(){
         self.delegate?.onComplete(model: self, count: responseData.count);
         onFinally();
     }
-    
+
     public func onFailed(_ error: ApiRequestDelegateError){
         self.delegate?.onFailed(model: self);
         onFinally();
     }
-    
+
     public func onFinally(){
         //ページを進める
         //        self.page += 1;

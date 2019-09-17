@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GroupChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class GroupChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate{
     
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -22,13 +22,16 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiGroupChatList> = [:]
     var dataSourceOrder: Array<String> = []
-    
+    var group_id:String = "0"
+    var comment:String = ""
+    @IBOutlet weak var textFiled: UITextField!
     var selectRow = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        textFiled.delegate = self
         // Do any additional setup after loading the view.
         
         self.tableView.register(UINib(nibName: "SettingEditTableViewCell", bundle: nil), forCellReuseIdentifier: "SettingEditTableViewCell")
@@ -43,8 +46,7 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
         let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_GROUP_CHAT;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
-        var api_key = userDefaults.object(forKey: "api_token") as? String
-        query["api_token"] = api_key
+        query["group_id"] = group_id
         //リクエスト実行
         if( !requestGroupChatModel.requestApi(url: requestUrl, addQuery: query) ){
             
@@ -86,20 +88,58 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
         //cell.detail?.text = ApiConfig.BLOOD_LIST[myData?.blood_type ?? 2]
         return cell
     }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("タップ")
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
-    
-    
-    
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        print("テキスト１")
+        var tag = textField.tag
+        print(textField.text!)
+        if tag == 0 {
+            self.comment = textField.text!
+        }
+        return true
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        var tag = textField.tag
+        print(textField.text!)
+        if tag == 0 {
+            self.comment = textField.text!
+        }
+        textField.resignFirstResponder()
+        return
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // キーボードを閉じる
+        self.comment = textField.text!
+        textField.resignFirstResponder()
+        return true
+    }
+
+    @IBAction func sendGroupChat(_ sender: Any) {
+
+        let requestGroupChatModel = GroupChatModel();
+        requestGroupChatModel.delegate = self as! GroupChatModelDelegate;
+        //リクエスト先
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_GROUP_CHAT;
+        //パラメーター
+        var query: Dictionary<String,String> = Dictionary<String,String>();
+        query["group_id"] = group_id
+        query["comment"] = self.comment
+
+        //リクエスト実行
+        if( !requestGroupChatModel.requestApi(url: requestUrl, addQuery: query) ){
+
+        }
+
+
+    }
+
+
     /*
      // MARK: - Navigation
      

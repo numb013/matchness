@@ -304,6 +304,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0d7-p9-jpl">
                                         <rect key="frame" x="303" y="31" width="46" height="30"/>
                                         <state key="normal" title="投稿"/>
+                                        <connections>
+                                            <action selector="sendGroupChat:" destination="bBw-jE-1fj" eventType="touchUpInside" id="1yT-I3-Wsr"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97648113969999994" green="0.97644716499999995" blue="0.97648030519999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -351,6 +354,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="sz1-L3-LFa" id="8Da-dp-WM5"/>
+                        <outlet property="textFiled" destination="Izw-b3-VB7" id="Wdd-0I-yUK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4WG-C8-0w3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1002,6 +1006,7 @@
                                 <rect key="frame" x="126" y="572" width="123" height="30"/>
                                 <state key="normal" title="グループチャット"/>
                                 <connections>
+                                    <action selector="groupChatButtom:" destination="Arj-8c-TBe" eventType="touchUpInside" id="eCM-lD-yxz"/>
                                     <segue destination="bBw-jE-1fj" kind="showDetail" identifier="toGroupChat" id="Hxz-xz-abO"/>
                                 </connections>
                             </button>
@@ -2253,6 +2258,62 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d0b-J5-Kt3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3164" y="1687.1064467766118"/>
+        </scene>
+        <!--Notice Detail View Controller-->
+        <scene sceneID="xAv-I6-4O1">
+            <objects>
+                <viewController id="hSw-En-tMr" customClass="NoticeDetailViewController" customModule="matchness" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="84r-fb-XHc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lJC-ai-syV">
+                                <rect key="frame" x="10" y="94" width="355" height="563"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ub7-4J-fVI">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="dim-eF-nHj"/>
+                                    <constraint firstAttribute="width" constant="375" id="y9A-li-TYA"/>
+                                </constraints>
+                            </view>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UuZ-cD-rEg">
+                                <rect key="frame" x="0.0" y="30" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="G3i-Mg-lG0"/>
+                                    <constraint firstAttribute="height" constant="44" id="K9D-OL-rjq"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Title" id="Xed-m8-ZHN">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" id="XAm-Cj-czd"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UuZ-cD-rEg" firstAttribute="trailing" secondItem="YxM-i0-mdh" secondAttribute="trailing" id="6De-1R-KE1"/>
+                            <constraint firstItem="ub7-4J-fVI" firstAttribute="trailing" secondItem="YxM-i0-mdh" secondAttribute="trailing" id="7eu-ba-WIh"/>
+                            <constraint firstItem="lJC-ai-syV" firstAttribute="top" secondItem="UuZ-cD-rEg" secondAttribute="bottom" constant="20" id="LJf-xt-lQ6"/>
+                            <constraint firstItem="lJC-ai-syV" firstAttribute="leading" secondItem="YxM-i0-mdh" secondAttribute="leading" constant="10" id="Nw6-Tg-WVu"/>
+                            <constraint firstItem="YxM-i0-mdh" firstAttribute="trailing" secondItem="lJC-ai-syV" secondAttribute="trailing" constant="10" id="OiP-fx-x1F"/>
+                            <constraint firstItem="ub7-4J-fVI" firstAttribute="top" secondItem="84r-fb-XHc" secondAttribute="top" id="W8W-Qc-Ekj"/>
+                            <constraint firstItem="ub7-4J-fVI" firstAttribute="leading" secondItem="YxM-i0-mdh" secondAttribute="leading" id="ZLk-Zk-BQy"/>
+                            <constraint firstItem="UuZ-cD-rEg" firstAttribute="top" secondItem="ub7-4J-fVI" secondAttribute="bottom" id="bfi-8K-DTr"/>
+                            <constraint firstItem="YxM-i0-mdh" firstAttribute="bottom" secondItem="lJC-ai-syV" secondAttribute="bottom" constant="10" id="hQB-b5-cXu"/>
+                            <constraint firstItem="UuZ-cD-rEg" firstAttribute="leading" secondItem="YxM-i0-mdh" secondAttribute="leading" id="w7Z-BA-fGH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="YxM-i0-mdh"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FnH-CA-Gzk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3844" y="1684.4077961019491"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="m9L-Re-jVO">

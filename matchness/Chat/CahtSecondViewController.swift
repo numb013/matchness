@@ -32,10 +32,10 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
          APIへリクエスト（ユーザー取得）
          *****************/
         //ロジック生成
-        let requestCahtSecondModel = CahtSecondModel();
-        requestCahtSecondModel.delegate = self as! CahtSecondModelDelegate;
+        let requestCahtRoomModel = CahtRoomModel();
+        requestCahtRoomModel.delegate = self as! CahtRoomModelDelegate;
         //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_MATCHE;
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_MESSAGE;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
@@ -43,7 +43,7 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
         query["user_id"] = matchness_user_id
         query["status"] = "0"
         //リクエスト実行
-        if( !requestCahtSecondModel.requestApi(url: requestUrl, addQuery: query) ){
+        if( !requestCahtRoomModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
     }
@@ -86,9 +86,7 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
         let setteing_status:[String:Any] = ["status":"2", "indexPath":indexPath]
         self.performSegue(withIdentifier: "toMessage", sender: setteing_status)
     }
-    
-    
-    
+
     //必須
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
@@ -96,12 +94,12 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
 }
 
 
-extension CahtSecondViewController : CahtSecondModelDelegate {
+extension CahtSecondViewController : CahtRoomModelDelegate {
     
-    func onStart(model: CahtSecondModel) {
+    func onStart(model: CahtRoomModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")
     }
-    func onComplete(model: CahtSecondModel, count: Int) {
+    func onComplete(model: CahtRoomModel, count: Int) {
         print("UserDetail着てきてきてきて")
         //更新用データを設定
         self.dataSource = model.responseData;
@@ -117,8 +115,8 @@ extension CahtSecondViewController : CahtSecondModelDelegate {
         
         //        self.pointView()
     }
-    func onFailed(model: CahtSecondModel) {
-        print("こちら/MultipleModel/UserDetailViewのonFailed")
+    func onFailed(model: CahtRoomModel) {
+        print("こちら/CahtRoomModel/UserDetailViewのonFailed")
     }
 }
 
