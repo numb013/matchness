@@ -15,15 +15,15 @@ class NoticeDetailViewController: UIViewController{
 
     
     var cellCount: Int = 0
-    var dataSource: Dictionary<String, ApiNoticelList> = [:]
+    var dataSource: Dictionary<String, ApiNoticeList> = [:]
     var dataSourceOrder: Array<String> = []
 
     var selectRow = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
+//        tableView.delegate = self
+//        tableView.dataSource = self
         // Do any additional setup after loading the view.
 
         /****************
@@ -97,7 +97,7 @@ extension NoticeDetailViewController : NoticeDetailModelDelegate {
         //            }
         //        }
 
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     func onFailed(model: NoticeDetailModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")

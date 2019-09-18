@@ -19,6 +19,8 @@ public struct ApiMessageList: CustomDebugStringConvertible {
     public var name: String? = nil;
     public var target_id: Int? = nil;
     public var last_message: String? = nil;
+    public var created_at: String? = nil;
+
     
     /*
      デフォルトイニシャライザ
@@ -66,6 +68,12 @@ public struct ApiMessageList: CustomDebugStringConvertible {
         if let last_message = item["last_message"].string {
             self.last_message = last_message;
         }
+
+        //String => String
+        if let created_at = item["created_at"].string {
+            self.created_at = created_at;
+        }
+
         return true;
         
     }
@@ -80,6 +88,7 @@ public struct ApiMessageList: CustomDebugStringConvertible {
             string += "name => \(String(describing: self.name))\n";
             string += "target_id => \(String(describing: self.target_id))\n";
             string += "last_message => \(String(describing: self.last_message))\n";
+            string += "created_at => \(String(describing: self.created_at))\n";
             return string;
         }
     }

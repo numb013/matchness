@@ -98,7 +98,9 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return 60
     }
     
-    
+    @IBAction func backNoticeView(segue:UIStoryboardSegue){
+        NSLog("PlaninputViewController#backFromPlaninputView")
+    }
     
     /*
      // MARK: - Navigation

@@ -11,18 +11,18 @@ import XLPagerTabStrip
 
 class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITableViewDelegate , UITableViewDataSource {
     //ここがボタンのタイトルに利用されます
-    var itemInfo: IndicatorInfo = "やりとり"
+    var itemInfo: IndicatorInfo = "マッチング"
     
     var cellCount: Int = 0
-    var dataSource: Dictionary<String, ApiChatRoom> = [:]
+    var dataSource: Dictionary<String, ApiMatcheList> = [:]
     var dataSourceOrder: Array<String> = []
     
-    @IBOutlet weak var ChatTabkeView: UITableView!
+    @IBOutlet weak var ChatTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        ChatTabkeView.delegate = self
-        ChatTabkeView.dataSource = self
-        self.ChatTabkeView.register(UINib(nibName: "ChatTableViewCell", bundle: nil), forCellReuseIdentifier: "ChatTableViewCell")
+        ChatTableView.delegate = self
+        ChatTableView.dataSource = self
+        self.ChatTableView.register(UINib(nibName: "ChatTableViewCell", bundle: nil), forCellReuseIdentifier: "ChatTableViewCell")
         // Do any additional setup after loading the view.
         apiRequest()
     }
@@ -35,10 +35,12 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
         let requestCahtRoomModel = CahtRoomModel();
         requestCahtRoomModel.delegate = self as! CahtRoomModelDelegate;
         //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_MESSAGE;
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_MATCHE;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
+        
+        print("マッチマッチマッチマッチマッチマッチマッチ")
         
         query["user_id"] = matchness_user_id
         query["status"] = "0"
@@ -48,33 +50,32 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
         }
     }
     
-    
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return self.cellCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = ChatTabkeView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
-        cell.ChatName.text = "名前"
-        cell.ChatDate.text = "12:00"
-        cell.ChatMessage.text = "おはよう"
+        
+        var matche = self.dataSource[String(indexPath.row)]
+        
+        let cell = ChatTableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
+        cell.ChatName.text = matche?.name
+        cell.ChatDate.text = matche?.created_at
+        cell.ChatMessage.text = "マッチングしました。メッセージを送れます。"
         var number = Int.random(in: 1 ... 18)
         cell.ChatImage.image = UIImage(named: "\(number)")
-        
-        
+        print("mamamamamamamamamamamamama")
+        cell.tag = matche!.id!
         cell.ChatImage.contentMode = .scaleAspectFill
         cell.ChatImage.clipsToBounds = true
         cell.ChatImage.layer.cornerRadius =  cell.ChatImage.frame.height / 2
         
         return cell
     }
-    
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
@@ -86,7 +87,7 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
         let setteing_status:[String:Any] = ["status":"2", "indexPath":indexPath]
         self.performSegue(withIdentifier: "toMessage", sender: setteing_status)
     }
-
+    
     //必須
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
@@ -105,14 +106,14 @@ extension CahtSecondViewController : CahtRoomModelDelegate {
         self.dataSource = model.responseData;
         self.dataSourceOrder = model.responseDataOrder;
         print(self.dataSourceOrder)
-        print("耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳")
+        print("ママママママ耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳")
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
         var count: Int = 0;
         print("ががががががががが")
         print(self.dataSource)
         print(self.dataSourceOrder)
-        
+        ChatTableView.reloadData()
         //        self.pointView()
     }
     func onFailed(model: CahtRoomModel) {

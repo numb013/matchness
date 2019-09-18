@@ -199,7 +199,13 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
             //ここが実際に移動するコードとなります
             self.present(multiple, animated: false, completion: nil)
         }
-
+        if (indexPath.row == 5) {
+            let storyboard: UIStoryboard = self.storyboard!
+            //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+            let multiple = storyboard.instantiateViewController(withIdentifier: "toNotice")
+            //ここが実際に移動するコードとなります
+            self.present(multiple, animated: false, completion: nil)
+        }
         if (indexPath.row == 6) {
             let storyboard: UIStoryboard = self.storyboard!
             //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)

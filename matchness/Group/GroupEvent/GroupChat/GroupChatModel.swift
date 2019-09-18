@@ -152,7 +152,7 @@ extension GroupChatModel : ApiRequestDelegate {
             //            }
             print("222222")
             //
-            guard let title = info.title else {
+            guard let name = info.name else {
                 continue;
             }
             

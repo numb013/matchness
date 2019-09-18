@@ -13,24 +13,24 @@ import SwiftyJSON;
 /*
  プロトコル
  */
-protocol CahtFirstModelDelegate {
-    func onStart(model: CahtFirstModel);
-    func onComplete(model: CahtFirstModel, count: Int);
-    func onFailed(model: CahtFirstModel);
+protocol CahtRoomModelDelegate {
+    func onStart(model: CahtRoomModel);
+    func onComplete(model: CahtRoomModel, count: Int);
+    func onFailed(model: CahtRoomModel);
 }
 
 /*
  プロトコル判定用
  */
-enum CahtFirstModelDelegateError : Error {
+enum CahtRoomModelDelegateError : Error {
     case start;
     case complete;
     case failed;
 }
 
-class CahtFirstModel: NSObject {
+class CahtRoomModel: NSObject {
     //プロトコル
-    var delegate: CahtFirstModelDelegate?;
+    var delegate: CahtRoomModelDelegate?;
     var request: ApiRequest!;
     //初回リクエストか
     var isRequestFirst: Bool = false;
@@ -47,7 +47,7 @@ class CahtFirstModel: NSObject {
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
     //IDをキーにしてデータを保持
-    public var responseData: Dictionary<String, ApiMessageList> = [String: ApiMessageList]();
+    public var responseData: Dictionary<String, ApiMatcheList> = [String: ApiMatcheList]();
     
     var request_mode: String!;
     
@@ -112,20 +112,20 @@ class CahtFirstModel: NSObject {
     
     /*
      */
-    func getData(row: Int) -> ApiMessageList? {
+    func getData(row: Int) -> ApiMatcheList? {
         let count: Int = row + 1;
         if( count > responseDataOrder.count || responseDataOrder.isEmpty ){
             return nil;
         }
         let key: String = responseDataOrder[row];
-        if let info: ApiMessageList = responseData[key] {
+        if let info: ApiMatcheList = responseData[key] {
             return info;
         }
         return nil;
     }
 }
 
-extension CahtFirstModel : ApiRequestDelegate {
+extension CahtRoomModel : ApiRequestDelegate {
     
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
@@ -137,9 +137,9 @@ extension CahtFirstModel : ApiRequestDelegate {
         let recommend: JSON = items["list"];
         for (key, item):(String, JSON) in json {
             //データを変換
-            let data: ApiMessageList? = ApiMessageList(json: item);
+            let data: ApiMatcheList? = ApiMatcheList(json: item);
             //Optionalチェック
-            guard let info: ApiMessageList = data else {
+            guard let info: ApiMatcheList = data else {
                 continue;
             }
             print(info)

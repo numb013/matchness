@@ -10,25 +10,26 @@ import UIKit
 import XLPagerTabStrip
 
 class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableViewDelegate , UITableViewDataSource {
-        //ここがボタンのタイトルに利用されます
-    var itemInfo: IndicatorInfo = "マッチング"
+    //ここがボタンのタイトルに利用されます
+    var itemInfo: IndicatorInfo = "やりとり"
     let stepInstance = TodayStep()
-
+    
     var cellCount: Int = 0
-    var dataSource: Dictionary<String, ApiGroupMatcheList> = [:]
+    var dataSource: Dictionary<String, ApiMessageList> = [:]
     var dataSourceOrder: Array<String> = []
-
-    @IBOutlet weak var ChatTabkeView: UITableView!
+    
+    @IBOutlet weak var ChatTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        ChatTabkeView.delegate = self
-        ChatTabkeView.dataSource = self
-
-        self.ChatTabkeView.register(UINib(nibName: "ChatTableViewCell", bundle: nil), forCellReuseIdentifier: "ChatTableViewCell")
+        ChatTableView.delegate = self
+        ChatTableView.dataSource = self
+        
+        self.ChatTableView.register(UINib(nibName: "ChatTableViewCell", bundle: nil), forCellReuseIdentifier: "ChatTableViewCell")
         // Do any additional setup after loading the view.
         apiRequest()
     }
-
+    
     
     func apiRequest() {
         /****************
@@ -69,17 +70,21 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return self.cellCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = ChatTabkeView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
-        cell.ChatName.text = "名前"
-        cell.ChatDate.text = "12:00"
-        cell.ChatMessage.text = "おはよう"
+        
+        var message = self.dataSource[String(indexPath.row)]
+        
+        
+        let cell = ChatTableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
+        cell.ChatName.text = message?.name
+        cell.ChatDate.text = message?.created_at
+        cell.ChatMessage.text = message?.last_message
         var number = Int.random(in: 1 ... 18)
         cell.ChatImage.image = UIImage(named: "\(number)")
-        
+        cell.tag = Int(message!.room_code!)!
         cell.ChatImage.contentMode = .scaleAspectFill
         cell.ChatImage.clipsToBounds = true
         cell.ChatImage.layer.cornerRadius =  cell.ChatImage.frame.height / 2
@@ -95,26 +100,26 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
+        
         let setteing_status:[String:Any] = ["status":"2", "indexPath":indexPath]
         self.performSegue(withIdentifier: "toMessage", sender: setteing_status)
     }
-
-
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toMessage" {
             let vc = segue.destination as! MessageViewController
-//            vc.delegate = self
-//            vc.setteing_status = sender as! [String:Any]
+            //            vc.delegate = self
+            //            vc.setteing_status = sender as! [String:Any]
         }
     }
-
-
-
+    
+    
+    
 }
 
 
@@ -137,7 +142,7 @@ extension CahtFirstViewController : CahtFirstModelDelegate {
         print(self.dataSource)
         print(self.dataSourceOrder)
         
-//        self.pointView()
+        ChatTableView.reloadData()
     }
     func onFailed(model: CahtFirstModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")

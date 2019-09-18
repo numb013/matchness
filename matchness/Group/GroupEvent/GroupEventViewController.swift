@@ -174,6 +174,9 @@ print("ログイン時間ログイン時間ログイン時間")
         performSegue(withIdentifier: "toGroupChat", sender: group_id)
     }
 
+    @IBAction func backGroupEventView(segue:UIStoryboardSegue){
+        NSLog("backGroupEventView#backFromPlaninputView")
+    }
 
 
     /*

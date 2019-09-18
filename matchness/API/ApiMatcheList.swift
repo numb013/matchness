@@ -18,7 +18,8 @@ public struct ApiMatcheList: CustomDebugStringConvertible {
     public var id: Int? = nil;
     public var name: String? = nil;
     public var target_id: Int? = nil;
-    
+    public var created_at: String? = nil;
+
     /*
      デフォルトイニシャライザ
      失敗可能イニシャライザ init?
@@ -60,6 +61,11 @@ public struct ApiMatcheList: CustomDebugStringConvertible {
         if let target_id = item["target_id"].int {
             self.target_id = target_id;
         }
+
+        //String => String
+        if let created_at = item["created_at"].string {
+            self.created_at = created_at;
+        }
         
         return true;
         
@@ -73,6 +79,7 @@ public struct ApiMatcheList: CustomDebugStringConvertible {
             string += "id => \(String(describing: self.id))\n";
             string += "name => \(String(describing: self.name))\n";
             string += "target_id => \(String(describing: self.target_id))\n";
+            string += "created_at => \(String(describing: self.created_at))\n";
             return string;
         }
     }
