@@ -15,7 +15,7 @@ import SwiftyJSON;
  構造体は利用時にプロパティ全てを初期化する必要がある。
  */
 public struct ApiGroupChatList: CustomDebugStringConvertible {
-    
+    public var user_id: Int? = nil;
     public var name: String? = nil;
     public var comment: String? = nil;
     public var created_at: String? = nil;
@@ -46,7 +46,10 @@ public struct ApiGroupChatList: CustomDebugStringConvertible {
         if( item == JSON.null ){
             return nil;
         }
-        
+
+        if let user_id = item["user_id"].int {
+            self.user_id = user_id;
+        }
         //String => String
         if let name = item["name"].string {
             self.name = name;
@@ -71,6 +74,7 @@ public struct ApiGroupChatList: CustomDebugStringConvertible {
     public var debugDescription: String {
         get{
             var string:String = "ApiNoticeList::\(#function)\n";
+            string += "user_id => \(String(describing: self.user_id))\n";
             string += "name => \(String(describing: self.name))\n";
             string += "comment => \(String(describing: self.comment))\n";
             string += "created_at => \(String(describing: self.created_at))\n";
