@@ -45,7 +45,7 @@ public struct ApiNoticeList: CustomDebugStringConvertible {
         }
         //String => String
         if let notice_id = item["notice_id"].int {
-            self.id = notice_id;
+            self.notice_id = notice_id;
         }
         //String => String
         if let title = item["title"].string {

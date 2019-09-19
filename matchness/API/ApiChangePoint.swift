@@ -15,7 +15,7 @@ import SwiftyJSON;
  */
 public struct ApiChangePoint: CustomDebugStringConvertible {
 
-    public var user_id: String? = nil;
+    public var user_id: Int? = nil;
     public var point: String? = nil;
     public var todayPointChenge: String? = nil;
     public var yesterdayPointChenge: String? = nil;
@@ -49,7 +49,7 @@ public struct ApiChangePoint: CustomDebugStringConvertible {
         }
         
         //String => String
-        if let user_id = item["user_id"].string {
+        if let user_id = item["user_id"].int {
             //print( "code => \(code)" );
             self.user_id = user_id;
         }

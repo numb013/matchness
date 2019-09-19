@@ -12,18 +12,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if let tabItem = self.tabBarController?.tabBar.items?[0] {
-            tabItem.badgeValue = "new"
-        }
-
-
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    
-    
-    
-    
+    }    
 }
 

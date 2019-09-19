@@ -35,7 +35,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     var step_1: [Double] = []
     
     let topMenu = ["AAA", "BBB", "CCC"]
-    let systemMenu = ["足あと", "もらったいいね", "マイデータ", "お気に入り", "ブロック", "お知らせ", "ポイント履歴", "設定", "退会"]
+    let systemMenu = ["足あと", "もらったいいね", "マイデータ", "お気に入り", "ポイント履歴", "お知らせ", "ブロック", "設定", "退会"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -152,19 +152,54 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         //コレクションビューから識別子「TestCell」のセルを取得する。
         let cell = Menu.dequeueReusableCell(withReuseIdentifier: "TestCell", for: indexPath as IndexPath) as UICollectionViewCell
         //セルの背景色をランダムに設定する。
-        cell.contentView.backgroundColor = UIColor(red: 102/256, green: 255/256, blue: 255/256, alpha: 0.1)
+        //cell.contentView.backgroundColor = UIColor(red: 102/256, green: 255/256, blue: 255/256, alpha: 0.1)
 
-        // Tag番号を使ってImageViewのインスタンス生成
-        let imageView = cell.contentView.viewWithTag(1) as! UIImageView
-        // 画像配列の番号で指定された要素の名前の画像をUIImageとする
-        var number = Int.random(in: 1 ... 18)
-        let cellImage = UIImage(named: "\(number)")
-        // UIImageをUIImageViewのimageとして設定
-        imageView.image = cellImage
-        
         // Tag番号を使ってLabelのインスタンス生成
         let label = cell.contentView.viewWithTag(2) as! UILabel
         label.text = systemMenu[indexPath.row]
+
+                // Tag番号を使ってImageViewのインスタンス生成
+        let imageView = cell.contentView.viewWithTag(1) as! UIImageView
+
+        if indexPath.row == 0 {
+            let cellImage = UIImage(named: "foot")
+            imageView.image = cellImage
+        }
+        if indexPath.row == 1 {
+            let cellImage = UIImage(named: "like")
+            imageView.image = cellImage
+        }
+        if indexPath.row == 2 {
+            let cellImage = UIImage(named: "prolile")
+            imageView.image = cellImage
+        }
+        if indexPath.row == 3 {
+            let cellImage = UIImage(named: "favorite")
+            imageView.image = cellImage
+        }
+        if indexPath.row == 4 {
+            let cellImage = UIImage(named: "change")
+            imageView.image = cellImage
+        }
+        if indexPath.row == 5 {
+            let cellImage = UIImage(named: "notice")
+            imageView.image = cellImage
+        }
+        if indexPath.row == 6 {
+            let cellImage = UIImage(named: "block")
+            imageView.image = cellImage
+        }
+        if indexPath.row == 7 {
+            let cellImage = UIImage(named: "setting")
+            imageView.image = cellImage
+        }
+        if indexPath.row == 8 {
+            let cellImage = UIImage(named: "out")
+            imageView.image = cellImage
+        }
+        // 画像配列の番号で指定された要素の名前の画像をUIImageとする
+        // UIImageをUIImageViewのimageとして設定
+
         return cell
 
     }
@@ -183,7 +218,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("SDSDSDSDSDSDSDSDSD")
         print(indexPath.row)
-        if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 4) {
+        if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 6) {
             let storyboard: UIStoryboard = self.storyboard!
             //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
             let multiple = storyboard.instantiateViewController(withIdentifier: "multiple") as? MultipleViewController
@@ -199,17 +234,18 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
             //ここが実際に移動するコードとなります
             self.present(multiple, animated: false, completion: nil)
         }
+        if (indexPath.row == 4) {
+            let storyboard: UIStoryboard = self.storyboard!
+            //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+            let multiple = storyboard.instantiateViewController(withIdentifier: "pointChange")
+            //ここが実際に移動するコードとなります
+            self.present(multiple, animated: false, completion: nil)
+        }
+
         if (indexPath.row == 5) {
             let storyboard: UIStoryboard = self.storyboard!
             //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
             let multiple = storyboard.instantiateViewController(withIdentifier: "toNotice")
-            //ここが実際に移動するコードとなります
-            self.present(multiple, animated: false, completion: nil)
-        }
-        if (indexPath.row == 6) {
-            let storyboard: UIStoryboard = self.storyboard!
-            //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-            let multiple = storyboard.instantiateViewController(withIdentifier: "pointChange")
             //ここが実際に移動するコードとなります
             self.present(multiple, animated: false, completion: nil)
         }
