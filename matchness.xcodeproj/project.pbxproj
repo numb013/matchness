@@ -64,6 +64,8 @@
 		B45677122330DC6300E0E9B7 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45677102330DC6300E0E9B7 /* NoticeViewController.swift */; };
 		B45677162330DC9D00E0E9B7 /* GroupChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45677142330DC9D00E0E9B7 /* GroupChatModel.swift */; };
 		B45677172330DC9D00E0E9B7 /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45677152330DC9D00E0E9B7 /* GroupChatViewController.swift */; };
+		B495CBFF23339BCF006A029C /* NotDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495CBFD23339BCE006A029C /* NotDataTableViewCell.swift */; };
+		B495CC0023339BCF006A029C /* NotDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B495CBFE23339BCF006A029C /* NotDataTableViewCell.xib */; };
 		B49CCD9522D592AD00F793F1 /* UserSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49CCD9422D592AD00F793F1 /* UserSearchModel.swift */; };
 		B4D1ECF52330EB07008760A2 /* NoticeDitailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D1ECF32330EB07008760A2 /* NoticeDitailModel.swift */; };
 		B4D1ECF62330EB07008760A2 /* NoticeDitailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D1ECF42330EB07008760A2 /* NoticeDitailViewController.swift */; };
@@ -190,6 +192,8 @@
 		B45677102330DC6300E0E9B7 /* NoticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
 		B45677142330DC9D00E0E9B7 /* GroupChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatModel.swift; sourceTree = "<group>"; };
 		B45677152330DC9D00E0E9B7 /* GroupChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatViewController.swift; sourceTree = "<group>"; };
+		B495CBFD23339BCE006A029C /* NotDataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotDataTableViewCell.swift; sourceTree = "<group>"; };
+		B495CBFE23339BCF006A029C /* NotDataTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotDataTableViewCell.xib; sourceTree = "<group>"; };
 		B49CCD9422D592AD00F793F1 /* UserSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchModel.swift; sourceTree = "<group>"; };
 		B4D1ECF32330EB07008760A2 /* NoticeDitailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeDitailModel.swift; sourceTree = "<group>"; };
 		B4D1ECF42330EB07008760A2 /* NoticeDitailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeDitailViewController.swift; sourceTree = "<group>"; };
@@ -534,6 +538,8 @@
 				8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */,
 				CE4B0986220942DE00F8A430 /* ViewController.swift */,
 				848A332F231BCA4000144950 /* TodayStep.swift */,
+				B495CBFD23339BCE006A029C /* NotDataTableViewCell.swift */,
+				B495CBFE23339BCF006A029C /* NotDataTableViewCell.xib */,
 				CE05743222AB547B0082182F /* CustomNavigationBar.swift */,
 				CE4B098B220942E100F8A430 /* Assets.xcassets */,
 				CE4B098D220942E100F8A430 /* LaunchScreen.storyboard */,
@@ -697,6 +703,7 @@
 				CE4B098F220942E100F8A430 /* LaunchScreen.storyboard in Resources */,
 				848A332D231BA37600144950 /* TextFiledTableViewCell.xib in Resources */,
 				845956AC22FC71F300B79278 /* ProfileEditTableViewCell.xib in Resources */,
+				B495CC0023339BCF006A029C /* NotDataTableViewCell.xib in Resources */,
 				CE1D51F522CE40C30093DC58 /* GoogleService-Info.plist in Resources */,
 				CE05743122AA3A3A0082182F /* ChatTableViewCell.xib in Resources */,
 				CE05742922A8EB0C0082182F /* GroupTableViewCell.xib in Resources */,
@@ -861,6 +868,7 @@
 				B40A33FE232A5AD700583CCC /* ApiConfig.swift in Sources */,
 				8432F2B222F0A2ED00A60EC5 /* SplashViewController.swift in Sources */,
 				848A33172319F81E00144950 /* MyDateStepModel.swift in Sources */,
+				B495CBFF23339BCF006A029C /* NotDataTableViewCell.swift in Sources */,
 				B40A3410232A5AD700583CCC /* ApiMyData.swift in Sources */,
 				B40A3401232A5AD700583CCC /* ApiMessageList.swift in Sources */,
 				B40A340C232A5AD700583CCC /* ApiGroupChat.swift in Sources */,

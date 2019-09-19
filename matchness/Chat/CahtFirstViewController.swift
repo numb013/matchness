@@ -74,21 +74,21 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        var message = self.dataSource[String(indexPath.row)]
-        
-        
-        let cell = ChatTableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
-        cell.ChatName.text = message?.name
-        cell.ChatDate.text = message?.created_at
-        cell.ChatMessage.text = message?.last_message
-        var number = Int.random(in: 1 ... 18)
-        cell.ChatImage.image = UIImage(named: "\(number)")
-        cell.tag = Int(message!.room_code!)!
-        cell.ChatImage.contentMode = .scaleAspectFill
-        cell.ChatImage.clipsToBounds = true
-        cell.ChatImage.layer.cornerRadius =  cell.ChatImage.frame.height / 2
-        
+        if self.cellCount != 0 {
+            var message = self.dataSource[String(indexPath.row)]
+            let cell = ChatTableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
+            cell.ChatName.text = message?.name
+            cell.ChatDate.text = message?.created_at
+            cell.ChatMessage.text = message?.last_message
+            var number = Int.random(in: 1 ... 18)
+            cell.ChatImage.image = UIImage(named: "\(number)")
+            cell.tag = Int(message!.room_code!)!
+            cell.ChatImage.contentMode = .scaleAspectFill
+            cell.ChatImage.clipsToBounds = true
+            cell.ChatImage.layer.cornerRadius =  cell.ChatImage.frame.height / 2
+        } else {
+            let cell = ChatTableView.dequeueReusableCell(withIdentifier: "NotDataTableViewCell") as! NotDataTableViewCell
+        }
         return cell
     }
     
@@ -137,7 +137,6 @@ extension CahtFirstViewController : CahtFirstModelDelegate {
         print("耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳")
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
-        var count: Int = 0;
         print("ががががががががが")
         print(self.dataSource)
         print(self.dataSourceOrder)
