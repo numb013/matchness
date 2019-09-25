@@ -26,6 +26,9 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
         ChatTableView.dataSource = self
         
         self.ChatTableView.register(UINib(nibName: "ChatTableViewCell", bundle: nil), forCellReuseIdentifier: "ChatTableViewCell")
+        self.ChatTableView.register(UINib(nibName: "NotDataTableViewCell", bundle: nil), forCellReuseIdentifier: "NotDataTableViewCell")
+
+        
         // Do any additional setup after loading the view.
         apiRequest()
     }
@@ -70,10 +73,16 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.cellCount
+        return 1
+//        return self.cellCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = ChatTableView.dequeueReusableCell(withIdentifier: "NotDataTableViewCell") as! NotDataTableViewCell
+
+print("カウントカウントカウント")
+print(self.cellCount)
+        
         if self.cellCount != 0 {
             var message = self.dataSource[String(indexPath.row)]
             let cell = ChatTableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
@@ -82,12 +91,14 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
             cell.ChatMessage.text = message?.last_message
             var number = Int.random(in: 1 ... 18)
             cell.ChatImage.image = UIImage(named: "\(number)")
-            cell.tag = Int(message!.room_code!)!
+//            cell.tag = message!.room_code!)!
             cell.ChatImage.contentMode = .scaleAspectFill
             cell.ChatImage.clipsToBounds = true
             cell.ChatImage.layer.cornerRadius =  cell.ChatImage.frame.height / 2
+            return cell
         } else {
             let cell = ChatTableView.dequeueReusableCell(withIdentifier: "NotDataTableViewCell") as! NotDataTableViewCell
+
         }
         return cell
     }

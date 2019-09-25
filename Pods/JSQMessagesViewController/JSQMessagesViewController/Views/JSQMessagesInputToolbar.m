@@ -77,15 +77,6 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
     return nibViews.firstObject;
 }
 
--(void) didMoveToWindow{
-    [super didMoveToWindow];
-    if (@available(iOS 11.0, *)) {
-        if (self.window.safeAreaLayoutGuide != nil) {
-            [[self.contentView bottomAnchor] constraintLessThanOrEqualToSystemSpacingBelowAnchor:self.window.safeAreaLayoutGuide.bottomAnchor multiplier:1.0].active = YES;
-        }
-    }
-}
-
 - (void)dealloc
 {
     [self jsq_removeObservers];

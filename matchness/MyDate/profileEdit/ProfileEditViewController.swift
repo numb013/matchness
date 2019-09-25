@@ -46,6 +46,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         self.UserProfileTable.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
 
         self.UserProfileTable.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
+        self.UserProfileTable.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")
 
         // datePickerの設定
         datePickerView.date = isDate
@@ -109,21 +110,25 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "profileCell")
 
+        print("こいいいいいい")
+        print(self.dataSource)
+        var myData = self.dataSource["0"]
+
+        
         print("AAAAAAAAAA")
         print(indexPath)
         print(indexPath.section)
         if indexPath.section == 0 {
+            let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "TextAreaTableViewCell") as! TextAreaTableViewCell
+
             cell.textLabel!.numberOfLines = 0
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            print("BBBBBBBBB")
-            print(indexPath.section)
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
-            cell.textLabel!.text = "ここが詳細テキストラベルですここが詳細テキストラベルですここが詳細テキストラベルですここが"
+            cell.textArea.delegate = self
+            cell.textArea.tag = 1
+            cell.textArea?.font = UIFont.systemFont(ofSize: 14)
+            cell.textArea!.text = myData?.profile_text
+                return cell
         }
-
-        print("こいいいいいい")
-        print(self.dataSource)
-        var myData = self.dataSource["0"]
 
         if indexPath.section == 1 {
 
@@ -217,7 +222,8 @@ print(self.dataSource["0"]?.birthday)
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-print("タップ")
+        print("タップ")
+        print(indexPath.row)
 
         cancelPressed()
         cancelDatePressed()
@@ -340,9 +346,7 @@ print("タップ")
         print("bbbb")
         print("セレクトピッカー")
         print(self.selectPicker)
-        if self.selectPicker == 0 {
-            
-        }
+
         if self.selectPicker == 1 {
             self.dataSource["0"]?.work = self.selectPickerItem
         }
@@ -419,9 +423,13 @@ print("タップ")
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         print("テキスト１")
         var tag = textField.tag
+        print(tag)
         print(textField.text!)
         if tag == 0 {
             self.dataSource["0"]?.name = textField.text!
+        }
+        if tag == 1 {
+            self.dataSource["0"]?.profile_text = textField.text!
         }
         return true
     }
@@ -432,6 +440,10 @@ print("タップ")
         if tag == 0 {
             self.dataSource["0"]?.name = textField.text!
         }
+        if tag == 1 {
+            self.dataSource["0"]?.profile_text = textField.text!
+        }
+
         textField.resignFirstResponder()
         return
     }
@@ -441,8 +453,17 @@ print("タップ")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // キーボードを閉じる
-        self.dataSource["0"]?.name = textField.text!
+
+        var tag = textField.tag
+        print("キーボードを閉じるキーボードを閉じるキーボードを閉じる")
+        print(tag)
+
+        if tag == 0 {
+            self.dataSource["0"]?.name = textField.text!
+        }
+        if tag == 1 {
+            self.dataSource["0"]?.profile_text = textField.text!
+        }
         textField.resignFirstResponder()
         return true
     }
@@ -464,6 +485,7 @@ print("タップ")
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         query["id"] = String(self.dataSource["0"]?.id ?? 0)
+        query["profile_text"] = self.dataSource["0"]?.profile_text
         query["name"] = self.dataSource["0"]?.name
         query["birthday"] = self.dataSource["0"]?.birthday
         query["work"] = String(self.dataSource["0"]?.work ?? 0)

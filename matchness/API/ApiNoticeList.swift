@@ -17,6 +17,7 @@ public struct ApiNoticeList: CustomDebugStringConvertible {
     public var notice_id: Int? = nil;
     public var title: String? = nil;
     public var body_text: String? = nil;
+    public var confirmed: String? = nil;
     public var created_at: String? = nil;
     /*
      デフォルトイニシャライザ
@@ -56,6 +57,10 @@ public struct ApiNoticeList: CustomDebugStringConvertible {
             self.body_text = body_text;
         }
         //String => String
+        if let confirmed = item["confirmed"].string {
+            self.confirmed = confirmed;
+        }
+        //String => String
         if let created_at = item["created_at"].string {
             self.created_at = created_at;
         }
@@ -71,6 +76,7 @@ public struct ApiNoticeList: CustomDebugStringConvertible {
             string += "notice_id => \(String(describing: self.notice_id))\n";
             string += "title => \(String(describing: self.title))\n";
             string += "body_text => \(String(describing: self.body_text))\n";
+            string += "confirmed => \(String(describing: self.confirmed))\n";
             string += "created_at => \(String(describing: self.created_at))\n";
             return string;
         }

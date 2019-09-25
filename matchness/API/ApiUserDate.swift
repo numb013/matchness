@@ -25,6 +25,8 @@ public struct ApiUserDate: CustomDebugStringConvertible {
     public var blood_type: Int? = nil;
     public var point: Int? = nil;
     public var prefecture_id: Int? = nil;
+    public var last_login_flag: Int? = nil;
+    public var created_flag: Int? = nil;
     public var weight: Int? = nil;
 //    public var images: Array<String> = Array<String>();
 //    public var categorySubId: Array<String> = Array<String>();
@@ -101,8 +103,12 @@ public struct ApiUserDate: CustomDebugStringConvertible {
         if let weight = item["weight"].int {
             self.weight = weight;
         }
-        
-
+        if let last_login_flag = item["last_login_flag"].int {
+            self.last_login_flag = last_login_flag;
+        }
+        if let created_flag = item["created_flag"].int {
+            self.created_flag = created_flag;
+        }
 //        if let prefecture_id = item["prefecture_id"].string {
 //            self.prefecture_id = prefecture_id;
 //        }
@@ -149,6 +155,8 @@ public struct ApiUserDate: CustomDebugStringConvertible {
             string += "point => \(String(describing: self.point))\n";
             string += "prefecture_id => \(String(describing: self.prefecture_id))\n";
             string += "weight => \(String(describing: self.weight))\n";
+            string += "last_login_flag => \(String(describing: self.last_login_flag))\n";
+            string += "created_flag => \(String(describing: self.created_flag))\n";
             return string;
         }
     }

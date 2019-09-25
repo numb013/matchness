@@ -245,7 +245,7 @@ extension MessageViewController {
                 //                instanceIDTokenMessage.text  = "Remote InstanceID token: \(result.token)"
             }
         }
-        
+
         super.viewDidLoad()
         self.senderId = currentUser.id
         self.senderDisplayName = currentUser.name

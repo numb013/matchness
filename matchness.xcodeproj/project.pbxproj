@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		81C6A8431AF3185E4817C3AE /* Pods_matchnessTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9CA3510AE57598FBBFB314 /* Pods_matchnessTests.framework */; };
 		8405839122F4097D00FAB292 /* RegistCompViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8405839022F4097D00FAB292 /* RegistCompViewController.swift */; };
+		8409E5FB23377623009BA908 /* PointHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8409E5FA23377623009BA908 /* PointHistoryViewController.swift */; };
+		8409E5FD233778CE009BA908 /* PointHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8409E5FC233778CE009BA908 /* PointHistoryModel.swift */; };
+		8409E5FF233779B4009BA908 /* ApiPointHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8409E5FE233779B4009BA908 /* ApiPointHistory.swift */; };
+		8409E60223377CE8009BA908 /* TextAreaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8409E60023377CE8009BA908 /* TextAreaTableViewCell.swift */; };
+		8409E60323377CE8009BA908 /* TextAreaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8409E60123377CE8009BA908 /* TextAreaTableViewCell.xib */; };
 		840FB6F123310C0D00F6F55F /* CahtRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840FB6F023310C0D00F6F55F /* CahtRoomModel.swift */; };
 		8432F2B022F09D6C00A60EC5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */; };
 		8432F2B222F0A2ED00A60EC5 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */; };
@@ -135,6 +140,11 @@
 		5C5B5093E137E02D7BFA9506 /* Pods-matchness.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matchness.debug.xcconfig"; path = "Target Support Files/Pods-matchness/Pods-matchness.debug.xcconfig"; sourceTree = "<group>"; };
 		620A40633C210A8E30559B8B /* Pods-matchnessUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matchnessUITests.release.xcconfig"; path = "Target Support Files/Pods-matchnessUITests/Pods-matchnessUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8405839022F4097D00FAB292 /* RegistCompViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistCompViewController.swift; sourceTree = "<group>"; };
+		8409E5FA23377623009BA908 /* PointHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointHistoryViewController.swift; sourceTree = "<group>"; };
+		8409E5FC233778CE009BA908 /* PointHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointHistoryModel.swift; sourceTree = "<group>"; };
+		8409E5FE233779B4009BA908 /* ApiPointHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiPointHistory.swift; path = matchness/API/ApiPointHistory.swift; sourceTree = "<group>"; };
+		8409E60023377CE8009BA908 /* TextAreaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaTableViewCell.swift; sourceTree = "<group>"; };
+		8409E60123377CE8009BA908 /* TextAreaTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextAreaTableViewCell.xib; sourceTree = "<group>"; };
 		840FB6F023310C0D00F6F55F /* CahtRoomModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CahtRoomModel.swift; sourceTree = "<group>"; };
 		8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -293,6 +303,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		8409E5F9233775E4009BA908 /* pointHistory */ = {
+			isa = PBXGroup;
+			children = (
+				8409E5FC233778CE009BA908 /* PointHistoryModel.swift */,
+				8409E5FA23377623009BA908 /* PointHistoryViewController.swift */,
+			);
+			path = pointHistory;
+			sourceTree = "<group>";
+		};
 		8432F2B722F16ABB00A60EC5 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,6 +347,8 @@
 			isa = PBXGroup;
 			children = (
 				848A332B231BA37600144950 /* TextFiledTableViewCell.xib */,
+				8409E60023377CE8009BA908 /* TextAreaTableViewCell.swift */,
+				8409E60123377CE8009BA908 /* TextAreaTableViewCell.xib */,
 				848A332A231BA37600144950 /* TextFiledTableViewCell.swift */,
 				845956A722FBF75000B79278 /* ProfileEditViewController.swift */,
 				845956AD2303E52800B79278 /* ProfileEditModel.swift */,
@@ -361,6 +382,7 @@
 			children = (
 				B40A33F5232A5AD600583CCC /* ApiChangePoint.swift */,
 				B40A33F3232A5AD500583CCC /* ApiChatRoom.swift */,
+				8409E5FE233779B4009BA908 /* ApiPointHistory.swift */,
 				B40A33EB232A5AD500583CCC /* ApiConfig.swift */,
 				B40A33F9232A5AD600583CCC /* ApiGroupChat.swift */,
 				B40A33F6232A5AD600583CCC /* ApiGroupEventList.swift */,
@@ -411,9 +433,10 @@
 				848A331A2319F99100144950 /* pointChange */,
 				CE1D51EF22CDD6540093DC58 /* Step */,
 				B456770E2330DC6300E0E9B7 /* Notice */,
-				CE4B09BE2209D2A000F8A430 /* MyDataViewController.swift */,
+				8409E5F9233775E4009BA908 /* pointHistory */,
 				CE0F9EEB22DE348900D320F5 /* MultipleViewController.swift */,
 				848A32C4230AA57900144950 /* MultipleModel.swift */,
+				CE4B09BE2209D2A000F8A430 /* MyDataViewController.swift */,
 				848A32D6230DA7A300144950 /* MyDataModel.swift */,
 				CE0F9EED22DE34D500D320F5 /* MultipleTableViewCell.swift */,
 				CE0F9EEE22DE34D500D320F5 /* MultipleTableViewCell.xib */,
@@ -700,6 +723,7 @@
 				CE0F9EF022DE34D500D320F5 /* MultipleTableViewCell.xib in Resources */,
 				848A3323231A8B9D00144950 /* SettingEditTableViewCell.xib in Resources */,
 				848A32CC230AF96700144950 /* UserDetailInfoTableViewCell.xib in Resources */,
+				8409E60323377CE8009BA908 /* TextAreaTableViewCell.xib in Resources */,
 				CE4B098F220942E100F8A430 /* LaunchScreen.storyboard in Resources */,
 				848A332D231BA37600144950 /* TextFiledTableViewCell.xib in Resources */,
 				845956AC22FC71F300B79278 /* ProfileEditTableViewCell.xib in Resources */,
@@ -850,6 +874,7 @@
 				843F203E22F6F85C008CBDDA /* UserDetailModel.swift in Sources */,
 				CE05743322AB547C0082182F /* CustomNavigationBar.swift in Sources */,
 				B49CCD9522D592AD00F793F1 /* UserSearchModel.swift in Sources */,
+				8409E60223377CE8009BA908 /* TextAreaTableViewCell.swift in Sources */,
 				8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */,
 				CE4B09BF2209D2A000F8A430 /* MyDataViewController.swift in Sources */,
 				B40A3405232A5AD700583CCC /* ApiUserDateParam.swift in Sources */,
@@ -884,8 +909,10 @@
 				B40A340F232A5AD700583CCC /* ApiUserDate.swift in Sources */,
 				CE0F9EF422E0529F00D320F5 /* PointChangeViewController.swift in Sources */,
 				B45677112330DC6300E0E9B7 /* NoticeModel.swift in Sources */,
+				8409E5FF233779B4009BA908 /* ApiPointHistory.swift in Sources */,
 				848A3330231BCA4000144950 /* TodayStep.swift in Sources */,
 				CE05742822A8EB0C0082182F /* GroupTableViewCell.swift in Sources */,
+				8409E5FB23377623009BA908 /* PointHistoryViewController.swift in Sources */,
 				848A3325231A8B9D00144950 /* SettingEditViewController.swift in Sources */,
 				848A3332231D542300144950 /* GroupEventModel.swift in Sources */,
 				B40A3406232A5AD700583CCC /* ApiChatRoom.swift in Sources */,
@@ -903,6 +930,7 @@
 				CEAF954D22BDF33600F37A6E /* GroupEventViewController.swift in Sources */,
 				CE4B0985220942DE00F8A430 /* AppDelegate.swift in Sources */,
 				845956AE2303E52800B79278 /* ProfileEditModel.swift in Sources */,
+				8409E5FD233778CE009BA908 /* PointHistoryModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

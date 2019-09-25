@@ -35,7 +35,7 @@ class FBLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         if error == nil {
             //            キャンセルしたかどうか
             if result.isCancelled {
-                print("キャンセル")
+                print("キャンセルFBlogin")
             }else{
                 print("AAAAAAAAAA")
                 //            画面遷移

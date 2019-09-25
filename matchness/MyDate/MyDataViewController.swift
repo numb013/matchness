@@ -35,7 +35,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     var step_1: [Double] = []
     
     let topMenu = ["AAA", "BBB", "CCC"]
-    let systemMenu = ["足あと", "もらったいいね", "マイデータ", "お気に入り", "ポイント履歴", "お知らせ", "ブロック", "設定", "退会"]
+    let systemMenu = ["足あと", "もらったいいね", "プロフィール", "お気に入り", "ポイント交換", "お知らせ", "ブロック", "設定", "退会", "ポイント履歴", "マイデータ"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -197,6 +197,14 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
             let cellImage = UIImage(named: "out")
             imageView.image = cellImage
         }
+        if indexPath.row == 9 {
+            let cellImage = UIImage(named: "history")
+            imageView.image = cellImage
+        }
+        if indexPath.row == 10 {
+            let cellImage = UIImage(named: "stepdata")
+            imageView.image = cellImage
+        }
         // 画像配列の番号で指定された要素の名前の画像をUIImageとする
         // UIImageをUIImageViewのimageとして設定
 
@@ -211,7 +219,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
 
         // 例えば端末サイズの半分の width と height にして 2 列にする場合
         let width: CGFloat = UIScreen.main.bounds.width / 3.02
-        let height = width - 15
+        let height = width - 35
         return CGSize(width: width, height: height)
     }
     
@@ -252,6 +260,16 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         if (indexPath.row == 7) {
             let storyboard: UIStoryboard = self.storyboard!
             let multiple = storyboard.instantiateViewController(withIdentifier: "toSettingEdit")
+            self.present(multiple, animated: false, completion: nil)
+        }
+        if (indexPath.row == 9) {
+            let storyboard: UIStoryboard = self.storyboard!
+            let multiple = storyboard.instantiateViewController(withIdentifier: "toPointHistory")
+            self.present(multiple, animated: false, completion: nil)
+        }
+        if (indexPath.row == 10) {
+            let storyboard: UIStoryboard = self.storyboard!
+            let multiple = storyboard.instantiateViewController(withIdentifier: "toMyData")
             self.present(multiple, animated: false, completion: nil)
         }
         if (indexPath.row == 8) {

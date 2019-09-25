@@ -11,8 +11,10 @@ import UIKit
 class NoticeDetailViewController: UIViewController{
 
     let userDefaults = UserDefaults.standard
+    var notice_id = Int()
 
-
+    
+    @IBOutlet weak var noticeDetail: UITextView!
     
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiNoticeList> = [:]
@@ -21,6 +23,10 @@ class NoticeDetailViewController: UIViewController{
     var selectRow = 0
 
     override func viewDidLoad() {
+
+print("notice_idnotice_idnotice_idnotice_id")
+print(notice_id)
+
         super.viewDidLoad()
 //        tableView.delegate = self
 //        tableView.dataSource = self
@@ -33,11 +39,11 @@ class NoticeDetailViewController: UIViewController{
         let requestNoticeDetailModel = NoticeDetailModel();
         requestNoticeDetailModel.delegate = self as! NoticeDetailModelDelegate;
         //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_GROUP_CHAT;
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_NOTICE_TEXT_BODY;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var api_key = userDefaults.object(forKey: "api_token") as? String
-        query["api_token"] = api_key
+        query["notice_id"] = String(notice_id)
         //リクエスト実行
         if( !requestNoticeDetailModel.requestApi(url: requestUrl, addQuery: query) ){
 
@@ -45,7 +51,10 @@ class NoticeDetailViewController: UIViewController{
         print("マイデータ")
     }
 
-
+    func viewNoticeDetail() {
+        var detail = self.dataSource["0"]
+        noticeDetail.text = detail?.body_text
+    }
 
     /*
      // MARK: - Navigation
@@ -97,7 +106,7 @@ extension NoticeDetailViewController : NoticeDetailModelDelegate {
         //            }
         //        }
 
-//        tableView.reloadData()
+        viewNoticeDetail()
     }
     func onFailed(model: NoticeDetailModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")

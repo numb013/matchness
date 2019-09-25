@@ -1371,7 +1371,7 @@
         <!--STEP-->
         <scene sceneID="VV3-nH-Mks">
             <objects>
-                <viewController id="Ijd-vG-DGU" customClass="MyDateStepViewController" customModule="matchness" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toMyData" id="Ijd-vG-DGU" customClass="MyDateStepViewController" customModule="matchness" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ca6-ls-CIW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1552,7 +1552,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="d8Y-ri-RdO" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="やりとり" image="message" landscapeImage="message" largeContentSizeImage="message" selectedImage="message" id="lac-0i-yr4">
-                        <inset key="imageInsets" minX="0.0" minY="15" maxX="0.0" maxY="-10"/>
+                        <inset key="imageInsets" minX="0.0" minY="10" maxX="0.0" maxY="-10"/>
                         <offsetWrapper key="titlePositionAdjustment" horizontal="10" vertical="10"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -1659,7 +1659,7 @@
                                     <constraint firstAttribute="width" constant="375" id="mRi-Yg-qV0"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Title" id="a4w-7K-Lb7">
+                                    <navigationItem title="ポイント交換" id="a4w-7K-Lb7">
                                         <barButtonItem key="leftBarButtonItem" title="戻る" id="FZh-Jh-hbZ">
                                             <connections>
                                                 <segue destination="meL-G7-74L" kind="unwind" unwindAction="backFromPlaninputViewWithSegue:" id="eEJ-kI-1yR"/>
@@ -2075,7 +2075,7 @@
                                     <constraint firstAttribute="height" constant="44" id="kVf-R2-bN8"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Title" id="qwc-0D-HJq">
+                                    <navigationItem title="設定" id="qwc-0D-HJq">
                                         <barButtonItem key="leftBarButtonItem" title="戻る" id="0ON-vR-VPU">
                                             <connections>
                                                 <segue destination="JE9-JR-xih" kind="unwind" unwindAction="backFromPlaninputViewWithSegue:" id="LBb-fa-SbP"/>
@@ -2131,6 +2131,77 @@
             </objects>
             <point key="canvasLocation" x="2508" y="2360.8695652173915"/>
         </scene>
+        <!--Point History View Controller-->
+        <scene sceneID="ZSd-Wp-gLL">
+            <objects>
+                <viewController storyboardIdentifier="toPointHistory" id="bWf-ka-Kua" customClass="PointHistoryViewController" customModule="matchness" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="q5r-FI-g4f">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lyi-lp-bXY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                                <color key="backgroundColor" red="0.96863788366317749" green="0.96860426664352417" blue="0.96863704919815063" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="jgg-y9-eun"/>
+                                    <constraint firstAttribute="height" constant="30" id="zEq-fU-BGf"/>
+                                </constraints>
+                            </view>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOZ-hT-TTR">
+                                <rect key="frame" x="0.0" y="30" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="LbM-Lt-7Rr"/>
+                                    <constraint firstAttribute="height" constant="44" id="ZjT-ZG-pxy"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="ポイント履歴" id="WcU-mQ-2J4">
+                                        <barButtonItem key="leftBarButtonItem" title="戻る" id="41v-rK-YEp">
+                                            <connections>
+                                                <segue destination="Rvb-Ne-4we" kind="unwind" unwindAction="backFromPlaninputViewWithSegue:" id="sEQ-2c-7tK"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="b4e-Uw-uKg">
+                                <rect key="frame" x="0.0" y="74" width="375" height="593"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="pointHistoryCell" id="t6F-kz-ll4">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t6F-kz-ll4" id="5HX-UO-GAy">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="oOZ-hT-TTR" firstAttribute="leading" secondItem="kcL-ji-QMK" secondAttribute="leading" id="I92-yo-5ao"/>
+                            <constraint firstItem="kcL-ji-QMK" firstAttribute="bottom" secondItem="b4e-Uw-uKg" secondAttribute="bottom" id="QzI-aP-ehr"/>
+                            <constraint firstItem="b4e-Uw-uKg" firstAttribute="top" secondItem="oOZ-hT-TTR" secondAttribute="bottom" id="Sl7-Nd-fNI"/>
+                            <constraint firstItem="oOZ-hT-TTR" firstAttribute="trailing" secondItem="kcL-ji-QMK" secondAttribute="trailing" id="XIA-DL-bxW"/>
+                            <constraint firstItem="Lyi-lp-bXY" firstAttribute="top" secondItem="q5r-FI-g4f" secondAttribute="top" id="bRo-OC-rvS"/>
+                            <constraint firstItem="Lyi-lp-bXY" firstAttribute="trailing" secondItem="kcL-ji-QMK" secondAttribute="trailing" id="hQM-5Z-MF9"/>
+                            <constraint firstItem="kcL-ji-QMK" firstAttribute="trailing" secondItem="b4e-Uw-uKg" secondAttribute="trailing" id="nUA-vZ-eCZ"/>
+                            <constraint firstItem="Lyi-lp-bXY" firstAttribute="leading" secondItem="kcL-ji-QMK" secondAttribute="leading" id="rc2-DQ-4JI"/>
+                            <constraint firstItem="oOZ-hT-TTR" firstAttribute="top" secondItem="Lyi-lp-bXY" secondAttribute="bottom" id="ux7-ss-QeX"/>
+                            <constraint firstItem="b4e-Uw-uKg" firstAttribute="leading" secondItem="kcL-ji-QMK" secondAttribute="leading" id="vBd-if-YtA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="kcL-ji-QMK"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="b4e-Uw-uKg" id="xLG-8Y-aXt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AtM-DC-onY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Rvb-Ne-4we" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3173.5999999999999" y="2355.472263868066"/>
+        </scene>
         <!--Profile Edit View Controller-->
         <scene sceneID="BSk-0z-5I5">
             <objects>
@@ -2155,7 +2226,7 @@
                                     <constraint firstAttribute="height" constant="44" id="L1v-mW-BuP"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Title" id="OgZ-2k-G9c">
+                                    <navigationItem title="プロフィール編集" id="OgZ-2k-G9c">
                                         <barButtonItem key="leftBarButtonItem" title="戻る" id="NgP-Tt-GJC">
                                             <connections>
                                                 <segue destination="5zd-cZ-8t1" kind="unwind" unwindAction="backFromPlaninputViewWithSegue:" id="YXd-d1-0Og"/>
@@ -2255,6 +2326,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="hSw-En-tMr" kind="show" identifier="toNoticeDetail" id="sdp-MO-aBH"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -2294,7 +2368,6 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lJC-ai-syV">
                                 <rect key="frame" x="10" y="94" width="355" height="563"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -2338,11 +2411,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="YxM-i0-mdh"/>
                     </view>
+                    <connections>
+                        <outlet property="noticeDetail" destination="lJC-ai-syV" id="AW6-KT-cdY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FnH-CA-Gzk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Oal-lh-kc1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3844" y="1684.4077961019491"/>
+            <point key="canvasLocation" x="4084" y="1687"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="m9L-Re-jVO">
@@ -2365,7 +2441,7 @@
     </scenes>
     <resources>
         <image name="group" width="37.5" height="37.5"/>
-        <image name="message" width="37.5" height="37.5"/>
+        <image name="message" width="24" height="24"/>
         <image name="mydata" width="37.5" height="37.5"/>
         <image name="search1" width="37.5" height="37.5"/>
     </resources>

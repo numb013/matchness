@@ -17,14 +17,19 @@ pod "MBCircularProgressBar"
 pod 'Charts'
 
 #メッセージ
-#pod 'JSQMessagesViewController'
-pod 'JSQMessagesViewController', :git => 'https://github.com/Ariandr/JSQMessagesViewController.git', :branch => 'master', :inhibit_warnings => true
+pod 'JSQMessagesViewController'
+#pod 'JSQMessagesViewController', :git => 'https://github.com/Ariandr/#JSQMessagesViewController.git', :branch => 'master', :inhibit_warnings => true
+#pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'
 pod 'Firebase/Core'
 pod 'FirebaseDatabase'
 pod 'FirebaseStorage'
 pod 'SDWebImage'
 pod 'FirebaseUI/Storage'
 pod 'FirebaseMessaging'
+
+pod 'FacebookCore'
+pod 'FacebookLogin'
+pod 'FacebookShare'
 
 #API通信
 pod 'Alamofire', '4.4'

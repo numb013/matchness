@@ -22,7 +22,7 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiNoticeList> = [:]
     var dataSourceOrder: Array<String> = []
-    
+    var notice_id: Int = 0
     var selectRow = 0
     
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let requestNoticeModel = NoticeModel();
         requestNoticeModel.delegate = self as! NoticeModelDelegate;
         //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_GROUP_CHAT;
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_NOTICE;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var api_key = userDefaults.object(forKey: "api_token") as? String
@@ -57,42 +57,59 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return self.cellCount
     }
+
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "設定"
+//    }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "設定"
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
-        header.tintColor = #colorLiteral(red: 0.9499146342, green: 0.9500735402, blue: 0.9498936534, alpha: 1)
-        header.textLabel?.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-    }
+//    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+//        header.tintColor = #colorLiteral(red: 0.9499146342, green: 0.9500735402, blue: 0.9498936534, alpha: 1)
+//        header.textLabel?.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+//        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+//    }
+
+
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 35
+        return 45
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("こいいいいいい")
         print(self.dataSource)
-        var myData = self.dataSource["0"]
+        var notice = self.dataSource[String(indexPath.row)]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingEditTableViewCell") as! SettingEditTableViewCell
         cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        cell.title?.text = "血液型"
+        cell.title?.text = notice?.title
+        cell.tag = notice!.notice_id!
+
+        print("お知らせID")
+        print(notice!.notice_id!)
+
         //cell.detail?.text = ApiConfig.BLOOD_LIST[myData?.blood_type ?? 2]
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("タップ")
-        print("\(indexPath.row)番目の行が選択されました。")
-        tableView.deselectRow(at: indexPath, animated: true)
+        let selectedCell = tableView.cellForRow(at: indexPath)
+        self.notice_id = selectedCell?.tag ?? 0
+        self.performSegue(withIdentifier: "toNoticeDetail", sender: nil)
+
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toNoticeDetail" {
+            let nextVC = segue.destination as! NoticeDetailViewController
+            nextVC.notice_id = self.notice_id
+        }
+    }
+    
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60

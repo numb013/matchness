@@ -52,7 +52,10 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         pickerView.showsSelectionIndicator = true
         
         self.profileAddTableView.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
+
         self.profileAddTableView.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
+
+        self.profileAddTableView.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")
 
         // datePickerの設定
         datePickerView.date = isDate
@@ -268,21 +271,21 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         print(indexPath)
         print(indexPath.section)
         
-        
-        if indexPath.section == 0 {
-            //            let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "profileCell")
-            cell.textLabel!.numberOfLines = 0
-            cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            
-            print("BBBBBBBBB")
-            print(indexPath.section)
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
-            cell.textLabel!.text = "ここが詳細テキストラベルですここが詳細テキストラベルですここが詳細テキストラベルですここが"
-        }
-        
         print("こいいいいいい")
         print(self.responseData["0"])
         var myData = self.responseData["0"]
+
+        if indexPath.section == 0 {
+            let cell = profileAddTableView.dequeueReusableCell(withIdentifier: "TextAreaTableViewCell") as! TextAreaTableViewCell
+
+            cell.textLabel!.numberOfLines = 0
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
+            cell.textArea.delegate = self
+            cell.textArea.tag = 1
+            cell.textArea?.font = UIFont.systemFont(ofSize: 14)
+            cell.textArea!.text = myData?.profile_text
+            return cell
+        }
         
         if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -578,6 +581,9 @@ print(self.dataSource)
         if tag == 0 {
             self.responseData["0"]?.name = textField.text!
         }
+        if tag == 1 {
+            self.responseData["0"]?.profile_text = textField.text!
+        }
         return true
     }
     
@@ -587,6 +593,10 @@ print(self.dataSource)
         if tag == 0 {
             self.responseData["0"]?.name = textField.text!
         }
+        if tag == 1 {
+            self.responseData["0"]?.profile_text = textField.text!
+        }
+
         textField.resignFirstResponder()
         return
     }
@@ -596,14 +606,19 @@ print(self.dataSource)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        var tag = textField.tag
         // キーボードを閉じる
-        self.responseData["0"]?.name = textField.text!
+        if tag == 0 {
+            self.responseData["0"]?.name = textField.text!
+        }
+        if tag == 1 {
+            self.responseData["0"]?.profile_text = textField.text!
+        }
         textField.resignFirstResponder()
         return true
     }
     
-    
-    
+
     @IBAction func editProfilButton(_ sender: Any) {
         print("編集ボタン！！！！")
         print(self.dataSource["0"])
@@ -621,6 +636,7 @@ print(self.dataSource)
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         query["id"] = String(self.responseData["0"]?.id ?? "0")
+        query["profile_text"] = self.responseData["0"]?.profile_text
         query["name"] = self.responseData["0"]?.name
         query["birthday"] = self.responseData["0"]?.birthday
         query["work"] = String(self.responseData["0"]?.work ?? 0)

@@ -24,6 +24,9 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     var dataSource: Dictionary<String, ApiUserDate> = [:]
     var dataSourceOrder: Array<String> = []
 
+    var isLoading:Bool = false
+
+
     override func viewDidLoad() {
         print("チェックチェックチェックチェック")
         print(FBSDKAccessToken.current())
@@ -52,7 +55,26 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         self.userDetail.register(UINib(nibName: "UserSearchCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "userDetailCell")
         // Do any additional setup after loading the view.
 
+        apiRequest()
 
+        //タブバー表示
+        tabBarController?.tabBar.isHidden = false
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        print("ここにこに")
+        super.viewWillAppear(animated)
+        //タブバー表示
+        tabBarController?.tabBar.isHidden = false
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("こっちにも恋")
+        //タブバー表示
+        tabBarController?.tabBar.isHidden = false
+    }
+
+    func apiRequest() {
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
@@ -67,24 +89,29 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         if( !requestUserSearchModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
-        //タブバー表示
-        tabBarController?.tabBar.isHidden = false
     }
 
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!self.isLoading && scrollView.contentOffset.y >= userDetail.contentSize.height - self.userDetail.bounds.size.height) {
+            self.isLoading = true
+
+            print("contentOffset")
+            print(scrollView.contentOffset.y)
+            print("height")
+            print(userDetail.contentSize.height)
+            print("size.height")
+            print(self.userDetail.bounds.size.height)
+
+            print("無限スクロール無限スクロール無限スクロール")
+
+            
+            //            callAPI(apiurl: "hoge.com/api/data/")
+        }
+
+    }
     
-    override func viewWillAppear(_ animated: Bool) {
-        print("ここにこに")
-        super.viewWillAppear(animated)
-        //タブバー表示
-        tabBarController?.tabBar.isHidden = false
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print("こっちにも恋")
-        //タブバー表示
-        tabBarController?.tabBar.isHidden = false
-    }
-
+    
+    
     //データの個数を返すメソッド
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
@@ -130,7 +157,6 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         }
     }
     
-    
     @objc func onTap(_ sender: MyTapGestureRecognizer) {
         print("タップタップタップいいね")
         var target_id = sender.targetString!
@@ -150,6 +176,10 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
             
         }
     }
+    
+
+    
+    
     
     
     /*
