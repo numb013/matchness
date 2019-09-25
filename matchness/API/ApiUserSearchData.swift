@@ -15,8 +15,8 @@ import SwiftyJSON;
  */
 public struct ApiUserSearchData: CustomDebugStringConvertible {
 
-    public var id: String? = nil;
-    public var name: String? = nil;
+    public var page_no: Int? = nil;
+    public var user_list: Array<ApiUserDate> = Array<ApiUserDate>();
     /*
      デフォルトイニシャライザ
      失敗可能イニシャライザ init?
@@ -43,12 +43,18 @@ public struct ApiUserSearchData: CustomDebugStringConvertible {
         if( item == JSON.null ){
             return nil;
         }
-        if let id = item["id"].string {
-            self.id = id;
+        if let page_no = item["page_no"].int {
+            self.page_no = page_no;
         }
-        if let name = item["name"].string {
-            //print( "subCategoryName => \(subCategoryName)" );
-            self.name = name;
+        //String => String
+        if let user_list = item["user_list"].array {
+            //print(user_date);
+            for(key, value) in user_date.enumerated() {
+                print("\(key) : \(value)");
+                if let info: ApiUserDate = ApiUserDate(json: value) {
+                    self.user_list.append(info);
+                }
+            }
         }
         return true;
     }
@@ -56,8 +62,8 @@ public struct ApiUserSearchData: CustomDebugStringConvertible {
     public var debugDescription: String {
         get{
             var string:String = "ApiUserSearchData::\(#function)\n";
-            string += "id => \(String(describing: self.id))\n";
-            string += "name => \(String(describing: self.name))\n";
+            string += "page_no => \(String(describing: self.page_no))\n";
+            string += "user_list => \(String(describing: self.user_list))\n";
             return string;
         }
     }
