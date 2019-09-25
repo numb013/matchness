@@ -103,7 +103,7 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
             print(self.userDetail.bounds.size.height)
 
             print("無限スクロール無限スクロール無限スクロール")
-
+            apiRequest()
             
             //            callAPI(apiurl: "hoge.com/api/data/")
         }

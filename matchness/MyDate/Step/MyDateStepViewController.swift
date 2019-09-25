@@ -42,7 +42,7 @@ class MyDateStepViewController: UIViewController {
         if(!CMPedometer.isStepCountingAvailable()) {
             print("cannot get stepcount")
         }
-        pedometer.accelerometerUpdateInterval = 0.2
+//        pedometer.accelerometerUpdateInterval = 0.2
 
         //        let from = Date(timeInterval: TimeInterval(-60*60*24*day), since: now)
         let from = Date(timeInterval: TimeInterval(-60*60*24*day), since: now)

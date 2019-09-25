@@ -48,6 +48,8 @@ class UserSearchModel: NSObject {
     //IDをキーにしてデータを保持
     public var responseData: Dictionary<String, ApiUserDate> = [String: ApiUserDate]();
 
+    
+    var page_no: Int!;
     var request_mode: String!;
 
     func requestApi(url: String, addQuery query: Dictionary<String,String>! = nil) -> Bool {
@@ -89,6 +91,14 @@ class UserSearchModel: NSObject {
             }
         }
 
+        print("サーチサーチサーチ")
+        print(self.page)
+        print(self.requestApiCount)
+        print(self.isRequest)
+
+        
+        print(params)
+        
         if let request: ApiRequest = ApiRequest(delegate: self) {
             self.request = request;
             request.request(url: url, params: params, method: .post);
@@ -157,11 +167,19 @@ extension UserSearchModel : ApiRequestDelegate {
     }
 
     public func onFinally(){
+
+print("onFinallyきてるかい？？？")
+
         //ページを進める
         self.page += 1;
         //リクエスト回数を増やす
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+
+        selef.page_no += 1;
+        
+        print(self.page)
+
     }
 }
