@@ -75,7 +75,7 @@ class MultipleModel: NSObject {
         //
         var params:[String: String] = condition.queryParams;
         //ページ番号
-//        params["page"] = String(self.page);
+        params["page"] = String(self.page);
         //
 //        params["action"] = String("search");
         //件数
@@ -173,7 +173,7 @@ extension MultipleModel : ApiRequestDelegate {
 
     public func onFinally(){
         //ページを進める
-        //        self.page += 1;
+        self.page += 1;
         //リクエスト回数を増やす
         self.requestApiCount += 1;
         //リクエスト完了

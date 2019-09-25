@@ -76,10 +76,10 @@ class UserSearchModel: NSObject {
         //ページ番号
         params["page"] = String(self.page);
         //
-        params["action"] = String("search");
-        //件数
-        params["limit"] = isRequestFirst ? REQUEST_ITEM_COUNT_DEFAULT : REQUEST_ITEM_COUNT_ADD;
-        
+//        params["action"] = String("search");
+//        //件数
+//        params["limit"] = isRequestFirst ? REQUEST_ITEM_COUNT_DEFAULT : REQUEST_ITEM_COUNT_ADD;
+//
         //追加パラメーターが設定されていたら
         if( query != nil ){
             for (key, value) in query {
@@ -158,7 +158,7 @@ extension UserSearchModel : ApiRequestDelegate {
 
     public func onFinally(){
         //ページを進める
-        //        self.page += 1;
+        self.page += 1;
         //リクエスト回数を増やす
         self.requestApiCount += 1;
         //リクエスト完了
