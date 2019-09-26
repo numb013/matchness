@@ -49,7 +49,7 @@ public struct ApiUserSearchData: CustomDebugStringConvertible {
         //String => String
         if let user_list = item["user_list"].array {
             //print(user_date);
-            for(key, value) in user_date.enumerated() {
+            for(key, value) in user_list.enumerated() {
                 print("\(key) : \(value)");
                 if let info: ApiUserDate = ApiUserDate(json: value) {
                     self.user_list.append(info);

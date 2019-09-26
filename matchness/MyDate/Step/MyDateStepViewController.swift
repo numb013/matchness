@@ -13,6 +13,7 @@ import Charts
 
 class MyDateStepViewController: UIViewController {
     
+    @IBOutlet weak var playLabel: UILabel!
     @IBOutlet weak var stepCountLabel: UILabel!
     @IBOutlet weak var distance: UILabel!
     @IBOutlet weak var schedule: UILabel!
@@ -27,15 +28,55 @@ class MyDateStepViewController: UIViewController {
     var counter = 0.0
     var step_1: [Double] = []
     
+
+    let pedometer:CMPedometer = CMPedometer()
+    let activity = CMMotionActivityManager()
+
+ var vibrateFlg:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getStepDate()
         // Do any additional setup after loading the view, typically from a nib.
+
+
+        //CMMotionActivityManagerの確認
+        if CMMotionActivityManager.isActivityAvailable() {
+            activity.startActivityUpdates(to: OperationQueue.current!,
+              withHandler: {activityData in
+                DispatchQueue.main.async(execute: { () -> Void in
+                    if(activityData?.stationary == true){
+                        print("止まっている")
+                        self.playLabel.text = "止まっている"
+                        self.vibrateFlg = false
+                    } else if (activityData?.walking == true){
+                        print("あるいている")
+                        self.playLabel.text = "あるいている"
+                        self.vibrateFlg = false
+                    } else if (activityData?.running == true){
+                        print("走ってる")
+                        self.playLabel.text = "走ってる"
+                        self.vibrateFlg = true
+                    } else if (activityData?.automotive == true){
+                        print("乗り物")
+                        self.playLabel.text = "乗り物"
+                        self.vibrateFlg = false
+                    }
+                })
+            })
+        }
+
+
+
     }
     
-    let pedometer:CMPedometer = CMPedometer()//プロパティでCMPedometerをインスタンス化。
     //ここは、クラスのプロパティで宣言すること。getWalkのローカル変数で記述してしまって、コールバックが呼ばれるときにインスタンスが消えててエラーが発生してしばらく詰まりました。
+
+    
+    
+    
+    
+    
     
     func getStepDate() {
         //歩数が取得できるかどうかチェックしてます
@@ -83,7 +124,6 @@ class MyDateStepViewController: UIViewController {
                 print("距離は\(data.distance))") // 距離
                 print("登った回数\((data.floorsAscended))") // 上った回数
                 print("降った回数\(data.floorsDescended))")
-                
                 
                 //self.progressViewBar2.value = (CGFloat(Double(step) / 10000)*100)
                 

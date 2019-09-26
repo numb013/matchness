@@ -1461,10 +1461,10 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5A5-M0-xTT">
-                                <rect key="frame" x="19" y="528" width="338" height="75"/>
+                                <rect key="frame" x="19" y="574" width="338" height="29"/>
                                 <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="75" id="cou-21-o9I"/>
+                                    <constraint firstAttribute="height" constant="29" id="cou-21-o9I"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vxp-8Y-Kku">
                                     <size key="itemSize" width="50" height="50"/>
@@ -1492,12 +1492,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q4D-Qz-PBa">
+                                <rect key="frame" x="69" y="529" width="239" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="viG-Ko-kV4" firstAttribute="leading" secondItem="HMq-TV-N5c" secondAttribute="leading" constant="42" id="0Sm-kS-E3C"/>
+                            <constraint firstItem="q4D-Qz-PBa" firstAttribute="leading" secondItem="HMq-TV-N5c" secondAttribute="leading" constant="69" id="2KC-Gh-rf9"/>
                             <constraint firstItem="viG-Ko-kV4" firstAttribute="top" secondItem="Jux-nS-B9T" secondAttribute="bottom" constant="22" id="2cu-Rq-CVr"/>
+                            <constraint firstItem="5A5-M0-xTT" firstAttribute="top" secondItem="q4D-Qz-PBa" secondAttribute="bottom" constant="15" id="3CE-m9-Z2R"/>
                             <constraint firstItem="bGU-TO-ep0" firstAttribute="leading" secondItem="HMq-TV-N5c" secondAttribute="leading" constant="15" id="5a5-RA-fIY"/>
                             <constraint firstItem="Jux-nS-B9T" firstAttribute="leading" secondItem="HMq-TV-N5c" secondAttribute="leading" constant="81" id="83U-6c-Rw4"/>
                             <constraint firstItem="Jux-nS-B9T" firstAttribute="top" secondItem="jZG-S4-bUQ" secondAttribute="bottom" constant="14" id="8MR-Vd-fFt"/>
@@ -1514,8 +1522,10 @@
                             <constraint firstItem="HMq-TV-N5c" firstAttribute="trailing" secondItem="5A5-M0-xTT" secondAttribute="trailing" constant="18" id="bVg-CS-jou"/>
                             <constraint firstItem="Moy-oF-Olk" firstAttribute="top" secondItem="Ca6-ls-CIW" secondAttribute="top" id="cOF-nV-Ela"/>
                             <constraint firstItem="jZG-S4-bUQ" firstAttribute="leading" secondItem="HMq-TV-N5c" secondAttribute="leading" id="eZU-nz-1wf"/>
+                            <constraint firstItem="HMq-TV-N5c" firstAttribute="trailing" secondItem="q4D-Qz-PBa" secondAttribute="trailing" constant="67" id="f21-qj-hdQ"/>
                             <constraint firstItem="5A5-M0-xTT" firstAttribute="leading" secondItem="HMq-TV-N5c" secondAttribute="leading" constant="19" id="gxn-LA-8Oq"/>
-                            <constraint firstItem="5A5-M0-xTT" firstAttribute="top" secondItem="bGU-TO-ep0" secondAttribute="bottom" constant="15" id="ko3-td-V2o"/>
+                            <constraint firstItem="5A5-M0-xTT" firstAttribute="top" secondItem="bGU-TO-ep0" secondAttribute="bottom" constant="61" id="ko3-td-V2o"/>
+                            <constraint firstItem="q4D-Qz-PBa" firstAttribute="top" secondItem="bGU-TO-ep0" secondAttribute="bottom" constant="16" id="l0G-kJ-x3o"/>
                             <constraint firstItem="bGU-TO-ep0" firstAttribute="top" secondItem="viG-Ko-kV4" secondAttribute="bottom" constant="-3" id="qMn-we-8ZI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HMq-TV-N5c"/>
@@ -1528,6 +1538,7 @@
                     <connections>
                         <outlet property="barChartView" destination="bGU-TO-ep0" id="L9Y-qZ-09I"/>
                         <outlet property="distance" destination="d91-vW-VqH" id="BnI-5j-yJZ"/>
+                        <outlet property="playLabel" destination="q4D-Qz-PBa" id="OtO-Kp-hao"/>
                         <outlet property="progressViewBar" destination="viG-Ko-kV4" id="rEg-3S-269"/>
                         <outlet property="schedule" destination="Jux-nS-B9T" id="RNS-18-H43"/>
                         <outlet property="stepCountLabel" destination="GKR-D4-Yf9" id="nAo-Wk-a6g"/>
@@ -1545,7 +1556,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3279" y="960"/>
+            <point key="canvasLocation" x="3277.5999999999999" y="959.37031484257875"/>
         </scene>
         <!--やりとり-->
         <scene sceneID="YPh-56-Naq">

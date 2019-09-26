@@ -48,8 +48,6 @@ class UserSearchModel: NSObject {
     //IDをキーにしてデータを保持
     public var responseData: Dictionary<String, ApiUserDate> = [String: ApiUserDate]();
 
-    
-    var page_no: Int!;
     var request_mode: String!;
 
     func requestApi(url: String, addQuery query: Dictionary<String,String>! = nil) -> Bool {
@@ -177,8 +175,6 @@ print("onFinallyきてるかい？？？")
         //リクエスト完了
         self.isRequest = false;
 
-        selef.page_no += 1;
-        
         print(self.page)
 
     }
