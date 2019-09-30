@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="421" id="KGk-i7-Jjw" customClass="ProfilImageTableViewCell" customModule="matchness" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="335" height="421"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="335" height="420.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="mb4-Zq-cMg">
+                        <rect key="frame" x="15" y="15" width="305" height="390.5"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="13" translatesAutoresizingMaskIntoConstraints="NO" id="5IH-aK-z8w">
+                                <rect key="frame" x="0.0" y="0.0" width="305" height="305.5"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="QC9-2L-7OM">
+                                <rect key="frame" x="0.0" y="320.5" width="305" height="70"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="11" translatesAutoresizingMaskIntoConstraints="NO" id="xA9-ee-mt4">
+                                        <rect key="frame" x="0.0" y="0.0" width="71" height="70"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fbb-6O-Gzp">
+                                        <rect key="frame" x="78" y="0.0" width="71" height="70"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oQa-IT-0EK">
+                                        <rect key="frame" x="156" y="0.0" width="71" height="70"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cmk-yn-D0R">
+                                        <rect key="frame" x="234" y="0.0" width="71" height="70"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="305" id="EwP-1k-Rzo"/>
+                                    <constraint firstAttribute="height" constant="70" id="XVQ-NB-bwd"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="QC9-2L-7OM" firstAttribute="leading" secondItem="mb4-Zq-cMg" secondAttribute="leading" id="96n-hm-aW6"/>
+                            <constraint firstAttribute="bottom" secondItem="QC9-2L-7OM" secondAttribute="bottom" id="Jqz-lE-67d"/>
+                            <constraint firstItem="QC9-2L-7OM" firstAttribute="top" secondItem="5IH-aK-z8w" secondAttribute="bottom" constant="15" id="MpJ-oV-7IL"/>
+                            <constraint firstAttribute="trailing" secondItem="QC9-2L-7OM" secondAttribute="trailing" id="ZqA-W7-stU"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="mb4-Zq-cMg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="IT2-FU-XTU"/>
+                    <constraint firstItem="mb4-Zq-cMg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="NJZ-gi-51b"/>
+                    <constraint firstAttribute="trailing" secondItem="mb4-Zq-cMg" secondAttribute="trailing" constant="15" id="eyX-wY-Qjd"/>
+                    <constraint firstAttribute="bottom" secondItem="mb4-Zq-cMg" secondAttribute="bottom" constant="15" id="jmi-VQ-3MR"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="image_1" destination="xA9-ee-mt4" id="oNo-MB-ls1"/>
+                <outlet property="image_2" destination="Fbb-6O-Gzp" id="ruk-YW-dUK"/>
+                <outlet property="image_3" destination="oQa-IT-0EK" id="WWf-bp-THo"/>
+                <outlet property="image_4" destination="cmk-yn-D0R" id="UKs-1F-lx3"/>
+                <outlet property="mainImage" destination="5IH-aK-z8w" id="ApT-j2-CdU"/>
+            </connections>
+            <point key="canvasLocation" x="-17" y="178"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="11" width="477" height="640"/>
+        <image name="13" width="271" height="361"/>
+    </resources>
+</document>

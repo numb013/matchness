@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="178" height="298"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsl-eh-jd8">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsl-eh-jd8">
                         <rect key="frame" x="0.0" y="0.0" width="178" height="228"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6fQ-84-ppF">
@@ -36,7 +36,7 @@
                     </label>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Xsl-eh-jd8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0XV-MU-S9N"/>
                 <constraint firstAttribute="trailing" secondItem="Xsl-eh-jd8" secondAttribute="trailing" id="9sc-db-d0O"/>

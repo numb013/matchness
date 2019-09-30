@@ -27,6 +27,8 @@
 		845956AB22FC71F300B79278 /* ProfileEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845956A922FC71F300B79278 /* ProfileEditTableViewCell.swift */; };
 		845956AC22FC71F300B79278 /* ProfileEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845956AA22FC71F300B79278 /* ProfileEditTableViewCell.xib */; };
 		845956AE2303E52800B79278 /* ProfileEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845956AD2303E52800B79278 /* ProfileEditModel.swift */; };
+		847398A5234224EC00D28135 /* ProfilImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847398A3234224EC00D28135 /* ProfilImageTableViewCell.swift */; };
+		847398A6234224EC00D28135 /* ProfilImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847398A4234224EC00D28135 /* ProfilImageTableViewCell.xib */; };
 		848A32C5230AA57900144950 /* MultipleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A32C4230AA57900144950 /* MultipleModel.swift */; };
 		848A32CC230AF96700144950 /* UserDetailInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848A32CA230AF96600144950 /* UserDetailInfoTableViewCell.xib */; };
 		848A32CD230AF96700144950 /* UserDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A32CB230AF96600144950 /* UserDetailInfoTableViewCell.swift */; };
@@ -158,6 +160,8 @@
 		845956A922FC71F300B79278 /* ProfileEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditTableViewCell.swift; sourceTree = "<group>"; };
 		845956AA22FC71F300B79278 /* ProfileEditTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileEditTableViewCell.xib; sourceTree = "<group>"; };
 		845956AD2303E52800B79278 /* ProfileEditModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditModel.swift; sourceTree = "<group>"; };
+		847398A3234224EC00D28135 /* ProfilImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilImageTableViewCell.swift; sourceTree = "<group>"; };
+		847398A4234224EC00D28135 /* ProfilImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilImageTableViewCell.xib; sourceTree = "<group>"; };
 		848A32C4230AA57900144950 /* MultipleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipleModel.swift; sourceTree = "<group>"; };
 		848A32CA230AF96600144950 /* UserDetailInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailInfoTableViewCell.xib; sourceTree = "<group>"; };
 		848A32CB230AF96600144950 /* UserDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -354,6 +358,8 @@
 				845956AD2303E52800B79278 /* ProfileEditModel.swift */,
 				845956A922FC71F300B79278 /* ProfileEditTableViewCell.swift */,
 				845956AA22FC71F300B79278 /* ProfileEditTableViewCell.xib */,
+				847398A3234224EC00D28135 /* ProfilImageTableViewCell.swift */,
+				847398A4234224EC00D28135 /* ProfilImageTableViewCell.xib */,
 			);
 			path = profileEdit;
 			sourceTree = "<group>";
@@ -734,6 +740,7 @@
 				CE4B098C220942E100F8A430 /* Assets.xcassets in Resources */,
 				CE05742522A6CF3E0082182F /* UserSearchCollectionViewCell.xib in Resources */,
 				CE05743722AB6F7E0082182F /* UserDetailTableViewCell.xib in Resources */,
+				847398A6234224EC00D28135 /* ProfilImageTableViewCell.xib in Resources */,
 				8432F2B022F09D6C00A60EC5 /* LaunchScreen.xib in Resources */,
 				CE4B098A220942DE00F8A430 /* Main.storyboard in Resources */,
 			);
@@ -873,6 +880,7 @@
 				CE05741522A3BA960082182F /* CahtFirstViewController.swift in Sources */,
 				843F203E22F6F85C008CBDDA /* UserDetailModel.swift in Sources */,
 				CE05743322AB547C0082182F /* CustomNavigationBar.swift in Sources */,
+				847398A5234224EC00D28135 /* ProfilImageTableViewCell.swift in Sources */,
 				B49CCD9522D592AD00F793F1 /* UserSearchModel.swift in Sources */,
 				8409E60223377CE8009BA908 /* TextAreaTableViewCell.swift in Sources */,
 				8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */,

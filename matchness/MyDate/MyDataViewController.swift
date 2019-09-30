@@ -25,7 +25,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     var dataSourceOrder: Array<String> = []
     var cellCount: Int = 0
 
-
+    var weight = Int()
 
     var times: [String]!
     let dateFormatter = DateFormatter()
@@ -86,6 +86,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         UserName.text = detail?.name
         UserJob.text = ApiConfig.WORK_LIST[(detail?.work ?? 0)!]
         myPoint.text = detail?.point
+        self.weight = detail!.weight!
         print("detaildetaildetaildetaildetail")
         print(detail)
     }
@@ -269,8 +270,13 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
         if (indexPath.row == 10) {
             let storyboard: UIStoryboard = self.storyboard!
-            let multiple = storyboard.instantiateViewController(withIdentifier: "toMyData")
-            self.present(multiple, animated: false, completion: nil)
+            let multiple = storyboard.instantiateViewController(withIdentifier: "toMyData") as! MyDateStepViewController
+            multiple.weight = self.weight
+
+print("!!!!!!!!!!!!!")
+print(self.weight)
+
+            self.present(multiple, animated: true, completion: nil)
         }
         if (indexPath.row == 8) {
             let alertController:UIAlertController =
@@ -305,6 +311,16 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     
+    @IBAction func MyDataButton(_ sender: Any) {
+        let storyboard: UIStoryboard = self.storyboard!
+        let multiple = storyboard.instantiateViewController(withIdentifier: "toMyData") as! MyDateStepViewController
+        multiple.weight = self.weight
+        
+        print("!ooooooooo")
+        print(self.weight)
+        
+        self.present(multiple, animated: true, completion: nil)
+    }
     
     func pushAction() {
         let uiAlertControl = UIAlertController(title: "Photo", message: "Photo of the Day", preferredStyle: .alert)

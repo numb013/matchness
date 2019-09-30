@@ -86,15 +86,15 @@ print(matchness_user_id)
         print("みんな")
         print(self.step_data)
         var tunagi = " / "
-        var step_data = self.dataSource["0"]
-        self.userPoint.text = step_data?.point
-        self.todayStep.text = step_data!.todayPointChenge! + tunagi + String(self.step_data[0])
-        self.yesterdayStep.text = step_data!.yesterdayPointChenge! + tunagi + String(self.step_data[1])
-        self.dayAfterTomorrowStep.text = step_data!.dayAfterTomorrowPointChenge! + tunagi + String(self.step_data[2])
+        var step_data1 = self.dataSource["0"]
+        self.userPoint.text = step_data1?.point
+        self.todayStep.text = step_data1!.todayPointChenge! + tunagi + String(self.step_data[0])
+        self.yesterdayStep.text = step_data1!.yesterdayPointChenge! + tunagi + String(self.step_data[1])
+        self.dayAfterTomorrowStep.text = step_data1!.dayAfterTomorrowPointChenge! + tunagi + String(self.step_data[2])
 
-        self.t_Point = self.step_data[0] - Int((step_data?.todayPointChenge!)!)!
-        self.y_Point = self.step_data[1] - Int((step_data?.yesterdayPointChenge!)!)!
-        self.d_Point = self.step_data[2] - Int((step_data?.dayAfterTomorrowPointChenge!)!)!
+        self.t_Point = self.step_data[0] - Int((step_data1?.todayPointChenge!)!)!
+        self.y_Point = self.step_data[1] - Int((step_data1?.yesterdayPointChenge!)!)!
+        self.d_Point = self.step_data[2] - Int((step_data1?.dayAfterTomorrowPointChenge!)!)!
 
         self.todayPoint.text = String(self.t_Point)
         self.yesterdayPoint.text = String(self.y_Point)

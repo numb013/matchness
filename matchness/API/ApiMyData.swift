@@ -17,6 +17,7 @@ public struct ApiMyData: CustomDebugStringConvertible {
     public var id: Int? = nil;
     public var name: String? = nil;
     public var work: Int? = nil;
+    public var weight: Int? = nil;
     public var profile_text: String? = nil;
     public var age: Int? = nil;
     public var sex: Int? = nil;
@@ -67,6 +68,10 @@ public struct ApiMyData: CustomDebugStringConvertible {
         //String => String
         if let work = item["work"].int {
             self.work = work;
+        }
+        //String => String
+        if let weight = item["weight"].int {
+            self.weight = weight;
         }
         //String => String
         if let profile_text = item["profile_text"].string {
@@ -137,6 +142,7 @@ public struct ApiMyData: CustomDebugStringConvertible {
             string += "id => \(String(describing: self.id))\n";
             string += "name => \(String(describing: self.name))\n";
             string += "work => \(String(describing: self.work))\n";
+            string += "weight => \(String(describing: self.weight))\n";
             string += "profile_text => \(String(describing: self.profile_text))\n";
             string += "age => \(String(describing: self.age))\n";
             string += "sex => \(String(describing: self.sex))\n";

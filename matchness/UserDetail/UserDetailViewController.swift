@@ -57,8 +57,8 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         print("ユーザーIDユーザーIDユーザーIDユーザーID")
         print(matchness_user_id)
 
-        query["id"] = matchness_user_id
-        query["user_id"] = "\(user_id)"
+        query["user_id"] = matchness_user_id
+        query["target_id"] = "\(user_id)"
 
         print("ハッスル2")
         print(query)

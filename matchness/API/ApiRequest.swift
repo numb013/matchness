@@ -102,6 +102,13 @@ print(api_key)
                      self.onFaild(response as AnyObject);
                     break;
                 }
+
+print("URLURLURLURLURLURL")
+print(url)
+                if (url == ApiConfig.REQUEST_URL_API_ADD_LIKE) {
+                    break;
+                }
+
                 print("取得した値はここにきて")
                 print(json)
                 //

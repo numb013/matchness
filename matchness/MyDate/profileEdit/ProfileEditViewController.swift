@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -47,6 +47,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
 
         self.UserProfileTable.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
         self.UserProfileTable.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")
+        self.UserProfileTable.register(UINib(nibName: "ProfilImageTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfilImageTableViewCell")
 
         // datePickerの設定
         datePickerView.date = isDate
@@ -76,21 +77,26 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1 {
-            return 8
-        } else {
+        if section == 0 {
             return 1
+        } else if section == 1 {
+            return 1
+        } else if section == 2 {
+            return 8
         }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if(section == 0){
-            return "自己紹介"
+            return "イメージ"
         } else if (section == 1){
+            return "自己紹介"
+        } else if (section == 2){
             return "プロフィール"
         }
         return ""
@@ -118,7 +124,25 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         print("AAAAAAAAAA")
         print(indexPath)
         print(indexPath.section)
+
         if indexPath.section == 0 {
+
+            let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "ProfilImageTableViewCell") as! ProfilImageTableViewCell
+
+
+            var number = Int.random(in: 1 ... 18)
+            cell.mainImage.image = UIImage(named: "\(number)")
+            cell.image_1.image = UIImage(named: "\(number)")
+            cell.image_2.image = UIImage(named: "\(number)")
+            cell.image_3.image = UIImage(named: "\(number)")
+            cell.image_4.image = UIImage(named: "\(number)")
+
+
+            return cell
+            
+        }
+        
+        if indexPath.section == 1 {
             let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "TextAreaTableViewCell") as! TextAreaTableViewCell
 
             cell.textLabel!.numberOfLines = 0
@@ -130,7 +154,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
                 return cell
         }
 
-        if indexPath.section == 1 {
+        if indexPath.section == 2 {
 
             if indexPath.row == 0 {
                 let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "TextFiledTableViewCell") as! TextFiledTableViewCell
@@ -228,7 +252,9 @@ print(self.dataSource["0"]?.birthday)
         cancelPressed()
         cancelDatePressed()
         if indexPath.row == 0 {
-            self.selectPicker = 0
+            print("カメラ")
+            selectImage()
+            // self.selectPicker = 0
         }
         if indexPath.row == 1 {
             self.selectPicker = 1
@@ -280,6 +306,8 @@ print(self.dataSource["0"]?.birthday)
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
+            return 500
+        } else if indexPath.section == 1 {
             return 100
         }
         return 60
@@ -512,6 +540,182 @@ print(self.dataSource["0"]?.birthday)
     }
     */
 
+    
+    
+//    //添付ファイルボタンが押された時の挙動
+//    override func didPressAccessoryButton(_ sender: UIButton!) {
+//        print("カメラ")
+//        selectImage()
+//    }
+    
+    private func selectImage() {
+        let alertController: UIAlertController = UIAlertController(title: "アラート表示", message: "保存してもいいですか？", preferredStyle:  UIAlertController.Style.alert)
+        //        let alertController = UIAlertController(title: "画像を選択", message: nil, preferredStyle: .actionSheet)
+        
+        let cameraAction = UIAlertAction(title: "カメラを起動", style: .default) { (UIAlertAction) -> Void in
+            self.selectFromCamera()
+        }
+        let libraryAction = UIAlertAction(title: "カメラロールから選択", style: .default) { (UIAlertAction) -> Void in
+            self.selectFromLibrary()
+        }
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) -> Void in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(cameraAction)
+        alertController.addAction(libraryAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func selectFromCamera() {
+        print("カメラ許可")
+        let sourceType:UIImagePickerController.SourceType = UIImagePickerController.SourceType.camera
+        // カメラが利用可能かチェック
+        if UIImagePickerController.isSourceTypeAvailable(
+            UIImagePickerController.SourceType.camera){
+            // インスタンスの作成
+            let cameraPicker = UIImagePickerController()
+            cameraPicker.sourceType = sourceType
+            cameraPicker.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            self.present(cameraPicker, animated: true, completion: nil)
+            
+        }
+        else{
+            print("カメラロール許可をしていない時の処理1111")
+        }
+    }
+    
+    private func selectFromLibrary() {
+        let sourceType:UIImagePickerController.SourceType = UIImagePickerController.SourceType.photoLibrary
+
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            imagePickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
+            imagePickerController.allowsEditing = true
+            self.present(imagePickerController, animated: true, completion: nil)
+        } else {
+            print("カメラロール許可をしていない時の処理")
+        }
+    }
+
+    
+    //　撮影が完了時した時に呼ばれる
+    func imagePickerController(_ imagePicker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
+        
+
+
+        let resizedImage = self.resizeImage(image: info[UIImagePickerController.InfoKey.editedImage] as! UIImage, ratio: 0.5) // 50% に縮小
+
+
+        if let pickedImage = info[.originalImage]
+            as? UIImage {
+            
+//            cameraView.contentMode = .scaleAspectFit
+//            cameraView.image = pickedImage
+        }
+        
+        //閉じる処理
+        imagePicker.dismiss(animated: true, completion: nil)
+        print("Tap the [Save] to save a picture")
+        
+    }
+    
+    // 撮影がキャンセルされた時に呼ばれる
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+        print("Canceled")
+    }
+    
+    
+    // 写真を保存
+//    @IBAction func savePicture(_ sender : AnyObject) {
+//        let image:UIImage! = cameraView.image
+//
+//        if image != nil {
+//            UIImageWriteToSavedPhotosAlbum(
+//                image,
+//                self,
+//                #selector(ProfileEditViewController.image(_:didFinishSavingWithError:contextInfo:)),
+//                nil)
+//        }
+//        else{
+//            print("image Failed !")
+//        }
+//
+//    }
+    
+    // 書き込み完了結果の受け取り
+    @objc func image(_ image: UIImage,
+                     didFinishSavingWithError error: NSError!,
+                     contextInfo: UnsafeMutableRawPointer) {
+        
+        if error != nil {
+            print(error.code)
+            print("Save Failed !")
+        }
+        else{
+            print("Save Succeeded")
+        }
+    }
+    
+//
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        let resizedImage = self.resizeImage(image: info[UIImagePickerController.InfoKey.editedImage] as! UIImage, ratio: 0.5) // 50% に縮小
+//
+//        let imageData = NSData(data: (resizedImage).pngData()!) as NSData
+////        let storageRef = Storage.storage().reference()
+//
+//        let f = DateFormatter()
+//        f.dateFormat = "yyyyMMddHms"
+//        let now = Date()
+//
+//        var image_url : String? = ""
+////        let referenceRef = storageRef.child("images/" + f.string(from: now) + ".jpg")
+////        let meta = StorageMetadata()
+////        meta.contentType = "image/jpeg"
+////
+////        referenceRef.putData(imageData as Data, metadata: meta, completion: { metaData, error in
+////            if (error != nil) {
+////                print("Uh-oh, an error occurred!")
+////            } else {
+////                print(metaData)
+////                image_url = metaData?.name
+////
+////                let post1 = [
+////                    "from": self.senderId,
+////                    "name": self.senderDisplayName,
+////                    "media_type": "image",
+////                    "text": nil,
+////                    "image_url": image_url,
+////                    "create_at": f.string(from: now),
+////                    "update_at": f.string(from: now),
+////                    ] as [String : Any]
+////                let post1Ref = self.ref.child("messages").child(self.roomId).childByAutoId()
+////                post1Ref.setValue(post1)
+////                self.finishSendingMessage(animated: true)
+////            }
+////        })
+////
+//        picker.dismiss(animated: true, completion: nil)
+//    }
+    
+    // 画像を指定された比率に縮小
+    func resizeImage(image: UIImage, ratio: CGFloat) -> UIImage {
+        let size = CGSize(width: image.size.width * ratio, height: image.size.height * ratio)
+        UIGraphicsBeginImageContext(size)
+        image.draw(in: CGRect(x:0, y:0, width: size.width, height: size.height))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizedImage!
+    }
+    
+    
+    
+    
+    
+    
+    
 }
 
 
