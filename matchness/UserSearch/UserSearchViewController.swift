@@ -114,20 +114,18 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         print(self.isLoading)
         print("EEWEWEEEEEEEEEEEEEEEEEE")
-        print(scrollView.contentOffset.y)
-        print(userDetail.contentSize.height)
-        print(self.userDetail.bounds.size.height)
+        print(scrollView.contentOffset.y + 2)
         print(userDetail.contentSize.height - self.userDetail.bounds.size.height)
 
-        if (!self.isLoading && scrollView.contentOffset.y >= userDetail.contentSize.height - self.userDetail.bounds.size.height) {
+        if (!self.isLoading && scrollView.contentOffset.y + 2  >= userDetail.contentSize.height - self.userDetail.bounds.size.height) {
             self.isLoading = true
 
-            print("contentOffset")
-            print(scrollView.contentOffset.y)
-            print("height")
-            print(userDetail.contentSize.height)
-            print("size.height")
-            print(self.userDetail.bounds.size.height)
+//            print("contentOffset")
+//            print(scrollView.contentOffset.y)
+//            print("height")
+//            print(userDetail.contentSize.height)
+//            print("size.height")
+//            print(self.userDetail.bounds.size.height)
 
             print("無限スクロール無限スクロール無限スクロール")
             apiRequest()
@@ -258,7 +256,7 @@ extension UserSearchViewController : UserSearchModelDelegate {
 //                mapMenuView.addTagGroup(model: model, jenre: jenre);
 //            }
 //        }
-        
+        self.isLoading = false
         userDetail.reloadData()
     }
     func onFailed(model: UserSearchModel) {
