@@ -106,11 +106,12 @@ print(api_key)
 print("URLURLURLURLURLURL")
 print(url)
                 if (url == ApiConfig.REQUEST_URL_API_ADD_LIKE) {
+                    self.onFaild(response as AnyObject);
                     break;
                 }
 
                 print("取得した値はここにきて")
-                print(json)
+//                print(json)
                 //
                   self.onParse(json);
                 //

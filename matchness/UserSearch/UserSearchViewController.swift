@@ -21,9 +21,12 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     let userDefaults = UserDefaults.standard
     
     var cellCount: Int = 0
+    var page_no = "1"
     var dataSource: Dictionary<String, ApiUserDate> = [:]
     var dataSourceOrder: Array<String> = []
 
+    
+    
     var isLoading:Bool = false
 
 
@@ -54,9 +57,7 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
 
         self.userDetail.register(UINib(nibName: "UserSearchCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "userDetailCell")
         // Do any additional setup after loading the view.
-
         apiRequest()
-
         //タブバー表示
         tabBarController?.tabBar.isHidden = false
     }
@@ -84,14 +85,40 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         //リクエスト先
         let requestUrl: String = ApiConfig.REQUEST_URL_API_USER_SEARCH;
         //パラメーター
-        let query: Dictionary<String,String> = Dictionary<String,String>();
+        var query: Dictionary<String,String> = Dictionary<String,String>();
+
+        print("午後午後午後午後午後ごg")
+//        self.page_no = String(model.page);
+        print(page_no)
+        requestUserSearchModel.array1 = self.dataSourceOrder
+        requestUserSearchModel.array2 = self.dataSource
         //リクエスト実行
+        query["page"] = page_no
         if( !requestUserSearchModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
     }
 
+//    userDetail: UICollectionView!
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionView, forRowAt indexPath: IndexPath) {
+        // 下から５件くらいになったらリフレッシュ
+        guard collectionView.cellForItem(at: IndexPath(row: collectionView.numberOfItems(inSection: 0)-5, section: 0)) != nil else {
+            print("下下下下下下下下下下下下下下下下")
+
+            return
+        }
+       print("したしたしたしたしたしたした")
+    }
+    
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(self.isLoading)
+        print("EEWEWEEEEEEEEEEEEEEEEEE")
+        print(scrollView.contentOffset.y)
+        print(userDetail.contentSize.height)
+        print(self.userDetail.bounds.size.height)
+        print(userDetail.contentSize.height - self.userDetail.bounds.size.height)
+
         if (!self.isLoading && scrollView.contentOffset.y >= userDetail.contentSize.height - self.userDetail.bounds.size.height) {
             self.isLoading = true
 
@@ -169,6 +196,7 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         var query: Dictionary<String,String> = Dictionary<String,String>();
         query["user_id"] = userDefaults.object(forKey: "matchness_user_id") as? String
         query["target_id"] = String(target_id)
+        query["page_no"] = String(self.page_no)
         print("ハッスル")
         print(userDefaults.object(forKey: "matchness_user_id") as? String)
         //リクエスト実行
@@ -176,12 +204,7 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
             
         }
     }
-    
 
-    
-    
-    
-    
     /*
     // MARK: - Navigation
 
@@ -218,6 +241,9 @@ extension UserSearchViewController : UserSearchModelDelegate {
         self.cellCount = dataSourceOrder.count;
 //        self.cellCount = 10;
 
+        print("路オロロロロロロロロ路r")
+        self.page_no = String(model.page);
+        print(self.page_no)
         print("ががががががががが")
         print(self.dataSource)
         print(self.dataSourceOrder)
