@@ -12,7 +12,7 @@ import MBCircularProgressBar
 import Charts
 
 class MyDateStepViewController: UIViewController {
-    //var backgroundTaskIdentifier: UIBackgroundTaskIdentifier?
+    var backgroundTaskIdentifier: UIBackgroundTaskIdentifier?
 
     let userDefaults = UserDefaults.standard
 
@@ -57,9 +57,9 @@ class MyDateStepViewController: UIViewController {
 print("weightweightweightweight")
 print(weight)
         
-//        backgroundTaskIdentifier = UIApplication.shared.beginBackgroundTask(expirationHandler: {
-//            UIApplication.shared.endBackgroundTask(self.backgroundTaskIdentifier!)
-//        })
+        backgroundTaskIdentifier = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+            UIApplication.shared.endBackgroundTask(self.backgroundTaskIdentifier!)
+        })
 
 
         getStepDate()

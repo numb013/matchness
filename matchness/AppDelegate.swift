@@ -22,7 +22,7 @@ let userDefaults = UserDefaults.standard
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var backgroundTaskID : UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier(rawValue: 0)
+//    var backgroundTaskID : UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier(rawValue: 0)
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -44,8 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         application.registerForRemoteNotifications()
-
-        
         print("チェックチェックチェックチェック")
         print(FBSDKAccessToken.current())
         
@@ -57,20 +55,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    
     //バックグラウンド遷移移行直前に呼ばれる
-    func applicationWillResignActive(application: UIApplication) {
-        self.backgroundTaskID = application.beginBackgroundTask(){
-            [weak self] in
-            application.endBackgroundTask((self?.backgroundTaskID)!)
-            self?.backgroundTaskID = UIBackgroundTaskIdentifier.invalid
-        }
-    }
+//    func applicationWillResignActive(application: UIApplication) {
+//        self.backgroundTaskID = application.beginBackgroundTask(){
+//            [weak self] in
+//            application.endBackgroundTask((self?.backgroundTaskID)!)
+//            self?.backgroundTaskID = UIBackgroundTaskIdentifier.invalid
+//        }
+//    }
     
-    //アプリがアクティブになる度に呼ばれる
-    func applicationDidBecomeActive(application: UIApplication) {
-        application.endBackgroundTask(self.backgroundTaskID)
-    }
+//    //アプリがアクティブになる度に呼ばれる
+//    func applicationDidBecomeActive(application: UIApplication) {
+//        application.endBackgroundTask(self.backgroundTaskID)
+//    }
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -36,7 +36,7 @@ class UserSearchModel: NSObject {
     //店舗情報取得用にリクエストを投げているか
     var isRequest: Bool = false;
     //ページ番号
-    public var page: Int = 1;
+    public var page = Int();
     //初回リクエスト時の取得件数
     let REQUEST_ITEM_COUNT_DEFAULT: String = "30";
     //２回目以降のリクエスト時の取得件数
@@ -48,6 +48,12 @@ class UserSearchModel: NSObject {
     //IDをキーにしてデータを保持
     public var responseData: Dictionary<String, ApiUserDate> = [String: ApiUserDate]();
 
+
+    var array1: [String] = []
+    var array2: Dictionary<String, ApiUserDate> = [:]
+
+    
+    
     var request_mode: String!;
 
     func requestApi(url: String, addQuery query: Dictionary<String,String>! = nil) -> Bool {
@@ -74,7 +80,7 @@ class UserSearchModel: NSObject {
         //
         var params:[String: String] = condition.queryParams;
         //ページ番号
-        params["page"] = String(self.page);
+        //params["page"] = String(self.page);
         //
 //        params["action"] = String("search");
 //        //件数
@@ -93,8 +99,9 @@ class UserSearchModel: NSObject {
         print(self.page)
         print(self.requestApiCount)
         print(self.isRequest)
+        print(self.array1)
 
-        
+        self.page = Int(params["page"]!)!
         print(params)
         
         if let request: ApiRequest = ApiRequest(delegate: self) {
@@ -133,25 +140,36 @@ class UserSearchModel: NSObject {
 }
 
 extension UserSearchModel : ApiRequestDelegate {
-
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
-        print("22222222222222222222222222")
+
+        var key1 = 0;
+        print("44444444444444444")
+        print(page)
+        print(responseDataOrder)
+        responseDataOrder = array1
+        responseData = array2
+
         json.forEach { (key, json) in
             //データを変換
             let data: ApiUserDate? = ApiUserDate(json: json);
-            //Optionalチェック
-//            guard let info: ApiUserDate = data else {
-//                continue;
-//            }
-//            guard let name = info.name else {
-//                continue;
-//            }
+            if (page != 1) {
+                key1 = Int(key)! + Int(page) * Int(8) - Int(8)
+            } else {
+                key1 = Int(key)!
+            }
             //並び順を保持
-            responseDataOrder.append(key);
-            //サブカテゴリーIDをキーにして保存
-            responseData[key] = data;
+            responseDataOrder.append(String(key1));
+            print("33333333333333333")
+            print(key1)
+            print(data)
+            responseData[String(key1)] = data;
         }
+
+        page += 1;
+
+print(responseData)
+
     }
 
     public func onComplete(){
@@ -169,13 +187,10 @@ extension UserSearchModel : ApiRequestDelegate {
 print("onFinallyきてるかい？？？")
 
         //ページを進める
-        self.page += 1;
         //リクエスト回数を増やす
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
-
-        print(self.page)
 
     }
 }
