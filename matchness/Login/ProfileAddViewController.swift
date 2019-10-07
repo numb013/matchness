@@ -116,6 +116,10 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
                     print(requestUrl)
                     print(params)
                     print("ログインUUUUUUU")
+                    print(response.result)
+                    print(response.data)
+
+
                     switch response.result {
                     case .success:
                         var json:JSON;
@@ -618,21 +622,16 @@ print(self.dataSource)
         return true
     }
     
-
-    @IBAction func editProfilButton(_ sender: Any) {
-        print("編集ボタン！！！！")
-        print(self.dataSource["0"])
-        print("編集ボタン??????")
-        
+    @IBAction func profileEdit(_ sender: Any) {
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
         //ロジック生成
-        let requestProfileEditModel = ProfileEditModel();
-        requestProfileEditModel.delegate = self as! ProfileEditModelDelegate;
+        let requestProfileAddModel = ProfileAddModel();
+        requestProfileAddModel.delegate = self as! ProfileAddModelDelegate;
         //リクエスト先
         let requestUrl: String = ApiConfig.REQUEST_URL_API_USER_PROFILE_EDIT;
-        
+        var setData = self.responseData
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         query["id"] = String(self.responseData["0"]?.id ?? "0")
@@ -646,38 +645,6 @@ print(self.dataSource)
         query["blood_type"] = String(self.responseData["0"]?.blood_type ?? 0)
         query["weight"] = String(self.responseData["0"]?.weight ?? 0)
         query["prefecture_id"] = String(self.responseData["0"]?.prefecture_id ?? 0)
-        //リクエスト実行
-        if( !requestProfileEditModel.requestApi(url: requestUrl, addQuery: query) ){
-            
-        }
-        print("マイデータ")
-    }
-    
-
-    @IBAction func profileEdit(_ sender: Any) {
-        /****************
-         APIへリクエスト（ユーザー取得）
-         *****************/
-        //ロジック生成
-        let requestProfileAddModel = ProfileAddModel();
-        requestProfileAddModel.delegate = self as! ProfileAddModelDelegate;
-        //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_USER_PROFILE_EDIT;
-        var setData = self.responseData
-        //パラメーター
-        var query: Dictionary<String,String> = Dictionary<String,String>();
-
-        query["id"] = self.responseData["0"]?.id
-        query["name"] = self.responseData["0"]?.name
-        query["work"] = String(self.responseData["0"]?.work ?? 0)
-        query["sex"] = String(self.responseData["0"]?.sex ?? 0)
-        query["birthday"] = self.responseData["0"]?.birthday
-        query["prefecture_id"] = String(self.responseData["0"]?.prefecture_id ?? 0)
-        query["fitness_parts_id"] = String(self.responseData["0"]?.fitness_parts_id ?? 0)
-        query["blood_type"] = String(self.responseData["0"]?.blood_type ?? 0)
-        query["profile_text"] = "よろしくお願いします。"
-        print("クエリークエリークエリークエリークエリー")
-        print(query)
         
         //リクエスト実行
         if( !requestProfileAddModel.requestApi(url: requestUrl, addQuery: query) ){

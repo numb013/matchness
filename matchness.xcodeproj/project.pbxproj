@@ -29,6 +29,7 @@
 		845956AE2303E52800B79278 /* ProfileEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845956AD2303E52800B79278 /* ProfileEditModel.swift */; };
 		847398A5234224EC00D28135 /* ProfilImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847398A3234224EC00D28135 /* ProfilImageTableViewCell.swift */; };
 		847398A6234224EC00D28135 /* ProfilImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847398A4234224EC00D28135 /* ProfilImageTableViewCell.xib */; };
+		847398AA2346764F00D28135 /* GradationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847398A92346764E00D28135 /* GradationView.swift */; };
 		848A32C5230AA57900144950 /* MultipleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A32C4230AA57900144950 /* MultipleModel.swift */; };
 		848A32CC230AF96700144950 /* UserDetailInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848A32CA230AF96600144950 /* UserDetailInfoTableViewCell.xib */; };
 		848A32CD230AF96700144950 /* UserDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A32CB230AF96600144950 /* UserDetailInfoTableViewCell.swift */; };
@@ -162,6 +163,7 @@
 		845956AD2303E52800B79278 /* ProfileEditModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditModel.swift; sourceTree = "<group>"; };
 		847398A3234224EC00D28135 /* ProfilImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilImageTableViewCell.swift; sourceTree = "<group>"; };
 		847398A4234224EC00D28135 /* ProfilImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilImageTableViewCell.xib; sourceTree = "<group>"; };
+		847398A92346764E00D28135 /* GradationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradationView.swift; sourceTree = "<group>"; };
 		848A32C4230AA57900144950 /* MultipleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipleModel.swift; sourceTree = "<group>"; };
 		848A32CA230AF96600144950 /* UserDetailInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailInfoTableViewCell.xib; sourceTree = "<group>"; };
 		848A32CB230AF96600144950 /* UserDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -575,6 +577,7 @@
 				8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */,
 				CE1D51F422CE40C30093DC58 /* GoogleService-Info.plist */,
 				CE4B0990220942E100F8A430 /* Info.plist */,
+				847398A92346764E00D28135 /* GradationView.swift */,
 			);
 			path = matchness;
 			sourceTree = "<group>";
@@ -864,6 +867,7 @@
 				CE05743622AB6F7E0082182F /* UserDetailTableViewCell.swift in Sources */,
 				B40A340D232A5AD700583CCC /* ApiRequestCondition.swift in Sources */,
 				CEAF954A22BDEB7400F37A6E /* GroupEventCollectionViewCell.swift in Sources */,
+				847398AA2346764F00D28135 /* GradationView.swift in Sources */,
 				848A33192319F91000144950 /* PointChangeModel.swift in Sources */,
 				B40A340B232A5AD700583CCC /* ApiProfileData.swift in Sources */,
 				B4D1ECF52330EB07008760A2 /* NoticeDitailModel.swift in Sources */,

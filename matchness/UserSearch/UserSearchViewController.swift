@@ -117,20 +117,19 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         print(scrollView.contentOffset.y + 2)
         print(userDetail.contentSize.height - self.userDetail.bounds.size.height)
 
+        if (!self.isLoading && scrollView.contentOffset.y  < -67.5) {
+            self.isLoading = true
+            self.page_no = "1"
+            self.dataSourceOrder = []
+            var dataSource: Dictionary<String, ApiUserDate> = [:]
+            print("更新")
+            apiRequest()
+        }
+
         if (!self.isLoading && scrollView.contentOffset.y + 2  >= userDetail.contentSize.height - self.userDetail.bounds.size.height) {
             self.isLoading = true
-
-//            print("contentOffset")
-//            print(scrollView.contentOffset.y)
-//            print("height")
-//            print(userDetail.contentSize.height)
-//            print("size.height")
-//            print(self.userDetail.bounds.size.height)
-
             print("無限スクロール無限スクロール無限スクロール")
             apiRequest()
-            
-            //            callAPI(apiurl: "hoge.com/api/data/")
         }
 
     }

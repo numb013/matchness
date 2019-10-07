@@ -19,6 +19,12 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
 
     let userDefaults = UserDefaults.standard
     @IBOutlet weak var UserDtailTable: UITableView!
+    @IBOutlet weak var chatButton: UIButton!
+    @IBOutlet weak var GroupRequest: UIButton!
+    @IBOutlet weak var LikeButton: UIButton!
+    
+
+
     var galleyItem: GalleryItem!
     var user_id:Int = 0
 
@@ -60,20 +66,15 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         query["user_id"] = matchness_user_id
         query["target_id"] = "\(user_id)"
 
-        print("ハッスル2")
-        print(query)
-
-
         //リクエスト実行
         if( !requestUserDetailModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
-print("ユーザー詳細")
-print(user_id)
-        
-        
         // Do any additional setup after loading the view.
     }
+
+
+    @IBOutlet weak var gradationView: GradationView!
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
@@ -81,10 +82,9 @@ print(user_id)
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 2 {
-            return 5
-        } else {
-            return 1
+            return 7
         }
+        return 1
     }
     
     // Sectioのタイトル
@@ -182,10 +182,10 @@ print(user_id)
 
 
             // いいねボタン設定
-            var target:Int = detail?.id ?? 0
-            var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onLike(_:)))
-            recognizer.targetString = String(target)
-            cell.LikeButton.addGestureRecognizer(recognizer)
+//            var target:Int = detail?.id ?? 0
+//            var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onLike(_:)))
+//            recognizer.targetString = String(target)
+//            cell.LikeButton.addGestureRecognizer(recognizer)
 
             return cell
         }
@@ -265,7 +265,7 @@ print(user_id)
 //        }
 //        return 533
 //    }
-    
+//
     
     func imageViewTapped(_ sender: UITapGestureRecognizer) {
         print("タップ")
@@ -293,9 +293,11 @@ print(user_id)
         self.present(galleryViewController, animated: true, completion: nil)
     }
 
-    @objc func onLike(_ sender: MyTapGestureRecognizer) {
+    
+    
+    @IBAction func addLikeButton(_ sender: Any) {
         print("タップタップタップいいね")
-        var target_id = sender.targetString!
+        var target_id = self.dataSource["0"]?.id
         
         let requestUserDetailModel = UserDetailModel();
         requestUserDetailModel.delegate = self as! UserDetailModelDelegate;
@@ -304,18 +306,43 @@ print(user_id)
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
-
+        
         print("ユーザーIDユーザーIDユーザーIDユーザーID")
         print(matchness_user_id)
         
         query["user_id"] = matchness_user_id
         query["target_id"] = "\(user_id)"
-
+        
         //リクエスト実行
         if( !requestUserDetailModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
     }
+    
+    
+//    @objc func onLike(_ sender: MyTapGestureRecognizer) {
+//        print("タップタップタップいいね")
+//        var target_id = sender.targetString!
+//
+//        let requestUserDetailModel = UserDetailModel();
+//        requestUserDetailModel.delegate = self as! UserDetailModelDelegate;
+//        //リクエスト先
+//        let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_LIKE;
+//        //パラメーター
+//        var query: Dictionary<String,String> = Dictionary<String,String>();
+//        var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
+//
+//        print("ユーザーIDユーザーIDユーザーIDユーザーID")
+//        print(matchness_user_id)
+//
+//        query["user_id"] = matchness_user_id
+//        query["target_id"] = "\(user_id)"
+//
+//        //リクエスト実行
+//        if( !requestUserDetailModel.requestApi(url: requestUrl, addQuery: query) ){
+//
+//        }
+//    }
     
     
     
