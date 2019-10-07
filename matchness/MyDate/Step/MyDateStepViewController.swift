@@ -278,6 +278,11 @@ print(weight)
                     //self.barChartView.leftAxis.enabled  = true  //左軸（値）の表示
                     self.barChartView.xAxis.labelPosition = .bottom
                     self.barChartView.xAxis.labelCount = 12
+<<<<<<< Updated upstream
+=======
+                    self.barChartView.xAxis.drawGridLinesEnabled = false
+                    self.barChartView.xAxis.labelPosition = .bottom
+>>>>>>> Stashed changes
                     self.barChartView.chartDescription?.enabled = false
                     self.barChartView.legend.enabled = false
                     self.barChartView.doubleTapToZoomEnabled = false
