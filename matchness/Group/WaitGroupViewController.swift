@@ -32,6 +32,33 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         //タブバー表示
         tabBarController?.tabBar.isHidden = false
     }
+
+    var isLoading:Bool = false
+    var page_no = "1"
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(self.isLoading)
+        print("EEWEWEEEEEEEEEEEEEEEEEE")
+        print(scrollView.contentOffset.y)
+        print(WaitGroup.contentSize.height - self.WaitGroup.bounds.size.height)
+        
+        if (!self.isLoading && scrollView.contentOffset.y  < -67.5) {
+            self.isLoading = true
+            self.page_no = "1"
+            self.dataSourceOrder = []
+            var dataSource: Dictionary<String, ApiGroupList> = [:]
+            print("更新")
+            apiRequest()
+        }
+        
+        if (!self.isLoading && scrollView.contentOffset.y  >= WaitGroup.contentSize.height - self.WaitGroup.bounds.size.height) {
+            self.isLoading = true
+            print("グループ無限スクロール無限スクロール無限スクロール")
+            apiRequest()
+        }
+    }
+    
+    
     
     func apiRequest() {
         /****************
@@ -226,31 +253,19 @@ extension WaitGroupViewController : GroupModelDelegate {
         
         print(self.dataSourceOrder)
         print("耳耳耳意味耳みm")
-        
-        //一つもなかったら
-        //        if( dataSourceOrder.isEmpty ){
-        //            return;
-        //        }
-        
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
-        //        self.cellCount = 10;
         
+        print("路オロロロロロロロロ路r")
+        self.page_no = String(model.page);
+        print(self.page_no)
         print("ががががががががが")
         print(self.dataSource)
         print(self.dataSourceOrder)
         
-        
-        //
         var count: Int = 0;
-        //        for(key, code) in dataSourceOrder.enumerated() {
-        //            count+=1;
-        //            if let jenre: ApiUserDateParam = dataSource[code] {
-        //                //取得したデータを元にコレクションを再構築＆更新
-        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-        //            }
-        //        }
-        
+
+        self.isLoading = false
         WaitGroup.reloadData()
     }
     func onFailed(model: GroupModel) {

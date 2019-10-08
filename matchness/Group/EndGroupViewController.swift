@@ -24,6 +24,11 @@ class EndGroupViewController: UIViewController, UITableViewDelegate , UITableVie
         EndGroup.dataSource = self
         self.EndGroup.register(UINib(nibName: "GroupTableViewCell", bundle: nil), forCellReuseIdentifier: "GroupTableViewCell")
 
+        apiRequest()
+    }
+
+
+    func apiRequest() {
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
@@ -44,6 +49,35 @@ class EndGroupViewController: UIViewController, UITableViewDelegate , UITableVie
         }
 
     }
+    
+    
+    var isLoading:Bool = false
+    var page_no = "1"
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(self.isLoading)
+        print("EEWEWEEEEEEEEEEEEEEEEEE")
+        print(scrollView.contentOffset.y)
+        print(EndGroup.contentSize.height - self.EndGroup.bounds.size.height)
+        
+        if (!self.isLoading && scrollView.contentOffset.y  < -67.5) {
+            self.isLoading = true
+            self.page_no = "1"
+            self.dataSourceOrder = []
+            var dataSource: Dictionary<String, ApiGroupList> = [:]
+            print("更新")
+            apiRequest()
+        }
+        
+        if (!self.isLoading && scrollView.contentOffset.y  >= EndGroup.contentSize.height - self.EndGroup.bounds.size.height) {
+            self.isLoading = true
+            print("グループ無限スクロール無限スクロール無限スクロール")
+            apiRequest()
+        }
+    }
+
+    
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -89,6 +123,7 @@ extension EndGroupViewController : GroupModelDelegate {
         print("こちら/usersearch/UserSearchViewのonStart")
     }
     func onComplete(model: GroupModel, count: Int) {
+
         print("着てきてきてきて")
         //更新用データを設定
         self.dataSource = model.responseData;
@@ -96,30 +131,19 @@ extension EndGroupViewController : GroupModelDelegate {
         
         print(self.dataSourceOrder)
         print("耳耳耳意味耳みm")
-        
-        //一つもなかったら
-        //        if( dataSourceOrder.isEmpty ){
-        //            return;
-        //        }
-        
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
-        //        self.cellCount = 10;
         
+        print("路オロロロロロロロロ路r")
+        self.page_no = String(model.page);
+        print(self.page_no)
         print("ががががががががが")
         print(self.dataSource)
         print(self.dataSourceOrder)
         
-        
-        //
         var count: Int = 0;
-        //        for(key, code) in dataSourceOrder.enumerated() {
-        //            count+=1;
-        //            if let jenre: ApiUserDateParam = dataSource[code] {
-        //                //取得したデータを元にコレクションを再構築＆更新
-        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-        //            }
-        //        }
+        
+        self.isLoading = false
         
         EndGroup.reloadData()
     }

@@ -49,6 +49,9 @@ class CahtFirstModel: NSObject {
     //IDをキーにしてデータを保持
     public var responseData: Dictionary<String, ApiMessageList> = [String: ApiMessageList]();
     
+    
+    var array1: [String] = []
+    var array2: Dictionary<String, ApiMessageList> = [:]
     var request_mode: String!;
     
     func requestApi(url: String, addQuery query: Dictionary<String,String>! = nil) -> Bool {
@@ -89,6 +92,9 @@ class CahtFirstModel: NSObject {
                 params.updateValue(value, forKey: key);
             }
         }
+
+        self.page = Int(params["page"]!)!
+        print(params)
         
         if let request: ApiRequest = ApiRequest(delegate: self) {
             self.request = request;
@@ -129,34 +135,35 @@ extension CahtFirstModel : ApiRequestDelegate {
     
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
-        print("22222222222222222222222222")
+
+        var key1 = 0;
+        print("44444444444444444")
+        print(page)
+        print(responseDataOrder)
+        responseDataOrder = array1
+        responseData = array2
         
-        //        print(json)
-        
-        let items: JSON = json;
-        let recommend: JSON = items["list"];
-        for (key, item):(String, JSON) in json {
+        json.forEach { (key, json) in
             //データを変換
-            let data: ApiMessageList? = ApiMessageList(json: item);
-            //Optionalチェック
-            guard let info: ApiMessageList = data else {
-                continue;
+            let data: ApiMessageList? = ApiMessageList(json: json);
+            if (page != 1) {
+                key1 = Int(key)! + Int(page) * Int(8) - Int(8)
+            } else {
+                key1 = Int(key)!
             }
-            print(info)
-            print("111111")
-            //
-            //            guard let code = info.id else {
-            //                continue;
-            //            }
-            print("222222")
-            //
-            
-            
             //並び順を保持
-            responseDataOrder.append(key);
-            //サブカテゴリーIDをキーにして保存
-            responseData[key] = info;
+            responseDataOrder.append(String(key1));
+            print("33333333333333333")
+            print(key1)
+            print(data)
+            responseData[String(key1)] = data;
         }
+        
+        page += 1;
+
+
+
+
     }
     
     public func onComplete(){

@@ -15,7 +15,6 @@ import SwiftyJSON;
  */
 public struct ApiUserDetailDate: CustomDebugStringConvertible {
 
-
     public var id: Int? = nil;
     public var name: String? = nil;
     public var work: Int? = nil;
@@ -27,9 +26,10 @@ public struct ApiUserDetailDate: CustomDebugStringConvertible {
     public var blood_type: Int? = nil;
     public var point: String? = nil;
     public var weight: Int? = nil;
-    
     public var prefecture_id: Int? = nil;
-//    public var images: Array<String> = Array<String>();
+    public var is_like: Int? = nil;
+    public var is_matche: Int? = nil;
+    //    public var images: Array<String> = Array<String>();
 //    public var categorySubId: Array<String> = Array<String>();
 //    public var tagId: Array<String> = Array<String>();
 //    public var map: String? = nil;
@@ -105,7 +105,12 @@ public struct ApiUserDetailDate: CustomDebugStringConvertible {
         if let prefecture_id = item["prefecture_id"].int {
             self.prefecture_id = prefecture_id;
         }
-        
+        if let is_like = item["is_like"].int {
+            self.is_like = is_like;
+        }
+        if let is_matche = item["is_matche"].int {
+            self.is_matche = is_matche;
+        }
 
 //        if let prefecture_id = item["prefecture_id"].string {
 //            self.prefecture_id = prefecture_id;
@@ -153,6 +158,8 @@ public struct ApiUserDetailDate: CustomDebugStringConvertible {
             string += "point => \(String(describing: self.point))\n";
             string += "weight => \(String(describing: self.point))\n";
             string += "prefecture_id => \(String(describing: self.prefecture_id))\n";
+            string += "is_like => \(String(describing: self.is_like))\n";
+            string += "is_matche => \(String(describing: self.is_matche))\n";
             return string;
         }
     }

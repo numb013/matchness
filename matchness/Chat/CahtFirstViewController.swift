@@ -33,6 +33,16 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
         apiRequest()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //タブバー表示
+        tabBarController?.tabBar.isHidden = false
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //タブバー表示
+        tabBarController?.tabBar.isHidden = false
+    }
     
     func apiRequest() {
         /****************
@@ -54,18 +64,32 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
             
         }
     }
+
+    var page_no = "1"
+    var isLoading:Bool = false
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(self.isLoading)
+        print("EEWEWEEEEEEEEEEEEEEEEEE")
+        print(scrollView.contentOffset.y)
+        print(ChatTableView.contentSize.height - self.ChatTableView.bounds.size.height)
+        
+        if (!self.isLoading && scrollView.contentOffset.y  < -67.5) {
+            self.isLoading = true
+            self.page_no = "1"
+            self.dataSourceOrder = []
+            var dataSource: Dictionary<String, ApiMatcheList> = [:]
+            print("更新")
+            apiRequest()
+        }
+        
+        if (!self.isLoading && scrollView.contentOffset.y >= ChatTableView.contentSize.height - self.ChatTableView.bounds.size.height) {
+            self.isLoading = true
+            print("無限スクロール無限スクロール無限スクロール")
+            apiRequest()
+        }
+    }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //タブバー表示
-        tabBarController?.tabBar.isHidden = false
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //タブバー表示
-        tabBarController?.tabBar.isHidden = false
-    }
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -140,18 +164,34 @@ extension CahtFirstViewController : CahtFirstModelDelegate {
         print("こちら/UserDetail/UserDetailViewのonStart")
     }
     func onComplete(model: CahtFirstModel, count: Int) {
-        print("UserDetail着てきてきてきて")
+        print("着てきてきてきて")
         //更新用データを設定
         self.dataSource = model.responseData;
         self.dataSourceOrder = model.responseDataOrder;
+        
         print(self.dataSourceOrder)
-        print("耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳耳")
+        print("耳耳耳意味耳みm")
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
+        
+        print("路オロロロロロロロロ路r")
+        self.page_no = String(model.page);
+        print(self.page_no)
         print("ががががががががが")
         print(self.dataSource)
         print(self.dataSourceOrder)
         
+        
+        //
+        var count: Int = 0;
+        //        for(key, code) in dataSourceOrder.enumerated() {
+        //            count+=1;
+        //            if let jenre: ApiUserDateParam = dataSource[code] {
+        //                //取得したデータを元にコレクションを再構築＆更新
+        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
+        //            }
+        //        }
+        self.isLoading = false
         ChatTableView.reloadData()
     }
     func onFailed(model: CahtFirstModel) {

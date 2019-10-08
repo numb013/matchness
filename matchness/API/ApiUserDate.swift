@@ -28,6 +28,7 @@ public struct ApiUserDate: CustomDebugStringConvertible {
     public var last_login_flag: Int? = nil;
     public var created_flag: Int? = nil;
     public var weight: Int? = nil;
+
 //    public var images: Array<String> = Array<String>();
 //    public var categorySubId: Array<String> = Array<String>();
 //    public var tagId: Array<String> = Array<String>();

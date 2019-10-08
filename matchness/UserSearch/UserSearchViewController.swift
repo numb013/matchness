@@ -21,14 +21,11 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     let userDefaults = UserDefaults.standard
     
     var cellCount: Int = 0
-    var page_no = "1"
+
     var dataSource: Dictionary<String, ApiUserDate> = [:]
     var dataSourceOrder: Array<String> = []
-
-    
-    
+    var page_no = "1"
     var isLoading:Bool = false
-
 
     override func viewDidLoad() {
         print("チェックチェックチェックチェック")
@@ -75,6 +72,29 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         tabBarController?.tabBar.isHidden = false
     }
 
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(self.isLoading)
+        print("EEWEWEEEEEEEEEEEEEEEEEE")
+        print(scrollView.contentOffset.y)
+        print(userDetail.contentSize.height - self.userDetail.bounds.size.height)
+        
+        if (!self.isLoading && scrollView.contentOffset.y  < -67.5) {
+            self.isLoading = true
+            self.page_no = "1"
+            self.dataSourceOrder = []
+            var dataSource: Dictionary<String, ApiUserDate> = [:]
+            print("更新")
+            apiRequest()
+        }
+        
+        if (!self.isLoading && scrollView.contentOffset.y + 2  >= userDetail.contentSize.height - self.userDetail.bounds.size.height) {
+            self.isLoading = true
+            print("無限スクロール無限スクロール無限スクロール")
+            apiRequest()
+        }
+    }
+    
+    
     func apiRequest() {
         /****************
          APIへリクエスト（ユーザー取得）
@@ -109,33 +129,7 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         }
        print("したしたしたしたしたしたした")
     }
-    
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(self.isLoading)
-        print("EEWEWEEEEEEEEEEEEEEEEEE")
-        print(scrollView.contentOffset.y + 2)
-        print(userDetail.contentSize.height - self.userDetail.bounds.size.height)
 
-        if (!self.isLoading && scrollView.contentOffset.y  < -67.5) {
-            self.isLoading = true
-            self.page_no = "1"
-            self.dataSourceOrder = []
-            var dataSource: Dictionary<String, ApiUserDate> = [:]
-            print("更新")
-            apiRequest()
-        }
-
-        if (!self.isLoading && scrollView.contentOffset.y + 2  >= userDetail.contentSize.height - self.userDetail.bounds.size.height) {
-            self.isLoading = true
-            print("無限スクロール無限スクロール無限スクロール")
-            apiRequest()
-        }
-
-    }
-    
-    
-    
     //データの個数を返すメソッド
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
@@ -228,15 +222,8 @@ extension UserSearchViewController : UserSearchModelDelegate {
 
         print(self.dataSourceOrder)
         print("耳耳耳意味耳みm")
-        
-        //一つもなかったら
-//        if( dataSourceOrder.isEmpty ){
-//            return;
-//        }
-        
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
-//        self.cellCount = 10;
 
         print("路オロロロロロロロロ路r")
         self.page_no = String(model.page);
