@@ -32,7 +32,35 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Do any additional setup after loading the view.
         
         self.tableView.register(UINib(nibName: "SettingEditTableViewCell", bundle: nil), forCellReuseIdentifier: "SettingEditTableViewCell")
+        apiRequest()
+    }
+
+    var isLoading:Bool = false
+    var page_no = "1"
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(self.isLoading)
+        print("EEWEWEEEEEEEEEEEEEEEEEE")
+        print(scrollView.contentOffset.y)
+        print(tableView.contentSize.height - self.tableView.bounds.size.height)
         
+        if (!self.isLoading && scrollView.contentOffset.y  < -67.5) {
+            self.isLoading = true
+            self.page_no = "1"
+            self.dataSourceOrder = []
+            var dataSource: Dictionary<String, ApiGroupList> = [:]
+            print("更新")
+            apiRequest()
+        }
+        
+        if (!self.isLoading && scrollView.contentOffset.y  >= tableView.contentSize.height - self.tableView.bounds.size.height) {
+            self.isLoading = true
+            print("グループ無限スクロール無限スクロール無限スクロール")
+            apiRequest()
+        }
+    }
+
+    func apiRequest() {
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
@@ -138,39 +166,29 @@ extension NoticeViewController : NoticeModelDelegate {
         print("こちら/SettingEdit/UserDetailViewのonStart")
     }
     func onComplete(model: NoticeModel, count: Int) {
-        print("UserDetail着てきてきてきて")
+        print("着てきてきてきて")
         //更新用データを設定
         self.dataSource = model.responseData;
         self.dataSourceOrder = model.responseDataOrder;
         
         print(self.dataSourceOrder)
-        print("UserDetail耳耳耳意味耳みm")
-        print(self.dataSource)
-        
-        
-        //一つもなかったら
-        //        if( dataSourceOrder.isEmpty ){
-        //            return;
-        //        }
-        
+        print("耳耳耳意味耳みm")
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
-        //        self.cellCount = 10;
         
+        print("路オロロロロロロロロ路r")
+        self.page_no = String(model.page);
+        print(self.page_no)
+        print("ががががががががが")
+        print(self.dataSource)
+        print(self.dataSourceOrder)
         
-        
-        //
         var count: Int = 0;
-        //        for(key, code) in dataSourceOrder.enumerated() {
-        //            count+=1;
-        //            if let jenre: ApiUserDateParam = dataSource[code] {
-        //                //取得したデータを元にコレクションを再構築＆更新
-        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-        //            }
-        //        }
         
+        self.isLoading = false
         tableView.reloadData()
     }
+
     func onFailed(model: NoticeModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }

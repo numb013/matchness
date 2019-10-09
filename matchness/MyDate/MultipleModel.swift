@@ -49,6 +49,9 @@ class MultipleModel: NSObject {
     //IDをキーにしてデータを保持
     public var responseData: Dictionary<String, ApiMultipleUser> = [String: ApiMultipleUser]();
 
+    var array1: [String] = []
+    var array2: Dictionary<String, ApiMultipleUser> = [:]
+
     var request_mode: String!;
 
     func requestApi(url: String, addQuery query: Dictionary<String,String>! = nil) -> Bool {
@@ -90,6 +93,8 @@ class MultipleModel: NSObject {
             }
         }
 
+        self.page = Int(params["page"]!)!
+
         if let request: ApiRequest = ApiRequest(delegate: self) {
             self.request = request;
             request.request(url: url, params: params, method: .post);
@@ -129,36 +134,32 @@ extension MultipleModel : ApiRequestDelegate {
 
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
-        print("22222222222222222222222222")
-
-//        print(json)
+        var key1 = 0;
+        print("44444444444444444")
+        print(page)
+        print(responseDataOrder)
+        responseDataOrder = array1
+        responseData = array2
         
-        let items: JSON = json;
-        let recommend: JSON = items["list"];
-        for (key, item):(String, JSON) in json {
+        json.forEach { (key, json) in
             //データを変換
-            let data: ApiMultipleUser? = ApiMultipleUser(json: item);
-            //Optionalチェック
-            guard let info: ApiMultipleUser = data else {
-                continue;
+            let data: ApiMultipleUser? = ApiMultipleUser(json: json);
+            if (page != 1) {
+                key1 = Int(key)! + Int(page) * Int(8) - Int(8)
+            } else {
+                key1 = Int(key)!
             }
-            print(info)
-                        print("111111")
-            //
-//            guard let code = info.id else {
-//                continue;
-//            }
-                        print("222222")
-            //
-            guard let name = info.name else {
-                continue;
-            }
-
             //並び順を保持
-            responseDataOrder.append(key);
-            //サブカテゴリーIDをキーにして保存
-            responseData[key] = info;
+            responseDataOrder.append(String(key1));
+            print("33333333333333333")
+            print(key1)
+            print(data)
+            responseData[String(key1)] = data;
         }
+        
+        page += 1;
+        
+        print(responseData)
     }
 
     public func onComplete(){
