@@ -104,9 +104,6 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = ChatTableView.dequeueReusableCell(withIdentifier: "NotDataTableViewCell") as! NotDataTableViewCell
 
-print("カウントカウントカウント")
-print(self.cellCount)
-        
         if self.cellCount != 0 {
             var message = self.dataSource[String(indexPath.row)]
             let cell = ChatTableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
@@ -119,6 +116,8 @@ print(self.cellCount)
             cell.ChatImage.contentMode = .scaleAspectFill
             cell.ChatImage.clipsToBounds = true
             cell.ChatImage.layer.cornerRadius =  cell.ChatImage.frame.height / 2
+
+            cell.tag = indexPath.row
             return cell
         } else {
             let cell = ChatTableView.dequeueReusableCell(withIdentifier: "NotDataTableViewCell") as! NotDataTableViewCell
@@ -138,20 +137,29 @@ print(self.cellCount)
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let selectedCell = tableView.cellForRow(at: indexPath)
+        let message_id = selectedCell?.tag ?? 0
         
-        let setteing_status:[String:Any] = ["status":"2", "indexPath":indexPath]
-        self.performSegue(withIdentifier: "toMessage", sender: setteing_status)
+        var users = self.dataSource[String(message_id)]
+        let message_users:[String:Any] = [
+            "user_id_1":"2",
+            "user_name_1":"2",
+            "user_id_2":users.id,
+            "user_name_2":users.name,
+            "room_code":users.room_code,
+        ]
+        self.performSegue(withIdentifier: "toMessage", sender: message_users)
     }
     
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toMessage" {
-            let vc = segue.destination as! MessageViewController
-            //            vc.delegate = self
-            //            vc.setteing_status = sender as! [String:Any]
+            let mvc = segue.destination as! MessageViewController
+            mvc.message_users = sender as! [String : Any]
         }
     }
+
     
     
     

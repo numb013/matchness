@@ -16,7 +16,8 @@ import SwiftyJSON;
 public struct ApiMessageList: CustomDebugStringConvertible {
     
     public var room_code: String? = nil;
-    public var name: String? = nil;
+    public var id: String? = nil;
+    public var hash_id: String? = nil;
     public var target_id: Int? = nil;
     public var last_message: String? = nil;
     public var created_at: String? = nil;

@@ -24,13 +24,16 @@ class MessageViewController: JSQMessagesViewController, UIImagePickerControllerD
     
     // データベースへの参照を定義
     var ref: DatabaseReference!
-    
+    var message_users = [String:Any]()
+
     //user1が使用者側、user2が相手側
-    let user1 = User(id: "1", name: "松本")
-    let user2 = User(id: "2", name: "浜田")
-    let user3 = User(id: "3", name: "今田")
-    let user4 = User(id: "4", name: "東野")
-    let roomId = "user1user2"
+    let user1 = User(id: message_users["user_id_1"] as! String, name: self.message_users["user_name_1"] as! String)
+    let user2 = User(id: self.message_users["user_id_2"] as! String, name: self.message_users["user_name_2"] as! String)
+    //    let user3 = User(id: "3", name: "今田")
+    //    let user4 = User(id: "4", name: "東野")
+    var user_hash_id_1 = self.message_users["user_hash_id_1"]
+    var user_hash_id_2 = self.message_users["user_hash_id_2"]
+    let roomId = user_hash_id_1 + user_hash_id_2
     //    let roomId = "user3user4"
     
     var incomingBubble: JSQMessagesBubbleImage!
@@ -40,12 +43,11 @@ class MessageViewController: JSQMessagesViewController, UIImagePickerControllerD
     var currentUser: User {
         return user2
     }
-    
+        
     var messages = [JSQMessage]()
 }
 
 extension MessageViewController {
-    
     //送信ボタンが押された時の挙動
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         let message = JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text)

@@ -26,8 +26,6 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
     var group_param = [String:Any]()
     let stepInstance = TodayStep()
     let pedometer:CMPedometer = CMPedometer()//プロパティでCMPedometerをインスタンス化。
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

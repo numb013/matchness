@@ -111,8 +111,6 @@ print(joinGroup)
         return cell
     }
 
-    
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("イベントイベントイベントイベントイベント")
         tableView.deselectRow(at: indexPath, animated: true)
