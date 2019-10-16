@@ -5,14 +5,6 @@ PODS:
   - Charts/Core (3.3.0)
   - FacebookCore (0.9.0):
     - FBSDKCoreKit (~> 5.0)
-  - FacebookLogin (0.9.0):
-    - FacebookCore (~> 0.9.0)
-    - FBSDKCoreKit (~> 5.0)
-    - FBSDKLoginKit (~> 5.0)
-  - FacebookShare (0.9.0):
-    - FacebookCore (~> 0.9.0)
-    - FBSDKCoreKit (~> 5.0)
-    - FBSDKShareKit (~> 5.0)
   - FBSDKCoreKit (5.6.0):
     - FBSDKCoreKit/Basics (= 5.6.0)
     - FBSDKCoreKit/Core (= 5.6.0)
@@ -22,10 +14,6 @@ PODS:
   - FBSDKLoginKit (5.6.0):
     - FBSDKLoginKit/Login (= 5.6.0)
   - FBSDKLoginKit/Login (5.6.0):
-    - FBSDKCoreKit (~> 5.0)
-  - FBSDKShareKit (5.6.0):
-    - FBSDKShareKit/Share (= 5.6.0)
-  - FBSDKShareKit/Share (5.6.0):
     - FBSDKCoreKit (~> 5.0)
   - Firebase/Core (6.8.1):
     - Firebase/CoreOnly
@@ -133,8 +121,7 @@ DEPENDENCIES:
   - Alamofire (= 4.4)
   - Charts
   - FacebookCore
-  - FacebookLogin
-  - FacebookShare
+  - FBSDKLoginKit
   - Firebase/Core
   - FirebaseDatabase
   - FirebaseMessaging
@@ -153,11 +140,8 @@ SPEC REPOS:
     - Alamofire
     - Charts
     - FacebookCore
-    - FacebookLogin
-    - FacebookShare
     - FBSDKCoreKit
     - FBSDKLoginKit
-    - FBSDKShareKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -191,11 +175,8 @@ SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
   FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
-  FacebookLogin: 6cee9fd6e1fe976fe8f7eec199e27b28b14f5d63
-  FacebookShare: 85968ad1b1606c4944fb154924e425fd29184ea5
   FBSDKCoreKit: d6655a343868d4bb5c29a60859bab07c3be14a0b
   FBSDKLoginKit: c5a623de88a6b0cda35b35582921f6cec2efcc36
-  FBSDKShareKit: 0d8c4cfd5c1f185d5f9c26d79758b141086e1251
   Firebase: 9cbe4e5b5eaafa05dc932be58b7c8c3820d71e88
   FirebaseAnalytics: 843c7f64a8f9c79f0d03281197ebe7bb1d58d477
   FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
@@ -225,6 +206,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 7e74633d9bfd01b0d16d7f8095feff9ed30fba46
+PODFILE CHECKSUM: 7365c743cea6a6677f4faf7c98758ec3940027c8
 
 COCOAPODS: 1.7.5

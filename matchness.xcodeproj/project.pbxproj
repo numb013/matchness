@@ -19,10 +19,12 @@
 		8432F2B222F0A2ED00A60EC5 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */; };
 		8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B822F16AF200A60EC5 /* FBLoginViewController.swift */; };
 		8432F2BB22F16B1100A60EC5 /* ProfileAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2BA22F16B1100A60EC5 /* ProfileAddViewController.swift */; };
-		8432F2BD22F16D1D00A60EC5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432F2BC22F16D1D00A60EC5 /* FBSDKLoginKit.framework */; };
-		8432F2BF22F16D2A00A60EC5 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432F2BE22F16D2A00A60EC5 /* FBSDKCoreKit.framework */; };
 		843F203E22F6F85C008CBDDA /* UserDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F203D22F6F85C008CBDDA /* UserDetailModel.swift */; };
 		843F204222F8043F008CBDDA /* ProfileAddModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F204122F8043F008CBDDA /* ProfileAddModel.swift */; };
+		8456F70A23530CEF00819DC0 /* ApiMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8456F70923530CEF00819DC0 /* ApiMessage.swift */; };
+		8456F70C2353310B00819DC0 /* ApiUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8456F70B2353310B00819DC0 /* ApiUserInfo.swift */; };
+		8456F7112354301A00819DC0 /* GroupChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8456F70F2354301A00819DC0 /* GroupChatTableViewCell.swift */; };
+		8456F7122354301A00819DC0 /* GroupChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8456F7102354301A00819DC0 /* GroupChatTableViewCell.xib */; };
 		845956A822FBF75000B79278 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845956A722FBF75000B79278 /* ProfileEditViewController.swift */; };
 		845956AB22FC71F300B79278 /* ProfileEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845956A922FC71F300B79278 /* ProfileEditTableViewCell.swift */; };
 		845956AC22FC71F300B79278 /* ProfileEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845956AA22FC71F300B79278 /* ProfileEditTableViewCell.xib */; };
@@ -49,6 +51,10 @@
 		848A333823216B1200144950 /* PreferredGroupListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A333723216B1100144950 /* PreferredGroupListModel.swift */; };
 		848A333B2325E86A00144950 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A33392325E86800144950 /* MessageModel.swift */; };
 		848A333C2325E86A00144950 /* CahtFirstModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A333A2325E86900144950 /* CahtFirstModel.swift */; };
+		849E34B52355A2840062E928 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849E34B12355A2840062E928 /* FBSDKCoreKit.framework */; };
+		849E34B62355A2840062E928 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849E34B22355A2840062E928 /* Bolts.framework */; };
+		849E34B72355A2840062E928 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849E34B32355A2840062E928 /* FBSDKLoginKit.framework */; };
+		849E34BB2355A39A0062E928 /* ApiGroupEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E34BA2355A3990062E928 /* ApiGroupEvent.swift */; };
 		B40A33FE232A5AD700583CCC /* ApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EB232A5AD500583CCC /* ApiConfig.swift */; };
 		B40A33FF232A5AD700583CCC /* ApiGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EC232A5AD500583CCC /* ApiGroupList.swift */; };
 		B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33ED232A5AD500583CCC /* ApiRequest.swift */; };
@@ -153,10 +159,12 @@
 		8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		8432F2B822F16AF200A60EC5 /* FBLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
 		8432F2BA22F16B1100A60EC5 /* ProfileAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAddViewController.swift; sourceTree = "<group>"; };
-		8432F2BC22F16D1D00A60EC5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Downloads/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		8432F2BE22F16D2A00A60EC5 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Downloads/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		843F203D22F6F85C008CBDDA /* UserDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailModel.swift; sourceTree = "<group>"; };
 		843F204122F8043F008CBDDA /* ProfileAddModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileAddModel.swift; sourceTree = "<group>"; };
+		8456F70923530CEF00819DC0 /* ApiMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiMessage.swift; path = matchness/API/ApiMessage.swift; sourceTree = "<group>"; };
+		8456F70B2353310B00819DC0 /* ApiUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiUserInfo.swift; path = matchness/API/ApiUserInfo.swift; sourceTree = "<group>"; };
+		8456F70F2354301A00819DC0 /* GroupChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatTableViewCell.swift; sourceTree = "<group>"; };
+		8456F7102354301A00819DC0 /* GroupChatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupChatTableViewCell.xib; sourceTree = "<group>"; };
 		845956A722FBF75000B79278 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		845956A922FC71F300B79278 /* ProfileEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditTableViewCell.swift; sourceTree = "<group>"; };
 		845956AA22FC71F300B79278 /* ProfileEditTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileEditTableViewCell.xib; sourceTree = "<group>"; };
@@ -183,6 +191,10 @@
 		848A333723216B1100144950 /* PreferredGroupListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredGroupListModel.swift; sourceTree = "<group>"; };
 		848A33392325E86800144950 /* MessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		848A333A2325E86900144950 /* CahtFirstModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CahtFirstModel.swift; sourceTree = "<group>"; };
+		849E34B12355A2840062E928 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../../Downloads/FacebookSDKs-iOS-4.40.0 (1) 2/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
+		849E34B22355A2840062E928 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../../../Downloads/FacebookSDKs-iOS-4.40.0 (1) 2/Bolts.framework"; sourceTree = "<group>"; };
+		849E34B32355A2840062E928 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../../Downloads/FacebookSDKs-iOS-4.40.0 (1) 2/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
+		849E34BA2355A3990062E928 /* ApiGroupEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiGroupEvent.swift; path = matchness/API/ApiGroupEvent.swift; sourceTree = "<group>"; };
 		946D3AF11F4FBEBAFE993661 /* Pods_matchness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_matchness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD66A8BE7976CA8BC6F822EA /* Pods-matchnessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matchnessTests.debug.xcconfig"; path = "Target Support Files/Pods-matchnessTests/Pods-matchnessTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B40A33EB232A5AD500583CCC /* ApiConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiConfig.swift; path = matchness/API/ApiConfig.swift; sourceTree = "<group>"; };
@@ -271,9 +283,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				849E34B62355A2840062E928 /* Bolts.framework in Frameworks */,
 				F5ED2E68F602F60024B65444 /* Pods_matchness.framework in Frameworks */,
-				8432F2BD22F16D1D00A60EC5 /* FBSDKLoginKit.framework in Frameworks */,
-				8432F2BF22F16D2A00A60EC5 /* FBSDKCoreKit.framework in Frameworks */,
+				849E34B72355A2840062E928 /* FBSDKLoginKit.framework in Frameworks */,
+				849E34B52355A2840062E928 /* FBSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +312,9 @@
 		78FD4CF3C319FC362A39B272 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				849E34B22355A2840062E928 /* Bolts.framework */,
+				849E34B12355A2840062E928 /* FBSDKCoreKit.framework */,
+				849E34B32355A2840062E928 /* FBSDKLoginKit.framework */,
 				5C5B5093E137E02D7BFA9506 /* Pods-matchness.debug.xcconfig */,
 				17B0CBC822090074B01DDA4F /* Pods-matchness.release.xcconfig */,
 				AD66A8BE7976CA8BC6F822EA /* Pods-matchnessTests.debug.xcconfig */,
@@ -381,6 +397,8 @@
 			children = (
 				B45677142330DC9D00E0E9B7 /* GroupChatModel.swift */,
 				B45677152330DC9D00E0E9B7 /* GroupChatViewController.swift */,
+				8456F70F2354301A00819DC0 /* GroupChatTableViewCell.swift */,
+				8456F7102354301A00819DC0 /* GroupChatTableViewCell.xib */,
 			);
 			path = GroupChat;
 			sourceTree = "<group>";
@@ -388,22 +406,25 @@
 		B49CCD9122D5872400F793F1 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				B40A33ED232A5AD500583CCC /* ApiRequest.swift */,
 				B40A33F5232A5AD600583CCC /* ApiChangePoint.swift */,
 				B40A33F3232A5AD500583CCC /* ApiChatRoom.swift */,
 				8409E5FE233779B4009BA908 /* ApiPointHistory.swift */,
+				849E34BA2355A3990062E928 /* ApiGroupEvent.swift */,
 				B40A33EB232A5AD500583CCC /* ApiConfig.swift */,
 				B40A33F9232A5AD600583CCC /* ApiGroupChat.swift */,
 				B40A33F6232A5AD600583CCC /* ApiGroupEventList.swift */,
 				B40A33EC232A5AD500583CCC /* ApiGroupList.swift */,
 				B40A33EF232A5AD500583CCC /* ApiGroupRequestList.swift */,
 				B40A33FB232A5AD600583CCC /* ApiMatcheList.swift */,
+				8456F70923530CEF00819DC0 /* ApiMessage.swift */,
 				B40A33EE232A5AD500583CCC /* ApiMessageList.swift */,
 				B40A33F0232A5AD500583CCC /* ApiMultipleUser.swift */,
 				B40A33FD232A5AD600583CCC /* ApiMyData.swift */,
 				B40A33F7232A5AD600583CCC /* ApiNoticeList.swift */,
 				B40A33F8232A5AD600583CCC /* ApiProfileData.swift */,
-				B40A33ED232A5AD500583CCC /* ApiRequest.swift */,
 				B40A33FA232A5AD600583CCC /* ApiRequestCondition.swift */,
+				8456F70B2353310B00819DC0 /* ApiUserInfo.swift */,
 				B40A33FC232A5AD600583CCC /* ApiUserDate.swift */,
 				B40A33F2232A5AD500583CCC /* ApiUserDateParam.swift */,
 				B40A33F1232A5AD500583CCC /* ApiUserDetailDate.swift */,
@@ -603,8 +624,6 @@
 		EC5E504D577588DD2937FB11 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8432F2BE22F16D2A00A60EC5 /* FBSDKCoreKit.framework */,
-				8432F2BC22F16D1D00A60EC5 /* FBSDKLoginKit.framework */,
 				946D3AF11F4FBEBAFE993661 /* Pods_matchness.framework */,
 				EE9CA3510AE57598FBBFB314 /* Pods_matchnessTests.framework */,
 				CFC97E77BD56B94179B87F49 /* Pods_matchnessUITests.framework */,
@@ -737,6 +756,7 @@
 				848A32CC230AF96700144950 /* UserDetailInfoTableViewCell.xib in Resources */,
 				8409E60323377CE8009BA908 /* TextAreaTableViewCell.xib in Resources */,
 				CE4B098F220942E100F8A430 /* LaunchScreen.storyboard in Resources */,
+				8456F7122354301A00819DC0 /* GroupChatTableViewCell.xib in Resources */,
 				848A332D231BA37600144950 /* TextFiledTableViewCell.xib in Resources */,
 				845956AC22FC71F300B79278 /* ProfileEditTableViewCell.xib in Resources */,
 				B495CC0023339BCF006A029C /* NotDataTableViewCell.xib in Resources */,
@@ -873,6 +893,7 @@
 				B4D1ECF52330EB07008760A2 /* NoticeDitailModel.swift in Sources */,
 				CE05742422A6CF3E0082182F /* UserSearchCollectionViewCell.swift in Sources */,
 				CE4B09C12209D2EA00F8A430 /* UserDetailViewController.swift in Sources */,
+				8456F7112354301A00819DC0 /* GroupChatTableViewCell.swift in Sources */,
 				848A333823216B1200144950 /* PreferredGroupListModel.swift in Sources */,
 				CE0F9EEC22DE348900D320F5 /* MultipleViewController.swift in Sources */,
 				CE05741D22A439330082182F /* JoinGroupViewController.swift in Sources */,
@@ -885,7 +906,9 @@
 				B40A33FF232A5AD700583CCC /* ApiGroupList.swift in Sources */,
 				848A332C231BA37600144950 /* TextFiledTableViewCell.swift in Sources */,
 				CE05741522A3BA960082182F /* CahtFirstViewController.swift in Sources */,
+				8456F70A23530CEF00819DC0 /* ApiMessage.swift in Sources */,
 				843F203E22F6F85C008CBDDA /* UserDetailModel.swift in Sources */,
+				8456F70C2353310B00819DC0 /* ApiUserInfo.swift in Sources */,
 				CE05743322AB547C0082182F /* CustomNavigationBar.swift in Sources */,
 				847398A5234224EC00D28135 /* ProfilImageTableViewCell.swift in Sources */,
 				B49CCD9522D592AD00F793F1 /* UserSearchModel.swift in Sources */,
@@ -902,6 +925,7 @@
 				B45677172330DC9D00E0E9B7 /* GroupChatViewController.swift in Sources */,
 				B4D1ECF62330EB07008760A2 /* NoticeDitailViewController.swift in Sources */,
 				CE05741F22A439420082182F /* WaitGroupViewController.swift in Sources */,
+				849E34BB2355A39A0062E928 /* ApiGroupEvent.swift in Sources */,
 				848A32C5230AA57900144950 /* MultipleModel.swift in Sources */,
 				B40A340A232A5AD700583CCC /* ApiNoticeList.swift in Sources */,
 				B40A3402232A5AD700583CCC /* ApiGroupRequestList.swift in Sources */,

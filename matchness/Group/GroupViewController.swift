@@ -41,8 +41,6 @@ class GroupViewController: UIViewController {
                     (action:UIAlertAction!) -> Void in
                     // 処理
                     print("ポイント変換ページへ")
-
-
                     let storyboard: UIStoryboard = self.storyboard!
                     //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
                     let multiple = storyboard.instantiateViewController(withIdentifier: "pointChange")
@@ -57,7 +55,6 @@ class GroupViewController: UIViewController {
                     // 処理
                     print("キャンセル")
                 })
-            
             // actionを追加
             alertController.addAction(cancelAction)
             alertController.addAction(defaultAction)
@@ -67,22 +64,15 @@ class GroupViewController: UIViewController {
         if (point < 150) {
             // UIAlertControllerの起動
             present(alertController, animated: true, completion: nil)
-
         } else {
-            let storyboard: UIStoryboard = self.storyboard!
-            //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-            let multiple = storyboard.instantiateViewController(withIdentifier: "GroupEventAdd")
-            //ここが実際に移動するコードとなります
-            self.present(multiple, animated: false, completion: nil)
+            self.performSegue(withIdentifier: "toAddGroupEvent", sender: nil)
         }
     }
-    
 
     @IBAction func backFromGroupView(segue:UIStoryboardSegue){
         NSLog("GroupViewController#backFromGroupEventAddView")
     }
 
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

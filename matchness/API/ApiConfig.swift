@@ -39,7 +39,10 @@ public struct ApiConfig {
     //プロフィール編集
     static let REQUEST_URL_API_USER_PROFILE_EDIT: String = REQUEST_URL_API + "/user/profile_edit";
     //マイデータ
-    static let REQUEST_URL_API_ME: String = REQUEST_URL_API + "/me";
+    static let REQUEST_URL_API_ME: String = REQUEST_URL_API + "/user/me";
+
+    static let REQUEST_URL_API_USER_INFO: String = REQUEST_URL_API + "/user/user_info";
+    
     //足跡
     static let REQUEST_URL_API_USER_FOOTPRINT: String = REQUEST_URL_API + "/footprint/user_footprint";
     //自分の足跡
@@ -66,6 +69,7 @@ public struct ApiConfig {
 
     static let REQUEST_URL_API_ADD_MESSAGE: String = REQUEST_URL_API + "/create_message";
     static let REQUEST_URL_API_SELECT_MESSAGE: String = REQUEST_URL_API + "/select_message";
+    static let REQUEST_URL_API_SEND_MESSAGE: String = REQUEST_URL_API + "/send_message";
 
     static let REQUEST_URL_API_ADD_GROUP_CHAT: String = REQUEST_URL_API + "/create_group_chat";
     static let REQUEST_URL_API_SELECT_GROUP_CHAT: String = REQUEST_URL_API + "/select_group_chat";

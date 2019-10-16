@@ -72,7 +72,7 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func returnUserData()
     {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(
+        let graphRequest : GraphRequest = GraphRequest(
             graphPath: "me",
             parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"])
         graphRequest.start(completionHandler: {

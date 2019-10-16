@@ -19,7 +19,7 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
 
     var group_step:Int = 0
     
-    var dataSource: Dictionary<String, ApiGroupEventList> = [:]
+    var dataSource: Dictionary<String, ApiGroupEvent> = [:]
     var dataSourceOrder: Array<String> = []
     var cellCount: Int = 0
     let now = Date()
@@ -32,14 +32,17 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
         groupEvent.delegate = self
         groupEvent.dataSource = self
         self.groupEvent.register(UINib(nibName: "GroupEventCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "groupCell")
-        
-        print("開催開催開催開催開催開催開催")
-        print(group_param["group_id"])
         getGroupStep_1(progress_day: group_param["progress_day"] as! Int)
     }
 
-    
-
+    func viewMain() {
+        print("メインメインメインメインメイン")
+        print(dataSource["0"])
+        rank.text = dataSource["0"]!.rank! + "位"
+        eventTime.text = dataSource["0"]?.event_time
+        peopleNumber.text = dataSource["0"]?.event_peple
+        stepNumber.text = dataSource["0"]?.step
+    }
 
     func getGroupStep_1(progress_day:Int) -> Int {
         print("きて流きて流きて流きて流")
@@ -107,10 +110,7 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
 
         }
     }
-    
-    
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.cellCount
     }
@@ -120,7 +120,7 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
         let label = UILabel()
         
 
-        var group_event = dataSource[String(indexPath.row)]
+        var group_event = dataSource["0"]!.group_event[indexPath.row]
 
         var number = Int.random(in: 1 ... 18)
         cell.userImage.image = UIImage(named: "\(number)")
@@ -142,7 +142,7 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
 print("ログイン時間ログイン時間ログイン時間")
 
         let date = dateFormater.date(from: "2016-10-03 03:12:12 +0000")
-        print(group_event!.action_datetime)
+        print(group_event.action_datetime)
         print(group_event)
         print(date)
 
@@ -150,11 +150,11 @@ print("ログイン時間ログイン時間ログイン時間")
         let date_text = dateFormater.string(from: date ?? Date())
         
         cell.lastLoginTime.text = "ログイン：" + date_text
-        var name = group_event!.name!
-        var age = group_event!.age! + "歳 "
-        var prefecture = ApiConfig.PREFECTURE_LIST[group_event?.prefecture_id ?? 0]
+        var name = group_event.name!
+        var age = group_event.age! + "歳 "
+        var prefecture = ApiConfig.PREFECTURE_LIST[group_event.prefecture_id ?? 0]
         cell.userInfo.text = name + " " + age + prefecture
-        cell.userStep.text = group_event?.step
+        cell.userStep.text = group_event.step
         cell.contentView.addSubview(label)
         
         if userStep < 50000 {
@@ -168,10 +168,17 @@ print("ログイン時間ログイン時間ログイン時間")
 
 
     @IBAction func groupChatButtom(_ sender: Any) {
-        var group_id = group_param["group_id"] as! String
-        performSegue(withIdentifier: "toGroupChat", sender: group_id)
+            self.performSegue(withIdentifier: "toGroupChat", sender: nil)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // SecondViewControllerに移動する変数vcを定義する
+        let vc = segue.destination as! GroupChatViewController
+        //ViewController2のtextにtextFieldのテキストを代入
+        vc.group_id = self.group_param["group_id"] as! String
+        
+    }
+    
     @IBAction func backGroupEventView(segue:UIStoryboardSegue){
         NSLog("backGroupEventView#backFromPlaninputView")
     }
@@ -211,34 +218,12 @@ extension GroupEventViewController : GroupEventModelDelegate {
         //更新用データを設定
         self.dataSource = model.responseData;
         self.dataSourceOrder = model.responseDataOrder;
-        
-        print(self.dataSourceOrder)
-        print("UserDetail耳耳耳意味耳みm")
-        
-        
-        //一つもなかったら
-        //        if( dataSourceOrder.isEmpty ){
-        //            return;
-        //        }
-        
         //cellの件数更新
-        self.cellCount = dataSourceOrder.count;
-        //        self.cellCount = 10;
-        
-        
-        //
+        self.cellCount = dataSource["0"]!.group_event.count;
         var count: Int = 0;
-        //        for(key, code) in dataSourceOrder.enumerated() {
-        //            count+=1;
-        //            if let jenre: ApiUserDateParam = dataSource[code] {
-        //                //取得したデータを元にコレクションを再構築＆更新
-        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-        //            }
-        //        }
-        
+        viewMain()
         groupEvent.reloadData()
         self.dismiss(animated: true, completion: nil)
-        //        self.performSegue(withIdentifier: "toGroupTop", sender: nil)
     }
     func onFailed(model: GroupEventModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")

@@ -56,7 +56,6 @@ class ApiRequest {
     }
 
     public func request(url url: String, params params:[String: String], method method: HTTPMethod = .get){
-        
         print("YLLRequest.request AAAAAA(APIリクエストの場所)AAAAAA");
         print("url : " + url);
         print(params);
@@ -105,13 +104,13 @@ print(api_key)
 
 print("URLURLURLURLURLURL")
 print(url)
-                if (url == ApiConfig.REQUEST_URL_API_ADD_LIKE) {
+                if (url == ApiConfig.REQUEST_URL_API_ADD_LIKE || url == ApiConfig.REQUEST_URL_API_SEND_MESSAGE) {
                     self.onFaild(response as AnyObject);
                     break;
                 }
 
                 print("取得した値はここにきて")
-//                print(json)
+                print(json)
                 //
                   self.onParse(json);
                 //

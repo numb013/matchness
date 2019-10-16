@@ -15,7 +15,6 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         return 1
     }
     
-    
     let userDefaults = UserDefaults.standard
     @IBOutlet weak var UserProfileTable: UITableView!
     
@@ -119,43 +118,29 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         print("こいいいいいい")
         print(self.dataSource)
         var myData = self.dataSource["0"]
-
-        
-        print("AAAAAAAAAA")
-        print(indexPath)
-        print(indexPath.section)
-
         if indexPath.section == 0 {
-
             let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "ProfilImageTableViewCell") as! ProfilImageTableViewCell
-
-
             var number = Int.random(in: 1 ... 18)
             cell.mainImage.image = UIImage(named: "\(number)")
             cell.image_1.image = UIImage(named: "\(number)")
             cell.image_2.image = UIImage(named: "\(number)")
             cell.image_3.image = UIImage(named: "\(number)")
             cell.image_4.image = UIImage(named: "\(number)")
-
-
             return cell
-            
         }
         
         if indexPath.section == 1 {
             let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "TextAreaTableViewCell") as! TextAreaTableViewCell
-
             cell.textLabel!.numberOfLines = 0
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.textArea.delegate = self
             cell.textArea.tag = 1
             cell.textArea?.font = UIFont.systemFont(ofSize: 14)
             cell.textArea!.text = myData?.profile_text
-                return cell
+            return cell
         }
 
         if indexPath.section == 2 {
-
             if indexPath.row == 0 {
                 let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "TextFiledTableViewCell") as! TextFiledTableViewCell
                 cell.title?.text = "ニックネーム"
@@ -191,9 +176,6 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
                 let dateFormater = DateFormatter()
                 dateFormater.locale = Locale(identifier: "ja_JP")
                 dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-
-print("時間時間時間時間時間時間時間時間")
-print(self.dataSource["0"]?.birthday)
 
                 let date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
                 print("誕生日誕生日誕生日")
@@ -313,16 +295,16 @@ print(self.dataSource["0"]?.birthday)
         return 60
     }
 
-    
+
     func PickerPush(){
         pickerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: pickerView.bounds.size.height)
         // Connect data:
         pickerView.delegate   = self
         pickerView.dataSource = self
         vi = UIView(frame: pickerView.bounds)
-        vi.backgroundColor = UIColor.white
+        vi.backgroundColor = UIColor.red
         vi.addSubview(pickerView)
-        view.addSubview(vi)
+
         let screenSize = UIScreen.main.bounds.size
         vi.frame.origin.y = screenSize.height
         UIView.animate(withDuration: 0.3) {
@@ -332,13 +314,14 @@ print(self.dataSource["0"]?.birthday)
         toolBar.barStyle = UIBarStyle.default
         toolBar.isTranslucent = true
         toolBar.tintColor = UIColor.black
-        let doneButton   = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(ProfileEditViewController.donePressed))
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ProfileEditViewController.cancelPressed))
-        let spaceButton  = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "決定", style: UIBarButtonItem.Style.done, target: self, action: #selector(ProfileEditViewController.donePressed))
+        let cancelButton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ProfileEditViewController.cancelPressed))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         toolBar.sizeToFit()
         vi.addSubview(toolBar)
+        view.addSubview(vi)
         print("push")
     }
     
@@ -598,27 +581,17 @@ print(self.dataSource["0"]?.birthday)
             print("カメラロール許可をしていない時の処理")
         }
     }
-
-    
     //　撮影が完了時した時に呼ばれる
     func imagePickerController(_ imagePicker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
-        
-
-
         let resizedImage = self.resizeImage(image: info[UIImagePickerController.InfoKey.editedImage] as! UIImage, ratio: 0.5) // 50% に縮小
-
-
         if let pickedImage = info[.originalImage]
             as? UIImage {
-            
 //            cameraView.contentMode = .scaleAspectFit
 //            cameraView.image = pickedImage
         }
-        
         //閉じる処理
         imagePicker.dismiss(animated: true, completion: nil)
         print("Tap the [Save] to save a picture")
-        
     }
     
     // 撮影がキャンセルされた時に呼ばれる
@@ -626,8 +599,7 @@ print(self.dataSource["0"]?.birthday)
         picker.dismiss(animated: true, completion: nil)
         print("Canceled")
     }
-    
-    
+        
     // 写真を保存
 //    @IBAction func savePicture(_ sender : AnyObject) {
 //        let image:UIImage! = cameraView.image
@@ -646,10 +618,7 @@ print(self.dataSource["0"]?.birthday)
 //    }
     
     // 書き込み完了結果の受け取り
-    @objc func image(_ image: UIImage,
-                     didFinishSavingWithError error: NSError!,
-                     contextInfo: UnsafeMutableRawPointer) {
-        
+    @objc func image(_ image: UIImage,didFinishSavingWithError error: NSError!,contextInfo: UnsafeMutableRawPointer) {
         if error != nil {
             print(error.code)
             print("Save Failed !")

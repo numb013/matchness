@@ -48,12 +48,9 @@ class UserSearchModel: NSObject {
     //IDをキーにしてデータを保持
     public var responseData: Dictionary<String, ApiUserDate> = [String: ApiUserDate]();
 
-
     var array1: [String] = []
     var array2: Dictionary<String, ApiUserDate> = [:]
 
-    
-    
     var request_mode: String!;
 
     func requestApi(url: String, addQuery query: Dictionary<String,String>! = nil) -> Bool {

@@ -47,7 +47,7 @@ class GroupEventModel: NSObject {
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
     //IDをキーにしてデータを保持
-    public var responseData: Dictionary<String, ApiGroupEventList> = [String: ApiGroupEventList]();
+    public var responseData: Dictionary<String, ApiGroupEvent> = [String: ApiGroupEvent]();
 
     var request_mode: String!;
 
@@ -112,13 +112,13 @@ class GroupEventModel: NSObject {
 
     /*
      */
-    func getData(row: Int) -> ApiGroupEventList? {
+    func getData(row: Int) -> ApiGroupEvent? {
         let count: Int = row + 1;
         if( count > responseDataOrder.count || responseDataOrder.isEmpty ){
             return nil;
         }
         let key: String = responseDataOrder[row];
-        if let info: ApiGroupEventList = responseData[key] {
+        if let info: ApiGroupEvent = responseData[key] {
             return info;
         }
         return nil;
@@ -137,21 +137,12 @@ extension GroupEventModel : ApiRequestDelegate {
         let recommend: JSON = items["list"];
         for (key, item):(String, JSON) in json {
             //データを変換
-            let data: ApiGroupEventList? = ApiGroupEventList(json: item);
+            let data: ApiGroupEvent? = ApiGroupEvent(json: item);
             //Optionalチェック
-            guard let info: ApiGroupEventList = data else {
+            guard let info: ApiGroupEvent = data else {
                 continue;
             }
             print(info)
-                        print("111111")
-            //
-//            guard let code = info.id else {
-//                continue;
-//            }
-                        print("222222")
-            //
-
-
             //並び順を保持
             responseDataOrder.append(key);
             //サブカテゴリーIDをキーにして保存

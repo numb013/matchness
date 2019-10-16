@@ -1,5 +1,5 @@
 //
-//  CahtSecondModel.swift
+//  MessageModel.swift
 //  matchness
 //
 //  Created by RW on 2019/07/10.
@@ -13,23 +13,23 @@ import SwiftyJSON;
 /*
  プロトコル
  */
-protocol CahtSecondModelDelegate {
-    func onStart(model: CahtSecondModel);
-    func onComplete(model: CahtSecondModel, count: Int);
-    func onFailed(model: CahtSecondModel);
+protocol MessageModelDelegate {
+    func onStart(model: MessageModel);
+    func onComplete(model: MessageModel, count: Int);
+    func onFailed(model: MessageModel);
 }
 /*
  プロトコル判定用
  */
-enum CahtSecondModelDelegateError : Error {
+enum MessageModelDelegateError : Error {
     case start;
     case complete;
     case failed;
 }
 
-class CahtSecondModel: NSObject {
+class MessageModel: NSObject {
     //プロトコル
-    var delegate: CahtSecondModelDelegate?;
+    var delegate: MessageModelDelegate?;
     var request: ApiRequest!;
     //初回リクエストか
     var isRequestFirst: Bool = false;
@@ -124,8 +124,7 @@ class CahtSecondModel: NSObject {
     }
 }
 
-extension CahtSecondModel : ApiRequestDelegate {
-    
+extension MessageModel : ApiRequestDelegate {
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         print("22222222222222222222222222")

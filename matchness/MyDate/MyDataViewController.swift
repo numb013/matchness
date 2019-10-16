@@ -25,7 +25,8 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     var dataSourceOrder: Array<String> = []
     var cellCount: Int = 0
 
-    var weight = Int()
+//    var weight = Int()
+    var weight = 0
 
     var times: [String]!
     let dateFormatter = DateFormatter()
@@ -241,7 +242,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
             //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
             let multiple = storyboard.instantiateViewController(withIdentifier: "toProfileEdit")
             //ここが実際に移動するコードとなります
-            self.present(multiple, animated: false, completion: nil)
+            self.present(multiple, animated: true, completion: nil)
         }
         if (indexPath.row == 4) {
             let storyboard: UIStoryboard = self.storyboard!

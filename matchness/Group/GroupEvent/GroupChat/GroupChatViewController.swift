@@ -9,22 +9,17 @@
 import UIKit
 
 class GroupChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate{
-    
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
     let userDefaults = UserDefaults.standard
-    
-    @IBOutlet weak var tableView: UITableView!
-    
+
+    @IBOutlet weak var sendButton: UIButton!
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiGroupChatList> = [:]
     var dataSourceOrder: Array<String> = []
-    var group_id:String = "0"
+    var group_id:String = ""
     var comment:String = ""
     @IBOutlet weak var textFiled: UITextField!
+    @IBOutlet weak var tableView: UITableView!
+
     var selectRow = 0
     
     override func viewDidLoad() {
@@ -34,8 +29,12 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
         textFiled.delegate = self
         // Do any additional setup after loading the view.
         
-        self.tableView.register(UINib(nibName: "SettingEditTableViewCell", bundle: nil), forCellReuseIdentifier: "SettingEditTableViewCell")
-        
+        sendButton.isEnabled = false
+        self.tableView.register(UINib(nibName: "GroupChatTableViewCell", bundle: nil), forCellReuseIdentifier: "GroupChatTableViewCell")
+        apiRequest()
+    }
+
+    func apiRequest() {
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
@@ -49,22 +48,24 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
         query["group_id"] = group_id
         //リクエスト実行
         if( !requestGroupChatModel.requestApi(url: requestUrl, addQuery: query) ){
-            
         }
-        print("マイデータ")
     }
     
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return self.cellCount
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "設定"
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "設定"
+//    }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
@@ -75,17 +76,16 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 35
     }
-    
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("こいいいいいい")
         print(self.dataSource)
-        var myData = self.dataSource["0"]
+        var myData = self.dataSource[String(indexPath.row)]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingEditTableViewCell") as! SettingEditTableViewCell
-        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        cell.title?.text = "血液型"
-        //cell.detail?.text = ApiConfig.BLOOD_LIST[myData?.blood_type ?? 2]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GroupChatTableViewCell") as! GroupChatTableViewCell
+        cell.comment?.text = myData?.comment
+        cell.name?.text = myData?.name
+        cell.created_at?.text = myData?.created_at
         return cell
     }
 
@@ -117,11 +117,14 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
         // キーボードを閉じる
         self.comment = textField.text!
         textField.resignFirstResponder()
+        sendButton.isEnabled = true
         return true
     }
 
     @IBAction func sendGroupChat(_ sender: Any) {
 
+        textFiled.endEditing(true)
+        
         let requestGroupChatModel = GroupChatModel();
         requestGroupChatModel.delegate = self as! GroupChatModelDelegate;
         //リクエスト先
@@ -130,31 +133,14 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
         var query: Dictionary<String,String> = Dictionary<String,String>();
         query["group_id"] = group_id
         query["comment"] = self.comment
-
         //リクエスト実行
         if( !requestGroupChatModel.requestApi(url: requestUrl, addQuery: query) ){
-
         }
-
-
     }
-
-
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
 
 extension GroupChatViewController : GroupChatModelDelegate {
-    
     func onStart(model: GroupChatModel) {
         print("こちら/SettingEdit/UserDetailViewのonStart")
     }
@@ -163,33 +149,13 @@ extension GroupChatViewController : GroupChatModelDelegate {
         //更新用データを設定
         self.dataSource = model.responseData;
         self.dataSourceOrder = model.responseDataOrder;
-        
-        print(self.dataSourceOrder)
-        print("UserDetail耳耳耳意味耳みm")
-        print(self.dataSource)
-        
-        
-        //一つもなかったら
-        //        if( dataSourceOrder.isEmpty ){
-        //            return;
-        //        }
-        
+
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
-        //        self.cellCount = 10;
-        
-        
-        
-        //
         var count: Int = 0;
-        //        for(key, code) in dataSourceOrder.enumerated() {
-        //            count+=1;
-        //            if let jenre: ApiUserDateParam = dataSource[code] {
-        //                //取得したデータを元にコレクションを再構築＆更新
-        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-        //            }
-        //        }
-        
+        textFiled.text = ""
+        sendButton.isEnabled = false
+        self.comment = ""
         tableView.reloadData()
     }
     func onFailed(model: GroupChatModel) {

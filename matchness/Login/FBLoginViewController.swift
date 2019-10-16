@@ -9,8 +9,9 @@
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
+import FBSDKShareKit
 
-class FBLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
+class FBLoginViewController: UIViewController, LoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,18 +20,14 @@ class FBLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-
-            //            FBログインボタン設置
-            let fbLoginBtn = FBSDKLoginButton()
-            fbLoginBtn.readPermissions = ["public_profile", "email"]
+        let fbLoginBtn = FBLoginButton()
+//            fbLoginBtn.readPermissions = ["public_profile", "email"]
             fbLoginBtn.center = self.view.center
             fbLoginBtn.delegate = self
-            self.view.addSubview(fbLoginBtn)
-
     }
     
     //    ログインコールバック
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+    func loginButton(_ loginButton: FBLoginButton!, didCompleteWith result: LoginManagerLoginResult!, error: Error!) {
         //        エラーチェック
         if error == nil {
             //            キャンセルしたかどうか
@@ -55,7 +52,7 @@ class FBLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
     }
     //    ログアウトコールバック
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton!) {
         
     }
 }

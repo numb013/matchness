@@ -27,9 +27,8 @@ pod 'SDWebImage'
 pod 'FirebaseUI/Storage'
 pod 'FirebaseMessaging'
 
+pod 'FBSDKLoginKit'
 pod 'FacebookCore'
-pod 'FacebookLogin'
-pod 'FacebookShare'
 
 #API通信
 pod 'Alamofire', '4.4'

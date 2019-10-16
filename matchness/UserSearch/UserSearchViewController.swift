@@ -29,9 +29,9 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
 
     override func viewDidLoad() {
         print("チェックチェックチェックチェック")
-        print(FBSDKAccessToken.current())
+        print(AccessToken.current)
 
-        if let _ = FBSDKAccessToken.current() {
+        if let _ = AccessToken.current {
             print("ログイン済み")
         } else {
             userDefaults.removeObject(forKey: "api_token")
@@ -155,7 +155,8 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 例えば端末サイズの半分の width と height にして 2 列にする場合
-        let width: CGFloat = UIScreen.main.bounds.width / 2.025
+//        let width: CGFloat = UIScreen.main.bounds.width / 2.025
+        let width: CGFloat = UIScreen.main.bounds.width / 2.07
         let height = width + 50
         return CGSize(width: width, height: height)
     }

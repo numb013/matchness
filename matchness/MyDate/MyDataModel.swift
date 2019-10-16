@@ -143,15 +143,6 @@ extension MyDataModel : ApiRequestDelegate {
                 continue;
             }
             print(info)
-                        print("111111")
-            //
-//            guard let code = info.id else {
-//                continue;
-//            }
-                        print("222222")
-            //
-
-
             //並び順を保持
             responseDataOrder.append(key);
             //サブカテゴリーIDをキーにして保存

@@ -17,8 +17,8 @@ public struct ApiMessageList: CustomDebugStringConvertible {
     
     public var room_code: String? = nil;
     public var id: String? = nil;
-    public var hash_id: String? = nil;
-    public var target_id: Int? = nil;
+    public var target_id: String? = nil;
+    public var target_name: String? = nil;
     public var last_message: String? = nil;
     public var created_at: String? = nil;
 
@@ -56,12 +56,12 @@ public struct ApiMessageList: CustomDebugStringConvertible {
         }
 
         //String => String
-        if let name = item["name"].string {
-            self.name = name;
+        if let target_name = item["target_name"].string {
+            self.target_name = target_name;
         }
         
         //String => String
-        if let target_id = item["target_id"].int {
+        if let target_id = item["target_id"].string {
             self.target_id = target_id;
         }
         
@@ -86,7 +86,7 @@ public struct ApiMessageList: CustomDebugStringConvertible {
         get{
             var string:String = "ApiMessageList::\(#function)\n";
             string += "room_code => \(String(describing: self.room_code))\n";
-            string += "name => \(String(describing: self.name))\n";
+            string += "target_name => \(String(describing: self.target_name))\n";
             string += "target_id => \(String(describing: self.target_id))\n";
             string += "last_message => \(String(describing: self.last_message))\n";
             string += "created_at => \(String(describing: self.created_at))\n";

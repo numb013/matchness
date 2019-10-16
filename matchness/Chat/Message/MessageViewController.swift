@@ -12,80 +12,158 @@ import JSQMessagesViewController
 import FirebaseDatabase
 import FirebaseStorage
 import SDWebImage
+import Alamofire
+import SwiftyJSON
 
-//メッセージのやり取りをするユーザーを定めるclass作成
-struct User {
-    let id: String
-    let name: String
-}
-
-
-class MessageViewController: JSQMessagesViewController, UIImagePickerControllerDelegate {
+class MessageViewController: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // データベースへの参照を定義
     var ref: DatabaseReference!
-    var message_users = [String:Any]()
-
-    //user1が使用者側、user2が相手側
-    let user1 = User(id: message_users["user_id_1"] as! String, name: self.message_users["user_name_1"] as! String)
-    let user2 = User(id: self.message_users["user_id_2"] as! String, name: self.message_users["user_name_2"] as! String)
-    //    let user3 = User(id: "3", name: "今田")
-    //    let user4 = User(id: "4", name: "東野")
-    var user_hash_id_1 = self.message_users["user_hash_id_1"]
-    var user_hash_id_2 = self.message_users["user_hash_id_2"]
-    let roomId = user_hash_id_1 + user_hash_id_2
-    //    let roomId = "user3user4"
-    
+    var message_users = [String:String]()
+    var roomId = String()
+    var point = String()
+    var last_message = String()
     var incomingBubble: JSQMessagesBubbleImage!
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingAvatar: JSQMessagesAvatarImage!
     var outgoingAvatar: JSQMessagesAvatarImage!
-    var currentUser: User {
-        return user2
-    }
-        
+
     var messages = [JSQMessage]()
 }
 
 extension MessageViewController {
     //送信ボタンが押された時の挙動
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
-        let message = JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text)
-        //メッセージの送信処理を完了する(画面上にメッセージが表示される)
-        self.finishReceivingMessage(animated: true)
+
+
+
+
+
+
+
+        let alertController:UIAlertController =
+            UIAlertController(title:"メッセージを送る",message: "メッセージ送信には10000pt必要です",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction =
+            UIAlertAction(title: "送信",style: .destructive,handler:{
+            (action:UIAlertAction!) -> Void in
+            // 処理
+                print("送信する")
+                if Int(self.point)! < 100000 {
+
+                    let alertController:UIAlertController =
+                        UIAlertController(title:"メッセージを送信",message: "メッセージを送信には10000pt必要です",preferredStyle: .alert)
+                    // Default のaction
+                    let defaultAction:UIAlertAction =
+                        UIAlertAction(title: "ポイント変換ページへ",style: .destructive,handler:{
+                            (action:UIAlertAction!) -> Void in
+                            // 処理
+                            print("ポイント変換ページへ")
+                            self.tabBarController?.tabBar.isHidden = false
+                            let storyboard: UIStoryboard = self.storyboard!
+                            //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+                            let multiple = storyboard.instantiateViewController(withIdentifier: "pointChange")
+                            //ここが実際に移動するコードとなります
+                            self.present(multiple, animated: false, completion: nil)
+                        })
+                    
+                    // Cancel のaction
+                    let cancelAction:UIAlertAction =
+                        UIAlertAction(title: "キャンセル",style: .cancel,handler:{
+                            (action:UIAlertAction!) -> Void in
+                            // 処理
+                            print("キャンセル")
+                        })
+                    // actionを追加
+                    alertController.addAction(cancelAction)
+                    alertController.addAction(defaultAction)
+                    // UIAlertControllerの起動
+                    self.present(alertController, animated: true, completion: nil)
+
+                } else {
+                    print("1111111111111111")
+                    let message = JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text)
+                    //メッセージの送信処理を完了する(画面上にメッセージが表示される)
+                    self.finishReceivingMessage(animated: true)
+                    self.last_message = text
+                    let f = DateFormatter()
+                    f.dateFormat = "yyyy-MM-dd H:m:s"
+                    let now = Date()
+
+                    self.addMessage()
+                    
+                    //firebaseにデータを送信、保存する
+                    let post1 = [
+                        "from": senderId,
+                        "name": senderDisplayName,
+                        "media_type": "text",
+                        "text":text,
+                        "image_url": nil,
+                        "create_at": f.string(from: now),
+                        "update_at": f.string(from: now),
+                        ] as [String : Any]
+                    let post1Ref = self.ref.child("messages").child(self.roomId).childByAutoId()
+                    post1Ref.setValue(post1)
+                    self.finishSendingMessage(animated: true)
+                }
+                //キーボードを閉じる
+                self.view.endEditing(true)
+            })
         
-        let f = DateFormatter()
-        f.dateFormat = "yyyy-MM-dd H:m:s"
-        let now = Date()
+        // Cancel のaction
+        let cancelAction:UIAlertAction =
+            UIAlertAction(title: "キャンセル",style: .cancel,handler:{
+            (action:UIAlertAction!) -> Void in
+            // 処理
+                print("キャンセル")
+            })
         
-        //firebaseにデータを送信、保存する
-        let post1 = [
-            "from": senderId,
-            "name": senderDisplayName,
-            "media_type": "text",
-            "text":text,
-            "image_url": nil,
-            "create_at": f.string(from: now),
-            "update_at": f.string(from: now),
-            ] as [String : Any]
-        let post1Ref = ref.child("messages").child(roomId).childByAutoId()
-        post1Ref.setValue(post1)
-        self.finishSendingMessage(animated: true)
+        // actionを追加
+        alertController.addAction(cancelAction)
+        alertController.addAction(defaultAction)
         
-        //キーボードを閉じる
-        self.view.endEditing(true)
+        // UIAlertControllerの起動
+        present(alertController, animated: true, completion: nil)
     }
+
+    
+    func addMessage() {
+        /****************
+         APIへリクエスト（ユーザー取得）
+         *****************/
+        //ロジック生成
+        let requestMessageModel = MessageModel();
+        //requestMessageModel.delegate = self as! MessageModelDelegate;
+        //リクエスト先
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_SEND_MESSAGE;
+        //パラメーター
+        var query: Dictionary<String,String> = Dictionary<String,String>();
+        
+        query["point"] = "10000"
+        query["last_message"] = self.last_message
+        query["room_code"] = self.roomId
+        //リクエスト実行
+
+        self.point = String(Int(self.point)! - Int(query["point"]!)!)
+
+        if( !requestMessageModel.requestApi(url: requestUrl, addQuery: query) ){
+            
+        }
+    }
+    
+    
+    
+    
     
     //添付ファイルボタンが押された時の挙動
     override func didPressAccessoryButton(_ sender: UIButton!) {
         print("カメラ")
         selectImage()
     }
-    
+
     private func selectImage() {
         let alertController: UIAlertController = UIAlertController(title: "アラート表示", message: "保存してもいいですか？", preferredStyle:  UIAlertController.Style.alert)
         //        let alertController = UIAlertController(title: "画像を選択", message: nil, preferredStyle: .actionSheet)
-        
         let cameraAction = UIAlertAction(title: "カメラを起動", style: .default) { (UIAlertAction) -> Void in
             self.selectFromCamera()
         }
@@ -131,7 +209,6 @@ extension MessageViewController {
         
         let imageData = NSData(data: (resizedImage).pngData()!) as NSData
         let storageRef = Storage.storage().reference()
-        
         let f = DateFormatter()
         f.dateFormat = "yyyyMMddHms"
         let now = Date()
@@ -147,7 +224,6 @@ extension MessageViewController {
             } else {
                 print(metaData)
                 image_url = metaData?.name
-                
                 let post1 = [
                     "from": self.senderId,
                     "name": self.senderDisplayName,
@@ -175,15 +251,7 @@ extension MessageViewController {
         UIGraphicsEndImageContext()
         return resizedImage!
     }
-    
-    //各送信者の表示について
-    override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
-        let message = messages[indexPath.row]
-        let messageUsername = message.senderDisplayName
-        
-        return NSAttributedString(string: messageUsername!)
-    }
-    
+
     //各メッセージの高さ
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAt indexPath: IndexPath!) -> CGFloat {
         return 15
@@ -194,23 +262,22 @@ extension MessageViewController {
         let message = self.messages[indexPath.item]
         if message.senderId == self.senderId {
             return self.outgoingAvatar
+        } else {
+            return self.incomingAvatar
         }
-        return self.incomingAvatar
     }
     
     //各メッセージの背景を設定
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         let bubbleFactory = JSQMessagesBubbleImageFactory()
-        
         let message = messages[indexPath.row]
-        
-        if currentUser.id == message.senderId {
+        if self.senderId == message.senderId {
             return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor(red: 112/255, green: 192/255, blue:  75/255, alpha: 1))
         } else {
             return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor(red: 229/255, green: 229/255, blue: 229/255, alpha: 1))
         }
     }
-    
+        
     // cell for item
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
@@ -220,7 +287,6 @@ extension MessageViewController {
         } else {
             cell.textView?.textColor = UIColor.darkGray
         }
-        
         return cell
     }
     
@@ -233,6 +299,37 @@ extension MessageViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
         return messages[indexPath.row]
     }
+
+     //時刻表示のための高さ調整
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
+        let message = messages[indexPath.item]
+        if indexPath.item == 0 {
+            return JSQMessagesTimestampFormatter.shared().attributedTimestamp(for: message.date)
+        }
+        if indexPath.item - 1 > 0 {
+            let previousMessage = messages[indexPath.item - 1]
+            if message.date.timeIntervalSince(previousMessage.date) / 60 > 1 {
+                return JSQMessagesTimestampFormatter.shared().attributedTimestamp(for: message.date)
+            }
+        }
+        return nil
+    }
+
+     // 送信時刻を出すために高さを調整する
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAt indexPath: IndexPath!) -> CGFloat {
+        if indexPath.item == 0 {
+            return kJSQMessagesCollectionViewCellLabelHeightDefault
+        }
+        if indexPath.item - 1 > 0 {
+            let previousMessage = messages[indexPath.item - 1]
+            let message = messages[indexPath.item]
+            if message.date .timeIntervalSince(previousMessage.date) / 60 > 1 {
+                return kJSQMessagesCollectionViewCellLabelHeightDefault
+            }
+        }
+        return 0.0
+    }
+
 }
 
 
@@ -247,10 +344,12 @@ extension MessageViewController {
                 //                instanceIDTokenMessage.text  = "Remote InstanceID token: \(result.token)"
             }
         }
-
         super.viewDidLoad()
-        self.senderId = currentUser.id
-        self.senderDisplayName = currentUser.name
+        self.roomId = self.message_users["room_code"]!
+        self.point = self.message_users["point"]!
+
+        self.senderId = self.message_users["user_id"]
+        self.senderDisplayName = self.message_users["user_name"]
         //タブバー非表示
         tabBarController?.tabBar.isHidden = true
         // アバターの設定
@@ -269,7 +368,7 @@ extension MessageViewController {
         ref = Database.database().reference()
         // 最新25件のデータをデータベースから取得する
         // 最新のデータが追加されるたびに最新データを取得する
-        ref.child("messages").child(roomId).queryLimited(toLast: 25).observe(DataEventType.childAdded, with: { (snapshot)  -> Void in
+        ref.child("messages").child(self.roomId).queryLimited(toLast: 25).observe(DataEventType.childAdded, with: { (snapshot)  -> Void in
             let snapshotValue = snapshot.value as! NSDictionary
             let mediaType = snapshotValue["media_type"] as! String
             let sender = snapshotValue["from"] as! String
@@ -279,8 +378,7 @@ extension MessageViewController {
             switch mediaType {
             case "image":
                 var photoItem = JSQPhotoMediaItem(image: nil)
-                photoItem!.appliesMediaViewMaskAsOutgoing = true
-                
+                photoItem!.appliesMediaViewMaskAsOutgoing = (sender == self.senderId) ? true : false
                 self.messages.append(JSQMessage(senderId: sender, displayName: name, media: photoItem))
                 let image_url = snapshotValue["image_url"] as! String
                 storage.reference(forURL: host).child("images/").child(image_url)

@@ -47,11 +47,11 @@ class CahtFirstModel: NSObject {
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
     //IDをキーにしてデータを保持
-    public var responseData: Dictionary<String, ApiMessageList> = [String: ApiMessageList]();
+    public var responseData: Dictionary<String, ApiMessage> = [String: ApiMessage]();
     
     
     var array1: [String] = []
-    var array2: Dictionary<String, ApiMessageList> = [:]
+    var array2: Dictionary<String, ApiMessage> = [:]
     var request_mode: String!;
     
     func requestApi(url: String, addQuery query: Dictionary<String,String>! = nil) -> Bool {
@@ -118,13 +118,13 @@ class CahtFirstModel: NSObject {
     
     /*
      */
-    func getData(row: Int) -> ApiMessageList? {
+    func getData(row: Int) -> ApiMessage? {
         let count: Int = row + 1;
         if( count > responseDataOrder.count || responseDataOrder.isEmpty ){
             return nil;
         }
         let key: String = responseDataOrder[row];
-        if let info: ApiMessageList = responseData[key] {
+        if let info: ApiMessage = responseData[key] {
             return info;
         }
         return nil;
@@ -145,7 +145,7 @@ extension CahtFirstModel : ApiRequestDelegate {
         
         json.forEach { (key, json) in
             //データを変換
-            let data: ApiMessageList? = ApiMessageList(json: json);
+            let data: ApiMessage? = ApiMessage(json: json);
             if (page != 1) {
                 key1 = Int(key)! + Int(page) * Int(8) - Int(8)
             } else {

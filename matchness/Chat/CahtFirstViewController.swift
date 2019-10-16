@@ -15,7 +15,7 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
     let stepInstance = TodayStep()
     
     var cellCount: Int = 0
-    var dataSource: Dictionary<String, ApiMessageList> = [:]
+    var dataSource: Dictionary<String, ApiMessage> = [:]
     var dataSourceOrder: Array<String> = []
     
     @IBOutlet weak var ChatTableView: UITableView!
@@ -90,26 +90,24 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
         }
     }
     
-    
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-//        return self.cellCount
+//        return 1
+        return self.cellCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = ChatTableView.dequeueReusableCell(withIdentifier: "NotDataTableViewCell") as! NotDataTableViewCell
 
         if self.cellCount != 0 {
-            var message = self.dataSource[String(indexPath.row)]
+            var message = self.dataSource["0"]!.message[indexPath.row]
             let cell = ChatTableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
-            cell.ChatName.text = message?.name
-            cell.ChatDate.text = message?.created_at
-            cell.ChatMessage.text = message?.last_message
+            cell.ChatName.text = message.target_name
+            cell.ChatDate.text = message.created_at
+            cell.ChatMessage.text = message.last_message
             var number = Int.random(in: 1 ... 18)
             cell.ChatImage.image = UIImage(named: "\(number)")
 //            cell.tag = message!.room_code!)!
@@ -140,13 +138,12 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
         let selectedCell = tableView.cellForRow(at: indexPath)
         let message_id = selectedCell?.tag ?? 0
         
-        var users = self.dataSource[String(message_id)]
-        let message_users:[String:Any] = [
-            "user_id_1":"2",
-            "user_name_1":"2",
-            "user_id_2":users.id,
-            "user_name_2":users.name,
-            "room_code":users.room_code,
+        var users = self.dataSource["0"]!.message[message_id]
+        let message_users:[String:String] = [
+            "room_code":String(users.room_code!),
+            "user_id":self.dataSource["0"]!.id!,
+            "user_name":self.dataSource["0"]!.name!,
+            "point":self.dataSource["0"]!.point!,
         ]
         self.performSegue(withIdentifier: "toMessage", sender: message_users)
     }
@@ -156,7 +153,10 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toMessage" {
             let mvc = segue.destination as! MessageViewController
-            mvc.message_users = sender as! [String : Any]
+
+            print("sendersendersendersender")
+            print(sender)
+            mvc.message_users = sender as! [String : String]
         }
     }
 
@@ -180,7 +180,7 @@ extension CahtFirstViewController : CahtFirstModelDelegate {
         print(self.dataSourceOrder)
         print("耳耳耳意味耳みm")
         //cellの件数更新
-        self.cellCount = dataSourceOrder.count;
+        self.cellCount = dataSource["0"]!.message.count;
         
         print("路オロロロロロロロロ路r")
         self.page_no = String(model.page);
