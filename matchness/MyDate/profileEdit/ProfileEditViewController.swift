@@ -9,17 +9,16 @@
 import UIKit
 
 class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
+
+
     
     let userDefaults = UserDefaults.standard
     @IBOutlet weak var UserProfileTable: UITableView!
-    
-    let pickerView = UIPickerView()
-    let datePickerView = UIDatePicker()
+    @IBOutlet weak var datePickerView: UIDatePicker!
+    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var pickerBottom: NSLayoutConstraint!
+    @IBOutlet weak var detaPickerBottom: NSLayoutConstraint!
+
     var setDateviewTime = ""
     var vi = UIView()
     var isDate = Date()
@@ -33,13 +32,15 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
 
     var editType: Int = 0
     var selectRow = 0
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         UserProfileTable.delegate = self
         UserProfileTable.dataSource = self
         // Do any additional setup after loading the view.
-
+        pickerView.delegate   = self
+        pickerView.dataSource = self
         pickerView.showsSelectionIndicator = true
         
         self.UserProfileTable.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
@@ -231,8 +232,8 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         print("タップ")
         print(indexPath.row)
 
-        cancelPressed()
-        cancelDatePressed()
+        dismissPicker()
+        dismissDatePicker()
         if indexPath.row == 0 {
             print("カメラ")
             selectImage()
@@ -277,10 +278,11 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
             dateFormater.locale = Locale(identifier: "ja_JP")
             dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
             let date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
-
             datePickerView.date = date!
+            print("デートピッカーーーーーーーー")
             datePickerPush()
         } else {
+            print("ピッカーーーーーーーー")
             PickerPush()
         }
         tableView.deselectRow(at: indexPath, animated: true)
@@ -296,65 +298,9 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
 
-    func PickerPush(){
-        pickerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: pickerView.bounds.size.height)
-        // Connect data:
-        pickerView.delegate   = self
-        pickerView.dataSource = self
-        vi = UIView(frame: pickerView.bounds)
-        vi.backgroundColor = UIColor.red
-        vi.addSubview(pickerView)
 
-        let screenSize = UIScreen.main.bounds.size
-        vi.frame.origin.y = screenSize.height
-        UIView.animate(withDuration: 0.3) {
-            self.vi.frame.origin.y = screenSize.height - self.vi.bounds.size.height
-        }
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor.black
-        let doneButton = UIBarButtonItem(title: "決定", style: UIBarButtonItem.Style.done, target: self, action: #selector(ProfileEditViewController.donePressed))
-        let cancelButton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ProfileEditViewController.cancelPressed))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        toolBar.sizeToFit()
-        vi.addSubview(toolBar)
-        view.addSubview(vi)
-        print("push")
-    }
-    
-    func datePickerPush(){
-        datePickerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: datePickerView.bounds.size.height)
-        // Connect data:
-        pickerView.delegate   = self
-        pickerView.dataSource = self
-        vi = UIView(frame: datePickerView.bounds)
-        vi.backgroundColor = UIColor.white
-        vi.addSubview(datePickerView)
-        view.addSubview(vi)
-        let screenSize = UIScreen.main.bounds.size
-        vi.frame.origin.y = screenSize.height
-        UIView.animate(withDuration: 0.3) {
-            self.vi.frame.origin.y = screenSize.height - self.vi.bounds.size.height
-        }
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor.black
-        let doneButton   = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(ProfileEditViewController.doneDatePressed))
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ProfileEditViewController.cancelDatePressed))
-        let spaceButton  = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        toolBar.sizeToFit()
-        vi.addSubview(toolBar)
-        print("push")
-    }
-    
-    @objc func donePressed() {
-        print("bbbb")
+    @IBAction func pickerSelectButton(_ sender: Any) {
+        print("セレクトピッカーセレクトピッカーbbbb")
         print("セレクトピッカー")
         print(self.selectPicker)
 
@@ -379,41 +325,81 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         if self.selectPicker == 7 {
             self.dataSource["0"]?.blood_type = self.selectPickerItem
         }
+        dismissPicker()
         UserProfileTable.reloadData()
         self.vi.removeFromSuperview()
+
+    }
+    @IBAction func pickerCloseButton(_ sender: Any) {
+        dismissPicker()
     }
     
-    // Cancel
-    @objc func cancelPressed() {
-        print("aaaaa")
-        //        UITextField.text = ""
-        self.vi.endEditing(true)
-        self.vi.removeFromSuperview()
+    func PickerPush(){
+        print("ピッカーーーーーーーー")
+        self.view.endEditing(true)
+        UIView.animate(withDuration: 0.5,animations: {
+//            self.datePickerView.date = self.setDay
+            self.pickerBottom.constant = -280
+            self.pickerView.updateConstraints()
+            self.UserProfileTable.updateConstraints()
+            self.view.layoutIfNeeded()
+        })
     }
     
-    @objc func doneDatePressed() {
+    func dismissPicker(){
+        UIView.animate(withDuration: 0.5,animations: {
+            self.pickerBottom.constant = 300
+            self.pickerView.updateConstraints()
+            self.UserProfileTable.updateConstraints()
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    @IBAction func dateSelectButton(_ sender: Any) {
         print("セットセットセットセット")
         print(self.setDateviewTime)
         self.vi.removeFromSuperview()
         UserProfileTable.reloadData()
+        dismissDatePicker()
     }
-    
-    @objc func cancelDatePressed() {
-        self.vi.removeFromSuperview()
+    @IBAction func dateCloseButton(_ sender: Any) {
+        dismissDatePicker()
     }
 
-    // ドラムロールの行数
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.pcker_list.count
+    func datePickerPush(){
+        self.view.endEditing(true)
+        UIView.animate(withDuration: 0.5,animations: {
+            self.detaPickerBottom.constant = -280
+            self.datePickerView.updateConstraints()
+            self.UserProfileTable.updateConstraints()
+            self.view.layoutIfNeeded()
+        })
     }
     
-    // ドラムロールの各タイトル
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        print(self.pcker_list[row])
+    func dismissDatePicker(){
+        UIView.animate(withDuration: 0.5,animations: {
+            self.detaPickerBottom.constant = 300
+            self.datePickerView.updateConstraints()
+            self.UserProfileTable.updateConstraints()
+            self.view.layoutIfNeeded()
+        })
+    }
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        print("p1p1p1p1p")
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        print("p2p2p2p2p2")
+        return self.pcker_list.count
+    }
+    // UIPickerViewに表示する配列
+    func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
+        print("p3p3p3p3p3")
         return self.pcker_list[row]
     }
 
-    // ドラムロール選択時
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectPickerItem = row
         print("選択ピッカー選択ピッカー選択ピッカー")

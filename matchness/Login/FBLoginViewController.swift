@@ -13,37 +13,48 @@ import FBSDKShareKit
 
 class FBLoginViewController: UIViewController, LoginButtonDelegate {
     
+var userProfile : NSDictionary = [:]
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // Facebookログイン用ボタンがSDKに用意されている
+        let facebookLoginButton = FBLoginButton()
+        // アクセス許可
+        facebookLoginButton.permissions = ["public_profile", "email"]
+        facebookLoginButton.center = self.view.center
+        facebookLoginButton.delegate = self
+        self.view.addSubview(facebookLoginButton)
+
+        // ログイン済みかチェック
+        checkloginFacebook()
         // Do any additional setup after loading the view, typically from a nib.
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        let fbLoginBtn = FBLoginButton()
-//            fbLoginBtn.readPermissions = ["public_profile", "email"]
-            fbLoginBtn.center = self.view.center
-            fbLoginBtn.delegate = self
+
+    /// ログイン済みかチェック
+    func checkloginFacebook() {
+        if let _ = AccessToken.current {
+            print("Logged in")
+        } else {
+            print("Not Logged in")
+        }
     }
     
     //    ログインコールバック
     func loginButton(_ loginButton: FBLoginButton!, didCompleteWith result: LoginManagerLoginResult!, error: Error!) {
-        //        エラーチェック
+        //エラーチェック
         if error == nil {
-            //            キャンセルしたかどうか
+            //キャンセルしたかどうか
             if result.isCancelled {
                 print("キャンセルFBlogin")
             }else{
                 print("AAAAAAAAAA")
-                //            画面遷移
+                //画面遷移
                 let storyboard: UIStoryboard = self.storyboard!
                 //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
                 let multiple = storyboard.instantiateViewController(withIdentifier: "profile")
                 //ここが実際に移動するコードとなります
                 self.present(multiple, animated: false, completion: nil)
-
-
-                //                画面遷移
+                //画面遷移
 //                performSegue(withIdentifier: "toProfile", sender: self)
             }
         }else{

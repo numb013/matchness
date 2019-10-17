@@ -41,9 +41,13 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
             // 画面遷移
             let storyboard: UIStoryboard = self.storyboard!
             // ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-            let multiple = storyboard.instantiateViewController(withIdentifier: "fblogin")
+            let multiple = storyboard.instantiateViewController(withIdentifier: "fblogin") as! FBLoginViewController
             // ここが実際に移動するコードとなります
             self.present(multiple, animated: false, completion: nil)
+
+
+
+
         }
         super.viewDidLoad()
         userDetail.delegate = self

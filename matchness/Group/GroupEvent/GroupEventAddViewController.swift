@@ -13,8 +13,11 @@ class GroupEventAddAddViewController: UIViewController, UITableViewDelegate, UIT
 
     @IBOutlet weak var tableView: UITableView!
     
-    let pickerView = UIPickerView()
-    let datePickerView = UIDatePicker()
+    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var datePickerView: UIDatePicker!
+    @IBOutlet weak var pickerBottom: NSLayoutConstraint!
+    @IBOutlet weak var datePickerButton: NSLayoutConstraint!
+    
     var setDateviewTime = ""
     var vi = UIView()
     var isDate = Date()
@@ -38,10 +41,20 @@ class GroupEventAddAddViewController: UIViewController, UITableViewDelegate, UIT
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
+        pickerView.delegate   = self
+        pickerView.dataSource = self
+     pickerView.showsSelectionIndicator = true
         self.tableView.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
         
         self.tableView.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
+        
+        // datePickerの設定
+        datePickerView.date = isDate
+        datePickerView.datePickerMode = .date
+        datePickerView.locale = Locale(identifier: "ja")
+        datePickerView.addTarget(self, action: #selector(setText), for: .valueChanged)
+        datePickerView.backgroundColor = UIColor.white
+
         
         // Do any additional setup after loading the view.
     }
@@ -136,7 +149,8 @@ class GroupEventAddAddViewController: UIViewController, UITableViewDelegate, UIT
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        cancelPressed()
+        dismissPicker()
+        dismissDatePicker()
         if indexPath.row == 0 {
             self.selectPicker = 0
         }
@@ -174,103 +188,219 @@ class GroupEventAddAddViewController: UIViewController, UITableViewDelegate, UIT
         return 60
     }
     
-    func PickerPush(){
-        pickerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: pickerView.bounds.size.height)
-        // Connect data:
-        pickerView.delegate   = self
-        pickerView.dataSource = self
-        vi = UIView(frame: pickerView.bounds)
-        vi.backgroundColor = UIColor.white
-        vi.addSubview(pickerView)
-        view.addSubview(vi)
-        let screenSize = UIScreen.main.bounds.size
-        vi.frame.origin.y = screenSize.height
-        UIView.animate(withDuration: 0.3) {
-            self.vi.frame.origin.y = screenSize.height - self.vi.bounds.size.height
-        }
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor.black
-        let doneButton   = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(GroupEventAddAddViewController.donePressed))
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(GroupEventAddAddViewController.cancelPressed))
-        let spaceButton  = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        toolBar.sizeToFit()
-        vi.addSubview(toolBar)
-        print("push")
-    }
-    
-    
-    
-    // Done
-    @objc func donePressed() {
-        print("bbbb")
+//    func PickerPush(){
+//        pickerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: pickerView.bounds.size.height)
+//        // Connect data:
+//        pickerView.delegate   = self
+//        pickerView.dataSource = self
+//        vi = UIView(frame: pickerView.bounds)
+//        vi.backgroundColor = UIColor.white
+//        vi.addSubview(pickerView)
+//        view.addSubview(vi)
+//        let screenSize = UIScreen.main.bounds.size
+//        vi.frame.origin.y = screenSize.height
+//        UIView.animate(withDuration: 0.3) {
+//            self.vi.frame.origin.y = screenSize.height - self.vi.bounds.size.height
+//        }
+//        let toolBar = UIToolbar()
+//        toolBar.barStyle = UIBarStyle.default
+//        toolBar.isTranslucent = true
+//        toolBar.tintColor = UIColor.black
+//        let doneButton   = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(GroupEventAddAddViewController.donePressed))
+//        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(GroupEventAddAddViewController.cancelPressed))
+//        let spaceButton  = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+//        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+//        toolBar.isUserInteractionEnabled = true
+//        toolBar.sizeToFit()
+//        vi.addSubview(toolBar)
+//        print("push")
+//    }
+//
+//
+//
+//    // Done
+//    @objc func donePressed() {
+//        print("bbbb")
+//
+//        print("セレクトピッカー")
+//        print(self.selectPicker)
+//        if self.selectPicker == 0 {
+//
+//        }
+//        if self.selectPicker == 1 {
+//            self.event_peple = String(self.selectPickerItem)
+//        }
+//        if self.selectPicker == 2 {
+//            self.event_period = String(self.selectPickerItem)
+//        }
+//        if self.selectPicker == 3 {
+//            self.present_point = String(self.selectPickerItem)
+//        }
+//        if self.selectPicker == 4 {
+//            self.event_type = String(self.selectPickerItem)
+//        }
+//        if self.selectPicker == 5 {
+//            self.start_type = String(self.selectPickerItem)
+//        }
+//
+//        tableView.reloadData()
+//        self.vi.removeFromSuperview()
+//    }
+//
+//    // Cancel
+//    @objc func cancelPressed() {
+//        print("aaaaa")
+//        //        UITextField.text = ""
+//        self.vi.endEditing(true)
+//        self.vi.removeFromSuperview()
+//    }
+//
+//    @objc func doneDatePressed() {
+//        print("セットセットセットセット")
+//        print(self.setDateviewTime)
+//        tableView.reloadData()
+//        self.vi.removeFromSuperview()
+//    }
+//
+//    @objc func cancelDatePressed() {
+//        self.vi.removeFromSuperview()
+//    }
+//
+//
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return self.pcker_list[row]
+//    }
+//
+//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//        return 1
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return self.pcker_list.count
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        print(self.pcker_list[row])
+//        self.selectPickerItem = row
+//        print("選択ピッカー選択ピッカー選択ピッカー")
+//
+//    }
+
+
+
+        @IBAction func pickerSelectButton(_ sender: Any) {
+               print("bbbb")
+                print("セレクトピッカー")
+                print(self.selectPicker)
+                if self.selectPicker == 0 {
         
-        print("セレクトピッカー")
-        print(self.selectPicker)
-        if self.selectPicker == 0 {
-            
+                }
+                if self.selectPicker == 1 {
+                    self.event_peple = String(self.selectPickerItem)
+                }
+                if self.selectPicker == 2 {
+                    self.event_period = String(self.selectPickerItem)
+                }
+                if self.selectPicker == 3 {
+                    self.present_point = String(self.selectPickerItem)
+                }
+                if self.selectPicker == 4 {
+                    self.event_type = String(self.selectPickerItem)
+                }
+                if self.selectPicker == 5 {
+                    self.start_type = String(self.selectPickerItem)
+                }
+                dismissPicker()
+                tableView.reloadData()
+                self.vi.removeFromSuperview()
         }
-        if self.selectPicker == 1 {
-            self.event_peple = String(self.selectPickerItem)
-        }
-        if self.selectPicker == 2 {
-            self.event_period = String(self.selectPickerItem)
-        }
-        if self.selectPicker == 3 {
-            self.present_point = String(self.selectPickerItem)
-        }
-        if self.selectPicker == 4 {
-            self.event_type = String(self.selectPickerItem)
-        }
-        if self.selectPicker == 5 {
-            self.start_type = String(self.selectPickerItem)
+
+        @IBAction func pickerCloseButton(_ sender: Any) {
+            dismissPicker()
         }
         
-        tableView.reloadData()
-        self.vi.removeFromSuperview()
-    }
-    
-    // Cancel
-    @objc func cancelPressed() {
-        print("aaaaa")
-        //        UITextField.text = ""
-        self.vi.endEditing(true)
-        self.vi.removeFromSuperview()
-    }
-    
-    @objc func doneDatePressed() {
-        print("セットセットセットセット")
-        print(self.setDateviewTime)
-        tableView.reloadData()
-        self.vi.removeFromSuperview()
-    }
-    
-    @objc func cancelDatePressed() {
-        self.vi.removeFromSuperview()
-    }
-    
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.pcker_list[row]
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.pcker_list.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(self.pcker_list[row])
-        self.selectPickerItem = row
-        print("選択ピッカー選択ピッカー選択ピッカー")
+        func PickerPush(){
+            print("ピッカーーーーーーーー")
+            self.view.endEditing(true)
+            UIView.animate(withDuration: 0.5,animations: {
+    //            self.datePickerView.date = self.setDay
+                self.pickerBottom.constant = -280
+                self.pickerView.updateConstraints()
+                self.tableView.updateConstraints()
+                self.view.layoutIfNeeded()
+            })
+        }
         
+        func dismissPicker(){
+            UIView.animate(withDuration: 0.5,animations: {
+                self.pickerBottom.constant = 300
+                self.pickerView.updateConstraints()
+                self.tableView.updateConstraints()
+                self.view.layoutIfNeeded()
+            })
+        }
+        
+        @IBAction func dateSelectButton(_ sender: Any) {
+            print("セットセットセットセット")
+            print(self.setDateviewTime)
+            self.vi.removeFromSuperview()
+            tableView.reloadData()
+            dismissDatePicker()
+        }
+        @IBAction func dateCloseButton(_ sender: Any) {
+            dismissDatePicker()
+        }
+
+        func datePickerPush(){
+            self.view.endEditing(true)
+            UIView.animate(withDuration: 0.5,animations: {
+                self.datePickerButton.constant = -280
+                self.datePickerView.updateConstraints()
+                self.tableView.updateConstraints()
+                self.view.layoutIfNeeded()
+            })
+        }
+        
+        func dismissDatePicker(){
+            UIView.animate(withDuration: 0.5,animations: {
+                self.datePickerButton.constant = 300
+                self.datePickerView.updateConstraints()
+                self.tableView.updateConstraints()
+                self.view.layoutIfNeeded()
+            })
+        }
+
+        func numberOfComponents(in pickerView: UIPickerView) -> Int {
+            print("p1p1p1p1p")
+            return 1
+        }
+        
+        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+            print("p2p2p2p2p2")
+            return self.pcker_list.count
+        }
+        // UIPickerViewに表示する配列
+        func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
+            print("p3p3p3p3p3")
+            return self.pcker_list[row]
+        }
+
+        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+            self.selectPickerItem = row
+            print("選択ピッカー選択ピッカー選択ピッカー")
+        }
+
+    // datePickerの日付けをtextFieldのtextに反映させる
+    @objc private func setText() {
+        let dateFormater = DateFormatter()
+        dateFormater.locale = Locale(identifier: "ja_JP")
+        dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        self.setDateviewTime = dateFormater.string(from: datePickerView.date)
+//        self.dataSource["0"]?.birthday = self.setDateviewTime
+        print("時間時間時間")
+        print(datePickerView.date)
     }
+    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         print("テキスト１")
