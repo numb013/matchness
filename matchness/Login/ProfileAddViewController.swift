@@ -57,7 +57,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         pickerView.showsSelectionIndicator = true
         
         self.profileAddTableView.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
-
         self.profileAddTableView.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
 
         self.profileAddTableView.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")

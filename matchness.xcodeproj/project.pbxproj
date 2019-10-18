@@ -55,6 +55,7 @@
 		849E34B62355A2840062E928 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849E34B22355A2840062E928 /* Bolts.framework */; };
 		849E34B72355A2840062E928 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849E34B32355A2840062E928 /* FBSDKLoginKit.framework */; };
 		849E34BB2355A39A0062E928 /* ApiGroupEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E34BA2355A3990062E928 /* ApiGroupEvent.swift */; };
+		849E34BD23593C900062E928 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E34BC23593C900062E928 /* SearchTableViewController.swift */; };
 		B40A33FE232A5AD700583CCC /* ApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EB232A5AD500583CCC /* ApiConfig.swift */; };
 		B40A33FF232A5AD700583CCC /* ApiGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EC232A5AD500583CCC /* ApiGroupList.swift */; };
 		B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33ED232A5AD500583CCC /* ApiRequest.swift */; };
@@ -195,6 +196,7 @@
 		849E34B22355A2840062E928 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../../../Downloads/FacebookSDKs-iOS-4.40.0 (1) 2/Bolts.framework"; sourceTree = "<group>"; };
 		849E34B32355A2840062E928 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../../Downloads/FacebookSDKs-iOS-4.40.0 (1) 2/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		849E34BA2355A3990062E928 /* ApiGroupEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiGroupEvent.swift; path = matchness/API/ApiGroupEvent.swift; sourceTree = "<group>"; };
+		849E34BC23593C900062E928 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		946D3AF11F4FBEBAFE993661 /* Pods_matchness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_matchness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD66A8BE7976CA8BC6F822EA /* Pods-matchnessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matchnessTests.debug.xcconfig"; path = "Target Support Files/Pods-matchnessTests/Pods-matchnessTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B40A33EB232A5AD500583CCC /* ApiConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiConfig.swift; path = matchness/API/ApiConfig.swift; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 				B49CCD9422D592AD00F793F1 /* UserSearchModel.swift */,
 				CE05742222A6CF3E0082182F /* UserSearchCollectionViewCell.swift */,
 				CE05742322A6CF3E0082182F /* UserSearchCollectionViewCell.xib */,
+				849E34BC23593C900062E928 /* SearchTableViewController.swift */,
 			);
 			path = UserSearch;
 			sourceTree = "<group>";
@@ -950,6 +953,7 @@
 				B45677112330DC6300E0E9B7 /* NoticeModel.swift in Sources */,
 				8409E5FF233779B4009BA908 /* ApiPointHistory.swift in Sources */,
 				848A3330231BCA4000144950 /* TodayStep.swift in Sources */,
+				849E34BD23593C900062E928 /* SearchTableViewController.swift in Sources */,
 				CE05742822A8EB0C0082182F /* GroupTableViewCell.swift in Sources */,
 				8409E5FB23377623009BA908 /* PointHistoryViewController.swift in Sources */,
 				848A3325231A8B9D00144950 /* SettingEditViewController.swift in Sources */,
