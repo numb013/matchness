@@ -29,7 +29,7 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
         textFiled.delegate = self
         // Do any additional setup after loading the view.
         
-        sendButton.isEnabled = false
+//        sendButton.isEnabled = false
         self.tableView.register(UINib(nibName: "GroupChatTableViewCell", bundle: nil), forCellReuseIdentifier: "GroupChatTableViewCell")
         apiRequest()
     }
@@ -105,6 +105,9 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         var tag = textField.tag
+        print("テキスト2")
+        print(textField.text!)
+
         print(textField.text!)
         if tag == 0 {
             self.comment = textField.text!
@@ -114,6 +117,9 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("テキスト3")
+        print(textField.text!)
+
         // キーボードを閉じる
         self.comment = textField.text!
         textField.resignFirstResponder()
@@ -124,7 +130,10 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBAction func sendGroupChat(_ sender: Any) {
 
         textFiled.endEditing(true)
-        
+        sendButton.isEnabled = false
+print("コメントコメントコメントコメントコメントコメント")
+        print(self.comment)
+
         let requestGroupChatModel = GroupChatModel();
         requestGroupChatModel.delegate = self as! GroupChatModelDelegate;
         //リクエスト先
@@ -154,7 +163,7 @@ extension GroupChatViewController : GroupChatModelDelegate {
         self.cellCount = dataSourceOrder.count;
         var count: Int = 0;
         textFiled.text = ""
-        sendButton.isEnabled = false
+//        sendButton.isEnabled = false
         self.comment = ""
         tableView.reloadData()
     }

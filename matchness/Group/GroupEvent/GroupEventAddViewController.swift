@@ -1,5 +1,5 @@
 //
-//  GroupEventAddAddViewController.swift
+//  GroupEventAddViewController.swift
 //  matchness
 //
 //  Created by user on 2019/07/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GroupEventAddAddViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     let userDefaults = UserDefaults.standard
 
     @IBOutlet weak var tableView: UITableView!
@@ -43,7 +43,7 @@ class GroupEventAddAddViewController: UIViewController, UITableViewDelegate, UIT
         tableView.dataSource = self
         pickerView.delegate   = self
         pickerView.dataSource = self
-     pickerView.showsSelectionIndicator = true
+        pickerView.showsSelectionIndicator = true
         self.tableView.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
         
         self.tableView.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
@@ -188,106 +188,6 @@ class GroupEventAddAddViewController: UIViewController, UITableViewDelegate, UIT
         return 60
     }
     
-//    func PickerPush(){
-//        pickerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: pickerView.bounds.size.height)
-//        // Connect data:
-//        pickerView.delegate   = self
-//        pickerView.dataSource = self
-//        vi = UIView(frame: pickerView.bounds)
-//        vi.backgroundColor = UIColor.white
-//        vi.addSubview(pickerView)
-//        view.addSubview(vi)
-//        let screenSize = UIScreen.main.bounds.size
-//        vi.frame.origin.y = screenSize.height
-//        UIView.animate(withDuration: 0.3) {
-//            self.vi.frame.origin.y = screenSize.height - self.vi.bounds.size.height
-//        }
-//        let toolBar = UIToolbar()
-//        toolBar.barStyle = UIBarStyle.default
-//        toolBar.isTranslucent = true
-//        toolBar.tintColor = UIColor.black
-//        let doneButton   = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(GroupEventAddAddViewController.donePressed))
-//        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(GroupEventAddAddViewController.cancelPressed))
-//        let spaceButton  = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-//        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-//        toolBar.isUserInteractionEnabled = true
-//        toolBar.sizeToFit()
-//        vi.addSubview(toolBar)
-//        print("push")
-//    }
-//
-//
-//
-//    // Done
-//    @objc func donePressed() {
-//        print("bbbb")
-//
-//        print("セレクトピッカー")
-//        print(self.selectPicker)
-//        if self.selectPicker == 0 {
-//
-//        }
-//        if self.selectPicker == 1 {
-//            self.event_peple = String(self.selectPickerItem)
-//        }
-//        if self.selectPicker == 2 {
-//            self.event_period = String(self.selectPickerItem)
-//        }
-//        if self.selectPicker == 3 {
-//            self.present_point = String(self.selectPickerItem)
-//        }
-//        if self.selectPicker == 4 {
-//            self.event_type = String(self.selectPickerItem)
-//        }
-//        if self.selectPicker == 5 {
-//            self.start_type = String(self.selectPickerItem)
-//        }
-//
-//        tableView.reloadData()
-//        self.vi.removeFromSuperview()
-//    }
-//
-//    // Cancel
-//    @objc func cancelPressed() {
-//        print("aaaaa")
-//        //        UITextField.text = ""
-//        self.vi.endEditing(true)
-//        self.vi.removeFromSuperview()
-//    }
-//
-//    @objc func doneDatePressed() {
-//        print("セットセットセットセット")
-//        print(self.setDateviewTime)
-//        tableView.reloadData()
-//        self.vi.removeFromSuperview()
-//    }
-//
-//    @objc func cancelDatePressed() {
-//        self.vi.removeFromSuperview()
-//    }
-//
-//
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return self.pcker_list[row]
-//    }
-//
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return self.pcker_list.count
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        print(self.pcker_list[row])
-//        self.selectPickerItem = row
-//        print("選択ピッカー選択ピッカー選択ピッカー")
-//
-//    }
-
-
-
         @IBAction func pickerSelectButton(_ sender: Any) {
                print("bbbb")
                 print("セレクトピッカー")
@@ -484,7 +384,7 @@ class GroupEventAddAddViewController: UIViewController, UITableViewDelegate, UIT
 
 
 
-extension GroupEventAddAddViewController : GroupEventAddModelDelegate {
+extension GroupEventAddViewController : GroupEventAddModelDelegate {
     
     func onStart(model: GroupEventAddModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")

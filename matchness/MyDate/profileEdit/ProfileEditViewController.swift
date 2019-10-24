@@ -18,7 +18,8 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var pickerBottom: NSLayoutConstraint!
     @IBOutlet weak var detaPickerBottom: NSLayoutConstraint!
-
+    //    let pickerView = UIPickerView()
+    //    let datePickerView = UIDatePicker()
     var setDateviewTime = ""
     var vi = UIView()
     var isDate = Date()

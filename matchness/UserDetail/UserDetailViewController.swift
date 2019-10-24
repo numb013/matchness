@@ -73,7 +73,25 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         // Do any additional setup after loading the view.
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
+        // ナビゲーションを透明にする処理
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        // 透明にしたナビゲーションを元に戻す処理
+        self.navigationController!.navigationBar.setBackgroundImage(nil, for: .default)
+        self.navigationController!.navigationBar.shadowImage = nil
+    }
+    
+    
+    
+    
     @IBOutlet weak var gradationView: GradationView!
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -318,6 +336,68 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             
         }
     }
+    
+    @IBAction func blockButtom(_ sender: Any) {
+       // UIAlertController
+       let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+       let actionChoise1 = UIAlertAction(title: "お気に入り", style: .default){
+           action in
+        self.userFavoriteBlock(1)
+       }
+       let actionChoise2 = UIAlertAction(title: "ブロックする", style: .default){
+           action in
+        self.userFavoriteBlock(0)
+       }
+       let actionNoChoise = UIAlertAction(title: "通報する", style: .destructive){
+           action in
+        self.createReport(3)
+       }
+       let actionCancel = UIAlertAction(title: "キャンセル", style: .cancel){
+           (action) -> Void in
+            print("Cancel")
+        }
+       // actionを追加
+       alertController.addAction(actionChoise1)
+       alertController.addAction(actionChoise2)
+       alertController.addAction(actionNoChoise)
+       alertController.addAction(actionCancel)
+       // UIAlertControllerの起動
+       present(alertController, animated: true, completion: nil)
+
+    }
+
+    func userFavoriteBlock(_ status:Int){
+        /****************
+         APIへリクエスト（ユーザー取得）
+         *****************/
+        //ロジック生成
+        let requestUserDetailModel = UserDetailModel();
+        requestUserDetailModel.delegate = self as! UserDetailModelDelegate;
+        //リクエスト先
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_FAVORITE_BLOCK;
+        //パラメーター
+        var query: Dictionary<String,String> = Dictionary<String,String>();
+        var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
+
+        print("ユーザーIDユーザーIDユーザーIDユーザーID")
+        print(matchness_user_id)
+
+        query["user_id"] = matchness_user_id
+        query["target_id"] = "\(user_id)"
+        query["status"] = String(status)
+
+        //リクエスト実行
+        if( !requestUserDetailModel.requestApi(url: requestUrl, addQuery: query) ){
+            
+        }
+    }
+
+    func createReport(_ status:Int){
+        print("toReporttoReporttoReporttoReporttoReport")
+        print(status)
+        performSegue(withIdentifier: "toReport", sender: self)
+    }
+    
     
     
 //    @objc func onLike(_ sender: MyTapGestureRecognizer) {

@@ -21,9 +21,9 @@ public struct ApiConfig {
      let SITE_BASIC_AUTHENTICATION_ACCOUNT_PASSWORD: String = "52011k";
      */
     #if DEBUG
-    static var SITE_DOMAIN: String = "c31c2091.ngrok.io";
+    static var SITE_DOMAIN: String = "22b95c79.ngrok.io";
     #else
-    static var SITE_DOMAIN: String = "c31c2091.ngrok.io";
+    static var SITE_DOMAIN: String = "22b95c79.ngrok.io";
     #endif
     
     //
@@ -77,7 +77,15 @@ public struct ApiConfig {
     static let REQUEST_URL_API_SELECT_NOTICE: String = REQUEST_URL_API + "/select_Notice";
     static let REQUEST_URL_API_SELECT_NOTICE_TEXT_BODY: String = REQUEST_URL_API + "/select_Notice_text_body";
     
+    static let REQUEST_URL_API_ADD_FAVORITE_BLOCK: String = REQUEST_URL_API + "/create_FavoriteBlock";
+    static let REQUEST_URL_API_DELETE_FAVORITE_BLOCK: String = REQUEST_URL_API + "/delete_FavoriteBlock";
+    static let REQUEST_URL_API_SELECT_FAVORITE_BLOCK: String = REQUEST_URL_API + "/select_FavoriteBlock";
+    
+    static let REQUEST_URL_API_ADD_REPORT: String = REQUEST_URL_API + "/create_report";
+    static let REQUEST_URL_API_CHARGE: String = REQUEST_URL_API + "/charge";
 
+    
+    
     static let WORK_LIST: [String] = ["未選択", "クリエイティブ", "コンピューター","出版", "放送", "流通", "金融", "医療・福祉", "教育・語学", "国家・自治体", "旅行関係", "料理関係", "動物・自然", "オフィス", "サービス", "エンターテイメント", "美容・ファッション", "建築・インテリア", "モノづくり", "交通機関", "冠婚葬祭", "自由業", "学生"]
 
     static let PREFECTURE_LIST: [String] = ["未選択", "北海道","青森","岩手","秋田","宮城","山形","福島","新潟","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","長野","山梨","静岡","岐阜","愛知","富山","石川","福井","滋賀","三重","京都","奈良","和歌山","大阪","兵庫","岡山","鳥取","島根","広島","山口","香川","愛媛","徳島","高知","福岡","佐賀","大分","長崎","熊本","宮崎","鹿児島","沖縄","海外"]

@@ -44,6 +44,7 @@ class GroupViewController: UIViewController {
                     let storyboard: UIStoryboard = self.storyboard!
                     //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
                     let multiple = storyboard.instantiateViewController(withIdentifier: "pointChange")
+                    multiple.modalPresentationStyle = .fullScreen
                     //ここが実際に移動するコードとなります
                     self.present(multiple, animated: false, completion: nil)
                 })

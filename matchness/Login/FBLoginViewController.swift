@@ -39,6 +39,7 @@ var userProfile : NSDictionary = [:]
         }
     }
     
+    
     //    ログインコールバック
     func loginButton(_ loginButton: FBLoginButton!, didCompleteWith result: LoginManagerLoginResult!, error: Error!) {
         //エラーチェック
@@ -47,15 +48,17 @@ var userProfile : NSDictionary = [:]
             if result.isCancelled {
                 print("キャンセルFBlogin")
             }else{
-                print("AAAAAAAAAA")
-                //画面遷移
-                let storyboard: UIStoryboard = self.storyboard!
-                //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-                let multiple = storyboard.instantiateViewController(withIdentifier: "profile")
-                //ここが実際に移動するコードとなります
-                self.present(multiple, animated: false, completion: nil)
-                //画面遷移
-//                performSegue(withIdentifier: "toProfile", sender: self)
+                print("GGGGGGGGGGGGGGG")
+//                //画面遷移
+//                let storyboard: UIStoryboard = self.storyboard!
+//                //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+//                let multiple = storyboard.instantiateViewController(withIdentifier: "toProfileEdit")
+//                multiple.modalPresentationStyle = .fullScreen
+//                //ここが実際に移動するコードとなります
+//                self.present(multiple, animated: false, completion: nil)
+//                画面遷移
+                performSegue(withIdentifier: "toProfileAdd", sender: self)
+                
             }
         }else{
             print("BBBBBBBBB")

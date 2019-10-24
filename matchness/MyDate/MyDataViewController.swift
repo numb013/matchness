@@ -232,46 +232,54 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
             let storyboard: UIStoryboard = self.storyboard!
             //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
             let multiple = storyboard.instantiateViewController(withIdentifier: "multiple") as? MultipleViewController
+            multiple!.modalPresentationStyle = .fullScreen
             //ここが実際に移動するコードとなります
             multiple!.status = indexPath.row
             self.present(multiple!, animated: false, completion: nil)
         }
 
         if (indexPath.row == 2) {
-            let storyboard: UIStoryboard = self.storyboard!
-            //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-            let multiple = storyboard.instantiateViewController(withIdentifier: "toProfileEdit")
-            //ここが実際に移動するコードとなります
-            self.present(multiple, animated: true, completion: nil)
+//            let storyboard: UIStoryboard = self.storyboard!
+//            //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+//            let multiple = storyboard.instantiateViewController(withIdentifier: "toProfileEdit")
+//            //ここが実際に移動するコードとなります
+//            self.present(multiple, animated: true, completion: nil)
+            performSegue(withIdentifier: "toProfiletoProfile", sender: self)
         }
         if (indexPath.row == 4) {
             let storyboard: UIStoryboard = self.storyboard!
             //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
             let multiple = storyboard.instantiateViewController(withIdentifier: "pointChange")
             //ここが実際に移動するコードとなります
+            multiple.modalPresentationStyle = .fullScreen
             self.present(multiple, animated: false, completion: nil)
+
         }
 
         if (indexPath.row == 5) {
             let storyboard: UIStoryboard = self.storyboard!
             //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
             let multiple = storyboard.instantiateViewController(withIdentifier: "toNotice")
+            multiple.modalPresentationStyle = .fullScreen
             //ここが実際に移動するコードとなります
             self.present(multiple, animated: false, completion: nil)
         }
         if (indexPath.row == 7) {
             let storyboard: UIStoryboard = self.storyboard!
             let multiple = storyboard.instantiateViewController(withIdentifier: "toSettingEdit")
+            multiple.modalPresentationStyle = .fullScreen
             self.present(multiple, animated: false, completion: nil)
         }
         if (indexPath.row == 9) {
             let storyboard: UIStoryboard = self.storyboard!
             let multiple = storyboard.instantiateViewController(withIdentifier: "toPointHistory")
+            multiple.modalPresentationStyle = .fullScreen
             self.present(multiple, animated: false, completion: nil)
         }
         if (indexPath.row == 10) {
             let storyboard: UIStoryboard = self.storyboard!
             let multiple = storyboard.instantiateViewController(withIdentifier: "toMyData") as! MyDateStepViewController
+            multiple.modalPresentationStyle = .fullScreen
             multiple.weight = self.weight
 
 print("!!!!!!!!!!!!!")
@@ -315,6 +323,7 @@ print(self.weight)
     @IBAction func MyDataButton(_ sender: Any) {
         let storyboard: UIStoryboard = self.storyboard!
         let multiple = storyboard.instantiateViewController(withIdentifier: "toMyData") as! MyDateStepViewController
+        multiple.modalPresentationStyle = .fullScreen
         multiple.weight = self.weight
         
         print("!ooooooooo")
@@ -327,7 +336,7 @@ print(self.weight)
         let uiAlertControl = UIAlertController(title: "Photo", message: "Photo of the Day", preferredStyle: .alert)
         let uiImageAlertAction = UIAlertAction(title: "", style: .default, handler: nil)
         let image = UIImage(named: "alert")
-    uiImageAlertAction.setValue(image?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), forKey: "image")
+        uiImageAlertAction.setValue(image?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), forKey: "image")
 
         uiAlertControl.addAction(uiImageAlertAction)
         // Cancel のaction

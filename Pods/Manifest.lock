@@ -114,6 +114,7 @@ PODS:
   - SDWebImage (5.1.1):
     - SDWebImage/Core (= 5.1.1)
   - SDWebImage/Core (5.1.1)
+  - Stripe (17.0.1)
   - SwiftyJSON (4.0.0)
   - XLPagerTabStrip (9.0.0)
 
@@ -132,6 +133,7 @@ DEPENDENCIES:
   - MBCircularProgressBar
   - PagingMenuController
   - SDWebImage
+  - Stripe
   - SwiftyJSON (= 4.0)
   - XLPagerTabStrip
 
@@ -168,6 +170,7 @@ SPEC REPOS:
     - PagingMenuController
     - Protobuf
     - SDWebImage
+    - Stripe
     - SwiftyJSON
     - XLPagerTabStrip
 
@@ -203,9 +206,10 @@ SPEC CHECKSUMS:
   PagingMenuController: 6176618987bb170096664f2da097313e45ed9c31
   Protobuf: 67fb42ba613def994e61854de2b3164f13790cc4
   SDWebImage: 96d7f03415ccb28d299d765f93557ff8a617abd8
+  Stripe: b8e845e12fd6dbc9cb010422b3b6b212e803d308
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 7365c743cea6a6677f4faf7c98758ec3940027c8
+PODFILE CHECKSUM: e24b35c4d14ac9fd1d2d2a1e6ba318d8273afef7
 
 COCOAPODS: 1.7.5

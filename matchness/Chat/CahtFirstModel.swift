@@ -161,9 +161,6 @@ extension CahtFirstModel : ApiRequestDelegate {
         
         page += 1;
 
-
-
-
     }
     
     public func onComplete(){

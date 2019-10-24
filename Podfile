@@ -29,6 +29,7 @@ pod 'FirebaseMessaging'
 
 pod 'FBSDKLoginKit'
 pod 'FacebookCore'
+pod 'Stripe'
 
 #API通信
 pod 'Alamofire', '4.4'

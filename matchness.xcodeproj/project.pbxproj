@@ -15,6 +15,9 @@
 		8409E60223377CE8009BA908 /* TextAreaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8409E60023377CE8009BA908 /* TextAreaTableViewCell.swift */; };
 		8409E60323377CE8009BA908 /* TextAreaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8409E60123377CE8009BA908 /* TextAreaTableViewCell.xib */; };
 		840FB6F123310C0D00F6F55F /* CahtRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840FB6F023310C0D00F6F55F /* CahtRoomModel.swift */; };
+		842515E9236079DC00BB6888 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515E8236079DC00BB6888 /* ReportViewController.swift */; };
+		842515EC2360856500BB6888 /* ReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515EB2360856500BB6888 /* ReportModel.swift */; };
+		842515EE2360AC6900BB6888 /* StripeKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */; };
 		8432F2B022F09D6C00A60EC5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */; };
 		8432F2B222F0A2ED00A60EC5 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */; };
 		8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B822F16AF200A60EC5 /* FBLoginViewController.swift */; };
@@ -156,6 +159,9 @@
 		8409E60023377CE8009BA908 /* TextAreaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaTableViewCell.swift; sourceTree = "<group>"; };
 		8409E60123377CE8009BA908 /* TextAreaTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextAreaTableViewCell.xib; sourceTree = "<group>"; };
 		840FB6F023310C0D00F6F55F /* CahtRoomModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CahtRoomModel.swift; sourceTree = "<group>"; };
+		842515E8236079DC00BB6888 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		842515EB2360856500BB6888 /* ReportModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportModel.swift; sourceTree = "<group>"; };
+		842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeKeyProvider.swift; sourceTree = "<group>"; };
 		8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		8432F2B822F16AF200A60EC5 /* FBLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
@@ -334,6 +340,15 @@
 				8409E5FA23377623009BA908 /* PointHistoryViewController.swift */,
 			);
 			path = pointHistory;
+			sourceTree = "<group>";
+		};
+		842515EA2360851F00BB6888 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				842515EB2360856500BB6888 /* ReportModel.swift */,
+				842515E8236079DC00BB6888 /* ReportViewController.swift */,
+			);
+			path = Report;
 			sourceTree = "<group>";
 		};
 		8432F2B722F16ABB00A60EC5 /* Login */ = {
@@ -582,14 +597,16 @@
 			children = (
 				CE1D51F322CDDC240093DC58 /* matchness.entitlements */,
 				CE4B0988220942DE00F8A430 /* Main.storyboard */,
+				842515EA2360851F00BB6888 /* Report */,
+				CE1D51EE22CDD60C0093DC58 /* UserDetail */,
 				B49CCD9122D5872400F793F1 /* API */,
 				8432F2B722F16ABB00A60EC5 /* Login */,
 				CE1D51E922CDD5290093DC58 /* UserSearch */,
-				CE1D51EE22CDD60C0093DC58 /* UserDetail */,
 				CE1D51EC22CDD5AF0093DC58 /* Group */,
 				CE1D51EB22CDD56D0093DC58 /* Chat */,
 				CE1D51EA22CDD54D0093DC58 /* MyDate */,
 				CE4B0984220942DE00F8A430 /* AppDelegate.swift */,
+				842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */,
 				8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */,
 				CE4B0986220942DE00F8A430 /* ViewController.swift */,
 				848A332F231BCA4000144950 /* TodayStep.swift */,
@@ -900,6 +917,7 @@
 				848A333823216B1200144950 /* PreferredGroupListModel.swift in Sources */,
 				CE0F9EEC22DE348900D320F5 /* MultipleViewController.swift in Sources */,
 				CE05741D22A439330082182F /* JoinGroupViewController.swift in Sources */,
+				842515EE2360AC6900BB6888 /* StripeKeyProvider.swift in Sources */,
 				8405839122F4097D00FAB292 /* RegistCompViewController.swift in Sources */,
 				845956AB22FC71F300B79278 /* ProfileEditTableViewCell.swift in Sources */,
 				848A32CD230AF96700144950 /* UserDetailInfoTableViewCell.swift in Sources */,
@@ -914,6 +932,7 @@
 				8456F70C2353310B00819DC0 /* ApiUserInfo.swift in Sources */,
 				CE05743322AB547C0082182F /* CustomNavigationBar.swift in Sources */,
 				847398A5234224EC00D28135 /* ProfilImageTableViewCell.swift in Sources */,
+				842515E9236079DC00BB6888 /* ReportViewController.swift in Sources */,
 				B49CCD9522D592AD00F793F1 /* UserSearchModel.swift in Sources */,
 				8409E60223377CE8009BA908 /* TextAreaTableViewCell.swift in Sources */,
 				8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */,
@@ -946,6 +965,7 @@
 				CE0F9EF622E590BF00D320F5 /* PreferredGroupListViewController.swift in Sources */,
 				B40A3409232A5AD700583CCC /* ApiGroupEventList.swift in Sources */,
 				CE4B0987220942DE00F8A430 /* ViewController.swift in Sources */,
+				842515EC2360856500BB6888 /* ReportModel.swift in Sources */,
 				B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */,
 				B45677162330DC9D00E0E9B7 /* GroupChatModel.swift in Sources */,
 				B40A340F232A5AD700583CCC /* ApiUserDate.swift in Sources */,

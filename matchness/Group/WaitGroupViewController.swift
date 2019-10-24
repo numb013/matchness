@@ -146,6 +146,7 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
 
             let storyboard: UIStoryboard = self.storyboard!
             let next = storyboard.instantiateViewController(withIdentifier: "PreferredGroupList") as! PreferredGroupListViewController
+            next.modalPresentationStyle = .fullScreen
             next.group_id = group_id
 
             //ここが実際に移動するコードとなります

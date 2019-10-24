@@ -28,6 +28,18 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     var isLoading:Bool = false
 
     override func viewDidLoad() {
+
+        print("AAAAAAAAAA")
+//        //画面遷移
+//        let storyboard: UIStoryboard = self.storyboard!
+//        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+//        let multiple = storyboard.instantiateViewController(withIdentifier: "profile")
+//        multiple.modalPresentationStyle = .fullScreen
+//        //ここが実際に移動するコードとなります
+//        self.present(multiple, animated: true, completion: nil)
+        //画面遷移
+//                performSegue(withIdentifier: "toProfile", sender: self)
+
         print("チェックチェックチェックチェック")
         print(AccessToken.current)
 
@@ -42,12 +54,9 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
             let storyboard: UIStoryboard = self.storyboard!
             // ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
             let multiple = storyboard.instantiateViewController(withIdentifier: "fblogin") as! FBLoginViewController
+            multiple.modalPresentationStyle = .fullScreen
             // ここが実際に移動するコードとなります
             self.present(multiple, animated: false, completion: nil)
-
-
-
-
         }
         super.viewDidLoad()
         userDetail.delegate = self
