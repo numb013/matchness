@@ -18,6 +18,8 @@
 		842515E9236079DC00BB6888 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515E8236079DC00BB6888 /* ReportViewController.swift */; };
 		842515EC2360856500BB6888 /* ReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515EB2360856500BB6888 /* ReportModel.swift */; };
 		842515EE2360AC6900BB6888 /* StripeKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */; };
+		842515F32361836200BB6888 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515F12361836200BB6888 /* ButtonTableViewCell.swift */; };
+		842515F42361836200BB6888 /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842515F22361836200BB6888 /* ButtonTableViewCell.xib */; };
 		8432F2B022F09D6C00A60EC5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */; };
 		8432F2B222F0A2ED00A60EC5 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */; };
 		8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B822F16AF200A60EC5 /* FBLoginViewController.swift */; };
@@ -162,6 +164,8 @@
 		842515E8236079DC00BB6888 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		842515EB2360856500BB6888 /* ReportModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportModel.swift; sourceTree = "<group>"; };
 		842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeKeyProvider.swift; sourceTree = "<group>"; };
+		842515F12361836200BB6888 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
+		842515F22361836200BB6888 /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
 		8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		8432F2B822F16AF200A60EC5 /* FBLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
@@ -347,6 +351,8 @@
 			children = (
 				842515EB2360856500BB6888 /* ReportModel.swift */,
 				842515E8236079DC00BB6888 /* ReportViewController.swift */,
+				842515F12361836200BB6888 /* ButtonTableViewCell.swift */,
+				842515F22361836200BB6888 /* ButtonTableViewCell.xib */,
 			);
 			path = Report;
 			sourceTree = "<group>";
@@ -777,6 +783,7 @@
 				8409E60323377CE8009BA908 /* TextAreaTableViewCell.xib in Resources */,
 				CE4B098F220942E100F8A430 /* LaunchScreen.storyboard in Resources */,
 				8456F7122354301A00819DC0 /* GroupChatTableViewCell.xib in Resources */,
+				842515F42361836200BB6888 /* ButtonTableViewCell.xib in Resources */,
 				848A332D231BA37600144950 /* TextFiledTableViewCell.xib in Resources */,
 				845956AC22FC71F300B79278 /* ProfileEditTableViewCell.xib in Resources */,
 				B495CC0023339BCF006A029C /* NotDataTableViewCell.xib in Resources */,
@@ -950,6 +957,7 @@
 				849E34BB2355A39A0062E928 /* ApiGroupEvent.swift in Sources */,
 				848A32C5230AA57900144950 /* MultipleModel.swift in Sources */,
 				B40A340A232A5AD700583CCC /* ApiNoticeList.swift in Sources */,
+				842515F32361836200BB6888 /* ButtonTableViewCell.swift in Sources */,
 				B40A3402232A5AD700583CCC /* ApiGroupRequestList.swift in Sources */,
 				B40A33FE232A5AD700583CCC /* ApiConfig.swift in Sources */,
 				8432F2B222F0A2ED00A60EC5 /* SplashViewController.swift in Sources */,

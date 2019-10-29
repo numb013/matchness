@@ -399,6 +399,9 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
+    @IBAction func backFromUserDetailView(segue:UIStoryboardSegue){
+        NSLog("ReportViewController#backUserDetail")
+    }
     
 //    @objc func onLike(_ sender: MyTapGestureRecognizer) {
 //        print("タップタップタップいいね")

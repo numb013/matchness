@@ -1351,7 +1351,7 @@
                         <outlet property="UserDtailTable" destination="mhs-3K-NJg" id="eIq-rc-mjX"/>
                         <outlet property="chatButton" destination="oWb-J3-043" id="6m2-Kk-qrJ"/>
                         <outlet property="gradationView" destination="3CP-Ym-uhV" id="s8l-NH-cvx"/>
-                        <segue destination="c3O-9W-dSH" kind="presentation" identifier="toReport" id="0Fm-7q-nZi"/>
+                        <segue destination="c3O-9W-dSH" kind="show" identifier="toReport" id="0Fm-7q-nZi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Esp-Jw-abf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1609,15 +1609,15 @@
             <objects>
                 <viewController storyboardIdentifier="report" modalPresentationStyle="fullScreen" id="c3O-9W-dSH" customClass="ReportViewController" customModule="matchness" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jwn-5P-bu6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MGq-Er-uto">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="292" width="375" height="355"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="375" id="GG5-Un-3AF"/>
-                                    <constraint firstAttribute="height" constant="667" id="fMb-EO-HmJ"/>
+                                    <constraint firstAttribute="height" constant="355" id="5A3-nY-yYS"/>
+                                    <constraint firstAttribute="width" constant="375" id="Skd-zb-Buq"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="ProfileAddCell" id="q7L-Cc-bCJ">
@@ -1630,15 +1630,36 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="lgZ-c5-axu" userLabel="項目Stack View">
-                                <rect key="frame" x="0.0" y="967" width="375" height="258"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Ktd-nS-FPY">
+                                <rect key="frame" x="117" y="119" width="140" height="140.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="2V6-X7-Yet">
+                                        <rect key="frame" x="0.0" y="0.0" width="140" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="Mal-eV-Dr1"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m7E-O5-xmP">
+                                        <rect key="frame" x="49" y="120" width="42" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="PO1-ny-1hv"/>
+                                    <constraint firstAttribute="height" constant="140.5" id="dIP-hR-tf1"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="lgZ-c5-axu" userLabel="項目Stack View">
+                                <rect key="frame" x="0.0" y="791" width="375" height="258"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="2qP-vc-fQP">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OVg-op-cf7">
-                                                <rect key="frame" x="8" y="6" width="46" height="29"/>
+                                                <rect key="frame" x="8" y="6" width="46" height="17"/>
                                                 <state key="normal" title="閉じる"/>
                                                 <connections>
                                                     <action selector="pickerCloseButton:" destination="HBb-Xq-J0i" eventType="touchUpInside" id="ASW-Lw-lWK"/>
@@ -1646,7 +1667,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZJn-a6-FOc">
-                                                <rect key="frame" x="336" y="5" width="31" height="30"/>
+                                                <rect key="frame" x="336" y="5" width="31" height="18"/>
                                                 <state key="normal" title="選択"/>
                                                 <connections>
                                                     <action selector="pickerSelectButton:" destination="c3O-9W-dSH" eventType="touchUpInside" id="QG8-e8-AAd"/>
@@ -1672,28 +1693,29 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="375" id="7Y2-8V-TpA"/>
-                                    <constraint firstAttribute="height" constant="258" id="9PM-tS-Gam"/>
+                                    <constraint firstAttribute="width" constant="375" id="SXw-Cz-eVp"/>
+                                    <constraint firstAttribute="height" constant="258" id="iDW-hx-FZ5"/>
                                 </constraints>
                                 <viewLayoutGuide key="safeArea" id="rjw-KL-HsE"/>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="MGq-Er-uto" firstAttribute="leading" secondItem="JXK-ym-ijM" secondAttribute="leading" id="2Vc-ck-5kO"/>
-                            <constraint firstItem="lgZ-c5-axu" firstAttribute="leading" secondItem="JXK-ym-ijM" secondAttribute="leading" id="6GG-Na-21L"/>
-                            <constraint firstItem="lgZ-c5-axu" firstAttribute="top" secondItem="MGq-Er-uto" secondAttribute="bottom" constant="300" id="6bB-ym-OmA"/>
-                            <constraint firstItem="MGq-Er-uto" firstAttribute="trailing" secondItem="JXK-ym-ijM" secondAttribute="trailing" id="IMY-G7-JrP"/>
-                            <constraint firstItem="MGq-Er-uto" firstAttribute="trailing" secondItem="JXK-ym-ijM" secondAttribute="trailing" id="Lgn-gQ-aqX"/>
-                            <constraint firstItem="lgZ-c5-axu" firstAttribute="trailing" secondItem="JXK-ym-ijM" secondAttribute="trailing" id="OEw-Ay-ggv"/>
-                            <constraint firstItem="MGq-Er-uto" firstAttribute="leading" secondItem="JXK-ym-ijM" secondAttribute="leading" id="tRi-7H-foc"/>
-                            <constraint firstItem="MGq-Er-uto" firstAttribute="top" secondItem="JXK-ym-ijM" secondAttribute="top" id="wNA-sH-Qm4"/>
+                            <constraint firstItem="Ktd-nS-FPY" firstAttribute="top" secondItem="JXK-ym-ijM" secondAttribute="top" constant="63" id="6aP-D3-h6a"/>
+                            <constraint firstItem="MGq-Er-uto" firstAttribute="trailing" secondItem="JXK-ym-ijM" secondAttribute="trailing" id="Ns4-YR-hGm"/>
+                            <constraint firstItem="JXK-ym-ijM" firstAttribute="trailing" secondItem="Ktd-nS-FPY" secondAttribute="trailing" constant="118" id="d8d-2d-ctB"/>
+                            <constraint firstItem="lgZ-c5-axu" firstAttribute="leading" secondItem="JXK-ym-ijM" secondAttribute="leading" id="ieL-uS-ABJ"/>
+                            <constraint firstItem="MGq-Er-uto" firstAttribute="leading" secondItem="JXK-ym-ijM" secondAttribute="leading" id="kCh-Or-bhJ"/>
+                            <constraint firstItem="MGq-Er-uto" firstAttribute="top" secondItem="Ktd-nS-FPY" secondAttribute="bottom" constant="32.5" id="n0O-fR-7wF"/>
+                            <constraint firstItem="Ktd-nS-FPY" firstAttribute="leading" secondItem="JXK-ym-ijM" secondAttribute="leading" constant="117" id="pJH-WM-Q0b"/>
+                            <constraint firstItem="lgZ-c5-axu" firstAttribute="trailing" secondItem="JXK-ym-ijM" secondAttribute="trailing" id="pcx-N5-pmf"/>
+                            <constraint firstItem="lgZ-c5-axu" firstAttribute="top" secondItem="MGq-Er-uto" secondAttribute="bottom" constant="144" id="t1v-Rh-SmZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JXK-ym-ijM"/>
                     </view>
                     <navigationItem key="navigationItem" id="KQ9-dD-vN0"/>
                     <connections>
-                        <outlet property="pickerBottom" destination="6bB-ym-OmA" id="ivS-05-lM0"/>
+                        <outlet property="pickerBottom" destination="t1v-Rh-SmZ" id="dTL-X4-obT"/>
                         <outlet property="pickerView" destination="qpg-L6-fzd" id="WXy-FX-fnq"/>
                         <outlet property="tableView" destination="MGq-Er-uto" id="YlU-Xz-FGW"/>
                     </connections>
@@ -3121,6 +3143,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="1" width="140" height="186.5"/>
         <image name="33" width="627" height="418"/>
         <image name="group" width="37.5" height="37.5"/>
         <image name="message" width="24" height="24"/>

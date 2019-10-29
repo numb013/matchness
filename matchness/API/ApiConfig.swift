@@ -21,9 +21,9 @@ public struct ApiConfig {
      let SITE_BASIC_AUTHENTICATION_ACCOUNT_PASSWORD: String = "52011k";
      */
     #if DEBUG
-    static var SITE_DOMAIN: String = "22b95c79.ngrok.io";
+    static var SITE_DOMAIN: String = "abdfbeaf.ngrok.io";
     #else
-    static var SITE_DOMAIN: String = "22b95c79.ngrok.io";
+    static var SITE_DOMAIN: String = "abdfbeaf.ngrok.io";
     #endif
     
     //
@@ -99,6 +99,7 @@ public struct ApiConfig {
     static let EVENT_TYPE_LIST: [String] = ["未選択", "半々","男性のみ","女性のみ"]
     static let EVENT_PRESENT_POINT: [String] = ["100","200","300","400","500","600","700","800","900","1000"]
     static let EVENT_PERIOD_LIST: [String] = ["未選択", "2","3","4","5","6","7", "14"]
+    static let REPORT_LIST: [String] = ["誹謗中傷や暴言","営業・求人行為","商用利用目的","ビジネスへの勧誘","他サイトの「サクラ」","登録写真が芸能人画像","ストーカー行為","その他"]
     //
     init(){
         

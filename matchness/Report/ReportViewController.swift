@@ -7,22 +7,23 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
-    let userDefaults = UserDefaults.standard
 
+    let userDefaults = UserDefaults.standard
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var pickerBottom: NSLayoutConstraint!
-
-    
+    private var requestAlamofire: Alamofire.Request?;
     var selectPicker: Int = 0
     var selectPickerItem: Int = 0
     var pcker_list: [String] = []
     var selectRow = 0
     var title_text = ""
-    var report_type_1 = 1
-    var target_id = 1
+    var report_type_1 = 0
+    var target_id = 0
     var vi = UIView()
     
     
@@ -36,6 +37,10 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
         
         self.tableView.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
+        self.tableView.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")
+        self.tableView.register(UINib(nibName: "ButtonTableViewCell", bundle: nil), forCellReuseIdentifier: "ButtonTableViewCell")
+
+        
         
         pickerView.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
@@ -43,14 +48,24 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 1
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "通報理由"
+        }
+        if section == 1 {
+            return "その他"
+        }
+        if section == 2 {
+            return ""
+        }
+
         return "詳細"
     }
     
@@ -60,9 +75,9 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         header.textLabel?.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         header.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
     }
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 35
-    }
+//    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 35
+//    }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,86 +90,79 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
             if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "TextFiledTableViewCell") as! TextFiledTableViewCell
-                cell.title?.text = "タイトル"
-                cell.textFiled.delegate = self
-                cell.textFiled.tag = 0
-                print("ニックネームニックネームニックネームニックネーム")
-                cell.textFiled?.text = self.title_text
-                return cell
-            }
-            if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-                
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "人数"
+                cell.title?.text = ApiConfig.REPORT_LIST[self.report_type_1]
+                cell.detail?.text = ""
                 return cell
             }
-            if indexPath.row == 2 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-                
-                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "期間"
+        }
+        if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TextAreaTableViewCell") as! TextAreaTableViewCell
+                cell.textLabel!.numberOfLines = 0
+                cell.selectionStyle = UITableViewCell.SelectionStyle.none
+                cell.textArea.delegate = self
+                cell.textArea.tag = 1
+                cell.textArea?.font = UIFont.systemFont(ofSize: 14)
+//                cell.textArea!.text = myData?.profile_text
+                cell.textArea!.text = ""
                 return cell
             }
-            if indexPath.row == 3 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-                
-                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "獲得ポイント"
+        }
+        if indexPath.section == 2 {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ButtonTableViewCell") as! ButtonTableViewCell
+                cell.pushButton.addTarget(self, action: #selector(addButton(_:)), for: .touchUpInside)
                 return cell
+
             }
-            
-            if indexPath.row == 4 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-                
-                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "男女の割合"
-                return cell
-            }
-            if indexPath.row == 5 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-                
-                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "開始タイプ"
-//                cell.detail?.text = ApiConfig.EVENT_START_TYPE[Int(self.start_type) ?? 0]
-                return cell
-            }
-            
         }
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1 {
+            return 150
+        } else if indexPath.section == 2 {
+            return 100
+        }
+        return 60
+    }
+    
+    
+    
+    
+    @objc private func pushButton(_ sender:UIButton)
+    {
+
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismissPicker()
-        if indexPath.row == 0 {
-            self.selectPicker = 1
-            self.pcker_list = ApiConfig.FITNESS_LIST
-//            self.selectRow = 0
-        }
-        if indexPath.row == 1 {
-            self.selectPicker = 1
-            self.pcker_list = ApiConfig.FITNESS_LIST
-//            self.selectRow = 0
-        }
 
+print("セレクトセレクトセレクトセレクトセレクト")
+print(indexPath)
+
+        if indexPath.section == 0 {
+            if indexPath.row == 0 {
+            self.selectPicker = 1
+            self.pcker_list = ApiConfig.REPORT_LIST
+//            self.selectRow = 0
+            }
+        }
         pickerView.selectRow(self.selectRow, inComponent: 0, animated: false)
         PickerPush()
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
     }
 
     @IBAction func pickerSelectButton(_ sender: Any) {
        print("bbbb")
         print("セレクトピッカー")
         print(self.selectPicker)
-        if self.selectPicker == 0 {
+        print(self.selectPicker)
 
-        }
         if self.selectPicker == 1 {
             self.report_type_1 = self.selectPickerItem
         }
@@ -172,7 +180,7 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         print("ピッカーーーーーーーー")
         self.view.endEditing(true)
         UIView.animate(withDuration: 0.5,animations: {
-            self.pickerBottom.constant = -280
+            self.pickerBottom.constant = -180
             self.pickerView.updateConstraints()
             self.tableView.updateConstraints()
             self.view.layoutIfNeeded()
@@ -210,13 +218,15 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         print("選択ピッカー選択ピッカー選択ピッカー")
     }
 
-
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         print("テキスト１")
         var tag = textField.tag
+        print(tag)
         print(textField.text!)
         if tag == 0 {
+            self.title_text = textField.text!
+        }
+        if tag == 1 {
             self.title_text = textField.text!
         }
         return true
@@ -228,6 +238,10 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if tag == 0 {
             self.title_text = textField.text!
         }
+        if tag == 1 {
+            self.title_text = textField.text!
+        }
+
         textField.resignFirstResponder()
         return
     }
@@ -237,8 +251,17 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // キーボードを閉じる
-        self.title_text = textField.text!
+
+        var tag = textField.tag
+        print("キーボードを閉じるキーボードを閉じるキーボードを閉じる")
+        print(tag)
+
+        if tag == 0 {
+            self.title_text = textField.text!
+        }
+        if tag == 1 {
+            self.title_text = textField.text!
+        }
         textField.resignFirstResponder()
         return true
     }
@@ -248,19 +271,56 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
-        //ロジック生成
-        let requestReportModel = ReportModel();
-        requestReportModel.delegate = self as! ReportModelDelegate;
         //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_GROUP;
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_REPORT;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         query["target_id"] = String(self.target_id)
         query["report_type_1"] = String(self.report_type_1)
         query["text"] = self.title_text
-        //リクエスト実行
-        if( !requestReportModel.requestApi(url: requestUrl, addQuery: query) ){
-            
+        var headers: [String : String] = [:]
+
+        var api_key = userDefaults.object(forKey: "api_token") as? String
+
+        print("えーピアイトークンーピアイトークン")
+        print(api_key)
+        if ((api_key) != nil) {
+            headers = [
+                "Accept" : "application/json",
+                "Authorization" : "Bearer " + api_key!,
+                "Content-Type" : "application/x-www-form-urlencoded"
+            ]
+        }
+        print("ヘッダーヘッダーヘッダーヘッダーヘッダー")
+        print(headers)
+        self.requestAlamofire = Alamofire.request(requestUrl, method: .post, parameters: query, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
+            print("リクエストRRRRRRRRRRRRRRRRRR")
+            print(requestUrl)
+//            print(method)
+            print(query)
+            print("リクエストBBBBBBBBBBBBBBBBBBBBB")
+            switch response.result {
+            case .success:
+                var json:JSON;
+                do{
+                    //レスポンスデータを解析
+                    json = try SwiftyJSON.JSON(data: response.data!);
+                } catch {
+                    // error
+                    print("json error: \(error.localizedDescription)");
+//                     self.onFaild(response as AnyObject);
+                    break;
+                }
+                print("取得した値はここにきて")
+                print(json)
+
+                self.dismiss(animated: true, completion: nil)
+                print("！！！！！！！！！！")
+            case .failure:
+                //  リクエスト失敗 or キャンセル時
+                print("リクエスト失敗 or キャンセル時")
+                return;
+            }
         }
     }
     
@@ -275,50 +335,3 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
      */
     
 }
-
-
-//
-//extension ReportViewController : ReportModelDelegate {
-//
-//    func onStart(model: ReportModel) {
-//        print("こちら/UserDetail/UserDetailViewのonStart")
-//    }
-//    func onComplete(model: ReportModel, count: Int) {
-//        print("UserDetail着てきてきてきて")
-//        //更新用データを設定
-//        self.dataSource = model.responseData;
-//        self.dataSourceOrder = model.responseDataOrder;
-//
-//        print(self.dataSourceOrder)
-//        print("UserDetail耳耳耳意味耳みm")
-//
-//
-//        //一つもなかったら
-//        //        if( dataSourceOrder.isEmpty ){
-//        //            return;
-//        //        }
-//
-//        //cellの件数更新
-//        self.cellCount = dataSourceOrder.count;
-//        //        self.cellCount = 10;
-//
-//
-//        //
-//        var count: Int = 0;
-//        //        for(key, code) in dataSourceOrder.enumerated() {
-//        //            count+=1;
-//        //            if let jenre: ApiUserDateParam = dataSource[code] {
-//        //                //取得したデータを元にコレクションを再構築＆更新
-//        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-//        //            }
-//        //        }
-//
-//        tableView.reloadData()
-//        self.dismiss(animated: true, completion: nil)
-//        //        self.performSegue(withIdentifier: "toGroupTop", sender: nil)
-//    }
-//    func onFailed(model: ReportModel) {
-//        print("こちら/MultipleModel/UserDetailViewのonFailed")
-//    }
-//}
-//
