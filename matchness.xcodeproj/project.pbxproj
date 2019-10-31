@@ -15,11 +15,7 @@
 		8409E60223377CE8009BA908 /* TextAreaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8409E60023377CE8009BA908 /* TextAreaTableViewCell.swift */; };
 		8409E60323377CE8009BA908 /* TextAreaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8409E60123377CE8009BA908 /* TextAreaTableViewCell.xib */; };
 		840FB6F123310C0D00F6F55F /* CahtRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840FB6F023310C0D00F6F55F /* CahtRoomModel.swift */; };
-		842515E9236079DC00BB6888 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515E8236079DC00BB6888 /* ReportViewController.swift */; };
-		842515EC2360856500BB6888 /* ReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515EB2360856500BB6888 /* ReportModel.swift */; };
 		842515EE2360AC6900BB6888 /* StripeKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */; };
-		842515F32361836200BB6888 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515F12361836200BB6888 /* ButtonTableViewCell.swift */; };
-		842515F42361836200BB6888 /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842515F22361836200BB6888 /* ButtonTableViewCell.xib */; };
 		8432F2B022F09D6C00A60EC5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */; };
 		8432F2B222F0A2ED00A60EC5 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */; };
 		8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B822F16AF200A60EC5 /* FBLoginViewController.swift */; };
@@ -61,6 +57,14 @@
 		849E34B72355A2840062E928 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849E34B32355A2840062E928 /* FBSDKLoginKit.framework */; };
 		849E34BB2355A39A0062E928 /* ApiGroupEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E34BA2355A3990062E928 /* ApiGroupEvent.swift */; };
 		849E34BD23593C900062E928 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E34BC23593C900062E928 /* SearchTableViewController.swift */; };
+		84C79C52236AB2F8000B6648 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C51236AB2F8000B6648 /* PaymentViewController.swift */; };
+		84C79C5D236AB9B5000B6648 /* ReportTextTableViewCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C79C56236AB9B4000B6648 /* ReportTextTableViewCellTableViewCell.xib */; };
+		84C79C5E236AB9B5000B6648 /* ReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C57236AB9B4000B6648 /* ReportModel.swift */; };
+		84C79C5F236AB9B5000B6648 /* ReportTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C58236AB9B4000B6648 /* ReportTextTableViewCell.swift */; };
+		84C79C60236AB9B5000B6648 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C59236AB9B4000B6648 /* ButtonTableViewCell.swift */; };
+		84C79C61236AB9B5000B6648 /* ReportTextTableViewCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C5A236AB9B4000B6648 /* ReportTextTableViewCellTableViewCell.swift */; };
+		84C79C62236AB9B5000B6648 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C5B236AB9B4000B6648 /* ReportViewController.swift */; };
+		84C79C63236AB9B5000B6648 /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C79C5C236AB9B4000B6648 /* ButtonTableViewCell.xib */; };
 		B40A33FE232A5AD700583CCC /* ApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EB232A5AD500583CCC /* ApiConfig.swift */; };
 		B40A33FF232A5AD700583CCC /* ApiGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EC232A5AD500583CCC /* ApiGroupList.swift */; };
 		B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33ED232A5AD500583CCC /* ApiRequest.swift */; };
@@ -161,11 +165,7 @@
 		8409E60023377CE8009BA908 /* TextAreaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaTableViewCell.swift; sourceTree = "<group>"; };
 		8409E60123377CE8009BA908 /* TextAreaTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextAreaTableViewCell.xib; sourceTree = "<group>"; };
 		840FB6F023310C0D00F6F55F /* CahtRoomModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CahtRoomModel.swift; sourceTree = "<group>"; };
-		842515E8236079DC00BB6888 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
-		842515EB2360856500BB6888 /* ReportModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportModel.swift; sourceTree = "<group>"; };
 		842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeKeyProvider.swift; sourceTree = "<group>"; };
-		842515F12361836200BB6888 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
-		842515F22361836200BB6888 /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
 		8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		8432F2B822F16AF200A60EC5 /* FBLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
@@ -207,6 +207,14 @@
 		849E34B32355A2840062E928 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../../Downloads/FacebookSDKs-iOS-4.40.0 (1) 2/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		849E34BA2355A3990062E928 /* ApiGroupEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiGroupEvent.swift; path = matchness/API/ApiGroupEvent.swift; sourceTree = "<group>"; };
 		849E34BC23593C900062E928 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		84C79C51236AB2F8000B6648 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
+		84C79C56236AB9B4000B6648 /* ReportTextTableViewCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReportTextTableViewCellTableViewCell.xib; path = matchness/Report/ReportTextTableViewCellTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		84C79C57236AB9B4000B6648 /* ReportModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReportModel.swift; path = matchness/Report/ReportModel.swift; sourceTree = SOURCE_ROOT; };
+		84C79C58236AB9B4000B6648 /* ReportTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReportTextTableViewCell.swift; path = matchness/Report/ReportTextTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		84C79C59236AB9B4000B6648 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtonTableViewCell.swift; path = matchness/Report/ButtonTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		84C79C5A236AB9B4000B6648 /* ReportTextTableViewCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReportTextTableViewCellTableViewCell.swift; path = matchness/Report/ReportTextTableViewCellTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		84C79C5B236AB9B4000B6648 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReportViewController.swift; path = matchness/Report/ReportViewController.swift; sourceTree = SOURCE_ROOT; };
+		84C79C5C236AB9B4000B6648 /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ButtonTableViewCell.xib; path = matchness/Report/ButtonTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		946D3AF11F4FBEBAFE993661 /* Pods_matchness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_matchness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD66A8BE7976CA8BC6F822EA /* Pods-matchnessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matchnessTests.debug.xcconfig"; path = "Target Support Files/Pods-matchnessTests/Pods-matchnessTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B40A33EB232A5AD500583CCC /* ApiConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiConfig.swift; path = matchness/API/ApiConfig.swift; sourceTree = "<group>"; };
@@ -346,17 +354,6 @@
 			path = pointHistory;
 			sourceTree = "<group>";
 		};
-		842515EA2360851F00BB6888 /* Report */ = {
-			isa = PBXGroup;
-			children = (
-				842515EB2360856500BB6888 /* ReportModel.swift */,
-				842515E8236079DC00BB6888 /* ReportViewController.swift */,
-				842515F12361836200BB6888 /* ButtonTableViewCell.swift */,
-				842515F22361836200BB6888 /* ButtonTableViewCell.xib */,
-			);
-			path = Report;
-			sourceTree = "<group>";
-		};
 		8432F2B722F16ABB00A60EC5 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +400,29 @@
 				847398A4234224EC00D28135 /* ProfilImageTableViewCell.xib */,
 			);
 			path = profileEdit;
+			sourceTree = "<group>";
+		};
+		84C79C4A2369B195000B6648 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				84C79C51236AB2F8000B6648 /* PaymentViewController.swift */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		84C79C55236AB9A1000B6648 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				84C79C59236AB9B4000B6648 /* ButtonTableViewCell.swift */,
+				84C79C5C236AB9B4000B6648 /* ButtonTableViewCell.xib */,
+				84C79C57236AB9B4000B6648 /* ReportModel.swift */,
+				84C79C58236AB9B4000B6648 /* ReportTextTableViewCell.swift */,
+				84C79C5A236AB9B4000B6648 /* ReportTextTableViewCellTableViewCell.swift */,
+				84C79C56236AB9B4000B6648 /* ReportTextTableViewCellTableViewCell.xib */,
+				84C79C5B236AB9B4000B6648 /* ReportViewController.swift */,
+			);
+			name = Report;
+			path = Payment/Report;
 			sourceTree = "<group>";
 		};
 		B456770E2330DC6300E0E9B7 /* Notice */ = {
@@ -603,11 +623,12 @@
 			children = (
 				CE1D51F322CDDC240093DC58 /* matchness.entitlements */,
 				CE4B0988220942DE00F8A430 /* Main.storyboard */,
-				842515EA2360851F00BB6888 /* Report */,
-				CE1D51EE22CDD60C0093DC58 /* UserDetail */,
 				B49CCD9122D5872400F793F1 /* API */,
-				8432F2B722F16ABB00A60EC5 /* Login */,
 				CE1D51E922CDD5290093DC58 /* UserSearch */,
+				84C79C55236AB9A1000B6648 /* Report */,
+				84C79C4A2369B195000B6648 /* Payment */,
+				CE1D51EE22CDD60C0093DC58 /* UserDetail */,
+				8432F2B722F16ABB00A60EC5 /* Login */,
 				CE1D51EC22CDD5AF0093DC58 /* Group */,
 				CE1D51EB22CDD56D0093DC58 /* Chat */,
 				CE1D51EA22CDD54D0093DC58 /* MyDate */,
@@ -783,12 +804,13 @@
 				8409E60323377CE8009BA908 /* TextAreaTableViewCell.xib in Resources */,
 				CE4B098F220942E100F8A430 /* LaunchScreen.storyboard in Resources */,
 				8456F7122354301A00819DC0 /* GroupChatTableViewCell.xib in Resources */,
-				842515F42361836200BB6888 /* ButtonTableViewCell.xib in Resources */,
 				848A332D231BA37600144950 /* TextFiledTableViewCell.xib in Resources */,
 				845956AC22FC71F300B79278 /* ProfileEditTableViewCell.xib in Resources */,
 				B495CC0023339BCF006A029C /* NotDataTableViewCell.xib in Resources */,
+				84C79C63236AB9B5000B6648 /* ButtonTableViewCell.xib in Resources */,
 				CE1D51F522CE40C30093DC58 /* GoogleService-Info.plist in Resources */,
 				CE05743122AA3A3A0082182F /* ChatTableViewCell.xib in Resources */,
+				84C79C5D236AB9B5000B6648 /* ReportTextTableViewCellTableViewCell.xib in Resources */,
 				CE05742922A8EB0C0082182F /* GroupTableViewCell.xib in Resources */,
 				CE4B098C220942E100F8A430 /* Assets.xcassets in Resources */,
 				CE05742522A6CF3E0082182F /* UserSearchCollectionViewCell.xib in Resources */,
@@ -924,22 +946,24 @@
 				848A333823216B1200144950 /* PreferredGroupListModel.swift in Sources */,
 				CE0F9EEC22DE348900D320F5 /* MultipleViewController.swift in Sources */,
 				CE05741D22A439330082182F /* JoinGroupViewController.swift in Sources */,
+				84C79C61236AB9B5000B6648 /* ReportTextTableViewCellTableViewCell.swift in Sources */,
 				842515EE2360AC6900BB6888 /* StripeKeyProvider.swift in Sources */,
 				8405839122F4097D00FAB292 /* RegistCompViewController.swift in Sources */,
 				845956AB22FC71F300B79278 /* ProfileEditTableViewCell.swift in Sources */,
+				84C79C52236AB2F8000B6648 /* PaymentViewController.swift in Sources */,
 				848A32CD230AF96700144950 /* UserDetailInfoTableViewCell.swift in Sources */,
 				848A333B2325E86A00144950 /* MessageModel.swift in Sources */,
 				B40A3408232A5AD700583CCC /* ApiChangePoint.swift in Sources */,
 				B45677122330DC6300E0E9B7 /* NoticeViewController.swift in Sources */,
 				B40A33FF232A5AD700583CCC /* ApiGroupList.swift in Sources */,
 				848A332C231BA37600144950 /* TextFiledTableViewCell.swift in Sources */,
+				84C79C5F236AB9B5000B6648 /* ReportTextTableViewCell.swift in Sources */,
 				CE05741522A3BA960082182F /* CahtFirstViewController.swift in Sources */,
 				8456F70A23530CEF00819DC0 /* ApiMessage.swift in Sources */,
 				843F203E22F6F85C008CBDDA /* UserDetailModel.swift in Sources */,
 				8456F70C2353310B00819DC0 /* ApiUserInfo.swift in Sources */,
 				CE05743322AB547C0082182F /* CustomNavigationBar.swift in Sources */,
 				847398A5234224EC00D28135 /* ProfilImageTableViewCell.swift in Sources */,
-				842515E9236079DC00BB6888 /* ReportViewController.swift in Sources */,
 				B49CCD9522D592AD00F793F1 /* UserSearchModel.swift in Sources */,
 				8409E60223377CE8009BA908 /* TextAreaTableViewCell.swift in Sources */,
 				8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */,
@@ -957,29 +981,30 @@
 				849E34BB2355A39A0062E928 /* ApiGroupEvent.swift in Sources */,
 				848A32C5230AA57900144950 /* MultipleModel.swift in Sources */,
 				B40A340A232A5AD700583CCC /* ApiNoticeList.swift in Sources */,
-				842515F32361836200BB6888 /* ButtonTableViewCell.swift in Sources */,
 				B40A3402232A5AD700583CCC /* ApiGroupRequestList.swift in Sources */,
 				B40A33FE232A5AD700583CCC /* ApiConfig.swift in Sources */,
 				8432F2B222F0A2ED00A60EC5 /* SplashViewController.swift in Sources */,
 				848A33172319F81E00144950 /* MyDateStepModel.swift in Sources */,
 				B495CBFF23339BCF006A029C /* NotDataTableViewCell.swift in Sources */,
 				B40A3410232A5AD700583CCC /* ApiMyData.swift in Sources */,
+				84C79C62236AB9B5000B6648 /* ReportViewController.swift in Sources */,
 				B40A3401232A5AD700583CCC /* ApiMessageList.swift in Sources */,
 				B40A340C232A5AD700583CCC /* ApiGroupChat.swift in Sources */,
 				848A32D7230DA7A300144950 /* MyDataModel.swift in Sources */,
 				B40A3403232A5AD700583CCC /* ApiMultipleUser.swift in Sources */,
 				B40A340E232A5AD700583CCC /* ApiMatcheList.swift in Sources */,
+				84C79C60236AB9B5000B6648 /* ButtonTableViewCell.swift in Sources */,
 				CE05741722A3BB030082182F /* CahtSecondViewController.swift in Sources */,
 				CE0F9EF622E590BF00D320F5 /* PreferredGroupListViewController.swift in Sources */,
 				B40A3409232A5AD700583CCC /* ApiGroupEventList.swift in Sources */,
 				CE4B0987220942DE00F8A430 /* ViewController.swift in Sources */,
-				842515EC2360856500BB6888 /* ReportModel.swift in Sources */,
 				B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */,
 				B45677162330DC9D00E0E9B7 /* GroupChatModel.swift in Sources */,
 				B40A340F232A5AD700583CCC /* ApiUserDate.swift in Sources */,
 				CE0F9EF422E0529F00D320F5 /* PointChangeViewController.swift in Sources */,
 				B45677112330DC6300E0E9B7 /* NoticeModel.swift in Sources */,
 				8409E5FF233779B4009BA908 /* ApiPointHistory.swift in Sources */,
+				84C79C5E236AB9B5000B6648 /* ReportModel.swift in Sources */,
 				848A3330231BCA4000144950 /* TodayStep.swift in Sources */,
 				849E34BD23593C900062E928 /* SearchTableViewController.swift in Sources */,
 				CE05742822A8EB0C0082182F /* GroupTableViewCell.swift in Sources */,

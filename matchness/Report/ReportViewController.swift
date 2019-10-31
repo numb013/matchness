@@ -316,6 +316,17 @@ print(indexPath)
 
                 self.dismiss(animated: true, completion: nil)
                 print("！！！！！！！！！！")
+
+                // アラート作成
+                let alert = UIAlertController(title: "通報", message: "通報しました。", preferredStyle: .alert)
+                // アラート表示
+                self.present(alert, animated: true, completion: {
+                    // アラートを閉じる
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
+                        alert.dismiss(animated: true, completion: nil)
+                    })
+                })
+
             case .failure:
                 //  リクエスト失敗 or キャンセル時
                 print("リクエスト失敗 or キャンセル時")

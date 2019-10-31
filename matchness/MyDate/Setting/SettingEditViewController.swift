@@ -31,9 +31,9 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiUserDetailDate> = [:]
     var dataSourceOrder: Array<String> = []
-
     var selectRow = 0
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         UserSettingTable.delegate = self
@@ -41,9 +41,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
         // Do any additional setup after loading the view.
 
         pickerView.showsSelectionIndicator = true
-        
-        self.UserSettingTable.register(UINib(nibName: "SettingEditTableViewCell", bundle: nil), forCellReuseIdentifier: "SettingEditTableViewCell")
-
         // datePickerの設定
         datePickerView.date = isDate
         datePickerView.datePickerMode = .date
@@ -51,7 +48,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
         datePickerView.addTarget(self, action: #selector(setText), for: .valueChanged)
         datePickerView.backgroundColor = UIColor.white
 
-        
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
@@ -72,14 +68,23 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 3
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "設定1"
+        }
+        if section == 1 {
+            return "設定2"
+        }
+        if section == 2 {
+            return "設定3"
+        }
         return "設定"
     }
 
@@ -95,89 +100,139 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("こいいいいいい")
-        print(self.dataSource)
-        var myData = self.dataSource["0"]
+//        print("こいいいいいい")
+//        print(self.dataSource)
+//        var myData = self.dataSource["0"]
+//
         
-        let cell = UserSettingTable.dequeueReusableCell(withIdentifier: "SettingEditTableViewCell") as! SettingEditTableViewCell
-        if indexPath.row == 0 {
-            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-            cell.title?.text = "ニックネーム"
-            print("ニックネームニックネームニックネームニックネーム")
-            print(self.dataSource["0"]?.work)
-            cell.detail?.text = myData?.name
-            return cell
-        }
-        if indexPath.row == 1 {
-            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-            cell.title?.text = "職業"
-            cell.detail?.text = ApiConfig.WORK_LIST[myData?.work ?? 0]
-            return cell
-        }
-        if indexPath.row == 2 {
-            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-            cell.title?.text = "居住地"
-            cell.detail?.text = ApiConfig.PREFECTURE_LIST[myData?.prefecture_id ?? 0]
-            return cell
-        }
-        if indexPath.row == 3 {
-            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-            cell.title?.text = "誕生日"
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        let switchView = UISwitch()
+        cell.accessoryView = switchView
 
-            let f = DateFormatter()
-            f.dateStyle = .long
-            f.locale = Locale(identifier: "ja")
-//                self.setDateviewTime = f.string(from: self.dataSource["0"]!.birthday)
-            let dateFormater = DateFormatter()
-//                dateFormater.locale = Locale(identifier: "ja_JP")
-//                dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-//                var date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
-////                print(date?.description ?? "nilですよ")    // 2016-10-03 03:12:12 +0000
-//                var date_data = date?.description
-       
-//                dateFormater.locale = Locale(identifier: "ja_JP")
-//                var date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
- 
-//                dateFormater.dateFormat = "yyyy年MM月dd日"
-//                var date_text = dateFormater.string(from: date!)
-            
-            
-            cell.detail?.text = "2016-10-03 03:12:12"
-            return cell
-        }
-        
-        if indexPath.row == 4 {
-            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-            cell.title?.text = "痩せたい部位"
-            cell.detail?.text = ApiConfig.FITNESS_LIST[myData?.fitness_parts_id ?? 0]
-            return cell
-        }
-        if indexPath.row == 5 {
-            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-            cell.title?.text = "体重(非公開)"
-            cell.detail?.text = ApiConfig.WEIGHT_LIST[myData?.weight ?? 0]
-            return cell
+        if indexPath.section == 0 {
 
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "あいうえお"
+
+                //スイッチの状態
+                switchView.isOn = true
+                //タグの値にindexPath.rowを入れる。
+                switchView.tag = indexPath.row
+                //スイッチが押されたときの動作
+                switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
+                return cell
+            }
+            if indexPath.row == 1 {
+                cell.textLabel?.text = "あいうえお"
+
+                //スイッチの状態
+                switchView.isOn = true
+                //タグの値にindexPath.rowを入れる。
+                switchView.tag = indexPath.row
+                //スイッチが押されたときの動作
+                switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
+                return cell
+            }
+            if indexPath.row == 2 {
+                cell.textLabel?.text = "あいうえお"
+
+                //スイッチの状態
+                switchView.isOn = true
+                //タグの値にindexPath.rowを入れる。
+                switchView.tag = indexPath.row
+                //スイッチが押されたときの動作
+                switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
+                return cell
+            }
         }
 
-        if indexPath.row == 6 {
-            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-            cell.title?.text = "性別"
-            cell.detail?.text = ApiConfig.SEX_LIST[myData?.sex ?? 0]
-            return cell
+        if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "あいうえお"
+
+                //スイッチの状態
+                switchView.isOn = true
+                //タグの値にindexPath.rowを入れる。
+                switchView.tag = indexPath.row
+                //スイッチが押されたときの動作
+                switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
+                return cell
+            }
+            if indexPath.row == 1 {
+                cell.textLabel?.text = "あいうえお"
+
+                //スイッチの状態
+                switchView.isOn = true
+                //タグの値にindexPath.rowを入れる。
+                switchView.tag = indexPath.row
+                //スイッチが押されたときの動作
+                switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
+                return cell
+            }
+            if indexPath.row == 2 {
+                cell.textLabel?.text = "あいうえお"
+
+                //スイッチの状態
+                switchView.isOn = true
+                //タグの値にindexPath.rowを入れる。
+                switchView.tag = indexPath.row
+                //スイッチが押されたときの動作
+                switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
+                return cell
+            }
         }
 
-        if indexPath.row == 7 {
-            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-            cell.title?.text = "血液型"
-            cell.detail?.text = ApiConfig.BLOOD_LIST[myData?.blood_type ?? 2]
-            return cell
-        }
+        if indexPath.section == 2 {
 
+
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "あいうえお"
+
+                //スイッチの状態
+                switchView.isOn = true
+                //タグの値にindexPath.rowを入れる。
+                switchView.tag = indexPath.row
+                //スイッチが押されたときの動作
+                switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
+                return cell
+            }
+            if indexPath.row == 1 {
+                cell.textLabel?.text = "あいうえお"
+
+                //スイッチの状態
+                switchView.isOn = true
+                //タグの値にindexPath.rowを入れる。
+                switchView.tag = indexPath.row
+                //スイッチが押されたときの動作
+                switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
+                return cell
+            }
+            if indexPath.row == 2 {
+                cell.textLabel?.text = "あいうえお"
+
+                //スイッチの状態
+                switchView.isOn = true
+                //タグの値にindexPath.rowを入れる。
+                switchView.tag = indexPath.row
+                //スイッチが押されたときの動作
+                switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
+                return cell
+            }
+
+        }
 
         return cell
     }
 
+    
+    //スイッチのテーブルが変更されたときに呼ばれる
+    @objc func fundlSwitch(_ sender: UISwitch) {
+        print(sender.tag)
+        print(sender.isOn)
+    }
+
+    
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 print("タップ")

@@ -96,9 +96,9 @@ print(matchness_user_id)
         self.y_Point = self.step_data[1] - Int((step_data1?.yesterdayPointChenge!)!)!
         self.d_Point = self.step_data[2] - Int((step_data1?.dayAfterTomorrowPointChenge!)!)!
 
-        self.todayPoint.text = String(self.t_Point)
-        self.yesterdayPoint.text = String(self.y_Point)
-        self.dayAfterTomorrowPoint.text = String(self.d_Point)
+        self.todayPoint.text = String(Int(floor(ceil(Double(self.t_Point) * 0.01))))
+        self.yesterdayPoint.text = String(Int(floor(ceil(Double(self.y_Point) * 0.01))))
+        self.dayAfterTomorrowPoint.text = String(Int(floor(ceil(Double(self.d_Point) * 0.01))))
 
         t_button.isEnabled = self.t_Point == 0 ? false : true // ボタン無効
         y_button.isEnabled = self.y_Point == 0 ? false : true // ボタン無効
@@ -153,23 +153,25 @@ print(matchness_user_id)
             }
         }
     }
-    
 
     @IBAction func todayChangeButtom(_ sender: Any) {
         self.change_point = String(self.t_Point)
         self.day_type = "0"
+        t_button.isEnabled = false
         requestUpdatePoint()
     }
     
     @IBAction func yesterdayChangeButtom(_ sender: Any) {
         self.change_point = String(self.y_Point)
         self.day_type = "1"
+        y_button.isEnabled = false
         requestUpdatePoint()
     }
     
     @IBAction func dayAfterTomorrowChangButtom(_ sender: Any) {
         self.change_point = String(self.d_Point)
         self.day_type = "2"
+        d_button.isEnabled = false
         requestUpdatePoint()
     }
     

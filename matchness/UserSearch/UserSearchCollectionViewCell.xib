@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,14 +21,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="178" height="228"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6fQ-84-ppF">
-                        <rect key="frame" x="68" y="236" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="70.5" y="241" width="37.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mbh-WJ-Ryr">
-                        <rect key="frame" x="68" y="262" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="72.5" y="267" width="33" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -40,7 +38,7 @@
             <constraints>
                 <constraint firstItem="Xsl-eh-jd8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0XV-MU-S9N"/>
                 <constraint firstAttribute="trailing" secondItem="Xsl-eh-jd8" secondAttribute="trailing" id="9sc-db-d0O"/>
-                <constraint firstItem="Mbh-WJ-Ryr" firstAttribute="top" secondItem="6fQ-84-ppF" secondAttribute="bottom" constant="5" id="FVO-NO-1kM"/>
+                <constraint firstItem="Mbh-WJ-Ryr" firstAttribute="top" secondItem="6fQ-84-ppF" secondAttribute="bottom" constant="8" id="FVO-NO-1kM"/>
                 <constraint firstAttribute="bottom" secondItem="Xsl-eh-jd8" secondAttribute="bottom" constant="70" id="c8J-V9-VIK"/>
                 <constraint firstItem="Mbh-WJ-Ryr" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="dMl-P0-THL"/>
                 <constraint firstItem="6fQ-84-ppF" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="sRs-3c-qXW"/>

@@ -17,6 +17,8 @@ import FacebookCore //in theory is just this one
 import FBSDKCoreKit
 import FBSDKShareKit
 
+import Stripe
+
 let userDefaults = UserDefaults.standard
 
 
@@ -29,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
+        STPPaymentConfiguration.shared().publishableKey = "pk_test_9ctOhFy7xdS9cYXFudRC4Smh001imsNQzB"
 
         FirebaseApp.configure()
         if #available(iOS 10.0, *) {
@@ -56,6 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
         return true
     }
+
+//    func STPPaymentConfiguration;.shared().appleMerchantIdentifier = "your apple merchant identifier"
 
 
     func application(_ application: UIApplication,open url: URL,sourceApplication: String?,annotation: Any) -> Bool {

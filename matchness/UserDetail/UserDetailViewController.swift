@@ -8,6 +8,8 @@
 
 import UIKit
 import ImageViewer
+import Alamofire
+import SwiftyJSON
 
 class MyTapGestureRecognizer: UITapGestureRecognizer {
     var targetString: String?
@@ -22,7 +24,8 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var chatButton: UIButton!
     @IBOutlet weak var GroupRequest: UIButton!
     @IBOutlet weak var LikeButton: UIButton!
-    
+    private var requestAlamofire: Alamofire.Request?;
+
 
 
     var galleyItem: GalleryItem!
@@ -316,24 +319,64 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func addLikeButton(_ sender: Any) {
         print("タップタップタップいいね")
         var target_id = self.dataSource["0"]?.id
-        
-        let requestUserDetailModel = UserDetailModel();
-        requestUserDetailModel.delegate = self as! UserDetailModelDelegate;
         //リクエスト先
         let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_LIKE;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
         
-        print("ユーザーIDユーザーIDユーザーIDユーザーID")
-        print(matchness_user_id)
-        
         query["user_id"] = matchness_user_id
         query["target_id"] = "\(user_id)"
-        
-        //リクエスト実行
-        if( !requestUserDetailModel.requestApi(url: requestUrl, addQuery: query) ){
-            
+
+        var headers: [String : String] = [:]
+        var api_key = userDefaults.object(forKey: "api_token") as? String
+        print("えーピアイトークンーピアイトークン")
+        print(api_key)
+        if ((api_key) != nil) {
+            headers = [
+                "Accept" : "application/json",
+                "Authorization" : "Bearer " + api_key!,
+                "Content-Type" : "application/x-www-form-urlencoded"
+            ]
+        }
+        print("ヘッダーヘッダーヘッダーヘッダーヘッダー")
+        print(headers)
+        self.requestAlamofire = Alamofire.request(requestUrl, method: .post, parameters: query, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
+            print("リクエストRRRRRRRRRRRRRRRRRR")
+            print(requestUrl)
+//            print(method)
+            print(query)
+            print("リクエストBBBBBBBBBBBBBBBBBBBBB")
+            switch response.result {
+            case .success:
+                var json:JSON;
+                do{
+                    //レスポンスデータを解析
+                    json = try SwiftyJSON.JSON(data: response.data!);
+                } catch {
+                    // error
+                    print("json error: \(error.localizedDescription)");
+//                     self.onFaild(response as AnyObject);
+                    break;
+                }
+                print("取得した値はここにきて")
+                print(json)
+
+                self.dismiss(animated: true, completion: nil)
+                let alert = UIAlertController(title: "いいね", message: "いいねしました", preferredStyle: .alert)
+                // アラート表示
+                self.present(alert, animated: true, completion: {
+                    // アラートを閉じる
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
+                        alert.dismiss(animated: true, completion: nil)
+                    })
+                })
+
+            case .failure:
+                //  リクエスト失敗 or キャンセル時
+                print("リクエスト失敗 or キャンセル時")
+                return;
+            }
         }
     }
     
@@ -370,25 +413,85 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
-        //ロジック生成
-        let requestUserDetailModel = UserDetailModel();
-        requestUserDetailModel.delegate = self as! UserDetailModelDelegate;
-        //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_FAVORITE_BLOCK;
-        //パラメーター
-        var query: Dictionary<String,String> = Dictionary<String,String>();
+
         var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
 
         print("ユーザーIDユーザーIDユーザーIDユーザーID")
         print(matchness_user_id)
 
+        //リクエスト先
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_FAVORITE_BLOCK;
+        //パラメーター
+        var query: Dictionary<String,String> = Dictionary<String,String>();
         query["user_id"] = matchness_user_id
         query["target_id"] = "\(user_id)"
         query["status"] = String(status)
+        var headers: [String : String] = [:]
+        var api_key = userDefaults.object(forKey: "api_token") as? String
+        print("えーピアイトークンーピアイトークン")
+        print(api_key)
+        if ((api_key) != nil) {
+            headers = [
+                "Accept" : "application/json",
+                "Authorization" : "Bearer " + api_key!,
+                "Content-Type" : "application/x-www-form-urlencoded"
+            ]
+        }
+        print("ヘッダーヘッダーヘッダーヘッダーヘッダー")
+        print(headers)
+        self.requestAlamofire = Alamofire.request(requestUrl, method: .post, parameters: query, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
+            print("リクエストRRRRRRRRRRRRRRRRRR")
+            print(requestUrl)
+//            print(method)
+            print(query)
+            print("リクエストBBBBBBBBBBBBBBBBBBBBB")
+            switch response.result {
+            case .success:
+                var json:JSON;
+                do{
+                    //レスポンスデータを解析
+                    json = try SwiftyJSON.JSON(data: response.data!);
+                } catch {
+                    // error
+                    print("json error: \(error.localizedDescription)");
+//                     self.onFaild(response as AnyObject);
+                    break;
+                }
+                print("取得した値はここにきて")
+                print(json)
 
-        //リクエスト実行
-        if( !requestUserDetailModel.requestApi(url: requestUrl, addQuery: query) ){
-            
+                self.dismiss(animated: true, completion: nil)
+                print("！！！！！！！！！！")
+                print(status)
+                var alert_title = ""
+                var alert_text = ""
+                
+                // アラート作成
+                if status == 0 {
+                    print("ブロック")
+                    alert_title = "ブロック"
+                    alert_text = "ブロックしました"
+
+                } else {
+                    print("お気に入り")
+                    alert_title = "お気に入り"
+                    alert_text = "お気に入りしました。"
+                }
+                let alert = UIAlertController(title: alert_title, message: alert_text, preferredStyle: .alert)
+
+                // アラート表示
+                self.present(alert, animated: true, completion: {
+                    // アラートを閉じる
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
+                        alert.dismiss(animated: true, completion: nil)
+                    })
+                })
+
+            case .failure:
+                //  リクエスト失敗 or キャンセル時
+                print("リクエスト失敗 or キャンセル時")
+                return;
+            }
         }
     }
 
@@ -402,6 +505,8 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func backFromUserDetailView(segue:UIStoryboardSegue){
         NSLog("ReportViewController#backUserDetail")
     }
+
+    
     
 //    @objc func onLike(_ sender: MyTapGestureRecognizer) {
 //        print("タップタップタップいいね")

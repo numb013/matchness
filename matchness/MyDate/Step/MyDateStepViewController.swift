@@ -26,6 +26,8 @@ class MyDateStepViewController: UIViewController {
     @IBOutlet weak var progressViewBar: MBCircularProgressBarView!
     @IBOutlet weak var barChartView: BarChartView!
 
+    
+    var step = 0
     let dateFormatter = DateFormatter()
     let now = Date()
     var day = 0
@@ -222,6 +224,8 @@ print(weight)
             }
         }
 
+        self.count = Double(self.step) / 1.5
+        
         let from1 = Date(timeInterval: TimeInterval(-60*60*24*0), since: now)
         var component1 = NSCalendar.current.dateComponents([.year, .month, .day], from: from1)
         component1.hour = 0

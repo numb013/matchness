@@ -30,15 +30,15 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     override func viewDidLoad() {
 
         print("AAAAAAAAAA")
-//        //画面遷移
-//        let storyboard: UIStoryboard = self.storyboard!
-//        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-//        let multiple = storyboard.instantiateViewController(withIdentifier: "profile")
-//        multiple.modalPresentationStyle = .fullScreen
-//        //ここが実際に移動するコードとなります
-//        self.present(multiple, animated: true, completion: nil)
         //画面遷移
-//                performSegue(withIdentifier: "toProfile", sender: self)
+        let storyboard: UIStoryboard = self.storyboard!
+        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+        let multiple = storyboard.instantiateViewController(withIdentifier: "payment")
+        multiple.modalPresentationStyle = .fullScreen
+        //ここが実際に移動するコードとなります
+        self.present(multiple, animated: true, completion: nil)
+//        画面遷移
+//                performSegue(withIdentifier: "payment", sender: self)
 
         print("チェックチェックチェックチェック")
         print(AccessToken.current)
@@ -155,7 +155,7 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
 
 //        cell.agearea.text = self.dataSource[String(indexPath.row)]?.work
         cell.agearea.text = self.dataSource[String(indexPath.row)]?.name
-        cell.job.text = self.dataSource[String(indexPath.row)]?.profile_text
+        cell.job.text = "痩せたい部位:" + ApiConfig.FITNESS_LIST[self.dataSource[String(indexPath.row)]!.fitness_parts_id!]
 
         cell.tag = self.dataSource[String(indexPath.row)]!.id! ?? 0
 
