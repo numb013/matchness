@@ -12,7 +12,12 @@
 #import "STPPaymentMethodEnums.h"
 #import "STPPaymentOption.h"
 
-@class STPPaymentMethodBillingDetails, STPPaymentMethodCard, STPPaymentMethodiDEAL, STPPaymentMethodCardPresent;
+@class STPPaymentMethodBillingDetails,
+STPPaymentMethodCard,
+STPPaymentMethodCardPresent,
+STPPaymentMethodFPX,
+STPPaymentMethodiDEAL,
+STPPaymentMethodSEPADebit;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -60,9 +65,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, readonly) STPPaymentMethodiDEAL *iDEAL;
 
 /**
+ If this is an FPX PaymentMethod (ie `self.type == STPPaymentMethodTypeFPX`), this contains additional details.
+ */
+@property (nonatomic, nullable, readonly) STPPaymentMethodFPX *fpx;
+
+/**
  If this is a card present PaymentMethod (ie `self.type == STPPaymentMethodTypeCardPresent`), this contains additional details.
  */
 @property (nonatomic, nullable, readonly) STPPaymentMethodCardPresent *cardPresent;
+
+/**
+ If this is a SEPA Debit PaymentMethod (ie `self.type == STPPaymentMethodTypeSEPADebit`), this contains additional details.
+ */
+@property (nonatomic, nullable, readonly) STPPaymentMethodSEPADebit *sepaDebit;
 
 /**
  The ID of the Customer to which this PaymentMethod is saved. Nil when the PaymentMethod has not been saved to a Customer.

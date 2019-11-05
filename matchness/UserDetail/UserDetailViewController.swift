@@ -78,6 +78,10 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+print("1111")
+
+
+
 
         // ナビゲーションを透明にする処理
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -86,7 +90,7 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-
+print("22222")
         // 透明にしたナビゲーションを元に戻す処理
         self.navigationController!.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController!.navigationBar.shadowImage = nil
@@ -498,7 +502,16 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     func createReport(_ status:Int){
         print("toReporttoReporttoReporttoReporttoReport")
         print(status)
-        performSegue(withIdentifier: "toReport", sender: self)
+
+        let storyboard: UIStoryboard = self.storyboard!
+        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+        let multiple = storyboard.instantiateViewController(withIdentifier: "report")
+        multiple.modalPresentationStyle = .fullScreen
+        //ここが実際に移動するコードとなります
+        self.present(multiple, animated: true, completion: nil)
+
+
+//        performSegue(withIdentifier: "toReport", sender: self)
     }
     
     

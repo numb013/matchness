@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The current version of this library.
  */
-static NSString *const STPSDKVersion = @"17.0.1";
+static NSString *const STPSDKVersion = @"18.2.0";
 
 @class STPBankAccount, STPBankAccountParams, STPCard, STPCardParams, STPConnectAccountParams;
 @class STPPaymentConfiguration, STPPaymentIntentParams, STPSourceParams, STPToken, STPPaymentMethodParams;
@@ -133,6 +133,14 @@ static NSString *const STPSDKVersion = @"17.0.1";
  @param completion  The callback to run with the returned Stripe token (and any errors that may have occurred).
  */
 - (void)createTokenWithPersonalIDNumber:(NSString *)pii completion:(__nullable STPTokenCompletionBlock)completion;
+
+/**
+Converts the last 4 SSN digits into a Stripe token using the Stripe API.
+
+@param ssnLast4 The last 4 digits of the user's SSN. Cannot be nil.
+@param completion  The callback to run with the returned Stripe token (and any errors that may have occurred).
+*/
+- (void)createTokenWithSSNLast4:(NSString *)ssnLast4 completion:(STPTokenCompletionBlock)completion;
 
 @end
 
@@ -291,7 +299,7 @@ static NSString *const STPSDKVersion = @"17.0.1";
 @property (class, nonatomic, getter=isJCBPaymentNetworkSupported) BOOL JCBPaymentNetworkSupported __attribute__((deprecated("Set additionalApplePayNetworks = @[PKPaymentNetworkJCB] instead")));
 
 /**
- The SDK accepts Amex, MasterCard, Visa, and Discover for Apple Pay.
+ The SDK accepts Amex, Mastercard, Visa, and Discover for Apple Pay.
  Set this property to enable other card networks in addition to these.
 
  For example, `additionalEnabledApplePayNetworks = @[PKPaymentNetworkJCB];` enables JCB (note this requires onboarding from JCB and Stripe).
@@ -414,7 +422,7 @@ static NSString *const STPSDKVersion = @"17.0.1";
 
  @note Use the `confirmSetupIntent:withAuthenticationContext:completion:` method on `STPPaymentHandler` instead
  of calling this method directly. It handles any authentication necessary for you. @see https://stripe.com/docs/mobile/ios/authentication
- @param setupIntentParams    The `STPSetupIntentParams` to pass to `/confirm`
+ @param setupIntentParams    The `STPSetupIntentConfirmParams` to pass to `/confirm`
  @param completion           The callback to run with the returned PaymentIntent object, or an error.
  */
 - (void)confirmSetupIntentWithParams:(STPSetupIntentConfirmParams *)setupIntentParams

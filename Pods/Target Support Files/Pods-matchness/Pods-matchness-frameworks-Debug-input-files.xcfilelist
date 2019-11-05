@@ -11,7 +11,7 @@ ${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framew
 ${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework
 ${BUILT_PRODUCTS_DIR}/MBCircularProgressBar/MBCircularProgressBar.framework
 ${BUILT_PRODUCTS_DIR}/PagingMenuController/PagingMenuController.framework
-${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework
+${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework

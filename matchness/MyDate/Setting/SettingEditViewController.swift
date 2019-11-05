@@ -7,15 +7,16 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class SettingEditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
-    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    
+    private var requestAlamofire: Alamofire.Request?;
     let userDefaults = UserDefaults.standard
     @IBOutlet weak var UserSettingTable: UITableView!
     
@@ -103,8 +104,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
 //        print("こいいいいいい")
 //        print(self.dataSource)
 //        var myData = self.dataSource["0"]
-//
-        
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         let switchView = UISwitch()
         cell.accessoryView = switchView
@@ -113,7 +112,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
 
             if indexPath.row == 0 {
                 cell.textLabel?.text = "あいうえお"
-
                 //スイッチの状態
                 switchView.isOn = true
                 //タグの値にindexPath.rowを入れる。
@@ -124,7 +122,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
             }
             if indexPath.row == 1 {
                 cell.textLabel?.text = "あいうえお"
-
                 //スイッチの状態
                 switchView.isOn = true
                 //タグの値にindexPath.rowを入れる。
@@ -135,7 +132,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
             }
             if indexPath.row == 2 {
                 cell.textLabel?.text = "あいうえお"
-
                 //スイッチの状態
                 switchView.isOn = true
                 //タグの値にindexPath.rowを入れる。
@@ -149,7 +145,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
         if indexPath.section == 1 {
             if indexPath.row == 0 {
                 cell.textLabel?.text = "あいうえお"
-
                 //スイッチの状態
                 switchView.isOn = true
                 //タグの値にindexPath.rowを入れる。
@@ -160,7 +155,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
             }
             if indexPath.row == 1 {
                 cell.textLabel?.text = "あいうえお"
-
                 //スイッチの状態
                 switchView.isOn = true
                 //タグの値にindexPath.rowを入れる。
@@ -171,7 +165,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
             }
             if indexPath.row == 2 {
                 cell.textLabel?.text = "あいうえお"
-
                 //スイッチの状態
                 switchView.isOn = true
                 //タグの値にindexPath.rowを入れる。
@@ -183,11 +176,8 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
         }
 
         if indexPath.section == 2 {
-
-
             if indexPath.row == 0 {
                 cell.textLabel?.text = "あいうえお"
-
                 //スイッチの状態
                 switchView.isOn = true
                 //タグの値にindexPath.rowを入れる。
@@ -198,7 +188,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
             }
             if indexPath.row == 1 {
                 cell.textLabel?.text = "あいうえお"
-
                 //スイッチの状態
                 switchView.isOn = true
                 //タグの値にindexPath.rowを入れる。
@@ -209,7 +198,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
             }
             if indexPath.row == 2 {
                 cell.textLabel?.text = "あいうえお"
-
                 //スイッチの状態
                 switchView.isOn = true
                 //タグの値にindexPath.rowを入れる。
@@ -218,22 +206,57 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
                 switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
                 return cell
             }
-
         }
-
         return cell
     }
 
-    
     //スイッチのテーブルが変更されたときに呼ばれる
     @objc func fundlSwitch(_ sender: UISwitch) {
+        print("スイッチスイッチスイッチスイッチスイッチ")
         print(sender.tag)
         print(sender.isOn)
+        settingApi(sender.tag, sender.isOn)
     }
 
-    
-    
-    
+    func settingApi(_ status1:Int, _ status2:Bool) {
+        print("APIへリクエスト（ユーザー取得")
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_EDIT_SETTING;
+        //パラメーター
+        var query: Dictionary<String,String> = Dictionary<String,String>();
+        query["target_id"] = String(status1)
+        query["report_type_1"] = String(status2)
+        var headers: [String : String] = [:]
+
+        var api_key = userDefaults.object(forKey: "api_token") as? String
+        if ((api_key) != nil) {
+            headers = [
+                "Accept" : "application/json",
+                "Authorization" : "Bearer " + api_key!,
+                "Content-Type" : "application/x-www-form-urlencoded"
+            ]
+        }
+        self.requestAlamofire = Alamofire.request(requestUrl, method: .post, parameters: query, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
+            switch response.result {
+            case .success:
+                var json:JSON;
+                do{
+                    json = try SwiftyJSON.JSON(data: response.data!);
+                } catch {
+                    break;
+                }
+            case .failure:
+                //  リクエスト失敗 or キャンセル時
+                let alert = UIAlertController(title: "設定", message: "失敗しました。", preferredStyle: .alert)
+                self.present(alert, animated: true, completion: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
+                        alert.dismiss(animated: true, completion: nil)
+                    })
+                })
+                return;
+            }
+        }
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 print("タップ")
 
@@ -288,7 +311,6 @@ print("タップ")
         return 60
     }
 
-    
     func PickerPush(){
         pickerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: pickerView.bounds.size.height)
         // Connect data:
@@ -394,28 +416,20 @@ print("タップ")
     @objc func cancelDatePressed() {
         self.vi.removeFromSuperview()
     }
-
-
-
-
     // ドラムロールの行数
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.pcker_list.count
     }
-    
     // ドラムロールの各タイトル
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         print(self.pcker_list[row])
         return self.pcker_list[row]
     }
-
     // ドラムロール選択時
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectPickerItem = row
         print("選択ピッカー選択ピッカー選択ピッカー")
     }
-
-
     // datePickerの日付けをtextFieldのtextに反映させる
     @objc private func setText() {
         let f = DateFormatter()
@@ -426,11 +440,10 @@ print("タップ")
         print(datePickerView.date)
     }
     
-    
     @IBAction func editProfilButton(_ sender: Any) {
-print("編集ボタン！！！！")
+        print("編集ボタン！！！！")
         print(self.dataSource["0"])
-print("編集ボタン??????")
+        print("編集ボタン??????")
 
         /****************
          APIへリクエスト（ユーザー取得）
@@ -467,48 +480,18 @@ print("編集ボタン??????")
         // Pass the selected object to the new view controller.
     }
     */
-
 }
 
-
 extension SettingEditViewController : SettingEditModelDelegate {
-    
     func onStart(model: SettingEditModel) {
         print("こちら/SettingEdit/UserDetailViewのonStart")
     }
     func onComplete(model: SettingEditModel, count: Int) {
-        print("UserDetail着てきてきてきて")
         //更新用データを設定
         self.dataSource = model.responseData;
         self.dataSourceOrder = model.responseDataOrder;
-        
-        print(self.dataSourceOrder)
-        print("UserDetail耳耳耳意味耳みm")
-        print(self.dataSource)
-        print(self.dataSource["0"]?.name)
-        print(self.dataSource["0"]?.work)
-
-        //一つもなかったら
-        //        if( dataSourceOrder.isEmpty ){
-        //            return;
-        //        }
-        
-        //cellの件数更新
         self.cellCount = dataSourceOrder.count;
-        //        self.cellCount = 10;
-        
-
-        
-        //
         var count: Int = 0;
-        //        for(key, code) in dataSourceOrder.enumerated() {
-        //            count+=1;
-        //            if let jenre: ApiUserDateParam = dataSource[code] {
-        //                //取得したデータを元にコレクションを再構築＆更新
-        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-        //            }
-        //        }
-        
         UserSettingTable.reloadData()
     }
     func onFailed(model: SettingEditModel) {

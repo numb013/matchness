@@ -24,6 +24,10 @@ class PaymentViewController: UIViewController {
     }
     
     @IBAction func didTapButton(_ sender: Any) {
+
+
+
+
         let addCardViewController = STPAddCardViewController()
         addCardViewController.delegate = self as! STPAddCardViewControllerDelegate
         let navigationController = UINavigationController(rootViewController: addCardViewController)
@@ -51,7 +55,13 @@ extension PaymentViewController: STPAddCardViewControllerDelegate {
         dismiss(animated: true)
     }
  
+
+    
+    
     func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
+
+
+ 
         print("決済２２２２")
 
         print(token.tokenId)

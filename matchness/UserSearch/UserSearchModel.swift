@@ -141,12 +141,16 @@ extension UserSearchModel : ApiRequestDelegate {
     public func onParse(_ json: JSON){
 
         var key1 = 0;
+        print(array1)
         print("44444444444444444")
         print(page)
-        print(responseDataOrder)
+
         responseDataOrder = array1
         responseData = array2
 
+        
+        print(responseDataOrder)
+        
         json.forEach { (key, json) in
             //データを変換
             let data: ApiUserDate? = ApiUserDate(json: json);
@@ -159,12 +163,12 @@ extension UserSearchModel : ApiRequestDelegate {
             responseDataOrder.append(String(key1));
             print("33333333333333333")
             print(key1)
-            print(data)
+//            print(data)
             responseData[String(key1)] = data;
         }
 
         page += 1;
-
+        print("responseDataresponseData")
         print(responseData)
 
     }

@@ -7,7 +7,18 @@
 //
 
 #import "STPPaymentIntentParams.h"
+
+#import "STPMandateCustomerAcceptanceParams.h"
+#import "STPMandateOnlineParams+Private.h"
+#import "STPMandateDataParams.h"
 #import "STPPaymentIntent+Private.h"
+#import "STPPaymentMethod.h"
+#import "STPPaymentMethodParams.h"
+#import "STPPaymentResult.h"
+
+@interface STPPaymentIntentParams ()
+
+@end
 
 @implementation STPPaymentIntentParams
 
@@ -55,6 +66,10 @@
                        [NSString stringWithFormat:@"paymentMethodId = %@", self.paymentMethodId],
                        [NSString stringWithFormat:@"paymentMethodParams = %@", self.paymentMethodParams],
 
+                       // Mandate
+                       [NSString stringWithFormat:@"mandateData = %@", self.mandateData],
+                       [NSString stringWithFormat:@"mandate = %@", self.mandate],
+
                        // Additional params set by app
                        [NSString stringWithFormat:@"additionalAPIParameters = %@", self.additionalAPIParameters],
                        ];
@@ -75,6 +90,33 @@
         case STPPaymentIntentSetupFutureUsageNone:
         case STPPaymentIntentSetupFutureUsageUnknown:
             return nil;
+    }
+}
+
+- (void)configureWithPaymentResult:(STPPaymentResult *)paymentResult {
+    if (paymentResult.paymentMethod) {
+        _paymentMethodId = [paymentResult.paymentMethod.stripeId copy];
+    } else if (paymentResult.paymentMethodParams) {
+        _paymentMethodParams = paymentResult.paymentMethodParams;
+    }
+}
+
+- (STPMandateDataParams *)mandateData {
+    if (_mandateData != nil) {
+        return _mandateData;
+    } else if (self.paymentMethodParams.type == STPPaymentMethodTypeSEPADebit && self.mandate == nil) {
+        // Create default infer from client mandate_data
+        STPMandateDataParams *mandateData = [[STPMandateDataParams alloc] init];
+        STPMandateCustomerAcceptanceParams *customerAcceptance = [[STPMandateCustomerAcceptanceParams alloc] init];
+        STPMandateOnlineParams *onlineParams = [[STPMandateOnlineParams alloc] init];
+        onlineParams.inferFromClient = @YES;
+        customerAcceptance.type = STPMandateCustomerAcceptanceTypeOnline;
+        customerAcceptance.onlineParams = onlineParams;
+        mandateData.customerAcceptance = customerAcceptance;
+
+        return mandateData;
+    } else {
+        return nil;
     }
 }
 
@@ -111,6 +153,8 @@
     copy.returnURL = self.returnURL;
     copy.setupFutureUsage = self.setupFutureUsage;
     copy.useStripeSDK = self.useStripeSDK;
+    copy.mandateData = self.mandateData;
+    copy.mandate = self.mandate;
     copy.additionalAPIParameters = self.additionalAPIParameters;
 
     return copy;
@@ -134,6 +178,8 @@
              NSStringFromSelector(@selector(savePaymentMethod)): @"save_payment_method",
              NSStringFromSelector(@selector(returnURL)): @"return_url",
              NSStringFromSelector(@selector(useStripeSDK)) : @"use_stripe_sdk",
+             NSStringFromSelector(@selector(mandateData)) : @"mandate_data",
+             NSStringFromSelector(@selector(mandate)) : @"mandate",
              };
 }
 

@@ -17,9 +17,7 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     @IBOutlet weak var userDetail: UICollectionView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     let navBarHeight : CGFloat = 164.0
-
     let userDefaults = UserDefaults.standard
-    
     var cellCount: Int = 0
 
     var dataSource: Dictionary<String, ApiUserDate> = [:]
@@ -27,16 +25,23 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     var page_no = "1"
     var isLoading:Bool = false
 
+    var freeword = ""
+    var work: String? = nil
+    var prefecture_id: String? = nil
+    var blood_type: String? = nil
+    var fitness_parts_id: String? = nil
+    
+    
     override func viewDidLoad() {
 
         print("AAAAAAAAAA")
         //画面遷移
-        let storyboard: UIStoryboard = self.storyboard!
-        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-        let multiple = storyboard.instantiateViewController(withIdentifier: "payment")
-        multiple.modalPresentationStyle = .fullScreen
-        //ここが実際に移動するコードとなります
-        self.present(multiple, animated: true, completion: nil)
+//        let storyboard: UIStoryboard = self.storyboard!
+//        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+//        let multiple = storyboard.instantiateViewController(withIdentifier: "payment")
+//        multiple.modalPresentationStyle = .fullScreen
+//        //ここが実際に移動するコードとなります
+//        self.present(multiple, animated: true, completion: nil)
 //        画面遷移
 //                performSegue(withIdentifier: "payment", sender: self)
 
@@ -61,6 +66,7 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         super.viewDidLoad()
         userDetail.delegate = self
         userDetail.dataSource = self
+
         if let tabItem = self.tabBarController?.tabBar.items?[2] {
             tabItem.badgeValue = "new"
         }
@@ -83,6 +89,11 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         print("こっちにも恋")
         //タブバー表示
         tabBarController?.tabBar.isHidden = false
+        self.isLoading = true
+        self.page_no = "1"
+        self.dataSourceOrder = []
+        var dataSource: Dictionary<String, ApiUserDate> = [:]
+        apiRequest()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -127,6 +138,20 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         requestUserSearchModel.array2 = self.dataSource
         //リクエスト実行
         query["page"] = page_no
+
+        
+
+        query["freeword"] = userDefaults.object(forKey: "searchFreeword") as? String
+        query["work"] = userDefaults.object(forKey: "searchWork") as? String
+        query["prefecture_id"] = userDefaults.object(forKey: "searchFitnessPartsId") as? String
+        query["blood_type"] = userDefaults.object(forKey: "searchBloodType") as? String
+        query["fitness_parts_id"] = userDefaults.object(forKey: "searchPrefectureId") as? String
+        
+        
+        print("検索ーーーーーーーーーーー")
+        print(query)
+        
+
         if( !requestUserSearchModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
@@ -155,6 +180,7 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
 
 //        cell.agearea.text = self.dataSource[String(indexPath.row)]?.work
         cell.agearea.text = self.dataSource[String(indexPath.row)]?.name
+
         cell.job.text = "痩せたい部位:" + ApiConfig.FITNESS_LIST[self.dataSource[String(indexPath.row)]!.fitness_parts_id!]
 
         cell.tag = self.dataSource[String(indexPath.row)]!.id! ?? 0
@@ -162,7 +188,6 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         var number = Int.random(in: 1 ... 18)
         cell.imageView.image = UIImage(named: "\(number)")  
         
-
         return cell
     }
 
@@ -210,6 +235,16 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         }
     }
 
+    
+    @IBAction func searchButton(_ sender: Any) {
+        print("検索検索検索検索検索")
+        self.performSegue(withIdentifier: "searchButton", sender: nil)
+    }
+    
+    @IBAction func backSearchView(segue:UIStoryboardSegue){
+        NSLog("backSearchView#backSearchView")
+    }
+    
     /*
     // MARK: - Navigation
 

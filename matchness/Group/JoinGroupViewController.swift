@@ -124,6 +124,7 @@ print(joinGroup)
         print(group_param)
         self.performSegue(withIdentifier: "toGroupEvent", sender: group_param)
     }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc = segue.destination as! GroupEventViewController
         vc.group_param = sender as! [String : Any]

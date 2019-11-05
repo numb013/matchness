@@ -40,8 +40,6 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")
         self.tableView.register(UINib(nibName: "ButtonTableViewCell", bundle: nil), forCellReuseIdentifier: "ButtonTableViewCell")
 
-        
-        
         pickerView.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
     }
@@ -65,7 +63,6 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if section == 2 {
             return ""
         }
-
         return "詳細"
     }
     
@@ -129,22 +126,14 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         return 60
     }
-    
-    
-    
-    
+
     @objc private func pushButton(_ sender:UIButton)
     {
 
     }
     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismissPicker()
-
-print("セレクトセレクトセレクトセレクトセレクト")
-print(indexPath)
-
         if indexPath.section == 0 {
             if indexPath.row == 0 {
             self.selectPicker = 1
@@ -313,10 +302,10 @@ print(indexPath)
                 }
                 print("取得した値はここにきて")
                 print(json)
-
-                self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true)
+//                self.dismiss(animated: true, completion: nil)
                 print("！！！！！！！！！！")
-
+                
                 // アラート作成
                 let alert = UIAlertController(title: "通報", message: "通報しました。", preferredStyle: .alert)
                 // アラート表示

@@ -91,6 +91,13 @@
                                                           [client setApiUsage:[client.apiUsage setByAddingObject:NSStringFromClass([STPPaymentOptionsViewController class])]];
                                                       } error:nil];
 
+        [STPBankSelectionViewController stp_aspect_hookSelector:@selector(initWithBankMethod:configuration:theme:)
+                                                     withOptions:STPAspectPositionAfter
+                                                      usingBlock:^{
+                                                          STPAnalyticsClient *client = [self sharedClient];
+                                                          [client setApiUsage:[client.apiUsage setByAddingObject:NSStringFromClass([STPBankSelectionViewController class])]];
+                                                      } error:nil];
+        
         [STPShippingAddressViewController stp_aspect_hookSelector:@selector(initWithConfiguration:theme:currency:shippingAddress:selectedShippingMethod:prefilledInformation:)
                                                       withOptions:STPAspectPositionAfter
                                                        usingBlock:^{
@@ -169,15 +176,12 @@
     NSString *uiUsageLevel = nil;
     if ([self.apiUsage containsObject:NSStringFromClass([STPPaymentContext class])]) {
         uiUsageLevel = @"full";
-    }
-    else if (self.apiUsage.count == 1
+    } else if (self.apiUsage.count == 1
              && [self.apiUsage containsObject:NSStringFromClass([STPPaymentCardTextField class])]) {
         uiUsageLevel = @"card_text_field";
-    }
-    else if (self.apiUsage.count > 0) {
+    } else if (self.apiUsage.count > 0) {
         uiUsageLevel = @"partial";
-    }
-    else {
+    } else {
         uiUsageLevel = @"none";
     }
     productUsage[@"ui_usage_level"] = uiUsageLevel;
@@ -407,11 +411,22 @@
 + (NSDictionary *)serializeConfiguration:(STPPaymentConfiguration *)configuration {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     dictionary[@"publishable_key"] = configuration.publishableKey ?: @"unknown";
-    switch (configuration.additionalPaymentOptions) {
-        case STPPaymentOptionTypeAll:
-            dictionary[@"additional_payment_methods"] = @"all";
-        case STPPaymentOptionTypeNone:
-            dictionary[@"additional_payment_methods"] = @"none";
+    
+    if (configuration.additionalPaymentOptions == STPPaymentOptionTypeDefault) {
+        dictionary[@"additional_payment_methods"] = @"default";
+    }
+    else if (configuration.additionalPaymentOptions == STPPaymentOptionTypeNone) {
+        dictionary[@"additional_payment_methods"] = @"none";
+    }
+    else {
+        NSMutableArray *methods = [[NSMutableArray alloc] init];
+        if (configuration.additionalPaymentOptions & STPPaymentOptionTypeApplePay) {
+            [methods addObject:@"applepay"];
+        }
+        if (configuration.additionalPaymentOptions & STPPaymentOptionTypeFPX) {
+            [methods addObject:@"fpx"];
+        }
+        dictionary[@"additional_payment_methods"] = [methods componentsJoinedByString:@","];
     }
     switch (configuration.requiredBillingAddressFields) {
         case STPBillingAddressFieldsNone:

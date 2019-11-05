@@ -8,6 +8,15 @@
 
 #import "STPSetupIntentConfirmParams.h"
 
+#import "STPMandateCustomerAcceptanceParams.h"
+#import "STPMandateOnlineParams+Private.h"
+#import "STPMandateDataParams.h"
+#import "STPPaymentMethodParams.h"
+
+@interface STPSetupIntentConfirmParams ()
+
+@end
+
 @implementation STPSetupIntentConfirmParams
 
 @synthesize additionalAPIParameters = _additionalAPIParameters;
@@ -37,12 +46,35 @@
                        [NSString stringWithFormat:@"paymentMethodId = %@", self.paymentMethodID],
                        [NSString stringWithFormat:@"paymentMethodParams = %@", self.paymentMethodParams],
                        [NSString stringWithFormat:@"useStripeSDK = %@", self.useStripeSDK],
-                       
+
+                       // Mandate
+                       [NSString stringWithFormat:@"mandateData = %@", self.mandateData],
+                       [NSString stringWithFormat:@"mandate = %@", self.mandate],
+
                        // Additional params set by app
                        [NSString stringWithFormat:@"additionalAPIParameters = %@", self.additionalAPIParameters],
                        ];
     
     return [NSString stringWithFormat:@"<%@>", [props componentsJoinedByString:@"; "]];
+}
+
+- (STPMandateDataParams *)mandateData {
+    if (_mandateData != nil) {
+        return _mandateData;
+    } else if (self.paymentMethodParams.type == STPPaymentMethodTypeSEPADebit && self.mandate == nil) {
+        // Create default infer from client mandate_data
+        STPMandateDataParams *mandateData = [[STPMandateDataParams alloc] init];
+        STPMandateCustomerAcceptanceParams *customerAcceptance = [[STPMandateCustomerAcceptanceParams alloc] init];
+        STPMandateOnlineParams *onlineParams = [[STPMandateOnlineParams alloc] init];
+        onlineParams.inferFromClient = @YES;
+        customerAcceptance.type = STPMandateCustomerAcceptanceTypeOnline;
+        customerAcceptance.onlineParams = onlineParams;
+        mandateData.customerAcceptance = customerAcceptance;
+
+        return mandateData;
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - NSCopying
@@ -55,6 +87,8 @@
     copy.paymentMethodID = self.paymentMethodID;
     copy.returnURL = self.returnURL;
     copy.useStripeSDK = self.useStripeSDK;
+    copy.mandateData = self.mandateData;
+    copy.mandate = self.mandate;
     copy.additionalAPIParameters = self.additionalAPIParameters;
 
     return copy;
@@ -73,6 +107,9 @@
              NSStringFromSelector(@selector(paymentMethodID)): @"payment_method",
              NSStringFromSelector(@selector(returnURL)): @"return_url",
              NSStringFromSelector(@selector(useStripeSDK)): @"use_stripe_sdk",
+             NSStringFromSelector(@selector(mandateData)): @"mandate_data",
+             NSStringFromSelector(@selector(mandateData)) : @"mandate_data",
+             NSStringFromSelector(@selector(mandate)) : @"mandate",
              };
 }
 

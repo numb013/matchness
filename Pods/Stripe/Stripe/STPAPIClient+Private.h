@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)createTokenWithParameters:(NSDictionary *)parameters
                        completion:(STPTokenCompletionBlock)completion;
 
++ (void)validateKey:(NSString *)publishableKey;
 
 @property (nonatomic, strong, readwrite) NSURL *apiURL;
 @property (nonatomic, strong, readonly) NSURLSession *urlSession;
@@ -128,9 +129,53 @@ fromCustomerUsingKey:(STPEphemeralKey *)ephemeralKey
 
 @end
 
+@interface STPAPIClient (PaymentIntentPrivate)
+
+/**
+ Retrieves the PaymentIntent object using the given secret. @see https://stripe.com/docs/api#retrieve_payment_intent
+
+ @param secret      The client secret of the payment intent to be retrieved. Cannot be nil.
+ @param expand  An array of string keys to expand on the returned PaymentIntent object. These strings should match one or more of the parameter names that are marked as expandable. @see https://stripe.com/docs/api/payment_intents/object
+ @param completion  The callback to run with the returned PaymentIntent object, or an error.
+*/
+- (void)retrievePaymentIntentWithClientSecret:(NSString *)secret
+                                       expand:(nullable NSArray<NSString *> *)expand
+                                   completion:(STPPaymentIntentCompletionBlock)completion;
+
+/**
+ Confirms the PaymentIntent object with the provided params object.
+ 
+ At a minimum, the params object must include the `clientSecret`.
+ 
+ @see https://stripe.com/docs/api#confirm_payment_intent
+ 
+ @note Use the `confirmPayment:withAuthenticationContext:completion:` method on `STPPaymentHandler` instead
+ of calling this method directly. It handles any authentication necessary for you. @see https://stripe.com/docs/mobile/ios/authentication
+ @param paymentIntentParams  The `STPPaymentIntentParams` to pass to `/confirm`
+ @param expand  An array of string keys to expand on the returned PaymentIntent object. These strings should match one or more of the parameter names that are marked as expandable. @see https://stripe.com/docs/api/payment_intents/object
+ @param completion           The callback to run with the returned PaymentIntent object, or an error.
+*/
+- (void)confirmPaymentIntentWithParams:(STPPaymentIntentParams *)paymentIntentParams
+                                expand:(nullable NSArray<NSString *> *)expand
+                            completion:(STPPaymentIntentCompletionBlock)completion;
+
+@end
+
 @interface Stripe (Private)
 
 + (NSArray<NSString *> *)supportedPKPaymentNetworks;
 
 @end
+
+@interface STPAPIClient (FPXPrivate)
+
+/**
+ Retrieves the online status of the FPX banks from the Stripe API.
+
+ @param completion  The callback to run with the returned FPX bank list, or an error.
+ */
+- (void)retrieveFPXBankStatusWithCompletion:(STPFPXBankStatusCompletionBlock)completion;
+
+@end
+
 NS_ASSUME_NONNULL_END

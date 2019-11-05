@@ -220,11 +220,19 @@ print(weight)
                 print("登った回数\((data.floorsAscended))") // 上った回数
                 print("降った回数\(data.floorsDescended))")
                 
+                print(step)
+                self.count = Double(step) / 1.7
+                self.formatter.unitsStyle = .positional
+                self.formatter.allowedUnits = [.hour, .minute, .second]
+                let str = self.formatter.string(from: self.count)
+                // ラベルに表示
+                self.timeLabel.text = str
+
                 //self.progressViewBar2.value = (CGFloat(Double(step) / 10000)*100)
             }
         }
 
-        self.count = Double(self.step) / 1.5
+        
         
         let from1 = Date(timeInterval: TimeInterval(-60*60*24*0), since: now)
         var component1 = NSCalendar.current.dateComponents([.year, .month, .day], from: from1)

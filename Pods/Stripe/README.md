@@ -16,11 +16,26 @@ We also expose the low-level APIs that power those UIs so that you can build ful
 
 > Updating to a newer version of the SDK? See our [migration guide](https://github.com/stripe/stripe-ios/blob/master/MIGRATING.md) and [changelog](https://github.com/stripe/stripe-ios/blob/master/CHANGELOG.md).
 
-### Features
+Table of contents
+=================
 
-**Simplified Security**: We make it simple for you to collect sensitive data such as credit card numbers by [tokenizing payment information](https://stripe.com/docs/quickstart#collecting-payment-information). This means the sensitive data is sent directly to Stripe instead of passing through your server. For more information, see our [Integration Security Guide](https://stripe.com/docs/security).
+<!--ts-->
+   * [Features](#features)
+   * [Releases](#releases)
+   * [Requirements](#requirements)
+   * [Getting Started](#getting-started)
+      * [Integration](#integration)
+      * [Examples](#examples)
+   * [Card IO](#card-io)
+   * [Contributing](#contributing)
+   * [Migrating](#migrating-from-older-versions)
+<!--te-->
 
-**Apple Pay**: We provide a seamless integration with Apple Pay that will allow your customers to pay using payment methods from their Wallet. For more information, see our [Apple Pay](https://stripe.com/apple-pay) page. We also have a tutorial for our [Apple Pay Utilities](https://stripe.com/docs/mobile/ios/custom#apple-pay).
+## Features
+
+**Simplified Security**: We make it simple for you to collect sensitive data such as credit card numbers and remain [PCI compliant](https://stripe.com/docs/security#pci-dss-guidelines). This means the sensitive data is sent directly to Stripe instead of passing through your server. For more information, see our [Integration Security Guide](https://stripe.com/docs/security).
+
+**Apple Pay**: We provide a seamless integration with [Apple Pay](https://stripe.com/apple-pay). After [installing the SDK](https://stripe.com/docs/mobile/ios/setup), see our full guide to [accept Apple Pay in your iOS app](https://stripe.com/docs/apple-pay#native).
 
 **Native UI**: We provide out-of-the-box native screens and elements so that you can get started quickly without having to think about designing the right interfaces. For example, [STPPaymentCardTextField](https://stripe.com/docs/mobile/ios/custom#stppaymentcardtextfield) is a UIView that collects and validates card details. [STPAddCardViewController](https://stripe.com/docs/mobile/ios/custom#stpaddcardviewcontroller) is a UIViewController that also creates the Stripe API payment object for you. See our [Custom Integration Guide](https://stripe.com/docs/mobile/ios/custom).
 
@@ -37,7 +52,7 @@ We also offer all of our UI components bundled into an all-in-one class designed
 We recommend that you install the Stripe iOS SDK using a package manager such as [Cocoapods or Carthage](https://stripe.com/docs/mobile/ios#getting-started). If you prefer to link the library manually, please use a version from our [releases](https://github.com/stripe/stripe-ios/releases) page because we consider the master branch to be unstable.
 
 If you're reading this on GitHub.com, please make sure you are looking at the [tagged version](https://github.com/stripe/stripe-ios/tags) that corresponds to the release you have installed. Otherwise, the instructions and example code may be mismatched with your copy. You can read the latest tagged version of this README and browse the associated code on GitHub using
-[this link](https://github.com/stripe/stripe-ios/tree/v17.0.1).
+[this link](https://github.com/stripe/stripe-ios/tree/v18.2.0).
 
 ## Requirements
 
@@ -47,21 +62,24 @@ The Stripe iOS SDK requires Xcode 10.1 or later and is compatible with apps targ
 
 ### Integration
 
-Please see our [iOS Integration Guide](https://stripe.com/docs/mobile/ios/setup) which explains everything from SDK installation, to tokenizing payment information, to Apple Pay integration, and more. For more fine-grained documentation for all of the classes and methods, please see our full [Stripe iOS SDK Reference](http://stripe.github.io/stripe-ios/docs/index.html).
+Please see our [iOS Integration Guide](https://stripe.com/docs/mobile/ios/setup) which explains SDK installation, collecting payment information, Apple Pay integration, and more. For more fine-grained documentation for all of the classes and methods, please see our full [Stripe iOS SDK Reference](http://stripe.github.io/stripe-ios/docs/index.html).
 
 ### Examples
 
 There are 3 example apps included in the repository:
 
-- [**UI Examples** Example/UI Examples/README.md ](/Example/UI%20Examples/README.md)
-- [**Standard Integration** Example/Standard Integration/README.md](/Example/Standard%20Integration/README.md)
+- [**UI Examples** Example/UI Examples/README.md ](/Example/UI%20Examples/README.md).
+  - This example lets you try out the pre-built UI components we provide.
 - [**Custom Integration** Example/Custom Integration/README.md](/Example/Custom%20Integration/README.md)
+  - This example demonstrates how to uset push `STPAPIClient` to accept various payment methods.
+- [**Basic Integration** Example/Basic Integration/README.md](/Example/Basic%20Integration/README.md)
+  - This example demonstrates how to build a payment flow using our pre-built UI component integration (`STPPaymentContext`).
 
 ## Card IO
 
 To add card scanning capabilities to our prebuilt UI components, you can simply [install card.io](https://github.com/card-io/card.io-iOS-SDK#setup) alongside our SDK. You'll also need to set `NSCameraUsageDescription` in your application's plist, and provide a reason for accessing the camera (e.g. "To scan cards").
 
-To try this out, you can run `./install_cardio.rb`, which will download and install card.io in the Standard Integration project. Now, when you run the example app on a device, you'll see a "Scan Card" button when adding a new card.
+To try this out, you can run `./install_cardio.rb`, which will download and install card.io in the Basic Integration project. Now, when you run the example app on a device, you'll see a "Scan Card" button when adding a new card.
 
 ## Contributing
 

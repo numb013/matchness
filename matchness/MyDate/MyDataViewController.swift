@@ -36,7 +36,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     var step_1: [Double] = []
     
     let topMenu = ["AAA", "BBB", "CCC"]
-    let systemMenu = ["足あと", "もらったいいね", "プロフィール", "お気に入り", "ポイント交換", "お知らせ", "ブロック", "設定", "退会", "ポイント履歴", "マイデータ"]
+    let systemMenu = ["足あと", "もらったいいね", "プロフィール", "お気に入り", "ポイント交換", "お知らせ", "ブロック", "設定", "退会", "ポイント履歴", "マイデータ", "決済"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,6 +207,10 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
             let cellImage = UIImage(named: "stepdata")
             imageView.image = cellImage
         }
+        if indexPath.row == 11 {
+            let cellImage = UIImage(named: "stepdata")
+            imageView.image = cellImage
+        }
         // 画像配列の番号で指定された要素の名前の画像をUIImageとする
         // UIImageをUIImageViewのimageとして設定
 
@@ -287,6 +291,15 @@ print(self.weight)
 
             self.present(multiple, animated: true, completion: nil)
         }
+
+
+        if (indexPath.row == 11) {
+            let storyboard: UIStoryboard = self.storyboard!
+            let multiple = storyboard.instantiateViewController(withIdentifier: "payment")
+            multiple.modalPresentationStyle = .fullScreen
+            self.present(multiple, animated: false, completion: nil)
+        }
+
         if (indexPath.row == 8) {
             let alertController:UIAlertController =
                 UIAlertController(title:"退会する",message: "本当に退会しますか？",preferredStyle: .alert)
