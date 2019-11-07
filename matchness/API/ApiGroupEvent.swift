@@ -15,6 +15,8 @@ import SwiftyJSON;
  */
 public struct ApiGroupEvent: CustomDebugStringConvertible {
 
+    
+    public var user_id: Int? = nil;
     public var step: String? = nil;
     public var rank: String? = nil;
     public var event_time: String? = nil;
@@ -48,6 +50,9 @@ public struct ApiGroupEvent: CustomDebugStringConvertible {
         if( item == JSON.null ){
             return nil;
         }
+        if let user_id = item["user_id"].int {
+            self.user_id = user_id;
+        }
         if let step = item["step"].string {
             self.step = step;
         }
@@ -78,6 +83,7 @@ public struct ApiGroupEvent: CustomDebugStringConvertible {
     public var debugDescription: String {
         get{
             var string:String = "ApiGroupEvent::\(#function)\n";
+            string += "user_id => \(String(describing: self.user_id))\n";
             string += "step => \(String(describing: self.step))\n";
             string += "rank => \(String(describing: self.rank))\n";
             string += "event_time => \(String(describing: self.event_time))\n";

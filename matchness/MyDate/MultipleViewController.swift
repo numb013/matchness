@@ -96,13 +96,32 @@ class MultipleViewController: UIViewController, UITableViewDelegate , UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MultipleTableViewCell") as! MultipleTableViewCell
 
-        cell.userName.text = self.dataSource[String(indexPath.row)]!.name!
-        cell.userWork.text = ApiConfig.WORK_LIST[self.dataSource[String(indexPath.row)]?.work ?? 0]
+        var multiple = self.dataSource[String(indexPath.row)]
+        
+        cell.userName.text = multiple?.name!
+        cell.userWork.text = ApiConfig.WORK_LIST[multiple?.work ?? 0]
+
         var number = Int.random(in: 1 ... 18)
         cell.userImage.image = UIImage(named: "\(number)")
+        cell.userImage.isUserInteractionEnabled = true
+        var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTap(_:)))
+        recognizer.targetUserId = multiple?.target_id
+        cell.userImage.addGestureRecognizer(recognizer)
+        
         cell.createTime.text = self.dataSource[String(indexPath.row)]!.updated_at!
         return cell
     }
+    
+    @objc func onTap(_ sender: MyTapGestureRecognizer) {
+        var user_id = sender.targetUserId!
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "toUserDetail") as! UserDetailViewController
+        nextVC.user_id = user_id
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
+    }
+    
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90

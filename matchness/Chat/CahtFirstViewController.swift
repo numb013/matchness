@@ -108,9 +108,13 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
             cell.ChatName.text = message.target_name
             cell.ChatDate.text = message.created_at
             cell.ChatMessage.text = message.last_message
+
             var number = Int.random(in: 1 ... 18)
             cell.ChatImage.image = UIImage(named: "\(number)")
-//            cell.tag = message!.room_code!)!
+            cell.ChatImage.isUserInteractionEnabled = true
+            var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTapImage(_:)))
+            recognizer.targetUserId = self.dataSource["0"]!.id
+            cell.ChatImage.addGestureRecognizer(recognizer)
             cell.ChatImage.contentMode = .scaleAspectFill
             cell.ChatImage.clipsToBounds = true
             cell.ChatImage.layer.cornerRadius =  cell.ChatImage.frame.height / 2
@@ -123,6 +127,18 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
         }
         return cell
     }
+
+    
+    @objc func onTapImage(_ sender: MyTapGestureRecognizer) {
+        var user_id = sender.targetUserId!
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "toUserDetail") as! UserDetailViewController
+        nextVC.user_id = user_id
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
+    }
+
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
@@ -141,7 +157,7 @@ class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableV
         var users = self.dataSource["0"]!.message[message_id]
         let message_users:[String:String] = [
             "room_code":String(users.room_code!),
-            "user_id":self.dataSource["0"]!.id!,
+            "user_id":String(self.dataSource["0"]!.id!),
             "user_name":self.dataSource["0"]!.name!,
             "point":self.dataSource["0"]!.point!,
         ]

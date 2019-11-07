@@ -139,8 +139,6 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         //リクエスト実行
         query["page"] = page_no
 
-        
-
         query["freeword"] = userDefaults.object(forKey: "searchFreeword") as? String
         query["work"] = userDefaults.object(forKey: "searchWork") as? String
         query["prefecture_id"] = userDefaults.object(forKey: "searchFitnessPartsId") as? String
@@ -202,7 +200,15 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCell = collectionView.cellForItem(at: indexPath)
         let user_id = selectedCell?.tag ?? 0
-        self.performSegue(withIdentifier: "toUserDetail", sender: user_id)
+//        self.performSegue(withIdentifier: "toUserDetail", sender: user_id)
+        //画面遷移
+        let storyboard: UIStoryboard = self.storyboard!
+        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "toUserDetail") as! UserDetailViewController
+        nextVC.modalPresentationStyle = .fullScreen
+        nextVC.user_id = user_id
+        //ここが実際に移動するコードとなります
+        self.present(nextVC, animated: true, completion: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: (Any)?) {
@@ -211,27 +217,6 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
             print(sender)
             let udc:UserDetailViewController = segue.destination as! UserDetailViewController
             udc.user_id = sender as! Int
-        }
-    }
-    
-    @objc func onTap(_ sender: MyTapGestureRecognizer) {
-        print("タップタップタップいいね")
-        var target_id = sender.targetString!
-        
-        let requestUserSearchModel = UserSearchModel();
-        requestUserSearchModel.delegate = self as! UserSearchModelDelegate;
-        //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_LIKE;
-        //パラメーター
-        var query: Dictionary<String,String> = Dictionary<String,String>();
-        query["user_id"] = userDefaults.object(forKey: "matchness_user_id") as? String
-        query["target_id"] = String(target_id)
-        query["page_no"] = String(self.page_no)
-        print("ハッスル")
-        print(userDefaults.object(forKey: "matchness_user_id") as? String)
-        //リクエスト実行
-        if( !requestUserSearchModel.requestApi(url: requestUrl, addQuery: query) ){
-            
         }
     }
 

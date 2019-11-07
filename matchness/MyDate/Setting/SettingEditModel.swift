@@ -47,7 +47,7 @@ class SettingEditModel: NSObject {
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
     //IDをキーにしてデータを保持
-    public var responseData: Dictionary<String, ApiUserDetailDate> = [String: ApiUserDetailDate]();
+    public var responseData: Dictionary<String, ApiSetting> = [String: ApiSetting]();
 
     var request_mode: String!;
 
@@ -112,13 +112,13 @@ class SettingEditModel: NSObject {
 
     /*
      */
-    func getData(row: Int) -> ApiUserDetailDate? {
+    func getData(row: Int) -> ApiSetting? {
         let count: Int = row + 1;
         if( count > responseDataOrder.count || responseDataOrder.isEmpty ){
             return nil;
         }
         let key: String = responseDataOrder[row];
-        if let info: ApiUserDetailDate = responseData[key] {
+        if let info: ApiSetting = responseData[key] {
             return info;
         }
         return nil;
@@ -137,11 +137,11 @@ extension SettingEditModel : ApiRequestDelegate {
         let recommend: JSON = items["list"];
         for (key, item):(String, JSON) in json {
             //データを変換
-            let data: ApiUserDetailDate? = ApiUserDetailDate(json: item);
+            let data: ApiSetting? = ApiSetting(json: item);
 
 
             //Optionalチェック
-            guard let info: ApiUserDetailDate = data else {
+            guard let info: ApiSetting = data else {
                 continue;
             }
             print(info)
@@ -152,9 +152,9 @@ extension SettingEditModel : ApiRequestDelegate {
 //            }
                         print("222222")
             //
-            guard let name = info.name else {
-                continue;
-            }
+//            guard let name = info.name else {
+//                continue;
+//            }
 
             //並び順を保持
             responseDataOrder.append(key);

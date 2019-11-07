@@ -127,7 +127,12 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.clipsToBounds = true
         cell.userImage.layer.cornerRadius =  cell.userImage.frame.height / 2
+        cell.userImage.isUserInteractionEnabled = true
+        var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTap(_:)))
+        recognizer.targetUserId = group_event.user_id
+        cell.userImage.addGestureRecognizer(recognizer)
         
+
         let userStep = Int.random(in: 5000 ... 120000)
         cell.lastLoginTime.textColor = UIColor.white
         cell.userInfo.textColor = UIColor.white
@@ -166,6 +171,17 @@ print("ログイン時間ログイン時間ログイン時間")
         return cell
     }
 
+    
+    @objc func onTap(_ sender: MyTapGestureRecognizer) {
+        var user_id = sender.targetUserId!
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "toUserDetail") as! UserDetailViewController
+        nextVC.user_id = user_id
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
+    }
+    
+    
 
     @IBAction func groupChatButtom(_ sender: Any) {
             self.performSegue(withIdentifier: "toGroupChat", sender: nil)

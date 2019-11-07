@@ -96,31 +96,48 @@ class JoinGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         cell.startType.text = "開始 : " +  ApiConfig.EVENT_START_TYPE[(joinGroup?.start_type)!]
         cell.presentPoint.text = "参加人数 : " +  ApiConfig.EVENT_PRESENT_POINT[(joinGroup?.present_point)!] + "point"
 
-        var number = Int.random(in: 1 ... 18)
         cell.joinButton.setTitle("参加中", for: .normal)
         cell.joinButton.layer.backgroundColor = UIColor(red: 0.0, green: 0.6, blue: 0.8, alpha: 1.0).cgColor
         cell.joinButton.layer.cornerRadius = 5.0 //丸みを数値で変更できます
         cell.tag = (joinGroup?.id!)!
 
-
-print("プログレスプログレスプログレス")
-print(joinGroup)
-        self.progress[joinGroup!.id!] = joinGroup!.progress_day!
-        print(self.progress)
+        var number = Int.random(in: 1 ... 18)
         cell.groupTestImage.image = UIImage(named: "\(number)")
+        cell.groupTestImage.isUserInteractionEnabled = true
+        var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTapImage(_:)))
+        recognizer.targetUserId = joinGroup?.master_id
+        cell.groupTestImage.addGestureRecognizer(recognizer)
+
         return cell
     }
 
+    @objc func onTapImage(_ sender: MyTapGestureRecognizer) {
+        var user_id = sender.targetUserId!
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "toUserDetail") as! UserDetailViewController
+        nextVC.user_id = user_id
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
+    }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("イベントイベントイベントイベントイベント")
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedCell = tableView.cellForRow(at: indexPath)
         let group_id = selectedCell?.tag ?? 0
 
+        print(group_id)
         print(self.progress)
-        var progress_day:Int = self.progress[group_id]!
-        let group_param:[String:Any] = ["group_id":String(group_id), "progress_day": progress_day]
 
+
+//        var progress_day:Int = self.progress[group_id]!
+//        let group_param:[String:Any] = ["group_id":String(group_id), "progress_day": progress_day]
+
+//        var progress_day:Int = self.progress[group_id]!
+        let group_param:[String:Any] = ["group_id":String(group_id), "progress_day": 5]
+
+        
         print(group_param)
         self.performSegue(withIdentifier: "toGroupEvent", sender: group_param)
     }

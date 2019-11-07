@@ -98,15 +98,31 @@ class EndGroupViewController: UIViewController, UITableViewDelegate , UITableVie
         cell.presentPoint.text = "参加人数 : " +  ApiConfig.EVENT_PRESENT_POINT[(eventGroup?.present_point)!] + "point"
 
 
+//        var number = Int.random(in: 1 ... 18)
+//        cell.groupTestImage.image = UIImage(named: "\(number)")
+//        cell.joinButton.setTitle("参加済", for: .normal)
+//        cell.joinButton.layer.backgroundColor = UIColor.gray.cgColor
+//        cell.joinButton.layer.cornerRadius = 5.0 //丸みを数値で変更できます
+
         var number = Int.random(in: 1 ... 18)
         cell.groupTestImage.image = UIImage(named: "\(number)")
-        cell.joinButton.setTitle("参加済", for: .normal)
-        cell.joinButton.layer.backgroundColor = UIColor.gray.cgColor
-        cell.joinButton.layer.cornerRadius = 5.0 //丸みを数値で変更できます
+        cell.groupTestImage.isUserInteractionEnabled = true
+        var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTapImage(_:)))
+        recognizer.targetUserId = eventGroup?.master_id
+        cell.groupTestImage.addGestureRecognizer(recognizer)
 
         return cell
     }
 
+    @objc func onTapImage(_ sender: MyTapGestureRecognizer) {
+        var user_id = sender.targetUserId!
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "toUserDetail") as! UserDetailViewController
+        nextVC.user_id = user_id
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }

@@ -135,9 +135,24 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
 
         var number = Int.random(in: 1 ... 18)
         cell.groupTestImage.image = UIImage(named: "\(number)")
+        cell.groupTestImage.isUserInteractionEnabled = true
+        var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTapImage(_:)))
+        recognizer.targetUserId = waitGroup?.master_id
+        cell.groupTestImage.addGestureRecognizer(recognizer)
+
         return cell
     }
 
+    @objc func onTapImage(_ sender: MyTapGestureRecognizer) {
+        var user_id = sender.targetUserId!
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "toUserDetail") as! UserDetailViewController
+        nextVC.user_id = user_id
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
+    }
+    
+    
     @objc func onTap(_ sender: MyTapGestureRecognizer) {
         print("タップタナンバー")
         self.group_id = sender.targetGroupId!

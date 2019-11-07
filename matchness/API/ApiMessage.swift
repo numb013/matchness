@@ -15,7 +15,7 @@ import SwiftyJSON;
  */
 public struct ApiMessage: CustomDebugStringConvertible {
     
-    public var id: String? = nil;
+    public var id: Int? = nil;
     public var name: String? = nil;
     public var point: String? = nil;
     public var message: Array<ApiMessageList> = Array<ApiMessageList>();
@@ -47,7 +47,7 @@ public struct ApiMessage: CustomDebugStringConvertible {
         }
         //String => String
         if let id = item["id"].int {
-            self.id = String(id);
+            self.id = id;
         }
         //String => String
         if let name = item["name"].string {

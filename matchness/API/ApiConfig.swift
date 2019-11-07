@@ -82,7 +82,10 @@ public struct ApiConfig {
     static let REQUEST_URL_API_SELECT_FAVORITE_BLOCK: String = REQUEST_URL_API + "/select_FavoriteBlock";
     
     static let REQUEST_URL_API_ADD_REPORT: String = REQUEST_URL_API + "/create_report";
+    
     static let REQUEST_URL_API_EDIT_SETTING: String = REQUEST_URL_API + "/edit_setting";
+    static let REQUEST_URL_API_SELECT_SETTING: String = REQUEST_URL_API + "/select_setting";
+    
     static let REQUEST_URL_API_CHARGE: String = REQUEST_URL_API + "/charge";
 
     

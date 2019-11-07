@@ -23,7 +23,6 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var UserDtailTable: UITableView!
     @IBOutlet weak var chatButton: UIButton!
     @IBOutlet weak var GroupRequest: UIButton!
-    @IBOutlet weak var LikeButton: UIButton!
     private var requestAlamofire: Alamofire.Request?;
 
 
@@ -80,20 +79,17 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewWillAppear(animated)
 print("1111")
 
-
-
-
         // ナビゲーションを透明にする処理
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
+//        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController!.navigationBar.shadowImage = UIImage()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 print("22222")
         // 透明にしたナビゲーションを元に戻す処理
-        self.navigationController!.navigationBar.setBackgroundImage(nil, for: .default)
-        self.navigationController!.navigationBar.shadowImage = nil
+//        self.navigationController!.navigationBar.setBackgroundImage(nil, for: .default)
+//        self.navigationController!.navigationBar.shadowImage = nil
     }
     
     
@@ -514,6 +510,10 @@ print("22222")
 //        performSegue(withIdentifier: "toReport", sender: self)
     }
     
+    @IBAction func backButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+//        self.navigationController?.popViewController(animated: true)
+    }
     
     @IBAction func backFromUserDetailView(segue:UIStoryboardSegue){
         NSLog("ReportViewController#backUserDetail")

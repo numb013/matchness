@@ -94,17 +94,32 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
         cell.ChatName.text = matche?.name
         cell.ChatDate.text = matche?.created_at
         cell.ChatMessage.text = "マッチングしました。メッセージを送れます。"
+
+
         var number = Int.random(in: 1 ... 18)
         cell.ChatImage.image = UIImage(named: "\(number)")
-        print("mamamamamamamamamamamamama")
-        cell.tag = matche!.id!
+        cell.ChatImage.isUserInteractionEnabled = true
+        var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTapImage(_:)))
+        recognizer.targetUserId = self.dataSource["0"]!.id
+        cell.ChatImage.addGestureRecognizer(recognizer)
         cell.ChatImage.contentMode = .scaleAspectFill
         cell.ChatImage.clipsToBounds = true
         cell.ChatImage.layer.cornerRadius =  cell.ChatImage.frame.height / 2
-        
+
         return cell
     }
     
+    
+    @objc func onTapImage(_ sender: MyTapGestureRecognizer) {
+        var user_id = sender.targetUserId!
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "toUserDetail") as! UserDetailViewController
+        nextVC.user_id = user_id
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
+    }
+
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
