@@ -46,6 +46,7 @@
 #if !TARGET_OS_TV
 #import "FBSDKEventBindingManager.h"
 #import "FBSDKHybridAppEventsScriptMessageHandler.h"
+#import "FBSDKModelManager.h"
 #endif
 
 //
@@ -1075,6 +1076,11 @@ static NSString *g_overrideAppID = nil;
       if (enabled) {
         // Enable AAM
         [FBSDKMetadataIndexer enable];
+      }
+    }];
+    [FBSDKFeatureManager checkFeature:FBSDKFeaturePrivacyProtection completionBlock:^(BOOL enabled) {
+      if (enabled) {
+        [FBSDKModelManager enable];
       }
     }];
 #endif

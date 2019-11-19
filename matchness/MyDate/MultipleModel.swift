@@ -147,6 +147,13 @@ extension MultipleModel : ApiRequestDelegate {
             if (page != 1) {
                 key1 = Int(key)! + Int(page) * Int(8) - Int(8)
             } else {
+
+                
+
+                print("エラーーーーーー")
+                print(key)
+
+
                 key1 = Int(key)!
             }
             //並び順を保持

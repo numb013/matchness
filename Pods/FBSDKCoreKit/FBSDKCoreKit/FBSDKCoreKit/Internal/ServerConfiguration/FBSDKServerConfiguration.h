@@ -18,7 +18,11 @@
 
 #import <Foundation/Foundation.h>
 
+#if SWIFT_PACKAGE
+#import "FBSDKCopying.h"
+#else
 #import <FBSDKCoreKit/FBSDKCopying.h>
+#endif
 
 #import "FBSDKDialogConfiguration.h"
 #import "FBSDKErrorConfiguration.h"
@@ -75,6 +79,7 @@ implicitPurchaseLoggingEnabled:(BOOL)implicitPurchaseLoggingEnabled
                 eventBindings:(NSArray *)eventBindings
             restrictiveParams:(NSDictionary<NSString *, id> *)restrictiveParams
                      AAMRules:(NSDictionary<NSString *, id> *)AAMRules
+       suggestedEventsSetting:(NSDictionary<NSString *, id> *)suggestedEventsSetting
 NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, assign, readonly, getter=isAdvertisingIDEnabled) BOOL advertisingIDEnabled;
@@ -101,6 +106,7 @@ NS_DESIGNATED_INITIALIZER;
 @property (nonatomic, copy, readonly) NSArray *eventBindings;
 @property (nonatomic, copy, readonly) NSDictionary<NSString *, id> *restrictiveParams;
 @property (nonatomic, copy, readonly) NSDictionary<NSString *, id> *AAMRules;
+@property (nonatomic, copy, readonly) NSDictionary<NSString *, id> *suggestedEventsSetting;
 @property (nonatomic, readonly) NSInteger version;
 
 - (FBSDKDialogConfiguration *)dialogConfigurationForDialogName:(NSString *)dialogName;

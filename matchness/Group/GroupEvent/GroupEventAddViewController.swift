@@ -12,12 +12,12 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
     let userDefaults = UserDefaults.standard
 
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var datePickerView: UIDatePicker!
     @IBOutlet weak var pickerBottom: NSLayoutConstraint!
+
     @IBOutlet weak var datePickerButton: NSLayoutConstraint!
-    
+
     var setDateviewTime = ""
     var vi = UIView()
     var isDate = Date()
@@ -54,8 +54,6 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
         datePickerView.locale = Locale(identifier: "ja")
         datePickerView.addTarget(self, action: #selector(setText), for: .valueChanged)
         datePickerView.backgroundColor = UIColor.white
-
-        
         // Do any additional setup after loading the view.
     }
     

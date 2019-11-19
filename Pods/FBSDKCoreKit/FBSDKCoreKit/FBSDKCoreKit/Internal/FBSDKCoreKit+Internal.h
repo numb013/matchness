@@ -18,15 +18,20 @@
 
 #import <UIKit/UIKit.h>
 
+#if SWIFT_PACKAGE
+#import "../FBSDKCoreKit.h"
+#else
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#endif
 
-#ifdef COCOAPODS
+#if defined COCOAPODS || defined BUCK
 
 #if !TARGET_OS_TV
 #import "FBSDKViewHierarchy.h"
 #import "FBSDKCodelessMacros.h"
 #import "FBSDKCodelessIndexer.h"
 #import "FBSDKMetadataIndexer.h"
+#import "FBSDKSuggestedEventsIndexer.h"
 #import "FBSDKCrypto.h"
 #import "FBSDKAudioResourceLoader.h"
 #import "FBSDKContainerViewController.h"
@@ -98,6 +103,7 @@
 #import "../AppEvents/Internal/Codeless/FBSDKCodelessMacros.h"
 #import "../AppEvents/Internal/Codeless/FBSDKCodelessIndexer.h"
 #import "../AppEvents/Internal/AAM/FBSDKMetadataIndexer.h"
+#import "../AppEvents/Internal/SuggestedEvents/FBSDKSuggestedEventsIndexer.h"
 #import "Cryptography/FBSDKCrypto.h"
 #import "FBSDKAudioResourceLoader.h"
 #import "FBSDKContainerViewController.h"

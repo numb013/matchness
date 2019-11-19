@@ -42,13 +42,26 @@ class SearchTableViewController: UIViewController, UITableViewDelegate, UITableV
         pickerView.delegate   = self
         pickerView.dataSource = self
         pickerView.showsSelectionIndicator = true
-        
+        if ((self.userDefaults.object(forKey: "searchFreeword")) != nil) {
+            self.freeword = (self.userDefaults.object(forKey: "searchFreeword") as? String)!
+        }
+        if ((self.userDefaults.object(forKey: "searchWork")) != nil) {
+            self.work = Int((self.userDefaults.object(forKey: "searchWork") as? String)!)!
+        }
+        if ((self.userDefaults.object(forKey: "searchPrefectureId")) != nil) {
+            self.prefecture_id = Int((self.userDefaults.object(forKey: "searchPrefectureId") as? String)!)!
+        }
+        if ((self.userDefaults.object(forKey: "searchBloodType")) != nil) {
+            self.blood_type = Int((self.userDefaults.object(forKey: "searchBloodType") as? String)!)!
+        }
+        if ((self.userDefaults.object(forKey: "searchFitnessPartsId")) != nil) {
+            self.fitness_parts_id = Int((self.userDefaults.object(forKey: "searchFitnessPartsId") as? String)!)!
+        }
 
-        self.freeword = (self.userDefaults.object(forKey: "searchFreeword") as? String)!
-        self.work = Int((self.userDefaults.object(forKey: "searchWork") as? String)!)!
-        self.prefecture_id = Int((self.userDefaults.object(forKey: "searchPrefectureId") as? String)!)!
-        self.blood_type = Int((self.userDefaults.object(forKey: "searchBloodType") as? String)!)!
-        self.fitness_parts_id = Int((self.userDefaults.object(forKey: "searchFitnessPartsId") as? String)!)!
+//        self.work = Int((self.userDefaults.object(forKey: "searchWork") as? String)!)!
+//        self.prefecture_id = Int((self.userDefaults.object(forKey: "searchPrefectureId") as? String)!)!
+//        self.blood_type = Int((self.userDefaults.object(forKey: "searchBloodType") as? String)!)!
+//        self.fitness_parts_id = Int((self.userDefaults.object(forKey: "searchFitnessPartsId") as? String)!)!
 
 print("workworkworkworkworkworkwork")
 print(work)

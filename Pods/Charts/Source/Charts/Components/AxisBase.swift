@@ -151,6 +151,9 @@ open class AxisBase: ComponentBase
             return ""
         }
         
+print("フォーマットエラー")
+print(entries)
+        
         return valueFormatter?.stringForValue(entries[index], axis: self) ?? ""
     }
     

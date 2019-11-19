@@ -63,6 +63,14 @@ class MultipleViewController: UIViewController, UITableViewDelegate , UITableVie
         requestMultipleModel.delegate = self as! MultipleModelDelegate;
         //リクエスト先
         var requestUrl: String = ""
+
+print("ああああああああああああああああああああ")
+print(status)
+        //パラメーター
+        var query: Dictionary<String,String> = Dictionary<String,String>();
+        query["id"] = userDefaults.object(forKey: "matchness_user_id") as? String
+        
+
         if status == 0 {
             requestUrl = ApiConfig.REQUEST_URL_API_USER_FOOTPRINT;
         }
@@ -70,15 +78,17 @@ class MultipleViewController: UIViewController, UITableViewDelegate , UITableVie
             requestUrl = ApiConfig.REQUEST_URL_API_MY_FOOTPRINT;
         }
         if status == 3 {
-            requestUrl = ApiConfig.REQUEST_URL_API_USER_FOOTPRINT;
+            requestUrl = ApiConfig.REQUEST_URL_API_SELECT_FAVORITE_BLOCK;
+            query["status"] = "1"
         }
         if status == 4 {
             requestUrl = ApiConfig.REQUEST_URL_API_USER_FOOTPRINT;
         }
+        if status == 6 {
+            requestUrl = ApiConfig.REQUEST_URL_API_SELECT_FAVORITE_BLOCK;
+            query["status"] = "0"
+        }
 
-        //パラメーター
-        var query: Dictionary<String,String> = Dictionary<String,String>();
-        query["id"] = userDefaults.object(forKey: "matchness_user_id") as? String
         //リクエスト実行
         if( !requestMultipleModel.requestApi(url: requestUrl, addQuery: query) ){
             
@@ -95,12 +105,9 @@ class MultipleViewController: UIViewController, UITableViewDelegate , UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MultipleTableViewCell") as! MultipleTableViewCell
-
         var multiple = self.dataSource[String(indexPath.row)]
-        
         cell.userName.text = multiple?.name!
         cell.userWork.text = ApiConfig.WORK_LIST[multiple?.work ?? 0]
-
         var number = Int.random(in: 1 ... 18)
         cell.userImage.image = UIImage(named: "\(number)")
         cell.userImage.isUserInteractionEnabled = true
@@ -120,9 +127,7 @@ class MultipleViewController: UIViewController, UITableViewDelegate , UITableVie
         nextVC.modalPresentationStyle = .fullScreen
         self.present(nextVC, animated: true, completion: nil)
     }
-    
 
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
@@ -131,8 +136,6 @@ class MultipleViewController: UIViewController, UITableViewDelegate , UITableVie
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    
-    
 //    @IBAction func toMyDataButton(_ sender: Any) {
 //        let storyboard: UIStoryboard = self.storyboard!
 ////ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
@@ -141,8 +144,6 @@ class MultipleViewController: UIViewController, UITableViewDelegate , UITableVie
 //        //ここが実際に移動するコードとなります
 //        self.present(multiple, animated: false, completion: nil)
 //    }
-
-    
 
     
     /*

@@ -31,6 +31,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
+        var api_key = userDefaults.object(forKey: "api_token") as? String
+
+        
+        if (api_key == nil || api_key == "") {
+
+
+
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "fblogin")
+            //rootViewControllerに入れる
+            self.window?.rootViewController = initialViewController
+            //表示
+            self.window?.makeKeyAndVisible()
+        }
+        
         FirebaseApp.configure()
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)

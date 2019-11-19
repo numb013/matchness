@@ -16,6 +16,8 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
 
     @IBOutlet weak var userDetail: UICollectionView!
     @IBOutlet weak var navigationBar: UINavigationBar!
+    
+    
     let navBarHeight : CGFloat = 164.0
     let userDefaults = UserDefaults.standard
     var cellCount: Int = 0
@@ -35,10 +37,10 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     override func viewDidLoad() {
 
         print("AAAAAAAAAA")
-        //画面遷移
+//        //画面遷移
 //        let storyboard: UIStoryboard = self.storyboard!
 //        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-//        let multiple = storyboard.instantiateViewController(withIdentifier: "payment")
+//        let multiple = storyboard.instantiateViewController(withIdentifier: "GroupEventAdd")
 //        multiple.modalPresentationStyle = .fullScreen
 //        //ここが実際に移動するコードとなります
 //        self.present(multiple, animated: true, completion: nil)
@@ -48,6 +50,8 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         print("チェックチェックチェックチェック")
         print(AccessToken.current)
 
+//        tabBarController?.tabBar.isHidden = true
+        
         if let _ = AccessToken.current {
             print("ログイン済み")
         } else {
@@ -174,17 +178,57 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        var search = self.dataSource[String(indexPath.row)]
+
         let cell : UserSearchCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "userDetailCell", for: indexPath as IndexPath) as! UserSearchCollectionViewCell
 
 //        cell.agearea.text = self.dataSource[String(indexPath.row)]?.work
-        cell.agearea.text = self.dataSource[String(indexPath.row)]?.name
+        cell.agearea.text = search?.name
+        
 
-        cell.job.text = "痩せたい部位:" + ApiConfig.FITNESS_LIST[self.dataSource[String(indexPath.row)]!.fitness_parts_id!]
+print(search)
 
-        cell.tag = self.dataSource[String(indexPath.row)]!.id! ?? 0
+        cell.job.text = "痩せたい部位:" + ApiConfig.FITNESS_LIST[search!.fitness_parts_id!]
+        cell.tag = search?.id! ?? 0
 
         var number = Int.random(in: 1 ... 18)
         cell.imageView.image = UIImage(named: "\(number)")  
+
+        cell.new_flag.isHidden = true
+        print(search)
+
+        
+        if (search?.created_flag != nil) {
+            if (search!.created_flag! == 1) {
+                cell.new_flag.image = UIImage(named: "new2")
+                cell.new_flag.isHidden = false
+            }
+            if (search!.created_flag! == 2) {
+                cell.new_flag.image = UIImage(named: "new2")
+                cell.new_flag.isHidden = false
+            }
+            if (search!.created_flag! == 3) {
+                cell.new_flag.image = UIImage(named: "new2")
+                cell.new_flag.isHidden = false
+            }
+        }
+        
+        
+        if (search?.last_login_flag != nil) {
+            if (search!.last_login_flag! == 1) {
+                cell.new_flag.image = UIImage(named: "new1")
+                cell.new_flag.isHidden = false
+            }
+            if (search!.last_login_flag! == 2) {
+                cell.new_flag.image = UIImage(named: "new1")
+                cell.new_flag.isHidden = false
+            }
+            if (search!.last_login_flag! == 3) {
+                cell.new_flag.image = UIImage(named: "new1")
+                cell.new_flag.isHidden = false
+            }
+        }
         
         return cell
     }

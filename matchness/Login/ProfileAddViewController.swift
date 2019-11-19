@@ -13,8 +13,8 @@ import Alamofire
 import SwiftyJSON
 import Foundation
 
-class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
-    
+class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UIPickerViewDelegate, UIPickerViewDataSource {
+
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var profileAddTableView: UITableView!
     @IBOutlet weak var datePickerBottom: NSLayoutConstraint!
@@ -27,19 +27,20 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
     var isDate = Date()
     var selectPicker: Int = 0
     var selectPickerItem: Int = 0
-    var pcker_list: [String] = []
+    var pcker_list: [String] = [""]
+
     var setDay = Date()
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiUserDate> = [:]
-
     var dataSourceOrder: Array<String> = []
-    
     private var requestAlamofire: Alamofire.Request?;
     private var response: DataResponse<Any>?;
     let userDefaults = UserDefaults.standard
     var userProfile : NSDictionary!
     var json_data:JSON = []
     var user_id = ""
+
+
     //IDをキーにしてデータを保持
     public var responseData: Dictionary<String, ApiProfileData> = [String: ApiProfileData]();
     
@@ -48,8 +49,8 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         print("通ってる？？？")
         profileAddTableView.delegate = self
         profileAddTableView.dataSource = self
-        pickerView.delegate   = self
-        pickerView.dataSource = self
+        pickerView.dataSource = self as! UIPickerViewDataSource
+        pickerView.delegate   = self as! UIPickerViewDelegate
 
         // Do any additional setup after loading the view.
         
@@ -67,8 +68,16 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         datePickerView.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
         returnUserData()
+        delegate()
 
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        print("YYYYYYYYYYYYYYYY")
+//        pickerView.reloadAllComponents()
+//    }
+    
     
 //    override func viewDidAppear(_ animated: Bool) {
 //        print("YYYYYYYYYYYYYYYY")
@@ -80,10 +89,13 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewWillAppear(_ animated: Bool) {
         print("ここにこに")
         super.viewWillAppear(animated)
-        pickerView.delegate   = self
-        pickerView.dataSource = self
     }
 
+    
+    func delegate() {
+        pickerView.delegate   = self as! UIPickerViewDelegate
+        pickerView.dataSource = self as! UIPickerViewDataSource
+    }
     
     func returnUserData()
     {
@@ -384,8 +396,8 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("タップ")
-        
+        print("タップタップタップタップ")
+        self.pcker_list = []
         dismissPicker()
         dismissDatePicker()
         if indexPath.row == 0 {
@@ -418,25 +430,134 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         
         print(indexPath.section)
         print(indexPath.row)
-        
-        
         if indexPath.row == 3 {
             let dateFormater = DateFormatter()
             dateFormater.locale = Locale(identifier: "ja_JP")
             dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+
+print("時間時間時間時間時間時間時間時間")
+
             let date = dateFormater.date(from: self.responseData["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
             datePickerView.date = date!
             datePickerPush()
         } else {
-
-            print(self.pcker_list)
-
-
+            self.pickerView.reloadAllComponents()
             PickerPush()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
+
+    @IBAction func pickerSelectButton(_ sender: Any) {
+        print("bbbb")
+        print("セレクトピッカーセレクトピッカーセレクトピッカー")
+        print(self.selectPicker)
+        if self.selectPicker == 0 {
+
+        }
+        if self.selectPicker == 1 {
+            self.responseData["0"]?.work = self.selectPickerItem
+        }
+        if self.selectPicker == 2 {
+            self.responseData["0"]?.prefecture_id = self.selectPickerItem
+        }
+        if self.selectPicker == 3 {
+            self.responseData["0"]?.work = self.selectPickerItem
+        }
+        if self.selectPicker == 4 {
+            self.responseData["0"]?.fitness_parts_id = self.selectPickerItem
+        }
+        if self.selectPicker == 5 {
+            self.responseData["0"]?.weight = self.selectPickerItem
+        }
+        if self.selectPicker == 6 {
+            self.responseData["0"]?.sex = self.selectPickerItem
+        }
+        if self.selectPicker == 7 {
+            self.responseData["0"]?.blood_type = self.selectPickerItem
+        }
+
+        profileAddTableView.reloadData()
+        self.vi.removeFromSuperview()
+        dismissPicker()
+    }
+
+    @IBAction func pickerCloseButton(_ sender: Any) {
+        dismissPicker()
+    }
+
+    func PickerPush(){
+        print("ピッカーーーーーーーー")
+        self.view.endEditing(true)
+        UIView.animate(withDuration: 0.5,animations: {
+//            self.datePickerView.date = self.setDay
+            self.pickerBottom.constant = -280
+            self.pickerView.updateConstraints()
+            self.profileAddTableView.updateConstraints()
+            self.view.layoutIfNeeded()
+        })
+    }
+
+    func dismissPicker(){
+        UIView.animate(withDuration: 0.5,animations: {
+            self.pickerBottom.constant = 300
+            self.pickerView.updateConstraints()
+            self.profileAddTableView.updateConstraints()
+            self.view.layoutIfNeeded()
+        })
+    }
+
+    @IBAction func dateSelectButton(_ sender: Any) {
+        print("セットセットセットセット")
+        print(self.setDateviewTime)
+        self.vi.removeFromSuperview()
+        profileAddTableView.reloadData()
+        dismissDatePicker()
+    }
+
+    @IBAction func dateCloseButton(_ sender: Any) {
+        dismissDatePicker()
+    }
+
+    func datePickerPush(){
+        self.view.endEditing(true)
+        UIView.animate(withDuration: 0.5,animations: {
+            self.datePickerBottom.constant = -280
+            self.datePickerView.updateConstraints()
+            self.profileAddTableView.updateConstraints()
+            self.view.layoutIfNeeded()
+        })
+    }
+
+    func dismissDatePicker(){
+        UIView.animate(withDuration: 0.5,animations: {
+            self.datePickerBottom.constant = 300
+            self.datePickerView.updateConstraints()
+            self.profileAddTableView.updateConstraints()
+            self.view.layoutIfNeeded()
+        })
+    }
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+print("1111111111111111")
+        return 1
+    }
     
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+print("2222222222222222")
+        return self.pcker_list.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+print("333333333333333")
+            print(self.pcker_list)
+        print(row)
+        return self.pcker_list[row]
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.selectPickerItem = row
+        print("選択ピッカー選択ピッカー選択ピッカー")
+    }
     
     
     
@@ -446,8 +567,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         return 60
     }
-    
-
 
     // datePickerの日付けをtextFieldのtextに反映させる
     @objc private func setText() {
@@ -547,132 +666,8 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
      // Pass the selected object to the new view controller.
      }
      */
-    
-    
-    
-    
+
 }
-
-extension ProfileAddViewController : UIPickerViewDelegate, UIPickerViewDataSource {
-    
-
-
-        @IBAction func pickerSelectButton(_ sender: Any) {
-            print("bbbb")
-            print("セレクトピッカーセレクトピッカーセレクトピッカー")
-            print(self.selectPicker)
-            if self.selectPicker == 0 {
-                
-            }
-            if self.selectPicker == 1 {
-                self.responseData["0"]?.work = self.selectPickerItem
-            }
-            if self.selectPicker == 2 {
-                self.responseData["0"]?.prefecture_id = self.selectPickerItem
-            }
-            if self.selectPicker == 3 {
-                self.responseData["0"]?.work = self.selectPickerItem
-            }
-            if self.selectPicker == 4 {
-                self.responseData["0"]?.fitness_parts_id = self.selectPickerItem
-            }
-            if self.selectPicker == 5 {
-                self.responseData["0"]?.weight = self.selectPickerItem
-            }
-            if self.selectPicker == 6 {
-                self.responseData["0"]?.sex = self.selectPickerItem
-            }
-            if self.selectPicker == 7 {
-                self.responseData["0"]?.blood_type = self.selectPickerItem
-            }
-
-            profileAddTableView.reloadData()
-            self.vi.removeFromSuperview()
-            dismissPicker()
-        }
-
-        @IBAction func pickerCloseButton(_ sender: Any) {
-            dismissPicker()
-        }
-
-     
-        
-        func PickerPush(){
-            print("ピッカーーーーーーーー")
-            self.view.endEditing(true)
-            UIView.animate(withDuration: 0.5,animations: {
-    //            self.datePickerView.date = self.setDay
-                self.pickerBottom.constant = -280
-                self.pickerView.updateConstraints()
-                self.profileAddTableView.updateConstraints()
-                self.view.layoutIfNeeded()
-            })
-        }
-        
-        func dismissPicker(){
-            UIView.animate(withDuration: 0.5,animations: {
-                self.pickerBottom.constant = 300
-                self.pickerView.updateConstraints()
-                self.profileAddTableView.updateConstraints()
-                self.view.layoutIfNeeded()
-            })
-        }
-        
-        @IBAction func dateSelectButton(_ sender: Any) {
-            print("セットセットセットセット")
-            print(self.setDateviewTime)
-            self.vi.removeFromSuperview()
-            profileAddTableView.reloadData()
-            dismissDatePicker()
-        }
-        @IBAction func dateCloseButton(_ sender: Any) {
-            dismissDatePicker()
-        }
-
-        func datePickerPush(){
-            self.view.endEditing(true)
-            UIView.animate(withDuration: 0.5,animations: {
-                self.datePickerBottom.constant = -280
-                self.datePickerView.updateConstraints()
-                self.profileAddTableView.updateConstraints()
-                self.view.layoutIfNeeded()
-            })
-        }
-        
-        func dismissDatePicker(){
-            UIView.animate(withDuration: 0.5,animations: {
-                self.datePickerBottom.constant = 300
-                self.datePickerView.updateConstraints()
-                self.profileAddTableView.updateConstraints()
-                self.view.layoutIfNeeded()
-            })
-        }
-
-        func numberOfComponents(in pickerView: UIPickerView) -> Int {
-            print("p1p1p1p1p")
-            return 1
-        }
-        
-        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            print("p2p2p2p2p2")
-            return self.pcker_list.count
-        }
-        // UIPickerViewに表示する配列
-        func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
-            print("p3p3p3p3p3")
-            return self.pcker_list[row]
-        }
-
-        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-            self.selectPickerItem = row
-            print("選択ピッカー選択ピッカー選択ピッカー")
-        }
-
-    
-    
-}
-
-
 
 
 extension ProfileAddViewController : ProfileAddModelDelegate {
@@ -680,42 +675,11 @@ extension ProfileAddViewController : ProfileAddModelDelegate {
         print("こちら/ ProfileAdd/ ProfileAddViewのonStart")
     }
     func onComplete(model: ProfileAddModel, count: Int) {
-        print("着てきてProfileAddきてきて")
-        //更新用データを設定
-        //        self.dataSource = model.responseData;
-        //        self.dataSourceOrder = model.responseDataOrder;
-        //
-        //        print(self.dataSourceOrder)
-        print("耳耳耳意ProfileAdd味耳みm")
-        
-        //一つもなかったら
-        //        if( dataSourceOrder.isEmpty ){
-        //            return;
-        //        }
-        
-        //cellの件数更新
-        //        self.cellCount = dataSourceOrder.count;
-        //        //        self.cellCount = 10;
-        //
-        //        print("ががががががががが")
-        //        print(self.dataSource)
-        //        print(self.dataSourceOrder)
-        
-        
-        //
         var count: Int = 0;
-        //        for(key, code) in dataSourceOrder.enumerated() {
-        //            count+=1;
-        //            if let jenre: ApiUserDateParam = dataSource[code] {
-        //                //取得したデータを元にコレクションを再構築＆更新
-        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-        //            }
-        //        }
-        
         performSegue(withIdentifier: "toRegistComp", sender: nil)
     }
     func onFailed(model: ProfileAddModel) {
         print("こちら/ProfileAddModel/ProfileAddModeliewのonFailed")
     }
-    
+
 }

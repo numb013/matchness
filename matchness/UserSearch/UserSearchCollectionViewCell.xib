@@ -32,6 +32,13 @@
                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VrQ-cE-5nQ">
+                        <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="54" id="TzR-NW-BTu"/>
+                            <constraint firstAttribute="height" constant="54" id="ebZ-gQ-y30"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -41,6 +48,8 @@
                 <constraint firstItem="Mbh-WJ-Ryr" firstAttribute="top" secondItem="6fQ-84-ppF" secondAttribute="bottom" constant="8" id="FVO-NO-1kM"/>
                 <constraint firstAttribute="bottom" secondItem="Xsl-eh-jd8" secondAttribute="bottom" constant="70" id="c8J-V9-VIK"/>
                 <constraint firstItem="Mbh-WJ-Ryr" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="dMl-P0-THL"/>
+                <constraint firstItem="VrQ-cE-5nQ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="lBb-TW-SSI"/>
+                <constraint firstItem="VrQ-cE-5nQ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="nWh-m1-obG"/>
                 <constraint firstItem="6fQ-84-ppF" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="sRs-3c-qXW"/>
                 <constraint firstAttribute="bottom" secondItem="Mbh-WJ-Ryr" secondAttribute="bottom" constant="15" id="sfj-ST-EAj"/>
                 <constraint firstItem="Xsl-eh-jd8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="swZ-ku-KEj"/>
@@ -51,6 +60,7 @@
                 <outlet property="agearea" destination="6fQ-84-ppF" id="Hyc-71-GmP"/>
                 <outlet property="imageView" destination="Xsl-eh-jd8" id="Yse-um-SBe"/>
                 <outlet property="job" destination="Mbh-WJ-Ryr" id="t5S-00-Pkv"/>
+                <outlet property="new_flag" destination="VrQ-cE-5nQ" id="DTa-oE-u0S"/>
             </connections>
             <point key="canvasLocation" x="153.62318840579712" y="96.428571428571431"/>
         </collectionViewCell>

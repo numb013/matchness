@@ -13,7 +13,8 @@ class UserSearchCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var agearea: UILabel!
     @IBOutlet weak var job: UILabel!
-
+    @IBOutlet weak var new_flag: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
 

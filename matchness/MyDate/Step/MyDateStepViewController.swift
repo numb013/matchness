@@ -225,6 +225,30 @@ print(weight)
                 self.formatter.unitsStyle = .positional
                 self.formatter.allowedUnits = [.hour, .minute, .second]
                 let str = self.formatter.string(from: self.count)
+
+                var weight_param = Double(ApiConfig.WEIGHT_LIST[self.weight ?? 0])
+
+                print("RRRRRRRYYYYYYRRRRR")
+                print(self.weight)
+                print(weight_param)
+
+                
+                
+                var hour = self.count / 3600
+
+
+
+print("エラー")
+print(hour)
+print(weight_param)
+
+
+                var kacl = 1.05 * 5.5 * hour * Double(weight_param!)
+
+                self.kcalLabel.text = "\(floor(kacl*10)/10)kcal"
+
+
+
                 // ラベルに表示
                 self.timeLabel.text = str
 

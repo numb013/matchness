@@ -67,6 +67,15 @@
 		84C79C63236AB9B5000B6648 /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C79C5C236AB9B4000B6648 /* ButtonTableViewCell.xib */; };
 		84C79C67237005F9000B6648 /* searchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C66237005F9000B6648 /* searchViewController.swift */; };
 		84C79C69237153CB000B6648 /* ApiSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C68237153CA000B6648 /* ApiSetting.swift */; };
+		84C79C73237670FC000B6648 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C79C71237670FB000B6648 /* CustomCell.xib */; };
+		84C79C74237670FC000B6648 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C72237670FB000B6648 /* CustomCell.swift */; };
+		84C79C9623793C9D000B6648 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C9123793C9A000B6648 /* MenuTableViewCell.swift */; };
+		84C79C9723793C9D000B6648 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C9223793C9B000B6648 /* SectionHeaderView.swift */; };
+		84C79C9823793C9D000B6648 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C9323793C9C000B6648 /* Resources.swift */; };
+		84C79C9923793C9D000B6648 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C9423793C9C000B6648 /* MenuViewController.swift */; };
+		84C79C9C23793D02000B6648 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C9B23793D02000B6648 /* Section.swift */; };
+		84C79CA2237AF98F000B6648 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79CA1237AF98F000B6648 /* TutorialViewController.swift */; };
+		84C79CE2237D7AF9000B6648 /* second1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79CE1237D7AF9000B6648 /* second1ViewController.swift */; };
 		B40A33FE232A5AD700583CCC /* ApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EB232A5AD500583CCC /* ApiConfig.swift */; };
 		B40A33FF232A5AD700583CCC /* ApiGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EC232A5AD500583CCC /* ApiGroupList.swift */; };
 		B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33ED232A5AD500583CCC /* ApiRequest.swift */; };
@@ -219,6 +228,15 @@
 		84C79C5C236AB9B4000B6648 /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ButtonTableViewCell.xib; path = matchness/Report/ButtonTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		84C79C66237005F9000B6648 /* searchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = searchViewController.swift; path = matchness/UserSearch/searchViewController.swift; sourceTree = "<group>"; };
 		84C79C68237153CA000B6648 /* ApiSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiSetting.swift; path = matchness/API/ApiSetting.swift; sourceTree = "<group>"; };
+		84C79C71237670FB000B6648 /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomCell.xib; path = "../../../../../../Downloads/iOS_Samples-master/UITableViewAccordionSample/UITableViewAccordionSample/CustomCell.xib"; sourceTree = "<group>"; };
+		84C79C72237670FB000B6648 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell.swift; path = "../../../../../../Downloads/iOS_Samples-master/UITableViewAccordionSample/UITableViewAccordionSample/CustomCell.swift"; sourceTree = "<group>"; };
+		84C79C9123793C9A000B6648 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		84C79C9223793C9B000B6648 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		84C79C9323793C9C000B6648 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		84C79C9423793C9C000B6648 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		84C79C9B23793D02000B6648 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		84C79CA1237AF98F000B6648 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		84C79CE1237D7AF9000B6648 /* second1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = second1ViewController.swift; sourceTree = "<group>"; };
 		946D3AF11F4FBEBAFE993661 /* Pods_matchness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_matchness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD66A8BE7976CA8BC6F822EA /* Pods-matchnessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matchnessTests.debug.xcconfig"; path = "Target Support Files/Pods-matchnessTests/Pods-matchnessTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B40A33EB232A5AD500583CCC /* ApiConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiConfig.swift; path = matchness/API/ApiConfig.swift; sourceTree = "<group>"; };
@@ -385,6 +403,8 @@
 				848A331E231A8B9C00144950 /* SettingEditTableViewCell.swift */,
 				848A331F231A8B9C00144950 /* SettingEditTableViewCell.xib */,
 				848A3321231A8B9D00144950 /* SettingEditViewController.swift */,
+				84C79C72237670FB000B6648 /* CustomCell.swift */,
+				84C79C71237670FB000B6648 /* CustomCell.xib */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -427,6 +447,26 @@
 			);
 			name = Report;
 			path = Payment/Report;
+			sourceTree = "<group>";
+		};
+		84C79C7F23793A70000B6648 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				84C79C9423793C9C000B6648 /* MenuViewController.swift */,
+				84C79C9123793C9A000B6648 /* MenuTableViewCell.swift */,
+				84C79C9323793C9C000B6648 /* Resources.swift */,
+				84C79C9B23793D02000B6648 /* Section.swift */,
+				84C79C9223793C9B000B6648 /* SectionHeaderView.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		84C79CA0237AF950000B6648 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				84C79CA1237AF98F000B6648 /* TutorialViewController.swift */,
+			);
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 		B456770E2330DC6300E0E9B7 /* Notice */ = {
@@ -512,6 +552,7 @@
 				CE1D51EF22CDD6540093DC58 /* Step */,
 				B456770E2330DC6300E0E9B7 /* Notice */,
 				8409E5F9233775E4009BA908 /* pointHistory */,
+				84C79C7F23793A70000B6648 /* Menu */,
 				CE0F9EEB22DE348900D320F5 /* MultipleViewController.swift */,
 				848A32C4230AA57900144950 /* MultipleModel.swift */,
 				CE4B09BE2209D2A000F8A430 /* MyDataViewController.swift */,
@@ -629,17 +670,19 @@
 			children = (
 				CE1D51F322CDDC240093DC58 /* matchness.entitlements */,
 				CE4B0988220942DE00F8A430 /* Main.storyboard */,
+				84C79CE1237D7AF9000B6648 /* second1ViewController.swift */,
 				B49CCD9122D5872400F793F1 /* API */,
+				8432F2B722F16ABB00A60EC5 /* Login */,
 				CE1D51E922CDD5290093DC58 /* UserSearch */,
 				84C79C55236AB9A1000B6648 /* Report */,
 				84C79C4A2369B195000B6648 /* Payment */,
 				CE1D51EE22CDD60C0093DC58 /* UserDetail */,
-				8432F2B722F16ABB00A60EC5 /* Login */,
 				CE1D51EC22CDD5AF0093DC58 /* Group */,
 				CE1D51EB22CDD56D0093DC58 /* Chat */,
 				CE1D51EA22CDD54D0093DC58 /* MyDate */,
 				CE4B0984220942DE00F8A430 /* AppDelegate.swift */,
 				842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */,
+				84C79CA0237AF950000B6648 /* Tutorial */,
 				8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */,
 				CE4B0986220942DE00F8A430 /* ViewController.swift */,
 				848A332F231BCA4000144950 /* TodayStep.swift */,
@@ -815,6 +858,7 @@
 				B495CC0023339BCF006A029C /* NotDataTableViewCell.xib in Resources */,
 				84C79C63236AB9B5000B6648 /* ButtonTableViewCell.xib in Resources */,
 				CE1D51F522CE40C30093DC58 /* GoogleService-Info.plist in Resources */,
+				84C79C73237670FC000B6648 /* CustomCell.xib in Resources */,
 				CE05743122AA3A3A0082182F /* ChatTableViewCell.xib in Resources */,
 				84C79C5D236AB9B5000B6648 /* ReportTextTableViewCellTableViewCell.xib in Resources */,
 				CE05742922A8EB0C0082182F /* GroupTableViewCell.xib in Resources */,
@@ -944,6 +988,7 @@
 				CEAF954A22BDEB7400F37A6E /* GroupEventCollectionViewCell.swift in Sources */,
 				847398AA2346764F00D28135 /* GradationView.swift in Sources */,
 				848A33192319F91000144950 /* PointChangeModel.swift in Sources */,
+				84C79CA2237AF98F000B6648 /* TutorialViewController.swift in Sources */,
 				B40A340B232A5AD700583CCC /* ApiProfileData.swift in Sources */,
 				B4D1ECF52330EB07008760A2 /* NoticeDitailModel.swift in Sources */,
 				CE05742422A6CF3E0082182F /* UserSearchCollectionViewCell.swift in Sources */,
@@ -954,6 +999,7 @@
 				CE05741D22A439330082182F /* JoinGroupViewController.swift in Sources */,
 				84C79C61236AB9B5000B6648 /* ReportTextTableViewCellTableViewCell.swift in Sources */,
 				842515EE2360AC6900BB6888 /* StripeKeyProvider.swift in Sources */,
+				84C79CE2237D7AF9000B6648 /* second1ViewController.swift in Sources */,
 				8405839122F4097D00FAB292 /* RegistCompViewController.swift in Sources */,
 				845956AB22FC71F300B79278 /* ProfileEditTableViewCell.swift in Sources */,
 				84C79C52236AB2F8000B6648 /* PaymentViewController.swift in Sources */,
@@ -972,12 +1018,14 @@
 				847398A5234224EC00D28135 /* ProfilImageTableViewCell.swift in Sources */,
 				B49CCD9522D592AD00F793F1 /* UserSearchModel.swift in Sources */,
 				8409E60223377CE8009BA908 /* TextAreaTableViewCell.swift in Sources */,
+				84C79C9C23793D02000B6648 /* Section.swift in Sources */,
 				8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */,
 				CE4B09BF2209D2A000F8A430 /* MyDataViewController.swift in Sources */,
 				B40A3405232A5AD700583CCC /* ApiUserDateParam.swift in Sources */,
 				8432F2BB22F16B1100A60EC5 /* ProfileAddViewController.swift in Sources */,
 				CE05742122A5E9350082182F /* ChatViewController.swift in Sources */,
 				CE1D51F922D015D10093DC58 /* MessageViewController.swift in Sources */,
+				84C79C9623793C9D000B6648 /* MenuTableViewCell.swift in Sources */,
 				840FB6F123310C0D00F6F55F /* CahtRoomModel.swift in Sources */,
 				848A3315231504E200144950 /* GroupEventAddModel.swift in Sources */,
 				848A333C2325E86A00144950 /* CahtFirstModel.swift in Sources */,
@@ -1004,6 +1052,7 @@
 				CE05741722A3BB030082182F /* CahtSecondViewController.swift in Sources */,
 				84C79C69237153CB000B6648 /* ApiSetting.swift in Sources */,
 				CE0F9EF622E590BF00D320F5 /* PreferredGroupListViewController.swift in Sources */,
+				84C79C74237670FC000B6648 /* CustomCell.swift in Sources */,
 				B40A3409232A5AD700583CCC /* ApiGroupEventList.swift in Sources */,
 				CE4B0987220942DE00F8A430 /* ViewController.swift in Sources */,
 				B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */,
@@ -1029,11 +1078,14 @@
 				CE05743022AA3A3A0082182F /* ChatTableViewCell.swift in Sources */,
 				CE1D51F722D0158B0093DC58 /* testViewController.swift in Sources */,
 				CE1D51E622C4990A0093DC58 /* MyDateStepViewController.swift in Sources */,
+				84C79C9723793C9D000B6648 /* SectionHeaderView.swift in Sources */,
 				B40A3407232A5AD700583CCC /* ApiUserSearchData.swift in Sources */,
 				843F204222F8043F008CBDDA /* ProfileAddModel.swift in Sources */,
 				CEAF954D22BDF33600F37A6E /* GroupEventViewController.swift in Sources */,
+				84C79C9923793C9D000B6648 /* MenuViewController.swift in Sources */,
 				CE4B0985220942DE00F8A430 /* AppDelegate.swift in Sources */,
 				845956AE2303E52800B79278 /* ProfileEditModel.swift in Sources */,
+				84C79C9823793C9D000B6648 /* Resources.swift in Sources */,
 				8409E5FD233778CE009BA908 /* PointHistoryModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

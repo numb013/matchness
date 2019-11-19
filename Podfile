@@ -16,6 +16,9 @@ pod 'ImageViewer'
 pod "MBCircularProgressBar"
 pod 'Charts'
 
+#チュートリアル
+pod 'EAIntroView'
+
 #メッセージ
 pod 'JSQMessagesViewController'
 #pod 'JSQMessagesViewController', :git => 'https://github.com/Ariandr/#JSQMessagesViewController.git', :branch => 'master', :inhibit_warnings => true

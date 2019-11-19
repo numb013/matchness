@@ -29,7 +29,7 @@ var userProfile : NSDictionary = [:]
         checkloginFacebook()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     /// ログイン済みかチェック
     func checkloginFacebook() {
         if let _ = AccessToken.current {
@@ -50,14 +50,14 @@ var userProfile : NSDictionary = [:]
             }else{
                 print("GGGGGGGGGGGGGGG")
 //                //画面遷移
-//                let storyboard: UIStoryboard = self.storyboard!
-//                //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-//                let multiple = storyboard.instantiateViewController(withIdentifier: "toProfileEdit")
-//                multiple.modalPresentationStyle = .fullScreen
-//                //ここが実際に移動するコードとなります
-//                self.present(multiple, animated: false, completion: nil)
+                let storyboard: UIStoryboard = self.storyboard!
+                //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+                let multiple = storyboard.instantiateViewController(withIdentifier: "profile")
+                multiple.modalPresentationStyle = .fullScreen
+                //ここが実際に移動するコードとなります
+                self.present(multiple, animated: false, completion: nil)
 //                画面遷移
-                performSegue(withIdentifier: "toProfileAdd", sender: self)
+//                performSegue(withIdentifier: "toProfileAdd", sender: self)
                 
             }
         }else{
