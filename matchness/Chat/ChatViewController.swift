@@ -24,6 +24,9 @@ class ChatViewController: ButtonBarPagerTabStripViewController {
 
         super.viewDidLoad()
 
+        if let tabBarItem = self.tabBarController?.tabBar.items?[2] as? UITabBarItem {
+            tabBarItem.badgeValue = nil
+        }
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {

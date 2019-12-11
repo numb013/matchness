@@ -15,6 +15,7 @@ class MyTapGestureRecognizer: UITapGestureRecognizer {
     var targetString: String?
     var targetGroupId: Int?
     var targetUserId: Int?
+    var amont: String?
 }
 
 class UserDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,GalleryItemsDataSource {
@@ -25,7 +26,7 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var GroupRequest: UIButton!
     private var requestAlamofire: Alamofire.Request?;
 
-
+    var ActivityIndicator: UIActivityIndicatorView!
 
     var galleyItem: GalleryItem!
     var user_id:Int = 0
@@ -67,6 +68,19 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
 
         query["user_id"] = matchness_user_id
         query["target_id"] = "\(user_id)"
+
+        // ActivityIndicatorを作成＆中央に配置
+        ActivityIndicator = UIActivityIndicatorView()
+        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        ActivityIndicator.center = self.view.center
+        // クルクルをストップした時に非表示する
+        ActivityIndicator.hidesWhenStopped = true
+        // 色を設定
+        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+        //Viewに追加
+
+        self.view.addSubview(ActivityIndicator)
+        ActivityIndicator.startAnimating()
 
         //リクエスト実行
         if( !requestUserDetailModel.requestApi(url: requestUrl, addQuery: query) ){
@@ -597,7 +611,7 @@ extension UserDetailViewController : UserDetailModelDelegate {
         //                mapMenuView.addTagGroup(model: model, jenre: jenre);
         //            }
         //        }
-        
+        ActivityIndicator.stopAnimating()
         UserDtailTable.reloadData()
     }
     func onFailed(model: UserDetailModel) {

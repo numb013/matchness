@@ -38,13 +38,19 @@ class SectionHeaderView: UITableViewHeaderFooterView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        let startColor = UIColor(white: 1.0, alpha: 0.7).cgColor
-        let endColor = UIColor(white: 0.8, alpha: 0.3).cgColor
-        let layer = CAGradientLayer()
-        layer.colors = [startColor, endColor]
-        layer.frame = contentView.bounds
-        contentView.layer.addSublayer(layer)
-        textLabel?.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        //contentView.backgroundColor = UIColor(red:0.54, green:0.74, blue:0.74, alpha:1)
+//        let startColor = UIColor(white: 1.0, alpha: 0.7).cgColor
+//        let endColor = UIColor(white: 0.8, alpha: 0.3).cgColor
+//        let layer = CAGradientLayer()
+//        layer.colors = [startColor, endColor]
+//        layer.frame = contentView.bounds
+
+
+        let buttomBorder = CALayer()
+        buttomBorder.frame = CGRect(x: 0, y: self.frame.height - 1, width: self.frame.width, height: 0.5)
+        buttomBorder.backgroundColor = UIColor.lightGray.cgColor
+
+        contentView.layer.addSublayer(buttomBorder)
+        textLabel?.textColor = #colorLiteral(red: 0.3726522326, green: 0.3743820786, blue: 0.3785918653, alpha: 1)
+        contentView.backgroundColor = #colorLiteral(red: 0.9683176875, green: 0.9684795737, blue: 0.968296349, alpha: 1)
     }
 }

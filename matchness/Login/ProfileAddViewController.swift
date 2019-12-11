@@ -47,15 +47,13 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         print("通ってる？？？")
+
         profileAddTableView.delegate = self
         profileAddTableView.dataSource = self
         pickerView.dataSource = self as! UIPickerViewDataSource
         pickerView.delegate   = self as! UIPickerViewDelegate
-
-        // Do any additional setup after loading the view.
-        
         pickerView.showsSelectionIndicator = true
-        
+
         self.profileAddTableView.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
         self.profileAddTableView.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
         self.profileAddTableView.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")
@@ -68,8 +66,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         datePickerView.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
         returnUserData()
-        delegate()
-
     }
     
 //    override func viewDidAppear(_ animated: Bool) {
@@ -186,6 +182,7 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
                         print(self.responseData)
                         print(self.responseData["0"]?.api_token)
                         print(self.responseData["name"])
+//                        print(self.responseData["birthday"])
                         self.viewPlofile()
                         
                     case .failure:
@@ -221,7 +218,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         let dateFormater = DateFormatter()
         dateFormater.locale = Locale(identifier: "ja_JP")
         dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-        
         responseData["0"]?.name = self.userProfile.object(forKey: "name") as? String
         responseData["0"]?.birthday = dateFormater.string(from: isDate)
         responseData["0"]?.work = 0
@@ -231,6 +227,9 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         responseData["0"]?.sex = 0
         responseData["0"]?.blood_type = 0
         
+        print("タイム2222222")
+        print(responseData["0"]?.birthday)
+
         print("kokokokokjiijijij")
         print(self.responseData["0"])
         
@@ -294,6 +293,11 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         print(indexPath)
         print(indexPath.section)
         
+
+        let dateFormater = DateFormatter()
+        dateFormater.locale = Locale(identifier: "ja_JP")
+        dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+
         print("こいいいいいい")
         print(self.responseData["0"])
         var myData = self.responseData["0"]
@@ -346,7 +350,16 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
                 let dateFormater = DateFormatter()
                 dateFormater.locale = Locale(identifier: "ja_JP")
                 dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+
+
+                self.responseData["0"]?.birthday = dateFormater.string(from: self.isDate)
+
+
                 let date = dateFormater.date(from: self.responseData["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
+
+                print("タイム444444444")
+                print(date)
+
                 print("誕生日誕生日誕生日")
                 dateFormater.dateFormat = "yyyy年MM月dd日"
                 let date_text = dateFormater.string(from: date ?? Date())
@@ -431,15 +444,19 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         print(indexPath.section)
         print(indexPath.row)
         if indexPath.row == 3 {
+
+            print("タイム33333333333")
+            print(self.responseData["0"])
+
             let dateFormater = DateFormatter()
             dateFormater.locale = Locale(identifier: "ja_JP")
             dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-
-print("時間時間時間時間時間時間時間時間")
-
             let date = dateFormater.date(from: self.responseData["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
             datePickerView.date = date!
+            print("デートピッカーーーーーーーー")
             datePickerPush()
+
+
         } else {
             self.pickerView.reloadAllComponents()
             PickerPush()
@@ -568,17 +585,18 @@ print("333333333333333")
         return 60
     }
 
+
     // datePickerの日付けをtextFieldのtextに反映させる
     @objc private func setText() {
         let dateFormater = DateFormatter()
         dateFormater.locale = Locale(identifier: "ja_JP")
         dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
         self.setDateviewTime = dateFormater.string(from: datePickerView.date)
-        self.dataSource["0"]?.birthday = self.setDateviewTime
-        print("時間時間時間")
+        self.responseData["0"]?.birthday = self.setDateviewTime
+        print("タイム１１１１１１")
         print(datePickerView.date)
     }
-
+    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         print("テキスト１")

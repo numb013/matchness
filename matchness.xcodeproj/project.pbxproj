@@ -15,11 +15,16 @@
 		8409E60223377CE8009BA908 /* TextAreaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8409E60023377CE8009BA908 /* TextAreaTableViewCell.swift */; };
 		8409E60323377CE8009BA908 /* TextAreaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8409E60123377CE8009BA908 /* TextAreaTableViewCell.xib */; };
 		840FB6F123310C0D00F6F55F /* CahtRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840FB6F023310C0D00F6F55F /* CahtRoomModel.swift */; };
-		842515EE2360AC6900BB6888 /* StripeKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */; };
+		8411A3BB2396C6720080EA55 /* ApiPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8411A3BA2396C6720080EA55 /* ApiPayment.swift */; };
+		841BBDC62384CE800047546C /* baseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BBDC52384CE800047546C /* baseViewController.swift */; };
 		8432F2B022F09D6C00A60EC5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */; };
 		8432F2B222F0A2ED00A60EC5 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */; };
 		8432F2B922F16AF200A60EC5 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2B822F16AF200A60EC5 /* FBLoginViewController.swift */; };
 		8432F2BB22F16B1100A60EC5 /* ProfileAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432F2BA22F16B1100A60EC5 /* ProfileAddViewController.swift */; };
+		84337C062397E62600F4BB83 /* PointPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84337C052397E62600F4BB83 /* PointPaymentViewController.swift */; };
+		84337C092397EC2F00F4BB83 /* pointPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84337C072397EC2F00F4BB83 /* pointPaymentTableViewCell.swift */; };
+		84337C0A2397EC2F00F4BB83 /* pointPaymentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84337C082397EC2F00F4BB83 /* pointPaymentTableViewCell.xib */; };
+		84337C0F239927B600F4BB83 /* ApplePayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84337C0E239927B600F4BB83 /* ApplePayViewController.swift */; };
 		843F203E22F6F85C008CBDDA /* UserDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F203D22F6F85C008CBDDA /* UserDetailModel.swift */; };
 		843F204222F8043F008CBDDA /* ProfileAddModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F204122F8043F008CBDDA /* ProfileAddModel.swift */; };
 		8456F70A23530CEF00819DC0 /* ApiMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8456F70923530CEF00819DC0 /* ApiMessage.swift */; };
@@ -33,6 +38,7 @@
 		847398A5234224EC00D28135 /* ProfilImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847398A3234224EC00D28135 /* ProfilImageTableViewCell.swift */; };
 		847398A6234224EC00D28135 /* ProfilImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847398A4234224EC00D28135 /* ProfilImageTableViewCell.xib */; };
 		847398AA2346764F00D28135 /* GradationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847398A92346764E00D28135 /* GradationView.swift */; };
+		847EFF8A238BBD8C0067D6AD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847EFF89238BBD8B0067D6AD /* GoogleService-Info.plist */; };
 		848A32C5230AA57900144950 /* MultipleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A32C4230AA57900144950 /* MultipleModel.swift */; };
 		848A32CC230AF96700144950 /* UserDetailInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848A32CA230AF96600144950 /* UserDetailInfoTableViewCell.xib */; };
 		848A32CD230AF96700144950 /* UserDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A32CB230AF96600144950 /* UserDetailInfoTableViewCell.swift */; };
@@ -76,6 +82,8 @@
 		84C79C9C23793D02000B6648 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79C9B23793D02000B6648 /* Section.swift */; };
 		84C79CA2237AF98F000B6648 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79CA1237AF98F000B6648 /* TutorialViewController.swift */; };
 		84C79CE2237D7AF9000B6648 /* second1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C79CE1237D7AF9000B6648 /* second1ViewController.swift */; };
+		84D00EA7239E8894008273CC /* PointPaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D00EA6239E8894008273CC /* PointPaymentModel.swift */; };
+		84D00EA9239E8991008273CC /* ApiPaymentPointList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D00EA8239E8991008273CC /* ApiPaymentPointList.swift */; };
 		B40A33FE232A5AD700583CCC /* ApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EB232A5AD500583CCC /* ApiConfig.swift */; };
 		B40A33FF232A5AD700583CCC /* ApiGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33EC232A5AD500583CCC /* ApiGroupList.swift */; };
 		B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40A33ED232A5AD500583CCC /* ApiRequest.swift */; };
@@ -176,11 +184,16 @@
 		8409E60023377CE8009BA908 /* TextAreaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaTableViewCell.swift; sourceTree = "<group>"; };
 		8409E60123377CE8009BA908 /* TextAreaTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextAreaTableViewCell.xib; sourceTree = "<group>"; };
 		840FB6F023310C0D00F6F55F /* CahtRoomModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CahtRoomModel.swift; sourceTree = "<group>"; };
-		842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeKeyProvider.swift; sourceTree = "<group>"; };
+		8411A3BA2396C6720080EA55 /* ApiPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiPayment.swift; path = matchness/API/ApiPayment.swift; sourceTree = "<group>"; };
+		841BBDC52384CE800047546C /* baseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = baseViewController.swift; sourceTree = "<group>"; };
 		8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		8432F2B822F16AF200A60EC5 /* FBLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
 		8432F2BA22F16B1100A60EC5 /* ProfileAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAddViewController.swift; sourceTree = "<group>"; };
+		84337C052397E62600F4BB83 /* PointPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointPaymentViewController.swift; sourceTree = "<group>"; };
+		84337C072397EC2F00F4BB83 /* pointPaymentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pointPaymentTableViewCell.swift; sourceTree = "<group>"; };
+		84337C082397EC2F00F4BB83 /* pointPaymentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = pointPaymentTableViewCell.xib; sourceTree = "<group>"; };
+		84337C0E239927B600F4BB83 /* ApplePayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayViewController.swift; sourceTree = "<group>"; };
 		843F203D22F6F85C008CBDDA /* UserDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailModel.swift; sourceTree = "<group>"; };
 		843F204122F8043F008CBDDA /* ProfileAddModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileAddModel.swift; sourceTree = "<group>"; };
 		8456F70923530CEF00819DC0 /* ApiMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiMessage.swift; path = matchness/API/ApiMessage.swift; sourceTree = "<group>"; };
@@ -194,6 +207,7 @@
 		847398A3234224EC00D28135 /* ProfilImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilImageTableViewCell.swift; sourceTree = "<group>"; };
 		847398A4234224EC00D28135 /* ProfilImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilImageTableViewCell.xib; sourceTree = "<group>"; };
 		847398A92346764E00D28135 /* GradationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradationView.swift; sourceTree = "<group>"; };
+		847EFF89238BBD8B0067D6AD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		848A32C4230AA57900144950 /* MultipleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipleModel.swift; sourceTree = "<group>"; };
 		848A32CA230AF96600144950 /* UserDetailInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailInfoTableViewCell.xib; sourceTree = "<group>"; };
 		848A32CB230AF96600144950 /* UserDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -237,6 +251,8 @@
 		84C79C9B23793D02000B6648 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		84C79CA1237AF98F000B6648 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		84C79CE1237D7AF9000B6648 /* second1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = second1ViewController.swift; sourceTree = "<group>"; };
+		84D00EA6239E8894008273CC /* PointPaymentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointPaymentModel.swift; sourceTree = "<group>"; };
+		84D00EA8239E8991008273CC /* ApiPaymentPointList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiPaymentPointList.swift; path = matchness/API/ApiPaymentPointList.swift; sourceTree = "<group>"; };
 		946D3AF11F4FBEBAFE993661 /* Pods_matchness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_matchness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD66A8BE7976CA8BC6F822EA /* Pods-matchnessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matchnessTests.debug.xcconfig"; path = "Target Support Files/Pods-matchnessTests/Pods-matchnessTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B40A33EB232A5AD500583CCC /* ApiConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiConfig.swift; path = matchness/API/ApiConfig.swift; sourceTree = "<group>"; };
@@ -387,6 +403,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		84337C0B2399276500F4BB83 /* ApplePay */ = {
+			isa = PBXGroup;
+			children = (
+				84337C0E239927B600F4BB83 /* ApplePayViewController.swift */,
+			);
+			path = ApplePay;
+			sourceTree = "<group>";
+		};
 		848A331A2319F99100144950 /* pointChange */ = {
 			isa = PBXGroup;
 			children = (
@@ -429,7 +453,11 @@
 		84C79C4A2369B195000B6648 /* Payment */ = {
 			isa = PBXGroup;
 			children = (
+				84337C052397E62600F4BB83 /* PointPaymentViewController.swift */,
+				84D00EA6239E8894008273CC /* PointPaymentModel.swift */,
 				84C79C51236AB2F8000B6648 /* PaymentViewController.swift */,
+				84337C072397EC2F00F4BB83 /* pointPaymentTableViewCell.swift */,
+				84337C082397EC2F00F4BB83 /* pointPaymentTableViewCell.xib */,
 			);
 			path = Payment;
 			sourceTree = "<group>";
@@ -498,6 +526,7 @@
 				84C79C68237153CA000B6648 /* ApiSetting.swift */,
 				B40A33F5232A5AD600583CCC /* ApiChangePoint.swift */,
 				B40A33F3232A5AD500583CCC /* ApiChatRoom.swift */,
+				84D00EA8239E8991008273CC /* ApiPaymentPointList.swift */,
 				8409E5FE233779B4009BA908 /* ApiPointHistory.swift */,
 				849E34BA2355A3990062E928 /* ApiGroupEvent.swift */,
 				B40A33F9232A5AD600583CCC /* ApiGroupChat.swift */,
@@ -517,6 +546,7 @@
 				B40A33F2232A5AD500583CCC /* ApiUserDateParam.swift */,
 				B40A33F1232A5AD500583CCC /* ApiUserDetailDate.swift */,
 				B40A33F4232A5AD500583CCC /* ApiUserSearchData.swift */,
+				8411A3BA2396C6720080EA55 /* ApiPayment.swift */,
 			);
 			name = API;
 			path = ..;
@@ -553,8 +583,10 @@
 				B456770E2330DC6300E0E9B7 /* Notice */,
 				8409E5F9233775E4009BA908 /* pointHistory */,
 				84C79C7F23793A70000B6648 /* Menu */,
-				CE0F9EEB22DE348900D320F5 /* MultipleViewController.swift */,
+				84C79C4A2369B195000B6648 /* Payment */,
 				848A32C4230AA57900144950 /* MultipleModel.swift */,
+				CE0F9EEB22DE348900D320F5 /* MultipleViewController.swift */,
+				84337C0B2399276500F4BB83 /* ApplePay */,
 				CE4B09BE2209D2A000F8A430 /* MyDataViewController.swift */,
 				848A32D6230DA7A300144950 /* MyDataModel.swift */,
 				CE0F9EED22DE34D500D320F5 /* MultipleTableViewCell.swift */,
@@ -645,6 +677,7 @@
 			isa = PBXGroup;
 			children = (
 				84C79C66237005F9000B6648 /* searchViewController.swift */,
+				841BBDC52384CE800047546C /* baseViewController.swift */,
 				CE1D51F622D0158B0093DC58 /* testViewController.swift */,
 				CE4B0983220942DE00F8A430 /* matchness */,
 				CE4B0998220942E100F8A430 /* matchnessTests */,
@@ -675,14 +708,12 @@
 				8432F2B722F16ABB00A60EC5 /* Login */,
 				CE1D51E922CDD5290093DC58 /* UserSearch */,
 				84C79C55236AB9A1000B6648 /* Report */,
-				84C79C4A2369B195000B6648 /* Payment */,
 				CE1D51EE22CDD60C0093DC58 /* UserDetail */,
 				CE1D51EC22CDD5AF0093DC58 /* Group */,
 				CE1D51EB22CDD56D0093DC58 /* Chat */,
 				CE1D51EA22CDD54D0093DC58 /* MyDate */,
-				CE4B0984220942DE00F8A430 /* AppDelegate.swift */,
-				842515ED2360AC6900BB6888 /* StripeKeyProvider.swift */,
 				84C79CA0237AF950000B6648 /* Tutorial */,
+				CE4B0984220942DE00F8A430 /* AppDelegate.swift */,
 				8432F2B122F0A2ED00A60EC5 /* SplashViewController.swift */,
 				CE4B0986220942DE00F8A430 /* ViewController.swift */,
 				848A332F231BCA4000144950 /* TodayStep.swift */,
@@ -693,6 +724,7 @@
 				CE4B098D220942E100F8A430 /* LaunchScreen.storyboard */,
 				8432F2AF22F09D6C00A60EC5 /* LaunchScreen.xib */,
 				CE1D51F422CE40C30093DC58 /* GoogleService-Info.plist */,
+				847EFF89238BBD8B0067D6AD /* GoogleService-Info.plist */,
 				CE4B0990220942E100F8A430 /* Info.plist */,
 				847398A92346764E00D28135 /* GradationView.swift */,
 			);
@@ -847,6 +879,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEAF954B22BDEB7400F37A6E /* GroupEventCollectionViewCell.xib in Resources */,
+				84337C0A2397EC2F00F4BB83 /* pointPaymentTableViewCell.xib in Resources */,
 				CE0F9EF022DE34D500D320F5 /* MultipleTableViewCell.xib in Resources */,
 				848A3323231A8B9D00144950 /* SettingEditTableViewCell.xib in Resources */,
 				848A32CC230AF96700144950 /* UserDetailInfoTableViewCell.xib in Resources */,
@@ -865,6 +898,7 @@
 				CE4B098C220942E100F8A430 /* Assets.xcassets in Resources */,
 				CE05742522A6CF3E0082182F /* UserSearchCollectionViewCell.xib in Resources */,
 				CE05743722AB6F7E0082182F /* UserDetailTableViewCell.xib in Resources */,
+				847EFF8A238BBD8C0067D6AD /* GoogleService-Info.plist in Resources */,
 				847398A6234224EC00D28135 /* ProfilImageTableViewCell.xib in Resources */,
 				8432F2B022F09D6C00A60EC5 /* LaunchScreen.xib in Resources */,
 				CE4B098A220942DE00F8A430 /* Main.storyboard in Resources */,
@@ -979,8 +1013,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				848A3322231A8B9D00144950 /* SettingEditTableViewCell.swift in Sources */,
+				84D00EA9239E8991008273CC /* ApiPaymentPointList.swift in Sources */,
 				CE0F9EEF22DE34D500D320F5 /* MultipleTableViewCell.swift in Sources */,
 				B40A3404232A5AD700583CCC /* ApiUserDetailDate.swift in Sources */,
+				841BBDC62384CE800047546C /* baseViewController.swift in Sources */,
 				848A32CF230D73D600144950 /* GroupModel.swift in Sources */,
 				CE05740F22A3AD9F0082182F /* GroupViewController.swift in Sources */,
 				CE05743622AB6F7E0082182F /* UserDetailTableViewCell.swift in Sources */,
@@ -998,7 +1034,6 @@
 				CE0F9EEC22DE348900D320F5 /* MultipleViewController.swift in Sources */,
 				CE05741D22A439330082182F /* JoinGroupViewController.swift in Sources */,
 				84C79C61236AB9B5000B6648 /* ReportTextTableViewCellTableViewCell.swift in Sources */,
-				842515EE2360AC6900BB6888 /* StripeKeyProvider.swift in Sources */,
 				84C79CE2237D7AF9000B6648 /* second1ViewController.swift in Sources */,
 				8405839122F4097D00FAB292 /* RegistCompViewController.swift in Sources */,
 				845956AB22FC71F300B79278 /* ProfileEditTableViewCell.swift in Sources */,
@@ -1007,6 +1042,7 @@
 				848A333B2325E86A00144950 /* MessageModel.swift in Sources */,
 				B40A3408232A5AD700583CCC /* ApiChangePoint.swift in Sources */,
 				B45677122330DC6300E0E9B7 /* NoticeViewController.swift in Sources */,
+				84337C092397EC2F00F4BB83 /* pointPaymentTableViewCell.swift in Sources */,
 				B40A33FF232A5AD700583CCC /* ApiGroupList.swift in Sources */,
 				848A332C231BA37600144950 /* TextFiledTableViewCell.swift in Sources */,
 				84C79C5F236AB9B5000B6648 /* ReportTextTableViewCell.swift in Sources */,
@@ -1026,11 +1062,13 @@
 				CE05742122A5E9350082182F /* ChatViewController.swift in Sources */,
 				CE1D51F922D015D10093DC58 /* MessageViewController.swift in Sources */,
 				84C79C9623793C9D000B6648 /* MenuTableViewCell.swift in Sources */,
+				84D00EA7239E8894008273CC /* PointPaymentModel.swift in Sources */,
 				840FB6F123310C0D00F6F55F /* CahtRoomModel.swift in Sources */,
 				848A3315231504E200144950 /* GroupEventAddModel.swift in Sources */,
 				848A333C2325E86A00144950 /* CahtFirstModel.swift in Sources */,
 				B45677172330DC9D00E0E9B7 /* GroupChatViewController.swift in Sources */,
 				B4D1ECF62330EB07008760A2 /* NoticeDitailViewController.swift in Sources */,
+				84337C062397E62600F4BB83 /* PointPaymentViewController.swift in Sources */,
 				CE05741F22A439420082182F /* WaitGroupViewController.swift in Sources */,
 				849E34BB2355A39A0062E928 /* ApiGroupEvent.swift in Sources */,
 				848A32C5230AA57900144950 /* MultipleModel.swift in Sources */,
@@ -1049,6 +1087,7 @@
 				B40A340E232A5AD700583CCC /* ApiMatcheList.swift in Sources */,
 				84C79C60236AB9B5000B6648 /* ButtonTableViewCell.swift in Sources */,
 				84C79C67237005F9000B6648 /* searchViewController.swift in Sources */,
+				8411A3BB2396C6720080EA55 /* ApiPayment.swift in Sources */,
 				CE05741722A3BB030082182F /* CahtSecondViewController.swift in Sources */,
 				84C79C69237153CB000B6648 /* ApiSetting.swift in Sources */,
 				CE0F9EF622E590BF00D320F5 /* PreferredGroupListViewController.swift in Sources */,
@@ -1056,6 +1095,7 @@
 				B40A3409232A5AD700583CCC /* ApiGroupEventList.swift in Sources */,
 				CE4B0987220942DE00F8A430 /* ViewController.swift in Sources */,
 				B40A3400232A5AD700583CCC /* ApiRequest.swift in Sources */,
+				84337C0F239927B600F4BB83 /* ApplePayViewController.swift in Sources */,
 				B45677162330DC9D00E0E9B7 /* GroupChatModel.swift in Sources */,
 				B40A340F232A5AD700583CCC /* ApiUserDate.swift in Sources */,
 				CE0F9EF422E0529F00D320F5 /* PointChangeViewController.swift in Sources */,
@@ -1298,7 +1338,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.a2c.matchness;
+				PRODUCT_BUNDLE_IDENTIFIER = com.a2c.popokatsu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1346,7 +1386,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.a2c.matchness;
+				PRODUCT_BUNDLE_IDENTIFIER = com.a2c.popokatsu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

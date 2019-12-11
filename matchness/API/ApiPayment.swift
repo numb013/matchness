@@ -13,12 +13,10 @@ import SwiftyJSON;
  レスポンスとデータを取り込む構造体
  構造体は利用時にプロパティ全てを初期化する必要がある。
  */
-public struct ApiChatRoom: CustomDebugStringConvertible {
-    public var room_code: String? = nil;
-    public var user_hash_id: String? = nil;
-    public var target_hash_id: String? = nil;
-    public var last_message: String? = nil;
-    
+public struct ApiPayment: CustomDebugStringConvertible {
+    public var client_secret: String? = nil;
+    public var publishableKey: String? = nil;
+
     /*
      デフォルトイニシャライザ
      失敗可能イニシャライザ init?
@@ -46,21 +44,14 @@ public struct ApiChatRoom: CustomDebugStringConvertible {
             return nil;
         }
         //String => String
-        if let room_code = item["room_code"].string {
-            self.room_code = room_code;
+        if let client_secret = item["client_secret"].string {
+            self.client_secret = client_secret;
         }
         //String => String
-        if let user_hash_id = item["user_hash_id"].string {
-            self.user_hash_id = user_hash_id;
+        if let publishableKey = item["publishableKey"].string {
+            self.publishableKey = publishableKey;
         }
-        //String => String
-        if let target_hash_id = item["target_hash_id"].string {
-            self.target_hash_id = target_hash_id;
-        }
-        //String => String
-        if let last_message = item["last_message"].string {
-            self.last_message = last_message;
-        }
+
         return true;
     }
     
@@ -70,10 +61,8 @@ public struct ApiChatRoom: CustomDebugStringConvertible {
     public var debugDescription: String {
         get{
             var string:String = "ApiMultipleUser::\(#function)\n";
-            string += "room_code => \(String(describing: self.room_code))\n";
-            string += "user_hash_id => \(String(describing: self.user_hash_id))\n";
-            string += "target_hash_id => \(String(describing: self.target_hash_id))\n";
-            string += "last_message => \(String(describing: self.last_message))\n";
+            string += "client_secret => \(String(describing: self.client_secret))\n";
+            string += "publishableKey => \(String(describing: self.publishableKey))\n";
             return string;
         }
     }

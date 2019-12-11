@@ -33,11 +33,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         var api_key = userDefaults.object(forKey: "api_token") as? String
 
+
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "pointPayment")
+        //rootViewControllerに入れる
+        self.window?.rootViewController = initialViewController
+        //表示
+        self.window?.makeKeyAndVisible()
+
         
         if (api_key == nil || api_key == "") {
-
-
-
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewController = storyboard.instantiateViewController(withIdentifier: "fblogin")
@@ -72,8 +78,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            print("みログイン")
 //        }
 
-        STPPaymentConfiguration.shared().publishableKey = "pk_test_9ctOhFy7xdS9cYXFudRC4Smh001imsNQzB"
-        
+//        STPPaymentConfiguration.shared().publishableKey = "pk_test_9ctOhFy7xdS9cYXFudRC4Smh001imsNQzB"
+        Stripe.setDefaultPublishableKey("pk_test_9ctOhFy7xdS9cYXFudRC4Smh001imsNQzB")
+
 
         return true
     }

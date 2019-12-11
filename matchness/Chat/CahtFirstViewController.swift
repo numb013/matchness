@@ -9,7 +9,7 @@
 import UIKit
 import XLPagerTabStrip
 
-class CahtFirstViewController: UIViewController, IndicatorInfoProvider, UITableViewDelegate , UITableViewDataSource {
+class CahtFirstViewController: baseViewController, IndicatorInfoProvider, UITableViewDelegate , UITableViewDataSource {
     //ここがボタンのタイトルに利用されます
     var itemInfo: IndicatorInfo = "やりとり"
     let stepInstance = TodayStep()

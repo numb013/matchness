@@ -25,7 +25,7 @@ class GroupViewController: UIViewController {
         self.view.addSubview(pagingMenuController.view)
         pagingMenuController.didMove(toParent: self)
 
-        if let tabBarItem = self.tabBarController?.tabBar.items?[2] as? UITabBarItem {
+        if let tabBarItem = self.tabBarController?.tabBar.items?[1] as? UITabBarItem {
             tabBarItem.badgeValue = nil
         }
         

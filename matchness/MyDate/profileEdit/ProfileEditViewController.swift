@@ -178,7 +178,6 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
                 let dateFormater = DateFormatter()
                 dateFormater.locale = Locale(identifier: "ja_JP")
                 dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-
                 let date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
                 print("誕生日誕生日誕生日")
 
@@ -202,7 +201,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "体重(非公開)"
-                cell.detail?.text = ApiConfig.WEIGHT_LIST[myData?.weight ?? 0]
+                cell.detail?.text = ApiConfig.WEIGHT_LIST[myData?.weight ?? 0] + "kg"
                 return cell
 
             }
@@ -398,6 +397,9 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
     // UIPickerViewに表示する配列
     func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
         print("p3p3p3p3p3")
+        if (self.selectPicker == 5) {
+            return self.pcker_list[row] + "kg"
+        }
         return self.pcker_list[row]
     }
 
@@ -413,7 +415,6 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
         self.setDateviewTime = dateFormater.string(from: datePickerView.date)
         self.dataSource["0"]?.birthday = self.setDateviewTime
-        print("時間時間時間")
         print(datePickerView.date)
     }
 

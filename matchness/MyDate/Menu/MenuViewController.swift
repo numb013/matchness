@@ -18,12 +18,23 @@ class MenuViewController: UIViewController {
         var cellCount: Int = 0
         var dataSource: Dictionary<String, ApiSetting> = [:]
         var dataSourceOrder: Array<String> = []
-    
+        var ActivityIndicator: UIActivityIndicatorView!
     
         private var sections: [Section] = [
             Section(title: "通知設定",values: [("MEN", false),("WOMEN", false),("KIDS", false)],expanded: true),
-            Section(title: "初めての方",values: [("MENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMENMEN", false),("M", false),("L", false)],expanded: true),
-            Section(title: "よくある質問",values: [("T-Shirt", false),("Bottom", false),("Shoes", false)],expanded: true)
+            Section(title: "初めての方",values: [("POPO-KATSUとは？", false),("POPO-KATSUで出来る事", false)],expanded: true),
+            Section(title: "よくある質問",values: [
+                ("このアプリは無料ですか？", false),
+                ("歩数はどうやって取得？", false),
+                ("カロリーの計算は？", false),
+            ],expanded: true),
+            Section(title: "グループについて",values: [
+                ("グループの作り方", false),
+                ("グループの使い方", false),
+                ("グループで出来る事", false),
+            ],expanded: true),
+            Section(title: "ポイントについて",values: [("ポイントの貯め方", false),("何をすればポイントを消費する", false),("ポイント購入について", false)],expanded: true),
+            Section(title: "メッセージついて",values: [("ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー", false)],expanded: true),
         ]
 
         override func viewDidLoad() {
@@ -32,6 +43,19 @@ class MenuViewController: UIViewController {
             self.menuTableView.rowHeight = UITableView.automaticDimension
             setupTableView()
 
+            // ActivityIndicatorを作成＆中央に配置
+            ActivityIndicator = UIActivityIndicatorView()
+            ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+            ActivityIndicator.center = self.view.center
+            // クルクルをストップした時に非表示する
+            ActivityIndicator.hidesWhenStopped = true
+            // 色を設定
+            ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+            //Viewに追加
+            self.view.addSubview(ActivityIndicator)
+            ActivityIndicator.startAnimating()
+            
+            
             /****************
              APIへリクエスト（ユーザー取得）
              *****************/
@@ -71,6 +95,12 @@ class MenuViewController: UIViewController {
             return 2
         }
 
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            print("タップ")
+            print(indexPath.row)
+            print("たっぷりなたっぷりなたっぷりな");
+        }
+        
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
             var mySetting = self.dataSource["0"]
@@ -79,24 +109,6 @@ class MenuViewController: UIViewController {
                 let cell = UITableViewCell(style: .default, reuseIdentifier: "myCell")
                 let switchView = UISwitch()
                 cell.accessoryView = switchView
-                //                cell.accessoryView = switchView
-//                cell.textLabel?.text = "メッセージ通知"
-////                if (mySetting?.message_notice == 0) {
-////                    swich_status = false
-////                } else {
-////                    swich_status = true
-////                }
-//                //スイッチの状態
-//                switchView.isOn = true
-//                //タグの値にindexPath.rowを入れる。
-//                switchView.tag = indexPath.row
-//                //スイッチが押されたときの動作
-//                switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
-//                return cell
-//
-//
-                
-
                 if indexPath.row == 0 {
                     cell.textLabel?.text = "メッセージ通知"
                     if (mySetting?.message_notice == 0) {
@@ -157,41 +169,70 @@ class MenuViewController: UIViewController {
                     switchView.addTarget(self, action: #selector(fundlSwitch(_:)), for: UIControl.Event.valueChanged)
                     return cell
                 }
-
-                
-                
             }
 
             if (indexPath.section == 1) {
-
-
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
                 cell.titleLabel.numberOfLines=0
                 cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
-
-    //            if self.sections[indexPath.section].values[indexPath.row].checked {
-    //                cell.checkBoxButton.setImage(checkedBoxImage, for: .normal)
-    //            } else {
-    //                cell.checkBoxButton.setImage(unCheckedBoxImage, for: .normal)
-    //            }
-    //
-    //            cell.tappedHandler = { [unowned self] in
-    //                if self.sections[indexPath.section].values[indexPath.row].checked {
-    //                    cell.checkBoxButton.setImage(unCheckedBoxImage, for: .normal)
-    //                } else {
-    //                    cell.checkBoxButton.setImage(checkedBoxImage, for: .normal)
-    //                }
-    //                self.sections[indexPath.section].values[indexPath.row].checked = !self.sections[indexPath.section].values[indexPath.row].checked
-    //            }
-
-
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 return cell
             }
+            if (indexPath.section == 2) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
+                cell.titleLabel.numberOfLines=0
+                cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                return cell
+            }
+            if (indexPath.section == 3) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
+                cell.titleLabel.numberOfLines=0
+                cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                return cell
+            }
+            if (indexPath.section == 4) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
+                cell.titleLabel.numberOfLines=0
+                cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                return cell
+            }
+
+            if (indexPath.section == 5) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
+                cell.titleLabel.numberOfLines=0
+                cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
+//                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                return cell
+            }
+            
+            //            if (indexPath.section == 5) {
+//                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
+//                cell.titleLabel.numberOfLines=0
+//                cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
+//                return cell
+//            }
+//            if (indexPath.section == 6) {
+//                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
+//                cell.titleLabel.numberOfLines=0
+//                cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
+//                return cell
+//            }
+//            if (indexPath.section == 70) {
+//                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
+//                cell.titleLabel.numberOfLines=0
+//                cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
+//                return cell
+//            }
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
 
             return cell
         }
 
+        
+        
         //スイッチのテーブルが変更されたときに呼ばれる
         @objc func fundlSwitch(_ sender: UISwitch) {
             print("スイッチスイッチスイッチスイッチスイッチ")
@@ -228,8 +269,11 @@ extension MenuViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 45
+        return 55
     }
+
+
+
 }
 
 
@@ -246,7 +290,7 @@ extension MenuViewController : SettingEditModelDelegate {
 
 print("設定設定設定設定設定")
 print(self.dataSource)
-
+        ActivityIndicator.stopAnimating()
         menuTableView.reloadData()
     }
     func onFailed(model: SettingEditModel) {

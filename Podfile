@@ -24,14 +24,17 @@ pod 'JSQMessagesViewController'
 #pod 'JSQMessagesViewController', :git => 'https://github.com/Ariandr/#JSQMessagesViewController.git', :branch => 'master', :inhibit_warnings => true
 #pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'
 pod 'Firebase/Core'
+pod 'FacebookCore'
 pod 'FirebaseDatabase'
 pod 'FirebaseStorage'
 pod 'SDWebImage'
 pod 'FirebaseUI/Storage'
 pod 'FirebaseMessaging'
 
+
 pod 'FBSDKLoginKit'
-pod 'FacebookCore'
+pod 'HydraAsync'
+pod 'Firebase/Functions'
 pod 'Stripe'
 
 #API通信

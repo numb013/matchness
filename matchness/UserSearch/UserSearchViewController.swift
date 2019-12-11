@@ -12,11 +12,11 @@ import SwiftyJSON
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class UserSearchViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate  {
+class UserSearchViewController: baseViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate  {
 
     @IBOutlet weak var userDetail: UICollectionView!
     @IBOutlet weak var navigationBar: UINavigationBar!
-    
+    var ActivityIndicator: UIActivityIndicatorView!
     
     let navBarHeight : CGFloat = 164.0
     let userDefaults = UserDefaults.standard
@@ -36,11 +36,11 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
     
     override func viewDidLoad() {
 
-        print("AAAAAAAAAA")
+//        print("AAAAAAAAAA")
 //        //画面遷移
 //        let storyboard: UIStoryboard = self.storyboard!
 //        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-//        let multiple = storyboard.instantiateViewController(withIdentifier: "GroupEventAdd")
+//        let multiple = storyboard.instantiateViewController(withIdentifier: "pointPayment")
 //        multiple.modalPresentationStyle = .fullScreen
 //        //ここが実際に移動するコードとなります
 //        self.present(multiple, animated: true, completion: nil)
@@ -71,10 +71,10 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         userDetail.delegate = self
         userDetail.dataSource = self
 
-        if let tabItem = self.tabBarController?.tabBar.items?[2] {
-            tabItem.badgeValue = "new"
-        }
+        
 
+
+        
         self.userDetail.register(UINib(nibName: "UserSearchCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "userDetailCell")
         // Do any additional setup after loading the view.
         apiRequest()
@@ -97,6 +97,20 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
         self.page_no = "1"
         self.dataSourceOrder = []
         var dataSource: Dictionary<String, ApiUserDate> = [:]
+
+
+        // ActivityIndicatorを作成＆中央に配置
+        ActivityIndicator = UIActivityIndicatorView()
+        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        ActivityIndicator.center = self.view.center
+        // クルクルをストップした時に非表示する
+        ActivityIndicator.hidesWhenStopped = true
+        // 色を設定
+        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+        //Viewに追加
+        self.view.addSubview(ActivityIndicator)
+        ActivityIndicator.startAnimating()
+
         apiRequest()
     }
 
@@ -112,6 +126,20 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
             self.dataSourceOrder = []
             var dataSource: Dictionary<String, ApiUserDate> = [:]
             print("更新")
+
+            // ActivityIndicatorを作成＆中央に配置
+            ActivityIndicator = UIActivityIndicatorView()
+            ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+            ActivityIndicator.center = self.view.center
+            // クルクルをストップした時に非表示する
+            ActivityIndicator.hidesWhenStopped = true
+            // 色を設定
+            ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+            //Viewに追加
+            self.view.addSubview(ActivityIndicator)
+            ActivityIndicator.startAnimating()
+
+
             apiRequest()
         }
         
@@ -186,9 +214,6 @@ class UserSearchViewController: UIViewController,UICollectionViewDataSource, UIC
 //        cell.agearea.text = self.dataSource[String(indexPath.row)]?.work
         cell.agearea.text = search?.name
         
-
-print(search)
-
         cell.job.text = "痩せたい部位:" + ApiConfig.FITNESS_LIST[search!.fitness_parts_id!]
         cell.tag = search?.id! ?? 0
 
@@ -311,7 +336,7 @@ extension UserSearchViewController : UserSearchModelDelegate {
         print(self.dataSourceOrder)
 
         
-        //
+
         var count: Int = 0;
 //        for(key, code) in dataSourceOrder.enumerated() {
 //            count+=1;
@@ -321,6 +346,9 @@ extension UserSearchViewController : UserSearchModelDelegate {
 //            }
 //        }
         self.isLoading = false
+
+        ActivityIndicator.stopAnimating()
+
         userDetail.reloadData()
     }
     func onFailed(model: UserSearchModel) {
@@ -328,3 +356,4 @@ extension UserSearchViewController : UserSearchModelDelegate {
     }
     
 }
+

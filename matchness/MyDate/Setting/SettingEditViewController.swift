@@ -19,7 +19,8 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
     private var requestAlamofire: Alamofire.Request?;
     let userDefaults = UserDefaults.standard
     @IBOutlet weak var UserSettingTable: UITableView!
-    
+    var ActivityIndicator: UIActivityIndicatorView!
+
     var setDateviewTime = ""
     var vi = UIView()
     var cellCount: Int = 0
@@ -35,6 +36,21 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
         UserSettingTable.dataSource = self
         // Do any additional setup after loading the view.
 
+        
+        // ActivityIndicatorを作成＆中央に配置
+        ActivityIndicator = UIActivityIndicatorView()
+        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        ActivityIndicator.center = self.view.center
+        // クルクルをストップした時に非表示する
+        ActivityIndicator.hidesWhenStopped = true
+        // 色を設定
+        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+        //Viewに追加
+        self.view.addSubview(ActivityIndicator)
+        ActivityIndicator.startAnimating()
+        
+        Thread.sleep(forTimeInterval: 5)
+        
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
@@ -170,7 +186,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
 //            }
 //
 //        }
-
         return cell
     }
 
@@ -179,9 +194,13 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
         print("スイッチスイッチスイッチスイッチスイッチ")
         print(sender.tag)
         print(sender.isOn)
+
         settingApi(sender.tag, sender.isOn)
     }
 
+    func aaaaaaa() {
+        print("ASAEIJIHUGUGUYG")
+    }
     func settingApi(_ status1:Int, _ status2:Bool) {
         print("APIへリクエスト（ユーザー取得")
         let requestUrl: String = ApiConfig.REQUEST_URL_API_EDIT_SETTING;
@@ -217,6 +236,10 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
                 "Content-Type" : "application/x-www-form-urlencoded"
             ]
         }
+
+print("SDSDSDSDSDSDSDSDSDSDSDSDS")
+print(requestUrl)
+
         self.requestAlamofire = Alamofire.request(requestUrl, method: .post, parameters: query, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
             switch response.result {
             case .success:
@@ -265,9 +288,7 @@ extension SettingEditViewController : SettingEditModelDelegate {
         self.cellCount = dataSourceOrder.count;
         var count: Int = 0;
 
-print("設定設定設定設定設定")
-print(self.dataSource)
-
+        ActivityIndicator.stopAnimating()
         UserSettingTable.reloadData()
     }
     func onFailed(model: SettingEditModel) {

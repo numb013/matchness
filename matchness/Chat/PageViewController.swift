@@ -4,10 +4,13 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setViewControllers([getFirst()], direction: .reverse, animated: true, completion: nil)
+
+        if let tabBarItem = self.tabBarController?.tabBar.items?[2] as? UITabBarItem {
+            tabBarItem.badgeValue = nil
+        }
+
         //　最初のviewControllerを設定している
-        
         self.dataSource = self
     }
 

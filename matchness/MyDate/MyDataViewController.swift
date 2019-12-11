@@ -51,6 +51,10 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         getStepDate()
         // Do any additional setup after loading the view.
 
+        if let tabBarItem = self.tabBarController?.tabBar.items?[3] as? UITabBarItem {
+            tabBarItem.badgeValue = nil
+        }
+
         apiRequest()
     }
 

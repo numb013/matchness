@@ -104,7 +104,7 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "人数"
-                cell.detail?.text = ApiConfig.EVENT_PEPLE_LIST[Int(self.event_peple) ?? 0]
+                cell.detail?.text = ApiConfig.EVENT_PEPLE_LIST[Int(self.event_peple) ?? 0] + "人"
                 return cell
             }
             if indexPath.row == 2 {
@@ -112,15 +112,15 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "期間"
-                cell.detail?.text = ApiConfig.EVENT_PERIOD_LIST[Int(self.event_period) ?? 0]
+                cell.detail?.text = ApiConfig.EVENT_PERIOD_LIST[Int(self.event_period) ?? 0] + "日"
                 return cell
             }
             if indexPath.row == 3 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
                 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "獲得ポイント"
-                cell.detail?.text = ApiConfig.EVENT_PRESENT_POINT[Int(self.present_point) ?? 0]
+                cell.title?.text = "プレゼントポイント"
+                cell.detail?.text = ApiConfig.EVENT_PRESENT_POINT[Int(self.present_point) ?? 0] + "ポイント"
                 return cell
             }
             
@@ -280,6 +280,16 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
         // UIPickerViewに表示する配列
         func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
             print("p3p3p3p3p3")
+            print(self.selectPicker)
+            if (self.selectPicker == 1) {
+                return self.pcker_list[row] + "人"
+            }
+            if (self.selectPicker == 2) {
+                return self.pcker_list[row] + "日"
+            }
+            if (self.selectPicker == 3) {
+                return self.pcker_list[row] + "ポイント"
+            }
             return self.pcker_list[row]
         }
 
