@@ -17,6 +17,8 @@ protocol CahtRoomModelDelegate {
     func onStart(model: CahtRoomModel);
     func onComplete(model: CahtRoomModel, count: Int);
     func onFailed(model: CahtRoomModel);
+    func onFinally(model: CahtRoomModel);
+    func onError(model: CahtRoomModel);
 }
 
 /*
@@ -132,7 +134,6 @@ class CahtRoomModel: NSObject {
 }
 
 extension CahtRoomModel : ApiRequestDelegate {
-    
     public func onParse(_ json: JSON){
         var key1 = 0;
         print("44444444444444444")
@@ -178,5 +179,9 @@ extension CahtRoomModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

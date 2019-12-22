@@ -26,7 +26,7 @@ class PointChangeViewController: UIViewController{
     @IBOutlet weak var t_button: UIButton!
     @IBOutlet weak var y_button: UIButton!
     @IBOutlet weak var d_button: UIButton!
-    
+    var ActivityIndicator: UIActivityIndicatorView!
     var t_Point = 0
     var y_Point = 0
     var d_Point = 0
@@ -47,10 +47,9 @@ class PointChangeViewController: UIViewController{
     var day = 0
     var from = Date()
     var yestarday = Date()
-    //var step_data = [Int]()
-    var step_data:[Int] = [100, 200, 300]
+    var step_data = [Int]()
+//    var step_data:[Int] = [100, 200, 300]
 
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +58,17 @@ class PointChangeViewController: UIViewController{
             self.day = i
             getStepDate()
         }
+//        UserDefaults.standard.removeObject(forKey: "customer_status")
+        apiRequest()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        apiRequest()
+        print("ViewController/viewWillAppear/画面が表示される直前")
+    }
+    
+    func apiRequest() {
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
@@ -72,8 +81,8 @@ class PointChangeViewController: UIViewController{
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
 
-print("ユーザーIDユーザーIDユーザーIDユーザーID")
-print(matchness_user_id)
+        print("ユーザーIDユーザーIDユーザーIDユーザーID")
+        print(matchness_user_id)
 
         query["user_id"] = matchness_user_id
         //リクエスト実行
@@ -81,13 +90,15 @@ print(matchness_user_id)
             
         }
     }
-
+    
+    
     func pointView() {
         print("みんな")
         print(self.step_data)
         var tunagi = " / "
         var step_data1 = self.dataSource["0"]
         self.userPoint.text = step_data1?.point
+
         self.todayStep.text = step_data1!.todayPointChenge! + tunagi + String(self.step_data[0])
         self.yesterdayStep.text = step_data1!.yesterdayPointChenge! + tunagi + String(self.step_data[1])
         self.dayAfterTomorrowStep.text = step_data1!.dayAfterTomorrowPointChenge! + tunagi + String(self.step_data[2])
@@ -96,9 +107,9 @@ print(matchness_user_id)
         self.y_Point = self.step_data[1] - Int((step_data1?.yesterdayPointChenge!)!)!
         self.d_Point = self.step_data[2] - Int((step_data1?.dayAfterTomorrowPointChenge!)!)!
 
-        self.todayPoint.text = String(Int(floor(ceil(Double(self.t_Point) * 0.01))))
-        self.yesterdayPoint.text = String(Int(floor(ceil(Double(self.y_Point) * 0.01))))
-        self.dayAfterTomorrowPoint.text = String(Int(floor(ceil(Double(self.d_Point) * 0.01))))
+        self.todayPoint.text = String(Int(floor(Double(self.t_Point) * 0.01)))
+        self.yesterdayPoint.text = String(Int(floor(Double(self.y_Point) * 0.01)))
+        self.dayAfterTomorrowPoint.text = String(Int(floor(Double(self.d_Point) * 0.01)))
 
         t_button.isEnabled = self.t_Point == 0 ? false : true // ボタン無効
         y_button.isEnabled = self.y_Point == 0 ? false : true // ボタン無効
@@ -175,7 +186,6 @@ print(matchness_user_id)
         requestUpdatePoint()
     }
     
-    
     func requestUpdatePoint()
     {
         /****************
@@ -199,11 +209,16 @@ print(matchness_user_id)
         }
     }
     
-    
     @IBAction func backFromPlaninputView(segue:UIStoryboardSegue){
         NSLog("PlaninputViewController#backFromPlaninputView")
     }
-    
+
+    @IBAction func paymentButton(_ sender: Any) {
+        let storyboard: UIStoryboard = self.storyboard!
+        let multiple = storyboard.instantiateViewController(withIdentifier: "pointPayment")
+        multiple.modalPresentationStyle = .fullScreen
+        self.present(multiple, animated: false, completion: nil)
+    }
 }
 
 extension Array {
@@ -215,6 +230,10 @@ extension Array {
 
 
 extension PointChangeViewController : PointChangeModelDelegate {
+    func onFinally(model: PointChangeModel) {
+        print("こちら/UserDetail/UserDetailViewのonStart")
+    }
+    
     
     func onStart(model: PointChangeModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")
@@ -237,6 +256,20 @@ extension PointChangeViewController : PointChangeModelDelegate {
     }
     func onFailed(model: PointChangeModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")
+    }
+
+    func onError(model: PointChangeModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

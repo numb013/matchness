@@ -15,9 +15,8 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var datePickerView: UIDatePicker!
     @IBOutlet weak var pickerBottom: NSLayoutConstraint!
-
     @IBOutlet weak var datePickerButton: NSLayoutConstraint!
-
+    var ActivityIndicator: UIActivityIndicatorView!
     var setDateviewTime = ""
     var vi = UIView()
     var isDate = Date()
@@ -31,8 +30,6 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
     var present_point:String = "0"
     var event_type:String = "0"
     var start_type:String = "0"
-    
-    
     var dataSource: Dictionary<String, ApiGroupList> = [:]
     var dataSourceOrder: Array<String> = []
     var cellCount: Int = 0
@@ -188,7 +185,7 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
     
         @IBAction func pickerSelectButton(_ sender: Any) {
                print("bbbb")
-                print("セレクトピッカー")
+                print("セレクトピッカーAAAAAA")
                 print(self.selectPicker)
                 if self.selectPicker == 0 {
         
@@ -393,6 +390,10 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
 
 
 extension GroupEventAddViewController : GroupEventAddModelDelegate {
+    func onFinally(model: GroupEventAddModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     
     func onStart(model: GroupEventAddModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")
@@ -433,6 +434,20 @@ extension GroupEventAddViewController : GroupEventAddModelDelegate {
     }
     func onFailed(model: GroupEventAddModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")
+    }
+
+    func onError(model: GroupEventAddModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

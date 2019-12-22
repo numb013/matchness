@@ -17,6 +17,8 @@ protocol UserDetailModelDelegate {
     func onStart(model: UserDetailModel);
     func onComplete(model: UserDetailModel, count: Int);
     func onFailed(model: UserDetailModel);
+    func onFinally(model: UserDetailModel);
+    func onError(model: UserDetailModel);
 }
 
 /*
@@ -176,5 +178,10 @@ extension UserDetailModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+    
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

@@ -17,6 +17,8 @@ protocol ReportModelDelegate {
     func onStart(model: ReportModel);
     func onComplete(model: ReportModel, count: Int);
     func onFailed(model: ReportModel);
+    func onFinally(model: ReportModel);
+    func onError(model: ReportModel);
 }
 
 /*
@@ -126,28 +128,9 @@ class ReportModel: NSObject {
 }
 
 extension ReportModel : ApiRequestDelegate {
-
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
-//        print("22222222222222222222222222")
-//
-////        print(json)
-//
-//        let items: JSON = json;
-//        let recommend: JSON = items["list"];
-//        for (key, item):(String, JSON) in json {
-//            //データを変換
-//            let data: ApiReport? = ApiReport(json: item);
-//            //Optionalチェック
-//            guard let info: ApiReport = data else {
-//                continue;
-//            }
-//            print(info)
-//            //並び順を保持
-//            responseDataOrder.append(key);
-//            //サブカテゴリーIDをキーにして保存
-//            responseData[key] = info;
-//        }
+
     }
 
     public func onComplete(){
@@ -168,4 +151,9 @@ extension ReportModel : ApiRequestDelegate {
         //リクエスト完了
         self.isRequest = false;
     }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
+    }
+
 }

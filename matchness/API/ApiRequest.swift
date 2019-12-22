@@ -17,6 +17,7 @@ protocol ApiRequestDelegate {
     func onParse(_ result: JSON);
     func onComplete();
     func onFailed(_ error: ApiRequestDelegateError);
+    func onError(_ error: ApiRequestDelegateError);
 }
 /*
  プロトコル判定用
@@ -101,9 +102,8 @@ print(api_key)
                      self.onFaild(response as AnyObject);
                     break;
                 }
-
-print("URLURLURLURLURLURL")
-print(url)
+                print("URLURLURLURLURLURL")
+                print(url)
                 if (
                     url == ApiConfig.REQUEST_URL_API_ADD_LIKE ||
                     url == ApiConfig.REQUEST_URL_API_SEND_MESSAGE ||
@@ -112,13 +112,17 @@ print(url)
                     self.onFaild(response as AnyObject);
                     break;
                 }
-
                 print("取得した値はここにきて")
                 print(json)
-                //
-                  self.onParse(json);
-                //
-                  self.onComplete();
+                let items: JSON = json;
+                let error: JSON = items["error"];
+                if error != nil && !error.isEmpty {
+                    // 処理
+                    self.onError((response as AnyObject) as! ApiRequestDelegateError);
+                    return;
+                }
+                self.onParse(json);
+                self.onComplete();
             case .failure:
                 //  リクエスト失敗 or キャンセル時
                 print("リクエスト失敗 or キャンセル時")
@@ -181,6 +185,11 @@ print(url)
         }
     }
 
+    public func onError(_ error: ApiRequestDelegateError) {
+        //コールバック実行
+        self.delegate?.onError(error);
+    }
+    
     public static func isError(_ json: JSON) -> Bool {
         if let errorCode: Int = json[self.KEY_ERROR_CODE].int {
             if( errorCode > 0 ){

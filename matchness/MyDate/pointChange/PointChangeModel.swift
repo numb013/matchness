@@ -17,6 +17,8 @@ protocol PointChangeModelDelegate {
     func onStart(model: PointChangeModel);
     func onComplete(model: PointChangeModel, count: Int);
     func onFailed(model: PointChangeModel);
+    func onFinally(model: PointChangeModel);
+    func onError(model: PointChangeModel);
 }
 
 /*
@@ -126,7 +128,6 @@ class PointChangeModel: NSObject {
 }
 
 extension PointChangeModel : ApiRequestDelegate {
-
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         print("22222222222222222222222222")
@@ -178,5 +179,11 @@ extension PointChangeModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
     }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
+    }
+
 }

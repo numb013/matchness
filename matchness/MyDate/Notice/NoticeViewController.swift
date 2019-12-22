@@ -24,7 +24,8 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var dataSourceOrder: Array<String> = []
     var notice_id: Int = 0
     var selectRow = 0
-    
+    var ActivityIndicator: UIActivityIndicatorView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -161,6 +162,10 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 
 extension NoticeViewController : NoticeModelDelegate {
+    func onFinally(model: NoticeModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     
     func onStart(model: NoticeModel) {
         print("こちら/SettingEdit/UserDetailViewのonStart")
@@ -192,5 +197,18 @@ extension NoticeViewController : NoticeModelDelegate {
     func onFailed(model: NoticeModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
-    
+
+    func onError(model: NoticeModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

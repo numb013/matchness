@@ -17,8 +17,8 @@ class CahtFirstViewController: baseViewController, IndicatorInfoProvider, UITabl
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiMessage> = [:]
     var dataSourceOrder: Array<String> = []
-    
     @IBOutlet weak var ChatTableView: UITableView!
+    var ActivityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,6 +183,10 @@ class CahtFirstViewController: baseViewController, IndicatorInfoProvider, UITabl
 
 
 extension CahtFirstViewController : CahtFirstModelDelegate {
+    func onFinally(model: CahtFirstModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     
     func onStart(model: CahtFirstModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")
@@ -221,5 +225,20 @@ extension CahtFirstViewController : CahtFirstModelDelegate {
     func onFailed(model: CahtFirstModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")
     }
+
+    func onError(model: CahtFirstModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
+
 }
 

@@ -17,6 +17,8 @@ protocol PointHistoryModelDelegate {
     func onStart(model: PointHistoryModel);
     func onComplete(model: PointHistoryModel, count: Int);
     func onFailed(model: PointHistoryModel);
+    func onFinally(model: PointHistoryModel);
+    func onError(model: PointHistoryModel);
 }
 
 /*
@@ -178,5 +180,10 @@ extension PointHistoryModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+    
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

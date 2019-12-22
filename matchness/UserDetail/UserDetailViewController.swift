@@ -15,7 +15,8 @@ class MyTapGestureRecognizer: UITapGestureRecognizer {
     var targetString: String?
     var targetGroupId: Int?
     var targetUserId: Int?
-    var amont: String?
+    var amount: String?
+    var pay_point_id: String?
 }
 
 class UserDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,GalleryItemsDataSource {
@@ -23,7 +24,8 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     let userDefaults = UserDefaults.standard
     @IBOutlet weak var UserDtailTable: UITableView!
     @IBOutlet weak var chatButton: UIButton!
-    @IBOutlet weak var GroupRequest: UIButton!
+    @IBOutlet weak var LikeRequest: UIButton!
+
     private var requestAlamofire: Alamofire.Request?;
 
     var ActivityIndicator: UIActivityIndicatorView!
@@ -106,9 +108,6 @@ print("22222")
 //        self.navigationController!.navigationBar.shadowImage = nil
     }
     
-    
-    
-    
     @IBOutlet weak var gradationView: GradationView!
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -117,7 +116,7 @@ print("22222")
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 2 {
-            return 7
+            return 9
         }
         return 1
     }
@@ -144,7 +143,13 @@ print("22222")
         
         if indexPath.section == 0 {
             let cell = UserDtailTable.dequeueReusableCell(withIdentifier: "UserDetailTableViewCell") as! UserDetailTableViewCell
-
+       
+            if (detail?.is_like == 1) {
+                LikeRequest.isEnabled = false
+                LikeRequest.backgroundColor = #colorLiteral(red: 0.4803626537, green: 0.05874101073, blue: 0.1950398982, alpha: 1)
+                LikeRequest.titleLabel?.text = "いいね済み"
+            }
+            
 //            var number = Int.random(in: 1 ... 18)
 //            let image = UIImage(named: "\(number)")
 //            galleyItem = GalleryItem.image{ $0(image) }
@@ -376,15 +381,26 @@ print("22222")
                 print("取得した値はここにきて")
                 print(json)
 
-                self.dismiss(animated: true, completion: nil)
-                let alert = UIAlertController(title: "いいね", message: "いいねしました", preferredStyle: .alert)
-                // アラート表示
-                self.present(alert, animated: true, completion: {
-                    // アラートを閉じる
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
-                        alert.dismiss(animated: true, completion: nil)
+                if (json["status"] == "NG") {
+                    print(json["error"])
+                    print(json["message"])
+                    var error_message: String = json["message"].description
+                    let alert = UIAlertController(title: "エラー", message: error_message, preferredStyle: .alert)
+                    self.present(alert, animated: true, completion: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                            alert.dismiss(animated: true, completion: nil)
+                        })
                     })
-                })
+                } else {
+                    let alert = UIAlertController(title: "いいね", message: "いいねしました", preferredStyle: .alert)
+                    self.present(alert, animated: true, completion: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                            alert.dismiss(animated: true, completion: nil)
+                        })
+                    })
+                }
+                
+
 
             case .failure:
                 //  リクエスト失敗 or キャンセル時
@@ -496,7 +512,7 @@ print("22222")
                 // アラート表示
                 self.present(alert, animated: true, completion: {
                     // アラートを閉じる
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                         alert.dismiss(animated: true, completion: nil)
                     })
                 })
@@ -575,6 +591,10 @@ print("22222")
 }
 
 extension UserDetailViewController : UserDetailModelDelegate {
+    func onFinally(model: UserDetailModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     
     func onStart(model: UserDetailModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")
@@ -617,5 +637,18 @@ extension UserDetailViewController : UserDetailModelDelegate {
     func onFailed(model: UserDetailModel) {
         print("こちら/UserDetail/UserDetailViewのonFailed")
     }
-    
+
+    func onError(model: UserDetailModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

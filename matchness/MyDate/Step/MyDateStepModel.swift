@@ -17,6 +17,8 @@ protocol MyDateStepModelDelegate {
     func onStart(model: MyDateStepModel);
     func onComplete(model: MyDateStepModel, count: Int);
     func onFailed(model: MyDateStepModel);
+    func onFinally(model: MyDateStepModel);
+    func onError(model: MyDateStepModel);
 }
 
 /*
@@ -126,7 +128,6 @@ class MyDateStepModel: NSObject {
 }
 
 extension MyDateStepModel : ApiRequestDelegate {
-
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         print("22222222222222222222222222")
@@ -180,5 +181,10 @@ extension MyDateStepModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

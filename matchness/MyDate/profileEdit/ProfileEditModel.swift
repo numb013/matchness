@@ -17,6 +17,8 @@ protocol ProfileEditModelDelegate {
     func onStart(model: ProfileEditModel);
     func onComplete(model: ProfileEditModel, count: Int);
     func onFailed(model: ProfileEditModel);
+    func onFinally(model: ProfileEditModel);
+    func onError(model: ProfileEditModel);
 }
 
 /*
@@ -180,5 +182,10 @@ extension ProfileEditModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

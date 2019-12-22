@@ -15,12 +15,15 @@ class MultipleViewController: UIViewController, UITableViewDelegate , UITableVie
     var dataSourceOrder: Array<String> = []
     var cellCount: Int = 0
     var status:Int = 0
-    
+    var ActivityIndicator: UIActivityIndicatorView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
 
+        print("JIJIJIJIJIJIJIJ")
+        
         self.tableView.register(UINib(nibName: "MultipleTableViewCell", bundle: nil), forCellReuseIdentifier: "MultipleTableViewCell")
         apiRequest()
         // Do any additional setup after loading the view.
@@ -159,6 +162,10 @@ print(status)
 }
 
 extension MultipleViewController : MultipleModelDelegate {
+    func onFinally(model: MultipleModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     
     func onStart(model: MultipleModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")
@@ -190,6 +197,20 @@ extension MultipleViewController : MultipleModelDelegate {
 
     func onFailed(model: MultipleModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")
+    }
+
+    func onError(model: MultipleModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

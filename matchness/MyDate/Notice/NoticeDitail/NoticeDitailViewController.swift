@@ -12,7 +12,7 @@ class NoticeDetailViewController: UIViewController{
 
     let userDefaults = UserDefaults.standard
     var notice_id = Int()
-
+    var ActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var noticeDetail: UITextView!
     
@@ -70,7 +70,10 @@ print(notice_id)
 
 
 extension NoticeDetailViewController : NoticeDetailModelDelegate {
-
+    func onFinally(model: NoticeDetailModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     func onStart(model: NoticeDetailModel) {
         print("こちら/SettingEdit/UserDetailViewのonStart")
     }
@@ -111,5 +114,18 @@ extension NoticeDetailViewController : NoticeDetailModelDelegate {
     func onFailed(model: NoticeDetailModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
-
+    
+    func onError(model: NoticeDetailModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

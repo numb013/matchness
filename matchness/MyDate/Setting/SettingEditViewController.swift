@@ -253,7 +253,7 @@ print(requestUrl)
                 //  リクエスト失敗 or キャンセル時
                 let alert = UIAlertController(title: "設定", message: "失敗しました。", preferredStyle: .alert)
                 self.present(alert, animated: true, completion: {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                         alert.dismiss(animated: true, completion: nil)
                     })
                 })
@@ -278,6 +278,10 @@ print(requestUrl)
 }
 
 extension SettingEditViewController : SettingEditModelDelegate {
+    func onFinally(model: SettingEditModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     func onStart(model: SettingEditModel) {
         print("こちら/SettingEdit/UserDetailViewのonStart")
     }
@@ -294,5 +298,18 @@ extension SettingEditViewController : SettingEditModelDelegate {
     func onFailed(model: SettingEditModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
-    
+
+    func onError(model: SettingEditModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

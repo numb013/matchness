@@ -12,8 +12,9 @@ import FBSDKLoginKit
 import Alamofire
 import SwiftyJSON
 import Foundation
+import EAIntroView
 
-class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UIPickerViewDelegate, UIPickerViewDataSource {
+class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UIPickerViewDelegate, UIPickerViewDataSource,EAIntroDelegate{
 
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var profileAddTableView: UITableView!
@@ -21,7 +22,8 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var pickerBottom: NSLayoutConstraint!
     @IBOutlet weak var datePickerView: UIDatePicker!
     @IBOutlet weak var pickerView: UIPickerView!
-    
+
+    var ActivityIndicator: UIActivityIndicatorView!
     var setDateviewTime = ""
     var vi = UIView()
     var isDate = Date()
@@ -39,6 +41,7 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
     var userProfile : NSDictionary!
     var json_data:JSON = []
     var user_id = ""
+    var profileImage:UIImage = UIImage()
 
 
     //IDをキーにしてデータを保持
@@ -46,6 +49,39 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        var login_step_1 = userDefaults.object(forKey: "login_step_1") as? String
+        if (login_step_1 == nil) {
+            // チュートリアル表示
+            let page1 = EAIntroPage()
+            page1.title = "はじめまして！"
+            page1.desc = "インストールありがとうございます！"
+            page1.bgImage = UIImage(named: "1")
+            
+            let page2 = EAIntroPage()
+            page2.title = "おすろてっく"
+            page2.desc = "月1~2のペースで勉強会を開いています。"
+            page2.bgImage = UIImage(named: "2")
+
+            let page3 = EAIntroPage()
+            page3.title = "ブログもよろしく！"
+            page3.desc = "真面目な記事が多いけどそろそろネタ記事書いてくれる人いないかな･･･"
+            page3.bgImage = UIImage(named: "3")
+            page3.titleFont = UIFont(name: "Helvetica-Bold", size: 32)
+            page3.titleColor = UIColor.orange
+            page3.descPositionY = self.view.bounds.size.height/2
+
+            let introView = EAIntroView(frame: self.view.bounds, andPages: [page1, page2, page3])
+            introView?.skipButton.setTitle("スキップ", for: UIControl.State.normal) //スキップボタン欲しいならここで実装！
+            // タップされたときのaction
+            introView?.skipButton.addTarget(self,
+                    action: #selector(TutorialViewController.buttonTapped(sender:)),
+                    for: .touchUpInside)
+            introView?.delegate = self
+            introView?.show(in: self.view, animateDuration: 1.0)
+            self.userDefaults.set("1", forKey: "login_step_1")
+        }
+
         print("通ってる？？？")
 
         profileAddTableView.delegate = self
@@ -65,28 +101,20 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         datePickerView.addTarget(self, action: #selector(setText), for: .valueChanged)
         datePickerView.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
-        returnUserData()
+
+        if (login_step_1 != nil) {
+            returnUserDataSecond()
+        } else {
+            returnUserData()
+        }
+
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        print("YYYYYYYYYYYYYYYY")
-//        pickerView.reloadAllComponents()
-//    }
-    
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        print("YYYYYYYYYYYYYYYY")
-//        super.viewDidAppear(animated)
-//        pickerView.delegate   = self
-//        pickerView.dataSource = self
-//    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        print("ここにこに")
-        super.viewWillAppear(animated)
+    @objc func buttonTapped(sender : AnyObject) {
+        self.userDefaults.set("1", forKey: "login_step_1")
+        loadView()
+        viewDidLoad()
     }
-
     
     func delegate() {
         pickerView.delegate   = self as! UIPickerViewDelegate
@@ -98,7 +126,7 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         let graphRequest : GraphRequest = GraphRequest(
             graphPath: "me",
             parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"])
-        graphRequest.start(completionHandler: {
+            graphRequest.start(completionHandler: {
             (connection, result, error) -> Void in
             if ((error) != nil)
             {
@@ -176,7 +204,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
                         }
                         self.userDefaults.set(self.responseData["0"]?.api_token, forKey: "api_token")
                         self.userDefaults.set(self.responseData["0"]?.id, forKey: "matchness_user_id")
-                        self.userDefaults.set("1", forKey: "login_status")
                         self.userDefaults.synchronize()
                         print("困難でました！！！！")
                         print(self.responseData)
@@ -193,32 +220,105 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
         })
-        
+    }
+
+
+
+    func returnUserDataSecond() {
+        print("ハッスルクエスト")
+        /****************
+         APIへリクエスト（ユーザー取得）
+         *****************/
+        //リクエスト先
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_ME;
+        //パラメーター
+        var query: Dictionary<String,String> = Dictionary<String,String>();
+        var headers: [String : String] = [:]
+        var api_key = userDefaults.object(forKey: "api_token") as? String
+
+        if ((api_key) != nil) {
+            headers = [
+                "Accept" : "application/json",
+                "Authorization" : "Bearer " + api_key!,
+                "Content-Type" : "application/x-www-form-urlencoded"
+            ]
+        }
+
+        self.requestAlamofire = Alamofire.request(requestUrl, method: .post, parameters: query, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
+            switch response.result {
+            case .success:
+                var json:JSON;
+                do{
+                    //レスポンスデータを解析
+                    json = try SwiftyJSON.JSON(data: response.data!);
+                } catch {
+                    // error
+                    print("json error: \(error.localizedDescription)");
+//                     self.onFaild(response as AnyObject);
+                    break;
+                }                
+                print(json)
+                print("22222222222222222222222222")
+                let items: JSON = json["data"];
+                let recommend: JSON = items["list"];
+                for (key, item):(String, JSON) in json {
+                    //データを変換
+                    let data: ApiProfileData? = ApiProfileData(json: item);
+                    
+                    print(data)
+                    
+                    //Optionalチェック
+                    guard let info: ApiProfileData = data else {
+                        continue;
+                    }
+                    guard let name = info.name else {
+                        continue;
+                    }
+                    print(info)
+                    //サブカテゴリーIDをキーにして保存
+                    self.responseData[key] = info;
+                }
+                self.viewPlofile()
+
+            case .failure:
+                //  リクエスト失敗 or キャンセル時
+                print("リクエスト失敗 or キャンセル時")
+                return;
+            }
+        }
     }
     
-    
-    
     func viewPlofile() {
-        var pic = self.userProfile.object(forKey: "picture") as AnyObject
-        var pic1:Any = pic["data"]
-        print((pic1 as AnyObject).object(forKey: "url") as! String)
-        let profileImageURL : String = (pic1 as AnyObject).object(forKey: "url") as! String
-        //// プロフィール画像の取得（よくあるように角を丸くする）
-        //let profileImageURL : String = ((self.userProfile.object(forKey: "picture") as AnyObject).object("data") as AnyObject).objectForKey("url") as! String
-        
-        var profileImage = UIImage(data: NSData(contentsOf: NSURL(string: profileImageURL)! as URL)! as Data)
+
+        var profileImageURL = userDefaults.object(forKey: "profileImageURL") as? String
+        if (profileImageURL == nil) {
+            var pic = self.userProfile.object(forKey: "picture") as AnyObject
+            var pic1:Any = pic["data"]
+            print((pic1 as AnyObject).object(forKey: "url") as! String)
+            let profileImageURL : String = (pic1 as AnyObject).object(forKey: "url") as! String
+
+            self.userDefaults.set(profileImageURL, forKey: "profileImageURL")
+            //// プロフィール画像の取得（よくあるように角を丸くする）
+            //let profileImageURL : String = ((self.userProfile.object(forKey: "picture") as AnyObject).object("data") as AnyObject).objectForKey("url") as! String
+
+            self.profileImage = UIImage(data: NSData(contentsOf: NSURL(string: profileImageURL)! as URL)! as Data)!
+        } else {
+            let profileImageURL : String = (userDefaults.object(forKey: "profileImageURL") as? String)!
+            self.profileImage = UIImage(data: NSData(contentsOf: NSURL(string: profileImageURL)! as URL)! as Data)!
+        }
         
         print("画像画像画像画像")
-        print(profileImage)
+
         
         self.userImage.clipsToBounds = true
-        self.userImage.layer.cornerRadius = 60
-        self.userImage.image = self.trimPicture(rawPic: profileImage!)
+        self.userImage.layer.cornerRadius = self.userImage.frame.height / 2
+        self.userImage.image = self.trimPicture(rawPic: self.profileImage)
 
         let dateFormater = DateFormatter()
         dateFormater.locale = Locale(identifier: "ja_JP")
         dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-        responseData["0"]?.name = self.userProfile.object(forKey: "name") as? String
+//        responseData["0"]?.name = self.userProfile.object(forKey: "name") as? String
+        responseData["0"]?.name = ""
         responseData["0"]?.birthday = dateFormater.string(from: isDate)
         responseData["0"]?.work = 0
         responseData["0"]?.prefecture_id = 0
@@ -226,7 +326,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         responseData["0"]?.weight = 0
         responseData["0"]?.sex = 0
         responseData["0"]?.blood_type = 0
-        
         print("タイム2222222")
         print(responseData["0"]?.birthday)
 
@@ -248,7 +347,7 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         var posY = (rawImageH - 200) / 2
         //        let trimArea : CGRect = CGRectMake(posX, posY, 200, 200)
         //        let trimArea = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-        let trimArea = CGRect(x : 0, y : 0, width : 150, height : 150)
+        let trimArea = CGRect(x : 0, y : 0, width : 270, height : 270)
         
         var rawImageRef:CGImage = rawPic.cgImage!
         let trimmedImageRef = rawImageRef.cropping(to: trimArea)
@@ -293,11 +392,9 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         print(indexPath)
         print(indexPath.section)
         
-
         let dateFormater = DateFormatter()
         dateFormater.locale = Locale(identifier: "ja_JP")
         dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-
         print("こいいいいいい")
         print(self.responseData["0"])
         var myData = self.responseData["0"]
@@ -327,7 +424,8 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             if indexPath.row == 1 {
                 let cell = profileAddTableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
+print("職業職業職業職業職業職業職業職業職業")
+print(myData?.work)
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "職業"
                 cell.detail?.text = ApiConfig.WORK_LIST[myData?.work ?? 0]
@@ -351,15 +449,10 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
                 dateFormater.locale = Locale(identifier: "ja_JP")
                 dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
 
-
                 self.responseData["0"]?.birthday = dateFormater.string(from: self.isDate)
-
-
                 let date = dateFormater.date(from: self.responseData["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
-
                 print("タイム444444444")
                 print(date)
-
                 print("誕生日誕生日誕生日")
                 dateFormater.dateFormat = "yyyy年MM月dd日"
                 let date_text = dateFormater.string(from: date ?? Date())
@@ -369,7 +462,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if indexPath.row == 4 {
                 let cell = profileAddTableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "痩せたい部位"
                 cell.detail?.text = ApiConfig.FITNESS_LIST[myData?.fitness_parts_id ?? 0]
@@ -382,7 +474,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.title?.text = "体重(非公開)"
                 cell.detail?.text = ApiConfig.WEIGHT_LIST[myData?.weight ?? 0]
                 return cell
-                
             }
             
             if indexPath.row == 6 {
@@ -444,10 +535,8 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         print(indexPath.section)
         print(indexPath.row)
         if indexPath.row == 3 {
-
             print("タイム33333333333")
             print(self.responseData["0"])
-
             let dateFormater = DateFormatter()
             dateFormater.locale = Locale(identifier: "ja_JP")
             dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
@@ -455,8 +544,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
             datePickerView.date = date!
             print("デートピッカーーーーーーーー")
             datePickerPush()
-
-
         } else {
             self.pickerView.reloadAllComponents()
             PickerPush()
@@ -472,7 +559,13 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
 
         }
         if self.selectPicker == 1 {
+            print("YYYUYUYUYUYUYUYUYUYUYUYUYUYUYUY")
+            print(self.selectPickerItem)
+
             self.responseData["0"]?.work = self.selectPickerItem
+            print("IOIOIOIOIOIOIOIOIOIO")
+            print(self.responseData["0"]?.work)
+
         }
         if self.selectPicker == 2 {
             self.responseData["0"]?.prefecture_id = self.selectPickerItem
@@ -665,7 +758,9 @@ print("333333333333333")
         query["blood_type"] = String(self.responseData["0"]?.blood_type ?? 0)
         query["weight"] = String(self.responseData["0"]?.weight ?? 0)
         query["prefecture_id"] = String(self.responseData["0"]?.prefecture_id ?? 0)
-        
+
+       
+
         //リクエスト実行
         if( !requestProfileAddModel.requestApi(url: requestUrl, addQuery: query) ){
             
@@ -694,10 +789,23 @@ extension ProfileAddViewController : ProfileAddModelDelegate {
     }
     func onComplete(model: ProfileAddModel, count: Int) {
         var count: Int = 0;
+        self.userDefaults.set("1", forKey: "login_step_2")
         performSegue(withIdentifier: "toRegistComp", sender: nil)
     }
     func onFailed(model: ProfileAddModel) {
         print("こちら/ProfileAddModel/ProfileAddModeliewのonFailed")
     }
-
+    func onError(model: ProfileAddModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

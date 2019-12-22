@@ -30,10 +30,9 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiUserDetailDate> = [:]
     var dataSourceOrder: Array<String> = []
-
     var editType: Int = 0
     var selectRow = 0
-
+    var ActivityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -666,17 +665,13 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         UIGraphicsEndImageContext()
         return resizedImage!
     }
-    
-    
-    
-    
-    
-    
-    
 }
 
-
 extension ProfileEditViewController : ProfileEditModelDelegate {
+    func onFinally(model: ProfileEditModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     
     func onStart(model: ProfileEditModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")
@@ -701,10 +696,6 @@ extension ProfileEditViewController : ProfileEditModelDelegate {
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
         //        self.cellCount = 10;
-        
-
-        
-        //
         var count: Int = 0;
         //        for(key, code) in dataSourceOrder.enumerated() {
         //            count+=1;
@@ -739,14 +730,23 @@ extension ProfileEditViewController : ProfileEditModelDelegate {
         // UIAlertControllerの起動
         present(alertController, animated: true, completion: nil)
         }
-
-
         UserProfileTable.reloadData()
-
-
     }
     func onFailed(model: ProfileEditModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
-    
+
+    func onError(model: ProfileEditModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

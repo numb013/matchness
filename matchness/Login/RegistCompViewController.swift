@@ -21,7 +21,7 @@ class RegistCompViewController: UIViewController {
         //画面遷移
         let storyboard: UIStoryboard = self.storyboard!
         //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-        let multiple = storyboard.instantiateViewController(withIdentifier: "Tutorial")
+        let multiple = storyboard.instantiateViewController(withIdentifier: "mypage")
         multiple.modalPresentationStyle = .fullScreen
         //ここが実際に移動するコードとなります
         self.present(multiple, animated: true, completion: nil)

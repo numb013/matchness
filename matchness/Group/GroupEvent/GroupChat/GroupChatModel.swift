@@ -17,6 +17,8 @@ protocol GroupChatModelDelegate {
     func onStart(model: GroupChatModel);
     func onComplete(model: GroupChatModel, count: Int);
     func onFailed(model: GroupChatModel);
+    func onFinally(model: GroupChatModel);
+    func onError(model: GroupChatModel);
 }
 
 /*
@@ -125,32 +127,17 @@ class GroupChatModel: NSObject {
 }
 
 extension GroupChatModel : ApiRequestDelegate {
-    
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
-        print("22222222222222222222222222")
-        
-        //        print(json)
-        
         let items: JSON = json;
         let recommend: JSON = items["list"];
         for (key, item):(String, JSON) in json {
             //データを変換
             let data: ApiGroupChatList? = ApiGroupChatList(json: item);
-            
-            
             //Optionalチェック
             guard let info: ApiGroupChatList = data else {
                 continue;
             }
-            print(info)
-            print("111111")
-            //
-            //            guard let code = info.id else {
-            //                continue;
-            //            }
-            print("222222")
-            //
             guard let name = info.name else {
                 continue;
             }
@@ -180,4 +167,9 @@ extension GroupChatModel : ApiRequestDelegate {
         //リクエスト完了
         self.isRequest = false;
     }
+
+   func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
+    }
+
 }

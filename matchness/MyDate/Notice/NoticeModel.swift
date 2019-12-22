@@ -17,6 +17,8 @@ protocol NoticeModelDelegate {
     func onStart(model: NoticeModel);
     func onComplete(model: NoticeModel, count: Int);
     func onFailed(model: NoticeModel);
+    func onFinally(model: NoticeModel);
+    func onError(model: NoticeModel);
 }
 
 /*
@@ -130,7 +132,6 @@ class NoticeModel: NSObject {
 }
 
 extension NoticeModel : ApiRequestDelegate {
-    
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
 
@@ -182,5 +183,10 @@ extension NoticeModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

@@ -21,9 +21,9 @@ public struct ApiConfig {
      let SITE_BASIC_AUTHENTICATION_ACCOUNT_PASSWORD: String = "52011k";
      */
     #if DEBUG
-    static var SITE_DOMAIN: String = "23921c1b.ngrok.io";
+    static var SITE_DOMAIN: String = "43255d8b.ngrok.io";
     #else
-    static var SITE_DOMAIN: String = "23921c1b.ngrok.io";
+    static var SITE_DOMAIN: String = "43255d8b.ngrok.io";
     #endif
 
     //
@@ -42,6 +42,10 @@ public struct ApiConfig {
     static let REQUEST_URL_API_ME: String = REQUEST_URL_API + "/user/me";
 
     static let REQUEST_URL_API_USER_INFO: String = REQUEST_URL_API + "/user/user_info";
+
+    static let REQUEST_URL_API_POINT_UPDATE: String = REQUEST_URL_API + "/user/point_update";
+
+    
     
     //足跡
     static let REQUEST_URL_API_USER_FOOTPRINT: String = REQUEST_URL_API + "/footprint/user_footprint";
@@ -104,10 +108,14 @@ public struct ApiConfig {
     
     static let EVENT_PEPLE_LIST: [String] = ["4","5","6","7"," 8"]
     static let EVENT_START_TYPE: [String] = ["未選択", "集まり次第","主催者決定"]
-    static let EVENT_TYPE_LIST: [String] = ["半々","男性のみ","女性のみ"]
+    static let EVENT_TYPE_LIST: [String] = ["こだわらない","男性のみ","女性のみ"]
     static let EVENT_PRESENT_POINT: [String] = ["100","200","300","400","500","600","700","800","900","1000"]
     static let EVENT_PERIOD_LIST: [String] = ["2","3","4","5","6","7", "14"]
     static let REPORT_LIST: [String] = ["誹謗中傷や暴言","営業・求人行為","商用利用目的","ビジネスへの勧誘","他サイトの「サクラ」","登録写真が芸能人画像","ストーカー行為","その他"]
+    static let SEARCH_AGE_LIST: [String] = ["未選択","18〜24","25〜29","30〜34","35〜39","40〜44","45〜49"]
+
+
+
     //
     init(){
         

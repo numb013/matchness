@@ -17,6 +17,8 @@ protocol PreferredGroupListModelDelegate {
     func onStart(model: PreferredGroupListModel);
     func onComplete(model: PreferredGroupListModel, count: Int);
     func onFailed(model: PreferredGroupListModel);
+    func onFinally(model: PreferredGroupListModel);
+    func onError(model: PreferredGroupListModel);
 }
 
 /*
@@ -167,5 +169,10 @@ extension PreferredGroupListModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+
+    public func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

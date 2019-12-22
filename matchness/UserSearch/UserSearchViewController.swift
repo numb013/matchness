@@ -71,10 +71,6 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
         userDetail.delegate = self
         userDetail.dataSource = self
 
-        
-
-
-        
         self.userDetail.register(UINib(nibName: "UserSearchCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "userDetailCell")
         // Do any additional setup after loading the view.
         apiRequest()
@@ -126,7 +122,6 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
             self.dataSourceOrder = []
             var dataSource: Dictionary<String, ApiUserDate> = [:]
             print("更新")
-
             // ActivityIndicatorを作成＆中央に配置
             ActivityIndicator = UIActivityIndicatorView()
             ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -138,8 +133,6 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
             //Viewに追加
             self.view.addSubview(ActivityIndicator)
             ActivityIndicator.startAnimating()
-
-
             apiRequest()
         }
         
@@ -218,7 +211,15 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
         cell.tag = search?.id! ?? 0
 
         var number = Int.random(in: 1 ... 18)
-        cell.imageView.image = UIImage(named: "\(number)")  
+        cell.imageView.image = UIImage(named: "\(number)")
+
+//        //urlでの画像の表示
+//        let url = NSURL(string:"http://k.yimg.jp/images/top/sp2/cmn/logo-ns-131205.png")
+//        let req = NSURLRequest(url:url! as URL)
+//        NSURLConnection.sendAsynchronousRequest(req as URLRequest, queue:OperationQueue.main){(res, data, err) in
+//            let image = UIImage(data:data!)
+//             cell.imageView.image = image
+//        }
 
         cell.new_flag.isHidden = true
         print(search)
@@ -308,12 +309,12 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
         // Pass the selected object to the new view controller.
     }
     */
-
 }
 
-
 extension UserSearchViewController : UserSearchModelDelegate {
-    
+    func onFinally(model: UserSearchModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
     func onStart(model: UserSearchModel) {
         print("こちら/usersearch/UserSearchViewのonStart")
     }
@@ -335,25 +336,27 @@ extension UserSearchViewController : UserSearchModelDelegate {
         print(self.dataSource)
         print(self.dataSourceOrder)
 
-        
-
         var count: Int = 0;
-//        for(key, code) in dataSourceOrder.enumerated() {
-//            count+=1;
-//            if let jenre: ApiUserDateParam = dataSource[code] {
-//                //取得したデータを元にコレクションを再構築＆更新
-//                mapMenuView.addTagGroup(model: model, jenre: jenre);
-//            }
-//        }
         self.isLoading = false
-
         ActivityIndicator.stopAnimating()
-
         userDetail.reloadData()
     }
     func onFailed(model: UserSearchModel) {
         print("こちら/usersearch/UserSearchViewのonFailed")
     }
-    
+
+    func onError(model: UserSearchModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
 

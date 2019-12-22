@@ -17,6 +17,7 @@ protocol ProfileAddModelDelegate {
     func onStart(model: ProfileAddModel);
     func onComplete(model: ProfileAddModel, count: Int);
     func onFailed(model: ProfileAddModel);
+    func onError(model: ProfileAddModel);
 }
 /*
  プロトコル判定用
@@ -120,6 +121,10 @@ extension ProfileAddModel : ApiRequestDelegate {
     public func onFinally(){
         //リクエスト完了
         self.isRequest = false;
+    }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }
 

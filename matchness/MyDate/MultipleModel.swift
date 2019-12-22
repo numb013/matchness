@@ -17,6 +17,8 @@ protocol MultipleModelDelegate {
     func onStart(model: MultipleModel);
     func onComplete(model: MultipleModel, count: Int);
     func onFailed(model: MultipleModel);
+    func onFinally(model: MultipleModel);
+    func onError(model: MultipleModel);
 }
 
 /*
@@ -131,7 +133,6 @@ class MultipleModel: NSObject {
 }
 
 extension MultipleModel : ApiRequestDelegate {
-
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         var key1 = 0;
@@ -186,5 +187,11 @@ extension MultipleModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
     }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
+    }
+
 }

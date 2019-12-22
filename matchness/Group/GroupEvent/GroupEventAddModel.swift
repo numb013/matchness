@@ -17,6 +17,8 @@ protocol GroupEventAddModelDelegate {
     func onStart(model: GroupEventAddModel);
     func onComplete(model: GroupEventAddModel, count: Int);
     func onFailed(model: GroupEventAddModel);
+    func onFinally(model: GroupEventAddModel);
+    func onError(model: GroupEventAddModel);
 }
 
 /*
@@ -126,7 +128,7 @@ class GroupEventAddModel: NSObject {
 }
 
 extension GroupEventAddModel : ApiRequestDelegate {
-    
+
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         print("22222222222222222222222222")
@@ -176,5 +178,12 @@ extension GroupEventAddModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
     }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
+    }
+    
+
 }

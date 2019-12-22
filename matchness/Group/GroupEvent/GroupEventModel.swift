@@ -17,6 +17,8 @@ protocol GroupEventModelDelegate {
     func onStart(model: GroupEventModel);
     func onComplete(model: GroupEventModel, count: Int);
     func onFailed(model: GroupEventModel);
+    func onFinally(model: GroupEventModel);
+    func onError(model: GroupEventModel);
 }
 
 /*
@@ -167,5 +169,10 @@ extension GroupEventModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

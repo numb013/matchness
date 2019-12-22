@@ -231,8 +231,6 @@ class MenuViewController: UIViewController {
             return cell
         }
 
-        
-        
         //スイッチのテーブルが変更されたときに呼ばれる
         @objc func fundlSwitch(_ sender: UISwitch) {
             print("スイッチスイッチスイッチスイッチスイッチ")
@@ -278,6 +276,10 @@ extension MenuViewController: UITableViewDelegate {
 
 
 extension MenuViewController : SettingEditModelDelegate {
+    func onFinally(model: SettingEditModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     func onStart(model: SettingEditModel) {
         print("こちら/SettingEdit/UserDetailViewのonStart")
     }
@@ -297,4 +299,18 @@ print(self.dataSource)
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
     
+    func onError(model: SettingEditModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
+
 }

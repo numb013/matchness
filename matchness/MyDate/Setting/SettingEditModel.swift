@@ -17,6 +17,8 @@ protocol SettingEditModelDelegate {
     func onStart(model: SettingEditModel);
     func onComplete(model: SettingEditModel, count: Int);
     func onFailed(model: SettingEditModel);
+    func onFinally(model: SettingEditModel);
+    func onError(model: SettingEditModel);
 }
 
 /*
@@ -180,5 +182,10 @@ extension SettingEditModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

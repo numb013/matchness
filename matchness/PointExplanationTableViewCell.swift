@@ -1,18 +1,16 @@
 //
-//  pointPaymentTableViewCell.swift
+//  PointExplanationTableViewCell.swift
 //  matchness
 //
-//  Created by 中村篤史 on 2019/12/04.
+//  Created by 中村篤史 on 2019/12/15.
 //  Copyright © 2019 a2c. All rights reserved.
 //
 
 import UIKit
 
-class pointPaymentTableViewCell: UITableViewCell {
+class PointExplanationTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var point: UILabel!
-    @IBOutlet weak var amount: UILabel!
-    @IBOutlet weak var pointPaymentImage: UIImageView!
+    @IBOutlet weak var pointExplanationImage: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

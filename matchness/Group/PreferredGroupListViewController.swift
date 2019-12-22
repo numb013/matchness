@@ -15,7 +15,8 @@ class PreferredGroupListViewController: UIViewController, UITableViewDelegate , 
     var dataSource: Dictionary<String, ApiGroupRequestList> = [:]
     var dataSourceOrder: Array<String> = []
     var group_id: Int = Int()
-    
+    var ActivityIndicator: UIActivityIndicatorView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -57,15 +58,12 @@ class PreferredGroupListViewController: UIViewController, UITableViewDelegate , 
         return self.cellCount
     }
     
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupTableViewCell") as! GroupTableViewCell
         var requestGroup = self.dataSource[String(indexPath.row)]
         cell.titel.text = requestGroup?.name
         cell.period.text = requestGroup!.age! + "歳"
         cell.joinNumber.text = "CCCCC"
-
-
 
         if (requestGroup?.status == 1) {
             cell.joinButton.setTitle("希望", for: .normal)
@@ -163,6 +161,17 @@ class PreferredGroupListViewController: UIViewController, UITableViewDelegate , 
         }
     }
 
+    @IBAction func BBB(_ sender: Any) {
+        print("GGGGGGGGQQQQ")
+    }
+    
+    @IBAction func GroupEventDelete(_ sender: Any) {
+        print("GGGGGGGG")
+        print(self.group_id)
+    }
+    
+    
+    
     func requestJoin(status: String, user_id: Int) {
         /****************
          APIへリクエスト（ユーザー取得）
@@ -199,6 +208,10 @@ class PreferredGroupListViewController: UIViewController, UITableViewDelegate , 
 
 
 extension PreferredGroupListViewController : PreferredGroupListModelDelegate {
+    func onFinally(model: PreferredGroupListModel) {
+        print("こちら/usersearch/UserSearchViewのonStart")
+    }
+    
     func onStart(model: PreferredGroupListModel) {
         print("こちら/usersearch/UserSearchViewのonStart")
     }
@@ -214,5 +227,18 @@ extension PreferredGroupListViewController : PreferredGroupListModelDelegate {
     func onFailed(model: PreferredGroupListModel) {
         print("こちら/usersearch/UserSearchViewのonFailed")
     }
-    
+
+    func onError(model: PreferredGroupListModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

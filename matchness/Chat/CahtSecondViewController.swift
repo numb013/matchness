@@ -12,12 +12,12 @@ import XLPagerTabStrip
 class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITableViewDelegate , UITableViewDataSource {
     //ここがボタンのタイトルに利用されます
     var itemInfo: IndicatorInfo = "マッチング"
-    
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiMatcheList> = [:]
     var dataSourceOrder: Array<String> = []
-    
     @IBOutlet weak var ChatTableView: UITableView!
+    var ActivityIndicator: UIActivityIndicatorView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         ChatTableView.delegate = self
@@ -139,6 +139,9 @@ class CahtSecondViewController: UIViewController, IndicatorInfoProvider, UITable
 
 
 extension CahtSecondViewController : CahtRoomModelDelegate {
+    func onFinally(model: CahtRoomModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
     
     func onStart(model: CahtRoomModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")
@@ -176,6 +179,20 @@ extension CahtSecondViewController : CahtRoomModelDelegate {
     }
     func onFailed(model: CahtRoomModel) {
         print("こちら/CahtRoomModel/UserDetailViewのonFailed")
+    }
+
+    func onError(model: CahtRoomModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

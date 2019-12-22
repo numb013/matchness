@@ -19,7 +19,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet var stepCountLabel: UIButton!
     @IBOutlet weak var progressViewBar: MBCircularProgressBarView!
     @IBOutlet weak var myPoint: UILabel!
-    
+    var ActivityIndicator: UIActivityIndicatorView!
 
     var dataSource: Dictionary<String, ApiMyData> = [:]
     var dataSourceOrder: Array<String> = []
@@ -46,8 +46,8 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         var number = Int.random(in: 1 ... 2)
         UserImage.image = UIImage(named: "\(number)")
-        UserName.text = "松本人志 48歳"
-        UserJob.text = "エンジニア"
+        UserName.text = ""
+        UserJob.text = ""
         getStepDate()
         // Do any additional setup after loading the view.
 
@@ -239,7 +239,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 6) {
             let storyboard: UIStoryboard = self.storyboard!
             //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-            let multiple = storyboard.instantiateViewController(withIdentifier: "multiple") as? MultipleViewController
+            let multiple = storyboard.instantiateViewController(withIdentifier: "toMultiple") as? MultipleViewController
             multiple!.modalPresentationStyle = .fullScreen
             //ここが実際に移動するコードとなります
             multiple!.status = indexPath.row
@@ -437,6 +437,10 @@ public extension String {
 
 
 extension MyDataViewController : MyDataModelDelegate {
+    func onFinally(model: MyDataModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     
     func onStart(model: MyDataModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")
@@ -480,6 +484,21 @@ extension MyDataViewController : MyDataModelDelegate {
     func onFailed(model: MyDataModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")
     }
+
+    func onError(model: MyDataModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
 }
 
 

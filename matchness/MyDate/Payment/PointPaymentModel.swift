@@ -17,6 +17,8 @@ protocol PointPaymentModelDelegate {
     func onStart(model: PointPaymentModel);
     func onComplete(model: PointPaymentModel, count: Int);
     func onFailed(model: PointPaymentModel);
+    func onFinally(model: PointPaymentModel);
+    func onError(model: PointPaymentModel);
 }
 
 /*
@@ -47,10 +49,10 @@ class PointPaymentModel: NSObject {
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
     //IDをキーにしてデータを保持
-    public var responseData: Dictionary<String, ApiPaymentPointList> = [String: ApiPaymentPointList]();
+    public var responseData: Dictionary<String, ApiUserPaymentInfo> = [String: ApiUserPaymentInfo]();
     
     var array1: [String] = []
-    var array2: Dictionary<String, ApiPaymentPointList> = [:]
+    var array2: Dictionary<String, ApiUserPaymentInfo> = [:]
 
     var request_mode: String!;
     
@@ -116,13 +118,13 @@ class PointPaymentModel: NSObject {
     
     /*
      */
-    func getData(row: Int) -> ApiPaymentPointList? {
+    func getData(row: Int) -> ApiUserPaymentInfo? {
         let count: Int = row + 1;
         if( count > responseDataOrder.count || responseDataOrder.isEmpty ){
             return nil;
         }
         let key: String = responseDataOrder[row];
-        if let info: ApiPaymentPointList = responseData[key] {
+        if let info: ApiUserPaymentInfo = responseData[key] {
             return info;
         }
         return nil;
@@ -130,36 +132,33 @@ class PointPaymentModel: NSObject {
 }
 
 extension PointPaymentModel : ApiRequestDelegate {
-    
+
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
+        print("64546453453634536764")
 
-        var key1 = 0;
-        print("44444444444444444")
-        print(page)
-        print(responseDataOrder)
-        responseDataOrder = array1
-        responseData = array2
-        
-        json.forEach { (key, json) in
+        let items: JSON = json;
+        for (key, item):(String, JSON) in json {
             //データを変換
-            let data: ApiPaymentPointList? = ApiPaymentPointList(json: json);
-            if (page != 1) {
-                key1 = Int(key)! + Int(page) * Int(8) - Int(8)
-            } else {
-                key1 = Int(key)!
+            let data: ApiUserPaymentInfo? = ApiUserPaymentInfo(json: item);
+
+            print("UUUUUUUUUUUUU")
+            print(data?.payment_point_list)
+
+            //Optionalチェック
+            guard let info: ApiUserPaymentInfo = data else {
+                continue;
             }
+            print("BBBBBBBBBBBBBBBIIII")
+            print(key)
+            print(info.payment_point_list)
             //並び順を保持
-            responseDataOrder.append(String(key1));
-            print("33333333333333333")
-            print(key1)
-            print(data)
-            responseData[String(key1)] = data;
+            responseDataOrder.append(key);
+            //サブカテゴリーIDをキーにして保存
+            responseData[key] = info;
         }
-        
-        page += 1;
-        print(responseData)
     }
+
     
     public func onComplete(){
         self.delegate?.onComplete(model: self, count: responseData.count);
@@ -178,5 +177,11 @@ extension PointPaymentModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
     }
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
+    }
+
+
 }

@@ -17,6 +17,8 @@ protocol UserSearchModelDelegate {
     func onStart(model: UserSearchModel);
     func onComplete(model: UserSearchModel, count: Int);
     func onFailed(model: UserSearchModel);
+    func onFinally(model: UserSearchModel);
+    func onError(model: UserSearchModel);
 }
 /*
  プロトコル判定用
@@ -184,14 +186,17 @@ extension UserSearchModel : ApiRequestDelegate {
     }
 
     public func onFinally(){
-
-print("onFinallyきてるかい？？？")
-
+        print("onFinallyきてるかい？？？")
         //ページを進める
         //リクエスト回数を増やす
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
-
+        self.delegate?.onFinally(model: self);
     }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
+    }
+
 }

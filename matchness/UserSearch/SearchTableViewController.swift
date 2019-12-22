@@ -29,7 +29,8 @@ class SearchTableViewController: UIViewController, UITableViewDelegate, UITableV
     var prefecture_id: Int = 0
     var blood_type: Int = 0
     var fitness_parts_id: Int = 0
-    
+    var search_age_id: Int = 0
+
     var editType: Int = 0
     var selectRow = 0
 
@@ -120,11 +121,6 @@ print(work)
 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "職業"
-
-                
-print("職業職業職業職業職業")
-print(self.work)
-
                 cell.detail?.text = ApiConfig.WORK_LIST[self.work ?? Int((userDefaults.object(forKey: "searchWork") as? String)!)!]
                 return cell
             }
@@ -158,7 +154,7 @@ print(self.work)
 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "年齢"
-                cell.detail?.text = ApiConfig.BLOOD_LIST[self.blood_type ?? Int((userDefaults.object(forKey: "searchBloodType") as? String)!)!]
+                cell.detail?.text = ApiConfig.SEARCH_AGE_LIST[self.search_age_id ?? Int((userDefaults.object(forKey: "searchBloodType") as? String)!)!]
                 return cell
             }
         }
@@ -193,8 +189,8 @@ print(self.work)
         }
         if indexPath.row == 5 {
             self.selectPicker = 5
-            self.pcker_list = ApiConfig.BLOOD_LIST
-            self.selectRow = self.blood_type ?? 0
+            self.pcker_list = ApiConfig.SEARCH_AGE_LIST
+            self.selectRow = self.search_age_id ?? 0
         }
 
         pickerView.selectRow(self.selectRow, inComponent: 0, animated: false)
@@ -220,20 +216,18 @@ print(self.work)
 
         if self.selectPicker == 1 {
             self.work = self.selectPickerItem
-
-print(self.work)
         }
         if self.selectPicker == 2 {
             self.prefecture_id = self.selectPickerItem
         }
         if self.selectPicker == 3 {
-            self.blood_type = self.selectPickerItem
+            self.fitness_parts_id = self.selectPickerItem
         }
         if self.selectPicker == 4 {
-            self.fitness_parts_id = self.selectPickerItem
+            self.blood_type = self.selectPickerItem
         }
         if self.selectPicker == 5 {
-            self.fitness_parts_id = self.selectPickerItem
+            self.search_age_id = self.selectPickerItem
         }
 
         dismissPicker()

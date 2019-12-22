@@ -17,7 +17,8 @@ class PointHistoryViewController: UIViewController, UITableViewDelegate, UITable
     var dataSourceOrder: Array<String> = []
     var notice_id: Int = 0
     var selectRow = 0
-    
+    var ActivityIndicator: UIActivityIndicatorView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -105,6 +106,10 @@ class PointHistoryViewController: UIViewController, UITableViewDelegate, UITable
 }
 
 extension PointHistoryViewController : PointHistoryModelDelegate {
+    func onFinally(model: PointHistoryModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     
     func onStart(model: PointHistoryModel) {
         print("こちら/SettingEdit/UserDetailViewのonStart")
@@ -147,4 +152,18 @@ extension PointHistoryViewController : PointHistoryModelDelegate {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
     
+    func onError(model: PointHistoryModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
+
 }

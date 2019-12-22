@@ -17,6 +17,8 @@ protocol CahtFirstModelDelegate {
     func onStart(model: CahtFirstModel);
     func onComplete(model: CahtFirstModel, count: Int);
     func onFailed(model: CahtFirstModel);
+    func onFinally(model: CahtFirstModel);
+    func onError(model: CahtFirstModel);
 }
 
 /*
@@ -132,7 +134,7 @@ class CahtFirstModel: NSObject {
 }
 
 extension CahtFirstModel : ApiRequestDelegate {
-    
+
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
 
@@ -180,5 +182,10 @@ extension CahtFirstModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

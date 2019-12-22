@@ -17,6 +17,8 @@ protocol GroupModelDelegate {
     func onStart(model: GroupModel);
     func onComplete(model: GroupModel, count: Int);
     func onFailed(model: GroupModel);
+    func onFinally(model: GroupModel);
+    func onError(model: GroupModel);
 }
 
 /*
@@ -134,7 +136,6 @@ class GroupModel: NSObject {
 }
 
 extension GroupModel : ApiRequestDelegate {
-
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         
@@ -187,5 +188,12 @@ extension GroupModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
     }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
+    }
+    
+
 }

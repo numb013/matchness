@@ -33,7 +33,8 @@ class GroupViewController: UIViewController {
     }
 
     @IBAction func toGroupEventAddButton(_ sender: Any) {
-            let alertController:UIAlertController =
+
+        let alertController:UIAlertController =
                 UIAlertController(title:"グループを作成",message: "グループを作成するには保有ポイントが150pt必要です",preferredStyle: .alert)
             // Default のaction
             let defaultAction:UIAlertAction =
@@ -60,14 +61,14 @@ class GroupViewController: UIViewController {
             alertController.addAction(cancelAction)
             alertController.addAction(defaultAction)
 
-        var point = Int.random(in: 120 ... 200)
+        //var point = Int.random(in: 120 ... 200)
 
-        if (point < 150) {
-            // UIAlertControllerの起動
-            present(alertController, animated: true, completion: nil)
-        } else {
+//        if (point < 150) {
+//            // UIAlertControllerの起動
+//            present(alertController, animated: true, completion: nil)
+//        } else {
             self.performSegue(withIdentifier: "toAddGroupEvent", sender: nil)
-        }
+//        }
     }
 
     @IBAction func backFromGroupView(segue:UIStoryboardSegue){

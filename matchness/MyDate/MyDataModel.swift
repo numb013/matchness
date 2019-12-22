@@ -17,6 +17,8 @@ protocol MyDataModelDelegate {
     func onStart(model: MyDataModel);
     func onComplete(model: MyDataModel, count: Int);
     func onFailed(model: MyDataModel);
+    func onFinally(model: MyDataModel);
+    func onError(model: MyDataModel);
 }
 
 /*
@@ -126,7 +128,6 @@ class MyDataModel: NSObject {
 }
 
 extension MyDataModel : ApiRequestDelegate {
-
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         print("22222222222222222222222222")
@@ -167,5 +168,10 @@ extension MyDataModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
+    }
+
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
     }
 }

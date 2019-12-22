@@ -311,7 +311,7 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 // アラート表示
                 self.present(alert, animated: true, completion: {
                     // アラートを閉じる
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                         alert.dismiss(animated: true, completion: nil)
                     })
                 })

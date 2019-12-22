@@ -32,6 +32,7 @@ class TutorialViewController: UIViewController, EAIntroDelegate {
         page3.titleColor = UIColor.orange
         page3.descPositionY = self.view.bounds.size.height/2
 
+
         let introView = EAIntroView(frame: self.view.bounds, andPages: [page1, page2, page3])
         introView?.skipButton.setTitle("スキップ", for: UIControl.State.normal) //スキップボタン欲しいならここで実装！
         // タップされたときのaction
@@ -43,6 +44,12 @@ class TutorialViewController: UIViewController, EAIntroDelegate {
         introView?.show(in: self.view, animateDuration: 1.0)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("マイページ戻りマイページ戻りマイページ戻りマイページ戻り")
+    }
+    
+    
     @objc func buttonTapped(sender : AnyObject) {
         let storyboard: UIStoryboard = self.storyboard!
         //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
@@ -53,6 +60,14 @@ class TutorialViewController: UIViewController, EAIntroDelegate {
      }
     
     
+    @IBAction func toTop(_ sender: Any) {
+        let storyboard: UIStoryboard = self.storyboard!
+        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+        let multiple = storyboard.instantiateViewController(withIdentifier: "userSearch") as? MultipleViewController
+        multiple!.modalPresentationStyle = .fullScreen
+        //ここが実際に移動するコードとなります
+        self.present(multiple!, animated: false, completion: nil)
+    }
     /*
     // MARK: - Navigation
 

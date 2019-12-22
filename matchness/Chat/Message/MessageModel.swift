@@ -17,6 +17,8 @@ protocol MessageModelDelegate {
     func onStart(model: MessageModel);
     func onComplete(model: MessageModel, count: Int);
     func onFailed(model: MessageModel);
+    func onFinally(model: MessageModel);
+    func onError(model: MessageModel);
 }
 /*
  プロトコル判定用
@@ -125,6 +127,7 @@ class MessageModel: NSObject {
 }
 
 extension MessageModel : ApiRequestDelegate {
+
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         print("22222222222222222222222222")
@@ -162,5 +165,10 @@ extension MessageModel : ApiRequestDelegate {
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
+        self.delegate?.onFinally(model: self);
     }
+    func onError(_ error: ApiRequestDelegateError) {
+        self.delegate?.onError(model: self);
+    }
+
 }

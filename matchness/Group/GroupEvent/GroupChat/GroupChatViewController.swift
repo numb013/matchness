@@ -19,7 +19,7 @@ class GroupChatViewController: UIViewController, UITableViewDelegate, UITableVie
     var comment:String = ""
     @IBOutlet weak var textFiled: UITextField!
     @IBOutlet weak var tableView: UITableView!
-
+    var ActivityIndicator: UIActivityIndicatorView!
     var selectRow = 0
     
     override func viewDidLoad() {
@@ -150,6 +150,10 @@ print("コメントコメントコメントコメントコメントコメント"
 
 
 extension GroupChatViewController : GroupChatModelDelegate {
+    func onFinally(model: GroupChatModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     func onStart(model: GroupChatModel) {
         print("こちら/SettingEdit/UserDetailViewのonStart")
     }
@@ -170,5 +174,18 @@ extension GroupChatViewController : GroupChatModelDelegate {
     func onFailed(model: GroupChatModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
-    
+
+    func onError(model: GroupChatModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

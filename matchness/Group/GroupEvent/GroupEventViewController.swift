@@ -16,7 +16,7 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak internal var rank: UILabel!
     @IBOutlet weak internal var stepNumber: UILabel!
     @IBOutlet weak internal var groupEvent: UICollectionView!
-
+    var ActivityIndicator: UIActivityIndicatorView!
     var group_step:Int = 0
     
     var dataSource: Dictionary<String, ApiGroupEvent> = [:]
@@ -225,6 +225,10 @@ extension GroupEventViewController: UICollectionViewDelegateFlowLayout {
 
 
 extension GroupEventViewController : GroupEventModelDelegate {
+    func onFinally(model: GroupEventModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     
     func onStart(model: GroupEventModel) {
         print("こちら/UserDetail/UserDetailViewのonStart")
@@ -243,6 +247,20 @@ extension GroupEventViewController : GroupEventModelDelegate {
     }
     func onFailed(model: GroupEventModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")
+    }
+
+    func onError(model: GroupEventModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

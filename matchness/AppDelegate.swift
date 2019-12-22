@@ -30,28 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-
         var api_key = userDefaults.object(forKey: "api_token") as? String
 
+print("addddaク")
+print(api_key)
 
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let initialViewController = storyboard.instantiateViewController(withIdentifier: "pointPayment")
-        //rootViewControllerに入れる
-        self.window?.rootViewController = initialViewController
-        //表示
-        self.window?.makeKeyAndVisible()
 
-        
-        if (api_key == nil || api_key == "") {
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let initialViewController = storyboard.instantiateViewController(withIdentifier: "fblogin")
-            //rootViewControllerに入れる
-            self.window?.rootViewController = initialViewController
-            //表示
-            self.window?.makeKeyAndVisible()
-        }
         
         FirebaseApp.configure()
         if #available(iOS 10.0, *) {
@@ -81,7 +65,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        STPPaymentConfiguration.shared().publishableKey = "pk_test_9ctOhFy7xdS9cYXFudRC4Smh001imsNQzB"
         Stripe.setDefaultPublishableKey("pk_test_9ctOhFy7xdS9cYXFudRC4Smh001imsNQzB")
 
+        
+//UserDefaults.standard.removeObject(forKey: "login_step_1")
+//UserDefaults.standard.removeObject(forKey: "login_step_2")
 
+        if (api_key == nil || api_key == "") {
+
+print("OPOPOPOPOPOPOPOPOPOP")
+
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "fblogin")
+            //rootViewControllerに入れる
+            self.window?.rootViewController = initialViewController
+            //表示
+            self.window?.makeKeyAndVisible()
+            return true
+        }
+        
+        
+        var login_step_2 = userDefaults.object(forKey: "login_step_2") as? String
+
+//        print("aaaaaaaチェックチェックチェックチェックチェックチェック")
+//        print(login_step_2)
+//
+        if (login_step_2 == nil) {
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "profile")
+            //rootViewControllerに入れる
+            self.window?.rootViewController = initialViewController
+            //表示
+            self.window?.makeKeyAndVisible()
+            return true
+        }
         return true
     }
 

@@ -14,11 +14,10 @@ class JoinGroupViewController: UIViewController, UITableViewDelegate , UITableVi
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiGroupList> = [:]
     var dataSourceOrder: Array<String> = []
-    
     var progress = [Int:Int]()
-    
     @IBOutlet weak var JoinGroup: UITableView!
-    
+    var ActivityIndicator: UIActivityIndicatorView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         JoinGroup.delegate = self
@@ -152,6 +151,10 @@ class JoinGroupViewController: UIViewController, UITableViewDelegate , UITableVi
 }
 
 extension JoinGroupViewController : GroupModelDelegate {
+    func onFinally(model: GroupModel) {
+        print("こちら/SettingEdit/UserDetailViewのonStart")
+    }
+    
     func onStart(model: GroupModel) {
         print("こちら/usersearch/UserSearchViewのonStart")
     }
@@ -184,4 +187,17 @@ extension JoinGroupViewController : GroupModelDelegate {
         print("こちら/usersearch/UserSearchViewのonFailed")
     }
     
+    func onError(model: GroupModel) {
+        ActivityIndicator.stopAnimating()
+        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
+        // Default のaction
+        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
+                (action:UIAlertAction!) -> Void in
+                // 処理
+                //  self.dismiss(animated: true, completion: nil)
+            })
+        alertController.addAction(defaultAction)
+        // UIAlertControllerの起動
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
