@@ -191,9 +191,8 @@ extension GroupModel : ApiRequestDelegate {
         self.delegate?.onFinally(model: self);
     }
 
-    func onError(_ error: ApiRequestDelegateError) {
+    func onError(_ error: JSON) {
         self.delegate?.onError(model: self);
     }
-    
 
 }

@@ -168,8 +168,7 @@ extension GroupChatModel : ApiRequestDelegate {
         self.isRequest = false;
     }
 
-   func onError(_ error: ApiRequestDelegateError) {
-        self.delegate?.onError(model: self);
-    }
-
+   func onError(_ error: JSON) {
+       self.delegate?.onError(model: self);
+   }
 }

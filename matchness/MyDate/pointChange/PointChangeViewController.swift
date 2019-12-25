@@ -47,13 +47,13 @@ class PointChangeViewController: UIViewController{
     var day = 0
     var from = Date()
     var yestarday = Date()
-    var step_data = [Int]()
-//    var step_data:[Int] = [100, 200, 300]
+//    var step_data = [Int]()
+    var step_data:[Int] = [100, 200, 300]
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.step_data = []
+//        self.step_data = []
         for i in 1..<4 {
             self.day = i
             getStepDate()

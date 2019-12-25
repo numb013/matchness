@@ -35,6 +35,8 @@
 		845956AB22FC71F300B79278 /* ProfileEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845956A922FC71F300B79278 /* ProfileEditTableViewCell.swift */; };
 		845956AC22FC71F300B79278 /* ProfileEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845956AA22FC71F300B79278 /* ProfileEditTableViewCell.xib */; };
 		845956AE2303E52800B79278 /* ProfileEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845956AD2303E52800B79278 /* ProfileEditModel.swift */; };
+		845CDA7C23B1E4A8002F21CF /* AlertUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CDA7B23B1E4A8002F21CF /* AlertUtil.swift */; };
+		845CDA7E23B27590002F21CF /* ApiErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CDA7D23B27590002F21CF /* ApiErrorAlert.swift */; };
 		847398A5234224EC00D28135 /* ProfilImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847398A3234224EC00D28135 /* ProfilImageTableViewCell.swift */; };
 		847398A6234224EC00D28135 /* ProfilImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847398A4234224EC00D28135 /* ProfilImageTableViewCell.xib */; };
 		847398AA2346764F00D28135 /* GradationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847398A92346764E00D28135 /* GradationView.swift */; };
@@ -207,6 +209,8 @@
 		845956A922FC71F300B79278 /* ProfileEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditTableViewCell.swift; sourceTree = "<group>"; };
 		845956AA22FC71F300B79278 /* ProfileEditTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileEditTableViewCell.xib; sourceTree = "<group>"; };
 		845956AD2303E52800B79278 /* ProfileEditModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditModel.swift; sourceTree = "<group>"; };
+		845CDA7B23B1E4A8002F21CF /* AlertUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtil.swift; sourceTree = "<group>"; };
+		845CDA7D23B27590002F21CF /* ApiErrorAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiErrorAlert.swift; path = matchness/API/ApiErrorAlert.swift; sourceTree = "<group>"; };
 		847398A3234224EC00D28135 /* ProfilImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilImageTableViewCell.swift; sourceTree = "<group>"; };
 		847398A4234224EC00D28135 /* ProfilImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilImageTableViewCell.xib; sourceTree = "<group>"; };
 		847398A92346764E00D28135 /* GradationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradationView.swift; sourceTree = "<group>"; };
@@ -529,6 +533,7 @@
 			children = (
 				B40A33ED232A5AD500583CCC /* ApiRequest.swift */,
 				B40A33EB232A5AD500583CCC /* ApiConfig.swift */,
+				845CDA7D23B27590002F21CF /* ApiErrorAlert.swift */,
 				84C79C68237153CA000B6648 /* ApiSetting.swift */,
 				B40A33F5232A5AD600583CCC /* ApiChangePoint.swift */,
 				B40A33F3232A5AD500583CCC /* ApiChatRoom.swift */,
@@ -554,6 +559,7 @@
 				84D00EA8239E8991008273CC /* ApiPaymentPointList.swift */,
 				8475D15E23A7EC9800D4B8C6 /* ApiUserPaymentInfo.swift */,
 				8411A3BA2396C6720080EA55 /* ApiPayment.swift */,
+				845CDA7B23B1E4A8002F21CF /* AlertUtil.swift */,
 			);
 			name = API;
 			path = ..;
@@ -1073,6 +1079,7 @@
 				CE1D51F922D015D10093DC58 /* MessageViewController.swift in Sources */,
 				84C79C9623793C9D000B6648 /* MenuTableViewCell.swift in Sources */,
 				84D00EA7239E8894008273CC /* PointPaymentModel.swift in Sources */,
+				845CDA7C23B1E4A8002F21CF /* AlertUtil.swift in Sources */,
 				840FB6F123310C0D00F6F55F /* CahtRoomModel.swift in Sources */,
 				848A3315231504E200144950 /* GroupEventAddModel.swift in Sources */,
 				848A333C2325E86A00144950 /* CahtFirstModel.swift in Sources */,
@@ -1123,6 +1130,7 @@
 				B40A3406232A5AD700583CCC /* ApiChatRoom.swift in Sources */,
 				CE05741B22A4391F0082182F /* EndGroupViewController.swift in Sources */,
 				848A3324231A8B9D00144950 /* SettingEditModel.swift in Sources */,
+				845CDA7E23B27590002F21CF /* ApiErrorAlert.swift in Sources */,
 				CE4B09B72209499A00F8A430 /* UserSearchViewController.swift in Sources */,
 				CE0F9EF222DEFAD000D320F5 /* GroupEventAddViewController.swift in Sources */,
 				CE05741122A3ADF50082182F /* PageViewController.swift in Sources */,

@@ -49,6 +49,7 @@ class UserSearchModel: NSObject {
     public var responseDataOrder: Array<String> = Array<String>();
     //IDをキーにしてデータを保持
     public var responseData: Dictionary<String, ApiUserDate> = [String: ApiUserDate]();
+    public var errorData: Dictionary<String, ApiErrorAlert> = [String: ApiErrorAlert]();
 
     var array1: [String] = []
     var array2: Dictionary<String, ApiUserDate> = [:]
@@ -141,18 +142,9 @@ class UserSearchModel: NSObject {
 extension UserSearchModel : ApiRequestDelegate {
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
-
         var key1 = 0;
-        print(array1)
-        print("44444444444444444")
-        print(page)
-
         responseDataOrder = array1
         responseData = array2
-
-        
-        print(responseDataOrder)
-        
         json.forEach { (key, json) in
             //データを変換
             let data: ApiUserDate? = ApiUserDate(json: json);
@@ -163,16 +155,19 @@ extension UserSearchModel : ApiRequestDelegate {
             }
             //並び順を保持
             responseDataOrder.append(String(key1));
-            print("33333333333333333")
-            print(key1)
-//            print(data)
             responseData[String(key1)] = data;
         }
-
         page += 1;
-        print("responseDataresponseData")
-        print(responseData)
+    }
 
+    func onError(_ error: JSON) {
+        for (key, item):(String, JSON) in error {
+            //データを変換
+            let data: ApiErrorAlert? = ApiErrorAlert(json: item);
+            //サブカテゴリーIDをキーにして保存
+            errorData[key] = data;
+        }
+        self.delegate?.onError(model: self);
     }
 
     public func onComplete(){
@@ -194,9 +189,4 @@ extension UserSearchModel : ApiRequestDelegate {
         self.isRequest = false;
         self.delegate?.onFinally(model: self);
     }
-
-    func onError(_ error: ApiRequestDelegateError) {
-        self.delegate?.onError(model: self);
-    }
-
 }

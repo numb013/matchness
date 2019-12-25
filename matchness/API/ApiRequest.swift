@@ -17,7 +17,7 @@ protocol ApiRequestDelegate {
     func onParse(_ result: JSON);
     func onComplete();
     func onFailed(_ error: ApiRequestDelegateError);
-    func onError(_ error: ApiRequestDelegateError);
+    func onError(_ error: JSON);
 }
 /*
  プロトコル判定用
@@ -115,10 +115,12 @@ print(api_key)
                 print("取得した値はここにきて")
                 print(json)
                 let items: JSON = json;
-                let error: JSON = items["error"];
-                if error != nil && !error.isEmpty {
+                let status: JSON = items["status"];
+                print(status)
+
+                if status == "NG" {
                     // 処理
-                    self.onError((response as AnyObject) as! ApiRequestDelegateError);
+                    self.onError(items["error"]);
                     return;
                 }
                 self.onParse(json);
@@ -185,7 +187,7 @@ print(api_key)
         }
     }
 
-    public func onError(_ error: ApiRequestDelegateError) {
+    public func onError(_ error: JSON) {
         //コールバック実行
         self.delegate?.onError(error);
     }

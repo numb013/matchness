@@ -23,6 +23,8 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
     var cellCount: Int = 0
 
     var dataSource: Dictionary<String, ApiUserDate> = [:]
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     var dataSourceOrder: Array<String> = []
     var page_no = "1"
     var isLoading:Bool = false
@@ -33,9 +35,9 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
     var blood_type: String? = nil
     var fitness_parts_id: String? = nil
     
-    
     override func viewDidLoad() {
-
+//        var airports: [String: String] = ["YYZ": "いいねしたんだよー", "DUB": "Dublin"]
+//        Alert.common(alertNum: airports, viewController: self)
 //        print("AAAAAAAAAA")
 //        //画面遷移
 //        let storyboard: UIStoryboard = self.storyboard!
@@ -346,17 +348,9 @@ extension UserSearchViewController : UserSearchModelDelegate {
     }
 
     func onError(model: UserSearchModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
 }
 

@@ -152,8 +152,7 @@ extension ReportModel : ApiRequestDelegate {
         self.isRequest = false;
     }
 
-    func onError(_ error: ApiRequestDelegateError) {
+    func onError(_ error: JSON) {
         self.delegate?.onError(model: self);
     }
-
 }

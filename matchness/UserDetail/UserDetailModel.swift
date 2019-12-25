@@ -129,6 +129,8 @@ class UserDetailModel: NSObject {
 
 extension UserDetailModel : ApiRequestDelegate {
 
+    
+
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         print("22222222222222222222222222")
@@ -181,7 +183,7 @@ extension UserDetailModel : ApiRequestDelegate {
         self.delegate?.onFinally(model: self);
     }
     
-    func onError(_ error: ApiRequestDelegateError) {
+    func onError(_ error: JSON) {
         self.delegate?.onError(model: self);
     }
 }

@@ -40,7 +40,7 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.dataSource = self
         pickerView.delegate   = self
         pickerView.dataSource = self
-        pickerView.showsSelectionIndicator = true
+        
         self.tableView.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
         
         self.tableView.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")

@@ -172,7 +172,7 @@ extension PreferredGroupListModel : ApiRequestDelegate {
         self.delegate?.onFinally(model: self);
     }
 
-    public func onError(_ error: ApiRequestDelegateError) {
+    func onError(_ error: JSON) {
         self.delegate?.onError(model: self);
     }
 }

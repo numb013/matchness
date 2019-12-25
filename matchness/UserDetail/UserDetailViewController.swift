@@ -385,12 +385,35 @@ print("22222")
                     print(json["error"])
                     print(json["message"])
                     var error_message: String = json["message"].description
-                    let alert = UIAlertController(title: "エラー", message: error_message, preferredStyle: .alert)
-                    self.present(alert, animated: true, completion: {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                            alert.dismiss(animated: true, completion: nil)
+
+                    let alertController:UIAlertController =
+                        UIAlertController(title:"エラー",message: error_message, preferredStyle: .alert)
+                    // Default のaction
+                    let defaultAction:UIAlertAction =
+                        UIAlertAction(title: "ポイント変換ページへ",style: .destructive,handler:{
+                            (action:UIAlertAction!) -> Void in
+                            // 処理
+                            print("ポイント変換ページへ")
+                            let storyboard: UIStoryboard = self.storyboard!
+                            //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+                            let multiple = storyboard.instantiateViewController(withIdentifier: "pointChange")
+                            multiple.modalPresentationStyle = .fullScreen
+                            //ここが実際に移動するコードとなります
+                            self.present(multiple, animated: false, completion: nil)
                         })
-                    })
+                    
+                    // Cancel のaction
+                    let cancelAction:UIAlertAction =
+                        UIAlertAction(title: "キャンセル",style: .cancel,handler:{
+                            (action:UIAlertAction!) -> Void in
+                            // 処理
+                            print("キャンセル")
+                        })
+                    // actionを追加
+                    alertController.addAction(cancelAction)
+                    alertController.addAction(defaultAction)
+                    // UIAlertControllerの起動
+                    self.present(alertController, animated: true, completion: nil)
                 } else {
                     let alert = UIAlertController(title: "いいね", message: "いいねしました", preferredStyle: .alert)
                     self.present(alert, animated: true, completion: {
@@ -399,8 +422,6 @@ print("22222")
                         })
                     })
                 }
-                
-
 
             case .failure:
                 //  リクエスト失敗 or キャンセル時
