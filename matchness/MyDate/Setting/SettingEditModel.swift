@@ -48,7 +48,8 @@ class SettingEditModel: NSObject {
     public var requestApiCount: Int = 0;
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
-    //IDをキーにしてデータを保持
+        //IDをキーにしてデータを保持
+    public var errorData: Dictionary<String, ApiErrorAlert> = [String: ApiErrorAlert]();
     public var responseData: Dictionary<String, ApiSetting> = [String: ApiSetting]();
 
     var request_mode: String!;
@@ -132,31 +133,15 @@ extension SettingEditModel : ApiRequestDelegate {
     //レスポンスデータを解析
     public func onParse(_ json: JSON){
         print("22222222222222222222222222")
-
-//        print(json)
-        
         let items: JSON = json;
         let recommend: JSON = items["list"];
         for (key, item):(String, JSON) in json {
             //データを変換
             let data: ApiSetting? = ApiSetting(json: item);
-
-
             //Optionalチェック
             guard let info: ApiSetting = data else {
                 continue;
             }
-            print(info)
-                        print("111111")
-            //
-//            guard let code = info.id else {
-//                continue;
-//            }
-                        print("222222")
-            //
-//            guard let name = info.name else {
-//                continue;
-//            }
 
             //並び順を保持
             responseDataOrder.append(key);
@@ -184,8 +169,14 @@ extension SettingEditModel : ApiRequestDelegate {
         self.isRequest = false;
         self.delegate?.onFinally(model: self);
     }
-
+    
     func onError(_ error: JSON) {
+        for (key, item):(String, JSON) in error {
+            //データを変換
+            let data: ApiErrorAlert? = ApiErrorAlert(json: item);
+            //サブカテゴリーIDをキーにして保存
+            errorData[key] = data;
+        }
         self.delegate?.onError(model: self);
     }
 }

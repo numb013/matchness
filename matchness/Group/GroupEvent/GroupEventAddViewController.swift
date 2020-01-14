@@ -16,22 +16,27 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var datePickerView: UIDatePicker!
     @IBOutlet weak var pickerBottom: NSLayoutConstraint!
     @IBOutlet weak var datePickerButton: NSLayoutConstraint!
+    var select_pcker_list: [Int] = [0, 0, 0, 0, 0, 0, 0, 0]
     var ActivityIndicator: UIActivityIndicatorView!
     var setDateviewTime = ""
     var vi = UIView()
     var isDate = Date()
+    var newDate:NSDate = Date() as NSDate
+    var start_date = ""
     var selectPicker: Int = 0
     var selectPickerItem: Int = 0
     var pcker_list: [String] = []
     var selectRow = 0
     var title_text = ""
-    var event_peple:String = "0"
-    var event_period:String = "0"
-    var present_point:String = "0"
-    var event_type:String = "0"
-    var start_type:String = "0"
+    var event_peple:Int = 0
+    var event_period:Int = 0
+    var present_point:Int = 0
+    var event_type:Int = 0
+    var start_type:Int = 0
     var dataSource: Dictionary<String, ApiGroupList> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     var cellCount: Int = 0
     
     override func viewDidLoad() {
@@ -44,23 +49,28 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
         
         self.tableView.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
-        
         // datePickerの設定
         datePickerView.date = isDate
         datePickerView.datePickerMode = .date
         datePickerView.locale = Locale(identifier: "ja")
         datePickerView.addTarget(self, action: #selector(setText), for: .valueChanged)
         datePickerView.backgroundColor = UIColor.white
-        // Do any additional setup after loading the view.
+
+        let date:NSDate = NSDate() //当日の日付を得る
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-DD" // 日付フォーマットの設定
+        var time = date.timeIntervalSince1970
+        time += 60*60*24 //２４時間後の時間を加算(６０秒*６０分*２４時間)
+        self.newDate = NSDate.init(timeIntervalSince1970:time)
+        datePickerView.minimumDate = newDate as Date
     }
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -80,10 +90,6 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "profileCell")
-        print("AAAAAAAAAA")
-        print(indexPath)
-        print(indexPath.section)
-        
         
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
@@ -101,43 +107,64 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "人数"
-                cell.detail?.text = ApiConfig.EVENT_PEPLE_LIST[Int(self.event_peple) ?? 0] + "人"
+                cell.detail?.text = ApiConfig.EVENT_PEPLE_LIST[self.event_peple ?? 0] + "人"
                 return cell
             }
+
             if indexPath.row == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-                
+
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "期間"
-                cell.detail?.text = ApiConfig.EVENT_PERIOD_LIST[Int(self.event_period) ?? 0] + "日"
+                cell.title?.text = "開始日"
+
+                let dateFormater = DateFormatter()
+                dateFormater.locale = Locale(identifier: "ja_JP")
+                dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+                let date = dateFormater.date(from: self.start_date ?? dateFormater.string(from: self.newDate as Date))
+                print("タイム444444444")
+                print(self.newDate)
+                dateFormater.dateFormat = "yyyy年MM月dd日"
+                let date_text = dateFormater.string(from: date ?? self.newDate as Date)
+                cell.detail?.text = String(date_text)
+
                 return cell
             }
+
             if indexPath.row == 3 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
                 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "プレゼントポイント"
-                cell.detail?.text = ApiConfig.EVENT_PRESENT_POINT[Int(self.present_point) ?? 0] + "ポイント"
+                cell.title?.text = "期間"
+                cell.detail?.text = ApiConfig.EVENT_PERIOD_LIST[self.event_period ?? 0] + "日"
                 return cell
             }
-            
+
+
             if indexPath.row == 4 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
                 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "男女の割合"
-                cell.detail?.text = ApiConfig.EVENT_TYPE_LIST[Int(self.event_type) ?? 0]
+                cell.title?.text = "プレゼントポイント"
+                cell.detail?.text = ApiConfig.EVENT_PRESENT_POINT[self.present_point ?? 0] + "ポイント"
                 return cell
             }
+            
             if indexPath.row == 5 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
                 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "開始タイプ"
-                cell.detail?.text = ApiConfig.EVENT_START_TYPE[Int(self.start_type) ?? 0]
+                cell.title?.text = "男女の割合"
+                cell.detail?.text = ApiConfig.EVENT_TYPE_LIST[self.event_type ?? 0]
                 return cell
             }
-            
+            if indexPath.row == 6 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
+                
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                cell.title?.text = "開始タイプ"
+                cell.detail?.text = ApiConfig.EVENT_START_TYPE[self.start_type ?? 0]
+                return cell
+            }
         }
         return cell
     }
@@ -152,31 +179,47 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
         if indexPath.row == 1 {
             self.selectPicker = 1
             self.pcker_list = ApiConfig.EVENT_PEPLE_LIST
-            self.selectRow = Int(self.event_peple) ?? 0
-        }
-        if indexPath.row == 2 {
-            self.selectPicker = 2
-            self.pcker_list = ApiConfig.EVENT_PERIOD_LIST
-            self.selectRow = Int(self.event_period) ?? 0
+            self.selectRow = self.event_peple ?? 0
         }
         if indexPath.row == 3 {
             self.selectPicker = 3
-            self.pcker_list = ApiConfig.EVENT_PRESENT_POINT
-            self.selectRow = Int(self.present_point) ?? 0
+            self.pcker_list = ApiConfig.EVENT_PERIOD_LIST
+            self.selectRow = self.event_period ?? 0
         }
         if indexPath.row == 4 {
             self.selectPicker = 4
-            self.pcker_list = ApiConfig.EVENT_TYPE_LIST
-            self.selectRow = Int(self.event_type) ?? 0
+            self.pcker_list = ApiConfig.EVENT_PRESENT_POINT
+            self.selectRow = self.present_point ?? 0
         }
         if indexPath.row == 5 {
             self.selectPicker = 5
-            self.pcker_list = ApiConfig.EVENT_START_TYPE
-            self.selectRow = Int(self.start_type) ?? 0
+            self.pcker_list = ApiConfig.EVENT_TYPE_LIST
+            self.selectRow = self.event_type ?? 0
         }
-        
-        pickerView.selectRow(self.selectRow, inComponent: 0, animated: false)
-        PickerPush()
+        if indexPath.row == 6 {
+            self.selectPicker = 6
+            self.pcker_list = ApiConfig.EVENT_START_TYPE
+            self.selectRow = self.start_type ?? 0
+        }
+
+        if indexPath.row == 2 {
+//            print("タイム33333333333")
+//            let dateFormater = DateFormatter()
+//            dateFormater.locale = Locale(identifier: "ja_JP")
+//            dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+//
+//            let date = dateFormater.date(from: self.start_date ?? "2000-01-01 03:12:12 +0000")
+//
+//
+//            datePickerView.date = date!
+            print("デートピッカーーーーーーーー")
+            datePickerPush()
+        } else {
+            pickerView.selectRow(self.selectRow, inComponent: 0, animated: false)
+            PickerPush()
+        }
+
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -191,19 +234,19 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
         
                 }
                 if self.selectPicker == 1 {
-                    self.event_peple = String(self.selectPickerItem)
-                }
-                if self.selectPicker == 2 {
-                    self.event_period = String(self.selectPickerItem)
+                    self.event_peple = self.select_pcker_list[self.selectPicker] ?? 0
                 }
                 if self.selectPicker == 3 {
-                    self.present_point = String(self.selectPickerItem)
+                    self.event_period = self.select_pcker_list[self.selectPicker] ?? 0
                 }
                 if self.selectPicker == 4 {
-                    self.event_type = String(self.selectPickerItem)
+                    self.present_point = self.select_pcker_list[self.selectPicker] ?? 0
                 }
                 if self.selectPicker == 5 {
-                    self.start_type = String(self.selectPickerItem)
+                    self.event_type = self.select_pcker_list[self.selectPicker] ?? 0
+                }
+                if self.selectPicker == 6 {
+                    self.start_type = self.select_pcker_list[self.selectPicker] ?? 0
                 }
                 dismissPicker()
                 tableView.reloadData()
@@ -278,34 +321,39 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
         func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
             print("p3p3p3p3p3")
             print(self.selectPicker)
-            if (self.selectPicker == 1) {
-                return self.pcker_list[row] + "人"
+
+            if (self.pcker_list.count > row) {
+                if (self.selectPicker == 1) {
+                    return self.pcker_list[row] + "人"
+                }
+                if (self.selectPicker == 3) {
+                    return self.pcker_list[row] + "日"
+                }
+                if (self.selectPicker == 4) {
+                    return self.pcker_list[row] + "ポイント"
+                }
+                return self.pcker_list[row]
+            } else {
+                return ""
             }
-            if (self.selectPicker == 2) {
-                return self.pcker_list[row] + "日"
-            }
-            if (self.selectPicker == 3) {
-                return self.pcker_list[row] + "ポイント"
-            }
-            return self.pcker_list[row]
         }
 
         func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-            self.selectPickerItem = row
             print("選択ピッカー選択ピッカー選択ピッカー")
+            print(self.selectPicker)
+            print(row)
+            self.select_pcker_list[self.selectPicker] = row
         }
 
     // datePickerの日付けをtextFieldのtextに反映させる
     @objc private func setText() {
         let dateFormater = DateFormatter()
         dateFormater.locale = Locale(identifier: "ja_JP")
-        dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        dateFormater.dateFormat = "yyyy-MM-dd HH:mm:ss"
         self.setDateviewTime = dateFormater.string(from: datePickerView.date)
-//        self.dataSource["0"]?.birthday = self.setDateviewTime
+        self.start_date = self.setDateviewTime
         print("時間時間時間")
-        print(datePickerView.date)
     }
-    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         print("テキスト１")
@@ -350,25 +398,18 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
         let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_GROUP;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
-        
-        query["master_id"] = self.userDefaults.object(forKey: "matchness_user_id") as? String
         query["title"] = self.title_text
-        query["event_peple"] = self.event_peple
-        query["start_type"] = self.start_type
-        query["present_point"] = self.present_point
-        query["event_type"] = self.event_type
-        query["event_period"] = self.event_period
-        
+        query["start_date"] = self.start_date
+        query["event_peple"] = String(self.event_peple)
+        query["start_type"] = String(self.start_type)
+        query["present_point"] = String(self.present_point)
+        query["event_type"] = String(self.event_type)
+        query["event_period"] = String(self.event_period)
         var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
-        
-        
-        
         print(userDefaults.object(forKey: "matchness_user_id") as? String)
         print(matchness_user_id)
+        print("queryqueryqueryqueryqueryqueryqueryquery")
         print(query)
-        
-        
-        
         //リクエスト実行
         if( !requestGroupEventAddModel.requestApi(url: requestUrl, addQuery: query) ){
             
@@ -387,8 +428,6 @@ class GroupEventAddViewController: UIViewController, UITableViewDelegate, UITabl
     
 }
 
-
-
 extension GroupEventAddViewController : GroupEventAddModelDelegate {
     func onFinally(model: GroupEventAddModel) {
         print("こちら/SettingEdit/UserDetailViewのonStart")
@@ -406,28 +445,11 @@ extension GroupEventAddViewController : GroupEventAddModelDelegate {
         
         print(self.dataSourceOrder)
         print("UserDetail耳耳耳意味耳みm")
-        
-        
-        //一つもなかったら
-        //        if( dataSourceOrder.isEmpty ){
-        //            return;
-        //        }
-        
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
-        //        self.cellCount = 10;
-        
-        
-        //
+
         var count: Int = 0;
-        //        for(key, code) in dataSourceOrder.enumerated() {
-        //            count+=1;
-        //            if let jenre: ApiUserDateParam = dataSource[code] {
-        //                //取得したデータを元にコレクションを再構築＆更新
-        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-        //            }
-        //        }
-        
+
         tableView.reloadData()
         self.dismiss(animated: true, completion: nil)
         //        self.performSegue(withIdentifier: "toGroupTop", sender: nil)
@@ -437,17 +459,10 @@ extension GroupEventAddViewController : GroupEventAddModelDelegate {
     }
 
     func onError(model: GroupEventAddModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }
 

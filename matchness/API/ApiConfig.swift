@@ -21,13 +21,13 @@ public struct ApiConfig {
      let SITE_BASIC_AUTHENTICATION_ACCOUNT_PASSWORD: String = "52011k";
      */
     #if DEBUG
-    static var SITE_DOMAIN: String = "43255d8b.ngrok.io";
+    static var SITE_DOMAIN: String = "604e5af9.ngrok.io";
     #else
-    static var SITE_DOMAIN: String = "43255d8b.ngrok.io";
+    static var SITE_DOMAIN: String = "604e5af9.ngrok.io";
     #endif
 
     //
-    static let SITE_BASE_URL: String = "http://" + SITE_DOMAIN;
+    static let SITE_BASE_URL: String = "https://" + SITE_DOMAIN;
     static let REQUEST_URL_API: String = SITE_BASE_URL + "/api";
     
     //ユーザー一覧
@@ -61,7 +61,8 @@ public struct ApiConfig {
     static let REQUEST_URL_API_SELECT_GROUP_EVENT: String = REQUEST_URL_API + "/select_group_event";
     static let REQUEST_URL_API_SELECT_REQUEST_GROUP_EVENT: String = REQUEST_URL_API + "/select_request_group_event";
     static let REQUEST_URL_API_REQUEST_GROUP_EVENT: String = REQUEST_URL_API + "/request_group_event";
-
+    static let REQUEST_URL_API_RECRUITMENT_DELETE_GROUP: String = REQUEST_URL_API + "/recruitment_delete_group";
+    
     static let REQUEST_URL_API_DELETE_POINT: String = REQUEST_URL_API + "/delete_point";
     static let REQUEST_URL_API_UPDATE_POINT: String = REQUEST_URL_API + "/update_point";
 
@@ -93,8 +94,12 @@ public struct ApiConfig {
     static let REQUEST_URL_API_SELECT_POINT_PAYMENT: String = REQUEST_URL_API + "/select_point_payment";
     static let REQUEST_URL_API_CHARGE: String = REQUEST_URL_API + "/charge";
     static let REQUEST_URL_API_REGISTRATION_CREDIT: String = REQUEST_URL_API + "/registration-credit";
+    static let REQUEST_URL_API_SELECT_PAYMENT_EDIT_LIST: String = REQUEST_URL_API + "/select_payment_edit_list";
+    static let REQUEST_URL_API_PAYMENT_DELETE: String = REQUEST_URL_API + "/payment_delete";
 
     
+    static let REQUEST_URL_API_SELECT_POINT_PURCHASE: String = REQUEST_URL_API + "/select_point_purchase";
+    static let REQUEST_URL_API_POINT_CHECK: String = REQUEST_URL_API + "/point_check";
 
     
     
@@ -102,7 +107,7 @@ public struct ApiConfig {
 
     static let PREFECTURE_LIST: [String] = ["未選択", "北海道","青森","岩手","秋田","宮城","山形","福島","新潟","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","長野","山梨","静岡","岐阜","愛知","富山","石川","福井","滋賀","三重","京都","奈良","和歌山","大阪","兵庫","岡山","鳥取","島根","広島","山口","香川","愛媛","徳島","高知","福岡","佐賀","大分","長崎","熊本","宮崎","鹿児島","沖縄","海外"]
     static let FITNESS_LIST: [String] = ["未選択", "顔・フェイス","あご・首","胸・バスト","手首・足首","腕・二の腕","お腹・下腹","お尻・ヒップ","肩・背中","太もも・ふくらはぎ"]
-    static let WEIGHT_LIST: [String] = ["10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85kg"]
+    static let WEIGHT_LIST: [String] = ["35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"]
     static let SEX_LIST: [String] = ["未選択", "女性", "男性", "ジェンダレス"]
     static let BLOOD_LIST: [String] = ["未選択", "A型","B型","O型","AB型"]
     

@@ -106,8 +106,9 @@ print(api_key)
                 print(url)
                 if (
                     url == ApiConfig.REQUEST_URL_API_ADD_LIKE ||
-                    url == ApiConfig.REQUEST_URL_API_SEND_MESSAGE ||
-                    url == ApiConfig.REQUEST_URL_API_ADD_FAVORITE_BLOCK
+//                    url == ApiConfig.REQUEST_URL_API_SEND_MESSAGE ||
+                    url == ApiConfig.REQUEST_URL_API_ADD_FAVORITE_BLOCK ||
+                    url == ApiConfig.REQUEST_URL_API_PAYMENT_DELETE
                     ) {
                     self.onFaild(response as AnyObject);
                     break;

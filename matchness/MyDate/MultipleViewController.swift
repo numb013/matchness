@@ -13,6 +13,8 @@ class MultipleViewController: UIViewController, UITableViewDelegate , UITableVie
     @IBOutlet var tableView: UITableView!
     var dataSource: Dictionary<String, ApiMultipleUser> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     var cellCount: Int = 0
     var status:Int = 0
     var ActivityIndicator: UIActivityIndicatorView!
@@ -198,20 +200,13 @@ extension MultipleViewController : MultipleModelDelegate {
     func onFailed(model: MultipleModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")
     }
-
+    
     func onError(model: MultipleModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }
 
 

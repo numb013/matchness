@@ -47,9 +47,10 @@ class UserSearchModel: NSObject {
     public var requestApiCount: Int = 0;
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
-    //IDをキーにしてデータを保持
-    public var responseData: Dictionary<String, ApiUserDate> = [String: ApiUserDate]();
+        //IDをキーにしてデータを保持
     public var errorData: Dictionary<String, ApiErrorAlert> = [String: ApiErrorAlert]();
+    public var responseData: Dictionary<String, ApiUserDate> = [String: ApiUserDate]();
+
 
     var array1: [String] = []
     var array2: Dictionary<String, ApiUserDate> = [:]
@@ -157,17 +158,12 @@ extension UserSearchModel : ApiRequestDelegate {
             responseDataOrder.append(String(key1));
             responseData[String(key1)] = data;
         }
-        page += 1;
-    }
 
-    func onError(_ error: JSON) {
-        for (key, item):(String, JSON) in error {
-            //データを変換
-            let data: ApiErrorAlert? = ApiErrorAlert(json: item);
-            //サブカテゴリーIDをキーにして保存
-            errorData[key] = data;
-        }
-        self.delegate?.onError(model: self);
+print("れれれれれれれれれれr")
+print(responseDataOrder)
+print(responseData)
+
+        page += 1;
     }
 
     public func onComplete(){
@@ -182,11 +178,22 @@ extension UserSearchModel : ApiRequestDelegate {
 
     public func onFinally(){
         print("onFinallyきてるかい？？？")
+        print(responseData)
         //ページを進める
         //リクエスト回数を増やす
         self.requestApiCount += 1;
         //リクエスト完了
         self.isRequest = false;
         self.delegate?.onFinally(model: self);
+    }
+    
+    func onError(_ error: JSON) {
+        for (key, item):(String, JSON) in error {
+            //データを変換
+            let data: ApiErrorAlert? = ApiErrorAlert(json: item);
+            //サブカテゴリーIDをキーにして保存
+            errorData[key] = data;
+        }
+        self.delegate?.onError(model: self);
     }
 }

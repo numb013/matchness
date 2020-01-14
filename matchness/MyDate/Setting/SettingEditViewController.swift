@@ -26,6 +26,8 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiSetting> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     var selectRow = 0
     var status = ""
     var swich_status:Bool = true
@@ -245,10 +247,20 @@ print(requestUrl)
             case .success:
                 var json:JSON;
                 do{
+                    //レスポンスデータを解析
                     json = try SwiftyJSON.JSON(data: response.data!);
                 } catch {
+                    // error
+                    print("json error: \(error.localizedDescription)");
+    //                     self.onFaild(response as AnyObject);
                     break;
                 }
+                print("取得した値はここにきて")
+                print(json)
+
+                self.ActivityIndicator.stopAnimating()
+
+                self.dismiss(animated: true, completion: nil)
             case .failure:
                 //  リクエスト失敗 or キャンセル時
                 let alert = UIAlertController(title: "設定", message: "失敗しました。", preferredStyle: .alert)
@@ -298,18 +310,11 @@ extension SettingEditViewController : SettingEditModelDelegate {
     func onFailed(model: SettingEditModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
-
+    
     func onError(model: SettingEditModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }

@@ -17,6 +17,9 @@ class CahtFirstViewController: baseViewController, IndicatorInfoProvider, UITabl
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiMessage> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+    let dateFormater = DateFormatter()
+    let userDefaults = UserDefaults.standard
     @IBOutlet weak var ChatTableView: UITableView!
     var ActivityIndicator: UIActivityIndicatorView!
     
@@ -37,6 +40,8 @@ class CahtFirstViewController: baseViewController, IndicatorInfoProvider, UITabl
         super.viewWillAppear(animated)
         //タブバー表示
         tabBarController?.tabBar.isHidden = false
+        print("MessageMessageMessageMessage")
+        apiRequest()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -106,7 +111,14 @@ class CahtFirstViewController: baseViewController, IndicatorInfoProvider, UITabl
             var message = self.dataSource["0"]!.message[indexPath.row]
             let cell = ChatTableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
             cell.ChatName.text = message.target_name
-            cell.ChatDate.text = message.created_at
+
+            dateFormater.locale = Locale(identifier: "ja_JP")
+            dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+            let date = dateFormater.date(from: message.created_at!)
+            dateFormater.dateFormat = "yyyy年MM月dd日"
+            let date_text = dateFormater.string(from: date ?? Date())
+            cell.ChatDate.text = String(date_text)
+
             cell.ChatMessage.text = message.last_message
 
             var number = Int.random(in: 1 ... 18)
@@ -161,22 +173,23 @@ class CahtFirstViewController: baseViewController, IndicatorInfoProvider, UITabl
             "user_name":self.dataSource["0"]!.name!,
             "point":self.dataSource["0"]!.point!,
         ]
+        self.userDefaults.set(Int(self.dataSource["0"]!.point!), forKey: "point")
         self.performSegue(withIdentifier: "toMessage", sender: message_users)
     }
-    
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toMessage" {
             let mvc = segue.destination as! MessageViewController
-
             print("sendersendersendersender")
             print(sender)
             mvc.message_users = sender as! [String : String]
         }
     }
 
-    
+    @IBAction func backFromChatFirsr(segue:UIStoryboardSegue){
+        NSLog("ReportViewController#backUserDetail")
+    }
+
     
     
 }
@@ -225,20 +238,13 @@ extension CahtFirstViewController : CahtFirstModelDelegate {
     func onFailed(model: CahtFirstModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")
     }
-
+    
     func onError(model: CahtFirstModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 
 }
 

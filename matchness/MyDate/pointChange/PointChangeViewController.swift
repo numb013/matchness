@@ -33,7 +33,8 @@ class PointChangeViewController: UIViewController{
 
     var change_point = "0"
     var day_type = "0"
-    
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     var dataSource: Dictionary<String, ApiChangePoint> = [:]
     var dataSourceOrder: Array<String> = []
     var cellCount: Int = 0
@@ -257,19 +258,12 @@ extension PointChangeViewController : PointChangeModelDelegate {
     func onFailed(model: PointChangeModel) {
         print("こちら/MultipleModel/UserDetailViewのonFailed")
     }
-
+    
     func onError(model: PointChangeModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }
 

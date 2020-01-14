@@ -20,7 +20,7 @@ class GroupTableViewCell: UITableViewCell {
 
     @IBOutlet weak var joinButton: UIButton!
 
-    @IBOutlet weak var groupFlag: UIView!
+    @IBOutlet weak var groupFlag: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

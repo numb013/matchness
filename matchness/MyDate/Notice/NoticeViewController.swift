@@ -22,6 +22,8 @@ class NoticeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiNoticeList> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     var notice_id: Int = 0
     var selectRow = 0
     var ActivityIndicator: UIActivityIndicatorView!
@@ -197,18 +199,11 @@ extension NoticeViewController : NoticeModelDelegate {
     func onFailed(model: NoticeModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
-
+    
     func onError(model: NoticeModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }

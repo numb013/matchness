@@ -16,6 +16,8 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiGroupList> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     var group_id: Int = 0
     var ActivityIndicator: UIActivityIndicatorView!
 
@@ -33,6 +35,15 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         //タブバー表示
         tabBarController?.tabBar.isHidden = false
     }
+
+
+    override func viewWillAppear(_ animated: Bool) {
+        print("ここにこに")
+        super.viewWillAppear(animated)
+        apiRequest()
+    }
+
+
 
     var isLoading:Bool = false
     var page_no = "1"
@@ -101,12 +112,14 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         cell.period.text = "開催期間 : " + ApiConfig.EVENT_PERIOD_LIST[(waitGroup!.event_period)!] + "日"
         cell.joinNumber.text = "参加人数 : " +  ApiConfig.EVENT_PEPLE_LIST[(waitGroup?.event_peple)!] + "人"
         cell.startType.text = "開始 : " +  ApiConfig.EVENT_START_TYPE[(waitGroup?.start_type)!]
-        cell.presentPoint.text = "参加人数 : " +  ApiConfig.EVENT_PRESENT_POINT[(waitGroup?.present_point)!] + "point"
+        cell.presentPoint.text = "賞金 : " +  ApiConfig.EVENT_PRESENT_POINT[(waitGroup?.present_point)!] + "P"
+
+        cell.groupFlag.image = UIImage(named: "new3")
 
         
         var number_button = waitGroup?.request_status
 
-        if (waitGroup?.master_group == 1) {
+        if ((waitGroup?.master_group) != 0) {
             cell.joinButton.setTitle("主催グループ", for: .normal)
             var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTap(_:)))
             recognizer.targetString = "3"
@@ -159,12 +172,10 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         self.group_id = sender.targetGroupId!
         var tap_number = sender.targetString!
         if (tap_number == "3") {
-
             let storyboard: UIStoryboard = self.storyboard!
             let next = storyboard.instantiateViewController(withIdentifier: "PreferredGroupList") as! PreferredGroupListViewController
             next.modalPresentationStyle = .fullScreen
             next.group_id = group_id
-
             //ここが実際に移動するコードとなります
             self.present(next, animated: false, completion: nil)
 
@@ -288,18 +299,10 @@ extension WaitGroupViewController : GroupModelDelegate {
     func onFailed(model: GroupModel) {
         print("こちら/usersearch/UserSearchViewのonFailed")
     }
-
+    
     func onError(model: GroupModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
 }

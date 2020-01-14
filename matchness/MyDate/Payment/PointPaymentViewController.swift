@@ -18,6 +18,8 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiUserPaymentInfo> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     private var requestAlamofire: Alamofire.Request?;
     var ActivityIndicator: UIActivityIndicatorView!
 
@@ -92,8 +94,6 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
             return cell
         } else {
             print("せえと111111")
-
-
             print("SDSDSDSDSWEWE")
             print(self.dataSource["0"])
             if self.dataSource["0"]?.card_no != nil {
@@ -116,6 +116,8 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
             recognizer.amount = point_pay.amount
             recognizer.pay_point_id = point_pay.id
             cell.pointPaymentImage.addGestureRecognizer(recognizer)
+
+            self.userDefaults.set(Int(point_pay.point!), forKey: "point")
             return cell
         }
 //        cell.createTime.text = "aaaaaaa"
@@ -277,7 +279,7 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
         // アラート表示
         self.present(alert, animated: true, completion: {
             // アラートを閉じる
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                 print("こここここここここここkは？？？")
 
                 self.dismiss(animated: true, completion: nil)
@@ -339,18 +341,11 @@ extension PointPaymentViewController : PointPaymentModelDelegate {
     func onFailed(model: PointPaymentModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
-
+    
     func onError(model: PointPaymentModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }

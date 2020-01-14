@@ -10,8 +10,6 @@ import UIKit
 
 class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-
-    
     let userDefaults = UserDefaults.standard
     @IBOutlet weak var UserProfileTable: UITableView!
     @IBOutlet weak var datePickerView: UIDatePicker!
@@ -25,11 +23,14 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
     var isDate = Date()
     var selectPicker: Int = 0
     var selectPickerItem: Int = 0
+    var select_pcker_list: [Int] = [0, 0, 0, 0, 0, 0, 0, 0]
     var pcker_list: [String] = []
     var setDay = Date()
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiUserDetailDate> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     var editType: Int = 0
     var selectRow = 0
     var ActivityIndicator: UIActivityIndicatorView!
@@ -44,7 +45,6 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         pickerView.showsSelectionIndicator = true
         
         self.UserProfileTable.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
-
         self.UserProfileTable.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
         self.UserProfileTable.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")
         self.UserProfileTable.register(UINib(nibName: "ProfilImageTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfilImageTableViewCell")
@@ -55,7 +55,6 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         datePickerView.locale = Locale(identifier: "ja")
         datePickerView.addTarget(self, action: #selector(setText), for: .valueChanged)
         datePickerView.backgroundColor = UIColor.white
-
         
         /****************
          APIへリクエスト（ユーザー取得）
@@ -154,7 +153,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
             
             if indexPath.row == 1 {
                 let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
+                self.select_pcker_list[indexPath.row] = myData?.work ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "職業"
                 cell.detail?.text = ApiConfig.WORK_LIST[myData?.work ?? 0]
@@ -162,7 +161,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
             }
             if indexPath.row == 2 {
                 let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
+                self.select_pcker_list[indexPath.row] = myData?.prefecture_id ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "居住地"
                 cell.detail?.text = ApiConfig.PREFECTURE_LIST[myData?.prefecture_id ?? 0]
@@ -177,7 +176,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
                 let dateFormater = DateFormatter()
                 dateFormater.locale = Locale(identifier: "ja_JP")
                 dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-                let date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
+                let date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2000-01-01 03:12:12 +0000")
                 print("誕生日誕生日誕生日")
 
                 dateFormater.dateFormat = "yyyy年MM月dd日"
@@ -189,7 +188,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
             
             if indexPath.row == 4 {
                 let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
+                self.select_pcker_list[indexPath.row] = myData?.fitness_parts_id ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "痩せたい部位"
                 cell.detail?.text = ApiConfig.FITNESS_LIST[myData?.fitness_parts_id ?? 0]
@@ -197,6 +196,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
             }
             if indexPath.row == 5 {
                 let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
+                self.select_pcker_list[indexPath.row] = myData?.weight ?? 0
 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "体重(非公開)"
@@ -207,7 +207,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
 
             if indexPath.row == 6 {
                 let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
+                self.select_pcker_list[indexPath.row] = myData?.sex ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "性別"
                 cell.detail?.text = ApiConfig.SEX_LIST[myData?.sex ?? 0]
@@ -216,7 +216,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
 
             if indexPath.row == 7 {
                 let cell = UserProfileTable.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
+                self.select_pcker_list[indexPath.row] = myData?.blood_type ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "血液型"
                 cell.detail?.text = ApiConfig.BLOOD_LIST[myData?.blood_type ?? 2]
@@ -226,11 +226,13 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
 
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("タップ")
         print(indexPath.row)
 
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        
         dismissPicker()
         dismissDatePicker()
         if indexPath.row == 0 {
@@ -238,10 +240,14 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
             selectImage()
             // self.selectPicker = 0
         }
+
         if indexPath.row == 1 {
             self.selectPicker = 1
             self.pcker_list = ApiConfig.WORK_LIST
             self.selectRow = self.dataSource["0"]?.work ?? 0
+            print("都道府県タップタップタップタップタップ")
+            print(self.dataSource["0"]?.work)
+            print(self.selectRow)
         }
         if indexPath.row == 2 {
             self.selectPicker = 2
@@ -269,6 +275,7 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
             self.selectRow = self.dataSource["0"]?.blood_type ?? 0
         }
         pickerView.selectRow(self.selectRow, inComponent: 0, animated: false)
+
         print(indexPath.section)
         print(indexPath.row)
 
@@ -276,9 +283,11 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
             let dateFormater = DateFormatter()
             dateFormater.locale = Locale(identifier: "ja_JP")
             dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-            let date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
-            datePickerView.date = date!
             print("デートピッカーーーーーーーー")
+            print(self.dataSource["0"]?.birthday)
+            let date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2000-01-01 03:12:12 +0000")
+            datePickerView.date = date!
+
             datePickerPush()
         } else {
             print("ピッカーーーーーーーー")
@@ -296,39 +305,37 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
         return 60
     }
 
-
-
     @IBAction func pickerSelectButton(_ sender: Any) {
         print("セレクトピッカーセレクトピッカーbbbb")
         print("セレクトピッカー")
         print(self.selectPicker)
 
         if self.selectPicker == 1 {
-            self.dataSource["0"]?.work = self.selectPickerItem
+            self.dataSource["0"]?.work = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 2 {
-            self.dataSource["0"]?.prefecture_id = self.selectPickerItem
+            self.dataSource["0"]?.prefecture_id = self.select_pcker_list[self.selectPicker] ?? 0
         }
-        if self.selectPicker == 3 {
-            self.dataSource["0"]?.work = self.selectPickerItem
-        }
+//        if self.selectPicker == 3 {
+//            self.dataSource["0"]?.work = self.select_pcker_list[self.selectPicker] ?? 0
+//        }
         if self.selectPicker == 4 {
-            self.dataSource["0"]?.fitness_parts_id = self.selectPickerItem
+            self.dataSource["0"]?.fitness_parts_id = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 5 {
-            self.dataSource["0"]?.weight = self.selectPickerItem
+            self.dataSource["0"]?.weight = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 6 {
-            self.dataSource["0"]?.sex = self.selectPickerItem
+            self.dataSource["0"]?.sex = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 7 {
-            self.dataSource["0"]?.blood_type = self.selectPickerItem
+            self.dataSource["0"]?.blood_type = self.select_pcker_list[self.selectPicker] ?? 0
         }
         dismissPicker()
         UserProfileTable.reloadData()
         self.vi.removeFromSuperview()
-
     }
+
     @IBAction func pickerCloseButton(_ sender: Any) {
         dismissPicker()
     }
@@ -391,20 +398,36 @@ class ProfileEditViewController: UIViewController, UITableViewDelegate, UITableV
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         print("p2p2p2p2p2")
+        print(self.pcker_list.count)
         return self.pcker_list.count
     }
     // UIPickerViewに表示する配列
     func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
         print("p3p3p3p3p3")
+        print(self.pcker_list)
+        print(self.selectPicker)
+        print(self.pcker_list.count)
+        print(row)
         if (self.selectPicker == 5) {
             return self.pcker_list[row] + "kg"
         }
-        return self.pcker_list[row]
+
+        if (self.pcker_list.count > row) {
+            return self.pcker_list[row]
+        } else {
+            return ""
+        }
+
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.selectPickerItem = row
+
         print("選択ピッカー選択ピッカー選択ピッカー")
+        print(self.selectPicker)
+        print(row)
+        self.select_pcker_list[self.selectPicker] = row
+
+
     }
 
     // datePickerの日付けをtextFieldのtextに反映させる
@@ -735,18 +758,11 @@ extension ProfileEditViewController : ProfileEditModelDelegate {
     func onFailed(model: ProfileEditModel) {
         print("こちら/ProfileEditModel/UserDetailViewのonFailed")
     }
-
+    
     func onError(model: ProfileEditModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }

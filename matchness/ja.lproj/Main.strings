@@ -1,0 +1,414 @@
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "0ON-vR-VPU"; */
+"0ON-vR-VPU.title" = "戻る";
+
+/* Class = "UIButton"; normalTitle = "投稿"; ObjectID = "0d7-p9-jpl"; */
+"0d7-p9-jpl.normalTitle" = "投稿";
+
+/* Class = "UIBarButtonItem"; title = "•••"; ObjectID = "19X-X3-B7f"; */
+"19X-X3-B7f.title" = "•••";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "1DA-Eo-MhD"; */
+"1DA-Eo-MhD.title" = "戻る";
+
+/* Class = "UILabel"; text = "ポイント"; ObjectID = "1Ja-HZ-3LW"; */
+"1Ja-HZ-3LW.text" = "ポイント";
+
+/* Class = "UITabBarItem"; title = "group"; ObjectID = "1qo-c1-t4i"; */
+"1qo-c1-t4i.title" = "group";
+
+/* Class = "UINavigationItem"; title = "参加希望待ち"; ObjectID = "22g-HQ-HpA"; */
+"22g-HQ-HpA.title" = "参加希望待ち";
+
+/* Class = "UITabBarItem"; title = "STEP"; ObjectID = "2Vh-B1-6OI"; */
+"2Vh-B1-6OI.title" = "STEP";
+
+/* Class = "UILabel"; text = "--"; ObjectID = "2wy-UM-DGi"; */
+"2wy-UM-DGi.text" = "--";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "3QS-BF-Ulh"; */
+"3QS-BF-Ulh.text" = "0";
+
+/* Class = "UILabel"; text = "ようこそ"; ObjectID = "3jW-t0-c2K"; */
+"3jW-t0-c2K.text" = "ようこそ";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "41v-rK-YEp"; */
+"41v-rK-YEp.title" = "戻る";
+
+/* Class = "UILabel"; text = "参加決定人数："; ObjectID = "42x-Tw-PwB"; */
+"42x-Tw-PwB.text" = "参加決定人数：";
+
+/* Class = "UILabel"; text = "所持"; ObjectID = "4Z4-dQ-bVG"; */
+"4Z4-dQ-bVG.text" = "所持";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "5dK-Re-iwg"; */
+"5dK-Re-iwg.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "閉じる"; ObjectID = "6Cl-QD-Unb"; */
+"6Cl-QD-Unb.normalTitle" = "閉じる";
+
+/* Class = "UIButton"; normalTitle = "いいね"; ObjectID = "6Nz-Je-oLO"; */
+"6Nz-Je-oLO.normalTitle" = "いいね";
+
+/* Class = "UILabel"; text = "ランク"; ObjectID = "6RQ-AB-KFb"; */
+"6RQ-AB-KFb.text" = "ランク";
+
+/* Class = "UIBarButtonItem"; title = "作成"; ObjectID = "6ar-h8-Dzz"; */
+"6ar-h8-Dzz.title" = "作成";
+
+/* Class = "UILabel"; text = "今日"; ObjectID = "6nE-Sp-oo2"; */
+"6nE-Sp-oo2.text" = "今日";
+
+/* Class = "UILabel"; text = "ポイント"; ObjectID = "6wr-fb-c58"; */
+"6wr-fb-c58.text" = "ポイント";
+
+/* Class = "UIButton"; normalTitle = "選択"; ObjectID = "7S7-aU-Yc3"; */
+"7S7-aU-Yc3.normalTitle" = "選択";
+
+/* Class = "UILabel"; text = "TODAY"; ObjectID = "7Te-9M-eT9"; */
+"7Te-9M-eT9.text" = "TODAY";
+
+/* Class = "UIButton"; normalTitle = "選択"; ObjectID = "9Tj-sM-nBF"; */
+"9Tj-sM-nBF.normalTitle" = "選択";
+
+/* Class = "UILabel"; text = "所持"; ObjectID = "9gH-Pr-OgG"; */
+"9gH-Pr-OgG.text" = "所持";
+
+/* Class = "UIBarButtonItem"; title = "リセット"; ObjectID = "9tc-eN-X2O"; */
+"9tc-eN-X2O.title" = "リセット";
+
+/* Class = "UILabel"; text = "２日前"; ObjectID = "CIj-2s-VmY"; */
+"CIj-2s-VmY.text" = "２日前";
+
+/* Class = "UILabel"; text = "距離"; ObjectID = "CSZ-qB-1VJ"; */
+"CSZ-qB-1VJ.text" = "距離";
+
+/* Class = "UIBarButtonItem"; title = "検索"; ObjectID = "DWL-hi-laO"; */
+"DWL-hi-laO.title" = "検索";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "DoW-fZ-IIC"; */
+"DoW-fZ-IIC.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "ポイント購入"; ObjectID = "EKX-Ex-TkG"; */
+"EKX-Ex-TkG.title" = "ポイント購入";
+
+/* Class = "UINavigationItem"; title = "やりとり"; ObjectID = "FRM-Si-g3h"; */
+"FRM-Si-g3h.title" = "やりとり";
+
+/* Class = "UILabel"; text = "STEP"; ObjectID = "FRi-RN-7wz"; */
+"FRi-RN-7wz.text" = "STEP";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "FZh-Jh-hbZ"; */
+"FZh-Jh-hbZ.title" = "戻る";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "GKR-D4-Yf9"; */
+"GKR-D4-Yf9.text" = "0";
+
+/* Class = "UILabel"; text = "0 / 0"; ObjectID = "Ic6-Qm-dr1"; */
+"Ic6-Qm-dr1.text" = "0 / 0";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "Iff-7o-hqu"; */
+"Iff-7o-hqu.text" = "0";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "Ih3-jb-9V5"; */
+"Ih3-jb-9V5.title" = "戻る";
+
+/* Class = "UIButton"; normalTitle = "閉じる"; ObjectID = "Ivm-i3-ClN"; */
+"Ivm-i3-ClN.normalTitle" = "閉じる";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Jux-nS-B9T"; */
+"Jux-nS-B9T.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "リセット"; ObjectID = "L2H-Re-Mlk"; */
+"L2H-Re-Mlk.normalTitle" = "リセット";
+
+/* Class = "UILabel"; text = "--"; ObjectID = "LIp-iK-lju"; */
+"LIp-iK-lju.text" = "--";
+
+/* Class = "UIButton"; normalTitle = "＜"; ObjectID = "M69-Ns-qni"; */
+"M69-Ns-qni.normalTitle" = "＜";
+
+/* Class = "UINavigationItem"; title = "設定"; ObjectID = "MUD-Bu-9Uq"; */
+"MUD-Bu-9Uq.title" = "設定";
+
+/* Class = "UILabel"; text = "POINT"; ObjectID = "Nrh-AT-XMA"; */
+"Nrh-AT-XMA.text" = "POINT";
+
+/* Class = "UILabel"; text = "1日前"; ObjectID = "ORw-p1-ERi"; */
+"ORw-p1-ERi.text" = "1日前";
+
+/* Class = "UIButton"; normalTitle = "閉じる"; ObjectID = "OVg-op-cf7"; */
+"OVg-op-cf7.normalTitle" = "閉じる";
+
+/* Class = "UIButton"; normalTitle = "グループ削除"; ObjectID = "P3O-1P-I3b"; */
+"P3O-1P-I3b.normalTitle" = "グループ削除";
+
+/* Class = "UINavigationItem"; title = "お知らせ"; ObjectID = "Pir-hx-3D4"; */
+"Pir-hx-3D4.title" = "お知らせ";
+
+/* Class = "UILabel"; text = "カロリー"; ObjectID = "PsH-bu-mTA"; */
+"PsH-bu-mTA.text" = "カロリー";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "QXm-Qe-LWU"; */
+"QXm-Qe-LWU.title" = "戻る";
+
+/* Class = "UILabel"; text = "歩数"; ObjectID = "R3i-e8-MK6"; */
+"R3i-e8-MK6.text" = "歩数";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "RDG-he-YVG"; */
+"RDG-he-YVG.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "選択"; ObjectID = "ROq-cK-nuB"; */
+"ROq-cK-nuB.normalTitle" = "選択";
+
+/* Class = "UIButton"; normalTitle = "登録しよ"; ObjectID = "Rrc-R5-dUU"; */
+"Rrc-R5-dUU.normalTitle" = "登録しよ";
+
+/* Class = "UILabel"; text = "交換ポイント"; ObjectID = "Rwc-Re-gzv"; */
+"Rwc-Re-gzv.text" = "交換ポイント";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "S8p-1Y-7GN"; */
+"S8p-1Y-7GN.title" = "戻る";
+
+/* Class = "UILabel"; text = "--"; ObjectID = "SJK-20-7Me"; */
+"SJK-20-7Me.text" = "--";
+
+/* Class = "UIButton"; normalTitle = "閉じる"; ObjectID = "SxB-35-PU3"; */
+"SxB-35-PU3.normalTitle" = "閉じる";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "TVE-IL-fAm"; */
+"TVE-IL-fAm.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "マイページ"; ObjectID = "Tjo-bA-rhK"; */
+"Tjo-bA-rhK.title" = "マイページ";
+
+/* Class = "UITabBarItem"; title = "グループイベント"; ObjectID = "UQz-fc-exU"; */
+"UQz-fc-exU.title" = "グループイベント";
+
+/* Class = "UIButton"; normalTitle = "選択"; ObjectID = "Ufe-na-gOs"; */
+"Ufe-na-gOs.normalTitle" = "選択";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "VQh-ik-pEb"; */
+"VQh-ik-pEb.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "マイデータ"; ObjectID = "Vln-ZF-CoP"; */
+"Vln-ZF-CoP.title" = "マイデータ";
+
+/* Class = "UILabel"; text = "POINT"; ObjectID = "VyE-KC-rET"; */
+"VyE-KC-rET.text" = "POINT";
+
+/* Class = "UILabel"; text = "交換済 / STEP数"; ObjectID = "Wc3-v1-ccz"; */
+"Wc3-v1-ccz.text" = "交換済 / STEP数";
+
+/* Class = "UINavigationItem"; title = "ポイント履歴"; ObjectID = "WcU-mQ-2J4"; */
+"WcU-mQ-2J4.title" = "ポイント履歴";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Wnb-az-FSd"; */
+"Wnb-az-FSd.normalTitle" = "Button";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "XAm-Cj-czd"; */
+"XAm-Cj-czd.title" = "戻る";
+
+/* Class = "UIButton"; normalTitle = "選択"; ObjectID = "XJq-GN-d2W"; */
+"XJq-GN-d2W.normalTitle" = "選択";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "Xed-m8-ZHN"; */
+"Xed-m8-ZHN.title" = "Title";
+
+/* Class = "UIButton"; normalTitle = "変換"; ObjectID = "Ygy-yz-Wg1"; */
+"Ygy-yz-Wg1.normalTitle" = "変換";
+
+/* Class = "UIButton"; normalTitle = "選択"; ObjectID = "ZJn-a6-FOc"; */
+"ZJn-a6-FOc.normalTitle" = "選択";
+
+/* Class = "UINavigationItem"; title = "ポイント交換"; ObjectID = "a4w-7K-Lb7"; */
+"a4w-7K-Lb7.title" = "ポイント交換";
+
+/* Class = "UILabel"; text = "24700"; ObjectID = "axC-9U-XN3"; */
+"axC-9U-XN3.text" = "24700";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "bK6-gN-YGI"; */
+"bK6-gN-YGI.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "選択"; ObjectID = "bVd-Mw-ZsD"; */
+"bVd-Mw-ZsD.normalTitle" = "選択";
+
+/* Class = "UILabel"; text = "現順位："; ObjectID = "bxN-rv-5iJ"; */
+"bxN-rv-5iJ.text" = "現順位：";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cjs-LL-Znw"; */
+"cjs-LL-Znw.text" = "Label";
+
+/* Class = "UILabel"; text = "--"; ObjectID = "d91-vW-VqH"; */
+"d91-vW-VqH.text" = "--";
+
+/* Class = "UILabel"; text = "所持ポイント"; ObjectID = "dIq-Qw-UKS"; */
+"dIq-Qw-UKS.text" = "所持ポイント";
+
+/* Class = "UITabBarItem"; title = "マイデータ"; ObjectID = "dQL-yF-0qo"; */
+"dQL-yF-0qo.title" = "マイデータ";
+
+/* Class = "UIButton"; normalTitle = "•••"; ObjectID = "dnd-mZ-Txg"; */
+"dnd-mZ-Txg.normalTitle" = "•••";
+
+/* Class = "UIButton"; normalTitle = "選択"; ObjectID = "dsd-us-bas"; */
+"dsd-us-bas.normalTitle" = "選択";
+
+/* Class = "UILabel"; text = "--"; ObjectID = "e3f-yL-aqV"; */
+"e3f-yL-aqV.text" = "--";
+
+/* Class = "UILabel"; text = "開催期間："; ObjectID = "ePa-lD-Jpk"; */
+"ePa-lD-Jpk.text" = "開催期間：";
+
+/* Class = "UITabBarItem"; title = "ユーザー詳細"; ObjectID = "ePt-bo-caw"; */
+"ePt-bo-caw.title" = "ユーザー詳細";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "efI-cg-mKC"; */
+"efI-cg-mKC.text" = "0";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "fRS-hg-maX"; */
+"fRS-hg-maX.text" = "0";
+
+/* Class = "UINavigationItem"; title = "グループ"; ObjectID = "gUz-QN-elg"; */
+"gUz-QN-elg.title" = "グループ";
+
+/* Class = "UIButton"; normalTitle = "ポイント購入"; ObjectID = "gk4-nm-V29"; */
+"gk4-nm-V29.normalTitle" = "ポイント購入";
+
+/* Class = "UILabel"; text = "--"; ObjectID = "h31-YM-Y6d"; */
+"h31-YM-Y6d.text" = "--";
+
+/* Class = "UIButton"; normalTitle = "閉じる"; ObjectID = "i8y-aS-dJk"; */
+"i8y-aS-dJk.normalTitle" = "閉じる";
+
+/* Class = "UITabBarItem"; title = "さがす"; ObjectID = "iaD-Ku-gLO"; */
+"iaD-Ku-gLO.title" = "さがす";
+
+/* Class = "UIButton"; normalTitle = "チュートリアルをみる"; ObjectID = "iuv-OM-mR3"; */
+"iuv-OM-mR3.normalTitle" = "チュートリアルをみる";
+
+/* Class = "UIBarButtonItem"; title = "編集"; ObjectID = "j8I-Fn-3Kb"; */
+"j8I-Fn-3Kb.title" = "編集";
+
+/* Class = "UILabel"; text = "pt"; ObjectID = "jsp-lR-59K"; */
+"jsp-lR-59K.text" = "pt";
+
+/* Class = "UIButton"; normalTitle = "作成"; ObjectID = "kud-2d-NDs"; */
+"kud-2d-NDs.normalTitle" = "作成";
+
+/* Class = "UILabel"; text = "登録ありがとうございます"; ObjectID = "l5D-1L-nBN"; */
+"l5D-1L-nBN.text" = "登録ありがとうございます";
+
+/* Class = "UILabel"; text = "STEP"; ObjectID = "l6X-eR-LR8"; */
+"l6X-eR-LR8.text" = "STEP";
+
+/* Class = "UILabel"; text = "時間"; ObjectID = "lAr-Fd-xCo"; */
+"lAr-Fd-xCo.text" = "時間";
+
+/* Class = "UINavigationItem"; title = "さがす"; ObjectID = "lDG-qN-sdb"; */
+"lDG-qN-sdb.title" = "さがす";
+
+/* Class = "UIButton"; normalTitle = "選択"; ObjectID = "lOS-ER-tzK"; */
+"lOS-ER-tzK.normalTitle" = "選択";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "lRn-qa-F7g"; */
+"lRn-qa-F7g.title" = "戻る";
+
+/* Class = "UITabBarItem"; title = "やりとり"; ObjectID = "lac-0i-yr4"; */
+"lac-0i-yr4.title" = "やりとり";
+
+/* Class = "UIButton"; normalTitle = "変換"; ObjectID = "m4p-Q0-GKC"; */
+"m4p-Q0-GKC.normalTitle" = "変換";
+
+/* Class = "UILabel"; text = "所持"; ObjectID = "m6b-yy-abD"; */
+"m6b-yy-abD.text" = "所持";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "m7E-O5-xmP"; */
+"m7E-O5-xmP.text" = "Label";
+
+/* Class = "UILabel"; text = "POINT"; ObjectID = "mbY-IP-QIh"; */
+"mbY-IP-QIh.text" = "POINT";
+
+/* Class = "UIButton"; normalTitle = "選択"; ObjectID = "mgx-BR-Wpk"; */
+"mgx-BR-Wpk.normalTitle" = "選択";
+
+/* Class = "UIButton"; normalTitle = "閉じる"; ObjectID = "nMc-bg-snj"; */
+"nMc-bg-snj.normalTitle" = "閉じる";
+
+/* Class = "UIButton"; normalTitle = "◀︎"; ObjectID = "oF2-Tl-8y1"; */
+"oF2-Tl-8y1.normalTitle" = "◀︎";
+
+/* Class = "UIButton"; normalTitle = "メッセージ"; ObjectID = "oWb-J3-043"; */
+"oWb-J3-043.normalTitle" = "メッセージ";
+
+/* Class = "UIButton"; normalTitle = "変換"; ObjectID = "on9-Rr-jWB"; */
+"on9-Rr-jWB.normalTitle" = "変換";
+
+/* Class = "UIButton"; normalTitle = "絞り込む"; ObjectID = "pW0-Wb-GOK"; */
+"pW0-Wb-GOK.normalTitle" = "絞り込む";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "pf7-uk-TRX"; */
+"pf7-uk-TRX.text" = "0";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "pxa-qI-QcF"; */
+"pxa-qI-QcF.title" = "Title";
+
+/* Class = "UILabel"; text = "0 / 0"; ObjectID = "q0H-BO-u5x"; */
+"q0H-BO-u5x.text" = "0 / 0";
+
+/* Class = "UILabel"; text = "アクション"; ObjectID = "q4D-Qz-PBa"; */
+"q4D-Qz-PBa.text" = "アクション";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "qtd-w3-pf6"; */
+"qtd-w3-pf6.title" = "戻る";
+
+/* Class = "UINavigationItem"; title = "設定"; ObjectID = "qwc-0D-HJq"; */
+"qwc-0D-HJq.title" = "設定";
+
+/* Class = "UILabel"; text = "0 / 0"; ObjectID = "rLH-oA-2eQ"; */
+"rLH-oA-2eQ.text" = "0 / 0";
+
+/* Class = "UINavigationItem"; title = "グループ作成"; ObjectID = "ruI-ab-bP1"; */
+"ruI-ab-bP1.title" = "グループ作成";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "sYf-ke-Chr"; */
+"sYf-ke-Chr.title" = "戻る";
+
+/* Class = "UILabel"; text = "ポイント"; ObjectID = "seV-yl-xse"; */
+"seV-yl-xse.text" = "ポイント";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "ta6-bH-TLb"; */
+"ta6-bH-TLb.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "閉じる"; ObjectID = "ts6-dZ-5lp"; */
+"ts6-dZ-5lp.normalTitle" = "閉じる";
+
+/* Class = "UIButton"; normalTitle = "閉じる"; ObjectID = "ttp-f0-Mcn"; */
+"ttp-f0-Mcn.normalTitle" = "閉じる";
+
+/* Class = "UILabel"; text = "スタンダード"; ObjectID = "vrB-24-wFb"; */
+"vrB-24-wFb.text" = "スタンダード";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "wui-wl-OCk"; */
+"wui-wl-OCk.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "閉じる"; ObjectID = "xJ9-Rt-pEH"; */
+"xJ9-Rt-pEH.normalTitle" = "閉じる";
+
+/* Class = "UIButton"; normalTitle = "グループチャット"; ObjectID = "xVX-VQ-qXI"; */
+"xVX-VQ-qXI.normalTitle" = "グループチャット";
+
+/* Class = "UIButton"; normalTitle = "▶︎"; ObjectID = "y77-0d-7Xk"; */
+"y77-0d-7Xk.normalTitle" = "▶︎";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "yHP-OY-SzQ"; */
+"yHP-OY-SzQ.title" = "戻る";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "yay-Ju-NdF"; */
+"yay-Ju-NdF.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "閉じる"; ObjectID = "z9f-rT-asW"; */
+"z9f-rT-asW.normalTitle" = "閉じる";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "zs0-6s-jb6"; */
+"zs0-6s-jb6.title" = "Title";

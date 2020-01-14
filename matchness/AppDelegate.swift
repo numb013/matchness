@@ -32,16 +32,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         var api_key = userDefaults.object(forKey: "api_token") as? String
 
-print("addddaク")
-print(api_key)
-
-
         
-        FirebaseApp.configure()
+//        self.window = UIWindow(frame: UIScreen.main.bounds)
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let initialViewController = storyboard.instantiateViewController(withIdentifier: "messageChat")
+//        //rootViewControllerに入れる
+//        self.window?.rootViewController = initialViewController
+//        //表示
+//        self.window?.makeKeyAndVisible()
+//        return true
+        
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self
-            
+
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
             UNUserNotificationCenter.current().requestAuthorization(
                 options: authOptions,
@@ -53,25 +57,9 @@ print(api_key)
         }
         
         application.registerForRemoteNotifications()
-//        print("チェックチェックチェックチェック")
-//        print(AccessToken.current())
-        
-//        if let _ = AccessToken.current() {
-//            print("ログイン済み")
-//        } else {
-//            print("みログイン")
-//        }
-
-//        STPPaymentConfiguration.shared().publishableKey = "pk_test_9ctOhFy7xdS9cYXFudRC4Smh001imsNQzB"
         Stripe.setDefaultPublishableKey("pk_test_9ctOhFy7xdS9cYXFudRC4Smh001imsNQzB")
 
-        
-//UserDefaults.standard.removeObject(forKey: "login_step_1")
-//UserDefaults.standard.removeObject(forKey: "login_step_2")
-
         if (api_key == nil || api_key == "") {
-
-print("OPOPOPOPOPOPOPOPOPOP")
 
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -99,6 +87,8 @@ print("OPOPOPOPOPOPOPOPOPOP")
             self.window?.makeKeyAndVisible()
             return true
         }
+
+        FirebaseApp.configure()
         return true
     }
 
@@ -135,29 +125,39 @@ print("OPOPOPOPOPOPOPOPOPOP")
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-//        // Print message ID.
-//        if let messageID = userInfo["gcm.message_id"] {
-//            print("Message ID: \(messageID)")
-//        }
-//        
-//        // Print full message.
-//        print(userInfo)
-//    }
-    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        // Print message ID.
+        if let messageID = userInfo["gcm.message_id"] {
+            print("Message ID: \(messageID)")
+        }
+
+        // Print full message.
+        print(userInfo)
+    }
+
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // Print message ID.
         if let messageID = userInfo["gcm.message_id"] {
             print("Message ID: \(messageID)")
         }
-        
+
         // Print full message.
         print(userInfo)
-        
+
         completionHandler(UIBackgroundFetchResult.newData)
     }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+      print("Firebase registration token: \(fcmToken)")
 
+      let dataDict:[String: String] = ["token": fcmToken]
+      NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+      // TODO: If necessary send token to application server.
+      // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+    
+    
 }
 
 @available(iOS 10, *)

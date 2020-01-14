@@ -14,6 +14,8 @@ class EndGroupViewController: UIViewController, UITableViewDelegate , UITableVie
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiGroupList> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     @IBOutlet weak var EndGroup: UITableView!
     var ActivityIndicator: UIActivityIndicatorView!
     
@@ -171,17 +173,9 @@ extension EndGroupViewController : GroupModelDelegate {
     }
     
     func onError(model: GroupModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
 
 }

@@ -21,6 +21,8 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
     
     var dataSource: Dictionary<String, ApiGroupEvent> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
     var cellCount: Int = 0
     let now = Date()
     var group_param = [String:Any]()
@@ -146,7 +148,7 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
 
 print("ログイン時間ログイン時間ログイン時間")
 
-        let date = dateFormater.date(from: "2016-10-03 03:12:12 +0000")
+        let date = dateFormater.date(from: "2000-01-01 03:12:12 +0000")
         print(group_event.action_datetime)
         print(group_event)
         print(date)
@@ -250,17 +252,10 @@ extension GroupEventViewController : GroupEventModelDelegate {
     }
 
     func onError(model: GroupEventModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }
 

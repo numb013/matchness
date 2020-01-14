@@ -18,6 +18,8 @@ PODS:
     - FBSDKLoginKit/Login (= 5.10.1)
   - FBSDKLoginKit/Login (5.10.1):
     - FBSDKCoreKit (~> 5.0)
+  - Firebase/Analytics (6.13.0):
+    - Firebase/Core
   - Firebase/Core (6.13.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.1.6)
@@ -26,6 +28,9 @@ PODS:
   - Firebase/Functions (6.13.0):
     - Firebase/CoreOnly
     - FirebaseFunctions (~> 2.5.1)
+  - Firebase/Messaging (6.13.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 4.1.9)
   - Firebase/Storage (6.13.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 3.4.2)
@@ -64,7 +69,7 @@ PODS:
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
-  - FirebaseMessaging (4.1.9):
+  - FirebaseMessaging (4.1.10):
     - FirebaseAnalyticsInterop (~> 1.3)
     - FirebaseCore (~> 6.2)
     - FirebaseInstanceID (~> 4.1)
@@ -122,7 +127,7 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - PagingMenuController (2.2.0)
-  - Protobuf (3.10.0)
+  - Protobuf (3.11.2)
   - SDWebImage (5.3.1):
     - SDWebImage/Core (= 5.3.1)
   - SDWebImage/Core (5.3.1)
@@ -136,15 +141,16 @@ DEPENDENCIES:
   - EAIntroView
   - FacebookCore
   - FBSDKLoginKit
+  - Firebase/Analytics
   - Firebase/Core
   - Firebase/Functions
+  - Firebase/Messaging
   - FirebaseDatabase
-  - FirebaseMessaging
   - FirebaseStorage
   - FirebaseUI/Storage
   - HydraAsync
   - ImageViewer
-  - JSQMessagesViewController
+  - JSQMessagesViewController (from `https://github.com/Ariandr/JSQMessagesViewController.git`, branch `master`)
   - MBCircularProgressBar
   - PagingMenuController
   - SDWebImage
@@ -153,7 +159,7 @@ DEPENDENCIES:
   - XLPagerTabStrip
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - Charts
     - EAIntroView
@@ -163,7 +169,6 @@ SPEC REPOS:
     - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
-    - FirebaseAnalyticsInterop
     - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -171,7 +176,6 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseFunctions
     - FirebaseInstanceID
-    - FirebaseMessaging
     - FirebaseStorage
     - FirebaseUI
     - GoogleAppMeasurement
@@ -181,17 +185,29 @@ SPEC REPOS:
     - GTMSessionFetcher
     - HydraAsync
     - ImageViewer
-    - JSQMessagesViewController
-    - JSQSystemSoundPlayer
     - leveldb-library
     - MBCircularProgressBar
     - nanopb
     - PagingMenuController
-    - Protobuf
     - SDWebImage
     - Stripe
     - SwiftyJSON
     - XLPagerTabStrip
+  trunk:
+    - FirebaseAnalyticsInterop
+    - FirebaseMessaging
+    - JSQSystemSoundPlayer
+    - Protobuf
+
+EXTERNAL SOURCES:
+  JSQMessagesViewController:
+    :branch: master
+    :git: https://github.com/Ariandr/JSQMessagesViewController.git
+
+CHECKOUT OPTIONS:
+  JSQMessagesViewController:
+    :commit: f75b9f9d4d9f0fd6318a8ca00393cd3117ed2497
+    :git: https://github.com/Ariandr/JSQMessagesViewController.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
@@ -211,7 +227,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 963515d232ded06f36f6ce830507c94551866170
   FirebaseFunctions: 5af7c35d1c5e41608fecbb667eb6c4e672e318d0
   FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
-  FirebaseMessaging: e8d71368a5c579083da02203146c953f3386d503
+  FirebaseMessaging: 089b7a4991425783384acc8bcefcd78c0af913bd
   FirebaseStorage: 046abe9ac4e2a1a0e47d72f536490ffa50896632
   FirebaseUI: 433550cb9e3d03ec7ee2c25f87493f76358d9b68
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
@@ -221,18 +237,18 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
   HydraAsync: 690b8c1c9dcde7ee1093cee363a6c1ce36b56a83
   ImageViewer: 3def6e39c6979ce3e9d001c78eec0d8b895f2f73
-  JSQMessagesViewController: 6587f56aedbcb150a8ba1d968e1ef58b1bc758b7
+  JSQMessagesViewController: f46d072fbc0d09a5268ab2a8a610db9a13ab35c5
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PagingMenuController: 6176618987bb170096664f2da097313e45ed9c31
-  Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
+  Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   SDWebImage: 7137d57385fb632129838c1e6ab9528a22c666cc
   Stripe: a468d5f39703807e840fdfed39572ffad0aaf053
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 99067568e345f8422789821d837ca581d62e3d11
+PODFILE CHECKSUM: d64161a74a5b1fc16f18f915323c0687c4c9b531
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

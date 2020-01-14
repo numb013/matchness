@@ -48,8 +48,9 @@ class PointHistoryModel: NSObject {
     public var requestApiCount: Int = 0;
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
-    //IDをキーにしてデータを保持
-    public var responseData: Dictionary<String, ApiPointHistory> = [String: ApiPointHistory]();
+        //IDをキーにしてデータを保持
+    public var errorData: Dictionary<String, ApiErrorAlert> = [String: ApiErrorAlert]();
+    public var responseData: Dictionary<String, ApiPintHistoryList> = [String: ApiPintHistoryList]();
     
     var request_mode: String!;
     
@@ -114,13 +115,13 @@ class PointHistoryModel: NSObject {
     
     /*
      */
-    func getData(row: Int) -> ApiPointHistory? {
+    func getData(row: Int) -> ApiPintHistoryList? {
         let count: Int = row + 1;
         if( count > responseDataOrder.count || responseDataOrder.isEmpty ){
             return nil;
         }
         let key: String = responseDataOrder[row];
-        if let info: ApiPointHistory = responseData[key] {
+        if let info: ApiPintHistoryList = responseData[key] {
             return info;
         }
         return nil;
@@ -139,9 +140,9 @@ extension PointHistoryModel : ApiRequestDelegate {
         let recommend: JSON = items["list"];
         for (key, item):(String, JSON) in json {
             //データを変換
-            let data: ApiPointHistory? = ApiPointHistory(json: item);
+            let data: ApiPintHistoryList? = ApiPintHistoryList(json: item);
             //Optionalチェック
-            guard let info: ApiPointHistory = data else {
+            guard let info: ApiPintHistoryList = data else {
                 continue;
             }
             print(info)
@@ -152,7 +153,7 @@ extension PointHistoryModel : ApiRequestDelegate {
             //            }
             print("222222")
             //
-            guard let notice_id = info.notice_id else {
+            guard let notice_id = info.point else {
                 continue;
             }
             
@@ -184,6 +185,12 @@ extension PointHistoryModel : ApiRequestDelegate {
     }
     
     func onError(_ error: JSON) {
+        for (key, item):(String, JSON) in error {
+            //データを変換
+            let data: ApiErrorAlert? = ApiErrorAlert(json: item);
+            //サブカテゴリーIDをキーにして保存
+            errorData[key] = data;
+        }
         self.delegate?.onError(model: self);
     }
 }

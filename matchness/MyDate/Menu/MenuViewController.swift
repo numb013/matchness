@@ -17,6 +17,8 @@ class MenuViewController: UIViewController {
         var swich_status:Bool = true
         var cellCount: Int = 0
         var dataSource: Dictionary<String, ApiSetting> = [:]
+        var errorData: Dictionary<String, ApiErrorAlert> = [:]
+
         var dataSourceOrder: Array<String> = []
         var ActivityIndicator: UIActivityIndicatorView!
     
@@ -300,17 +302,9 @@ print(self.dataSource)
     }
     
     func onError(model: SettingEditModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
 
 }

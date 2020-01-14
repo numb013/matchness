@@ -47,7 +47,8 @@ class MessageModel: NSObject {
     public var requestApiCount: Int = 0;
     //Dictionaryは要素の順番が決められていないため、順番を保持する配列s
     public var responseDataOrder: Array<String> = Array<String>();
-    //IDをキーにしてデータを保持
+        //IDをキーにしてデータを保持
+    public var errorData: Dictionary<String, ApiErrorAlert> = [String: ApiErrorAlert]();
     public var responseData: Dictionary<String, ApiChatRoom> = [String: ApiChatRoom]();
     
     var request_mode: String!;
@@ -167,7 +168,14 @@ extension MessageModel : ApiRequestDelegate {
         self.isRequest = false;
         self.delegate?.onFinally(model: self);
     }
+    
     func onError(_ error: JSON) {
+        for (key, item):(String, JSON) in error {
+            //データを変換
+            let data: ApiErrorAlert? = ApiErrorAlert(json: item);
+            //サブカテゴリーIDをキーにして保存
+            errorData[key] = data;
+        }
         self.delegate?.onError(model: self);
     }
 }

@@ -82,5 +82,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
+	<string>ヘルスケアのデータを取得してもいいでしょうか？</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>ヘルスケアのデータを取得してもいいでしょうか？</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>ヘルスケアのデータを取得してもいいでしょうか？</string>
 </dict>
 </plist>

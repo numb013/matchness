@@ -36,6 +36,7 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
     var fitness_parts_id: String? = nil
     
     override func viewDidLoad() {
+     
 //        var airports: [String: String] = ["YYZ": "いいねしたんだよー", "DUB": "Dublin"]
 //        Alert.common(alertNum: airports, viewController: self)
 //        print("AAAAAAAAAA")
@@ -80,6 +81,19 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
         tabBarController?.tabBar.isHidden = false
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        if (segue.identifier == "Modal") {
+            guard let ModalVC = segue.destination as? ModalViewController else {
+                return
+            }
+
+            ModalVC.modalPresentationStyle = .overCurrentContext
+            ModalVC.view.backgroundColor = UIColor(red:0.94, green:0.94, blue:0.96, alpha:0.5)
+
+        }
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         print("ここにこに")
         super.viewWillAppear(animated)
@@ -95,7 +109,7 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
         self.page_no = "1"
         self.dataSourceOrder = []
         var dataSource: Dictionary<String, ApiUserDate> = [:]
-
+        var errorData: Dictionary<String, ApiErrorAlert> = [:]
 
         // ActivityIndicatorを作成＆中央に配置
         ActivityIndicator = UIActivityIndicatorView()
@@ -204,60 +218,68 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
 
         var search = self.dataSource[String(indexPath.row)]
 
+print("VVVVVVVVVVVVV")
+print(search)
+        
+        
+        
         let cell : UserSearchCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "userDetailCell", for: indexPath as IndexPath) as! UserSearchCollectionViewCell
 
-//        cell.agearea.text = self.dataSource[String(indexPath.row)]?.work
-        cell.agearea.text = search?.name
-        
-        cell.job.text = "痩せたい部位:" + ApiConfig.FITNESS_LIST[search!.fitness_parts_id!]
-        cell.tag = search?.id! ?? 0
+        if (search != nil) {
+    //        cell.agearea.text = self.dataSource[String(indexPath.row)]?.work
+            cell.agearea.text = search?.name
+            
+            cell.job.text = "痩せたい部位:" + ApiConfig.FITNESS_LIST[search!.fitness_parts_id!]
+            cell.tag = search?.id! ?? 0
 
-        var number = Int.random(in: 1 ... 18)
-        cell.imageView.image = UIImage(named: "\(number)")
+            var number = Int.random(in: 1 ... 18)
+            cell.imageView.image = UIImage(named: "\(number)")
 
-//        //urlでの画像の表示
-//        let url = NSURL(string:"http://k.yimg.jp/images/top/sp2/cmn/logo-ns-131205.png")
-//        let req = NSURLRequest(url:url! as URL)
-//        NSURLConnection.sendAsynchronousRequest(req as URLRequest, queue:OperationQueue.main){(res, data, err) in
-//            let image = UIImage(data:data!)
-//             cell.imageView.image = image
-//        }
+    //        //urlでの画像の表示
+    //        let url = NSURL(string:"http://k.yimg.jp/images/top/sp2/cmn/logo-ns-131205.png")
+    //        let req = NSURLRequest(url:url! as URL)
+    //        NSURLConnection.sendAsynchronousRequest(req as URLRequest, queue:OperationQueue.main){(res, data, err) in
+    //            let image = UIImage(data:data!)
+    //             cell.imageView.image = image
+    //        }
 
-        cell.new_flag.isHidden = true
-        print(search)
+            cell.new_flag.isHidden = true
+            print(search)
 
-        
-        if (search?.created_flag != nil) {
-            if (search!.created_flag! == 1) {
-                cell.new_flag.image = UIImage(named: "new2")
-                cell.new_flag.isHidden = false
+            
+            if (search?.created_flag != nil) {
+                if (search!.created_flag! == 1) {
+                    cell.new_flag.image = UIImage(named: "new2")
+                    cell.new_flag.isHidden = false
+                }
+                if (search!.created_flag! == 2) {
+                    cell.new_flag.image = UIImage(named: "new2")
+                    cell.new_flag.isHidden = false
+                }
+                if (search!.created_flag! == 3) {
+                    cell.new_flag.image = UIImage(named: "new2")
+                    cell.new_flag.isHidden = false
+                }
             }
-            if (search!.created_flag! == 2) {
-                cell.new_flag.image = UIImage(named: "new2")
-                cell.new_flag.isHidden = false
+            
+            
+            if (search?.last_login_flag != nil) {
+                if (search!.last_login_flag! == 1) {
+                    cell.new_flag.image = UIImage(named: "new1")
+                    cell.new_flag.isHidden = false
+                }
+                if (search!.last_login_flag! == 2) {
+                    cell.new_flag.image = UIImage(named: "new1")
+                    cell.new_flag.isHidden = false
+                }
+                if (search!.last_login_flag! == 3) {
+                    cell.new_flag.image = UIImage(named: "new1")
+                    cell.new_flag.isHidden = false
+                }
             }
-            if (search!.created_flag! == 3) {
-                cell.new_flag.image = UIImage(named: "new2")
-                cell.new_flag.isHidden = false
-            }
+            
         }
-        
-        
-        if (search?.last_login_flag != nil) {
-            if (search!.last_login_flag! == 1) {
-                cell.new_flag.image = UIImage(named: "new1")
-                cell.new_flag.isHidden = false
-            }
-            if (search!.last_login_flag! == 2) {
-                cell.new_flag.image = UIImage(named: "new1")
-                cell.new_flag.isHidden = false
-            }
-            if (search!.last_login_flag! == 3) {
-                cell.new_flag.image = UIImage(named: "new1")
-                cell.new_flag.isHidden = false
-            }
-        }
-        
+
         return cell
     }
 
@@ -283,14 +305,14 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
         self.present(nextVC, animated: true, completion: nil)
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: (Any)?) {
-        if segue.identifier == "toUserDetail" {
-            print("ユーザー詳細遷移前")
-            print(sender)
-            let udc:UserDetailViewController = segue.destination as! UserDetailViewController
-            udc.user_id = sender as! Int
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: (Any)?) {
+//        if segue.identifier == "toUserDetail" {
+//            print("ユーザー詳細遷移前")
+//            print(sender)
+//            let udc:UserDetailViewController = segue.destination as! UserDetailViewController
+//            udc.user_id = sender as! Int
+//        }
+//    }
 
     
     @IBAction func searchButton(_ sender: Any) {
@@ -315,7 +337,16 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
 
 extension UserSearchViewController : UserSearchModelDelegate {
     func onFinally(model: UserSearchModel) {
-        print("こちら/SettingEdit/UserDetailViewのonStart")
+        if (self.dataSourceOrder.isEmpty) {
+            let alertController:UIAlertController = UIAlertController(title:"該当なし",message: "再度検索してください",preferredStyle: .alert)
+            let cancelAction:UIAlertAction =
+                UIAlertAction(title: "閉じる",style: .cancel,handler:{
+                    (action:UIAlertAction!) -> Void in
+                    print("キャンセル")
+                })
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true, completion: nil)
+        }
     }
     func onStart(model: UserSearchModel) {
         print("こちら/usersearch/UserSearchViewのonStart")
@@ -351,6 +382,7 @@ extension UserSearchViewController : UserSearchModelDelegate {
         print("modelmodelmodelmodel")
         self.errorData = model.errorData;
         Alert.common(alertNum: self.errorData, viewController: self)
+        ActivityIndicator.stopAnimating()
     }
 }
 

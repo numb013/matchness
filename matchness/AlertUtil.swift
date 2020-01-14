@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 class Alert: UIAlertController {
-    class func error(alertNum : Int, viewController: UIViewController) {
+    class func error(alertNum : Dictionary<String, ApiErrorAlert>, viewController: UIViewController) {
 //        var alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
 //        alert = UIAlertController(title: "タイトル", message: "エラー出ませんように", preferredStyle: .alert)
 //        let actionCancel = UIAlertAction(title: "キャンセル", style: .cancel) {

@@ -17,6 +17,7 @@ class MyTapGestureRecognizer: UITapGestureRecognizer {
     var targetUserId: Int?
     var amount: String?
     var pay_point_id: String?
+    var payment_id: String?
 }
 
 class UserDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,GalleryItemsDataSource {
@@ -36,7 +37,7 @@ class UserDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiUserDetailDate> = [:]
     var dataSourceOrder: Array<String> = []
-    
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
     
     struct DataItem {
         let imageView: UIImage
@@ -264,12 +265,12 @@ print("22222")
                 let dateFormater = DateFormatter()
                 //                dateFormater.locale = Locale(identifier: "ja_JP")
                 //                dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-                //                var date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
+                //                var date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2000-01-01 03:12:12 +0000")
                 ////                print(date?.description ?? "nilですよ")    // 2016-10-03 03:12:12 +0000
                 //                var date_data = date?.description
                 
                 //                dateFormater.locale = Locale(identifier: "ja_JP")
-                //                var date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
+                //                var date = dateFormater.date(from: self.dataSource["0"]?.birthday ?? "2000-01-01 03:12:12 +0000")
                 
                 //                dateFormater.dateFormat = "yyyy年MM月dd日"
                 //                var date_text = dateFormater.string(from: date!)
@@ -337,6 +338,11 @@ print("22222")
     
     @IBAction func addLikeButton(_ sender: Any) {
         print("タップタップタップいいね")
+
+        LikeRequest.isEnabled = false
+        LikeRequest.backgroundColor = #colorLiteral(red: 0.4803626537, green: 0.05874101073, blue: 0.1950398982, alpha: 1)
+        LikeRequest.titleLabel?.text = "いいね済み"
+
         var target_id = self.dataSource["0"]?.id
         //リクエスト先
         let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_LIKE;
@@ -382,12 +388,18 @@ print("22222")
                 print(json)
 
                 if (json["status"] == "NG") {
+
+                    self.LikeRequest.isEnabled = true
+                    self.LikeRequest.backgroundColor = #colorLiteral(red: 1, green: 0.1857388616, blue: 0.5733950138, alpha: 1)
+                    self.LikeRequest.titleLabel?.text = "いいね"
+
+
                     print(json["error"])
                     print(json["message"])
                     var error_message: String = json["message"].description
 
                     let alertController:UIAlertController =
-                        UIAlertController(title:"エラー",message: error_message, preferredStyle: .alert)
+                        UIAlertController(title:"ポイントが不足しています",message: "いいねするにはポイント1p必要です", preferredStyle: .alert)
                     // Default のaction
                     let defaultAction:UIAlertAction =
                         UIAlertAction(title: "ポイント変換ページへ",style: .destructive,handler:{
@@ -658,18 +670,11 @@ extension UserDetailViewController : UserDetailModelDelegate {
     func onFailed(model: UserDetailModel) {
         print("こちら/UserDetail/UserDetailViewのonFailed")
     }
-
+    
     func onError(model: UserDetailModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }

@@ -21,13 +21,13 @@ class MessageViewController: JSQMessagesViewController, UIImagePickerControllerD
     var ref: DatabaseReference!
     var message_users = [String:String]()
     var roomId = String()
-    var point = String()
+    var point = Int()
     var last_message = String()
     var incomingBubble: JSQMessagesBubbleImage!
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingAvatar: JSQMessagesAvatarImage!
     var outgoingAvatar: JSQMessagesAvatarImage!
-
+    let userDefaults = UserDefaults.standard
     var messages = [JSQMessage]()
 }
 
@@ -35,24 +35,23 @@ extension MessageViewController {
     //送信ボタンが押された時の挙動
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
 
-
-
-
-
-
-
-        let alertController:UIAlertController =
-            UIAlertController(title:"メッセージを送る",message: "メッセージ送信には10000pt必要です",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction =
-            UIAlertAction(title: "送信",style: .destructive,handler:{
-            (action:UIAlertAction!) -> Void in
-            // 処理
+        
+//        let alertController:UIAlertController =
+//            UIAlertController(title:"メッセージを送る",message: "メッセージ送信には100pt必要です",preferredStyle: .alert)
+//        // Default のaction
+//        let defaultAction:UIAlertAction =
+//            UIAlertAction(title: "送信",style: .destructive,handler:{
+//            (action:UIAlertAction!) -> Void in
+//            // 処理
                 print("送信する")
-                if Int(self.point)! < 100000 {
+                self.point = self.userDefaults.object(forKey: "point") as! Int
+
+print(self.point)
+
+                if self.point < 100 {
 
                     let alertController:UIAlertController =
-                        UIAlertController(title:"メッセージを送信",message: "メッセージを送信には10000pt必要です",preferredStyle: .alert)
+                        UIAlertController(title:"メッセージを送信",message: "メッセージを送信には100pt必要です",preferredStyle: .alert)
                     // Default のaction
                     let defaultAction:UIAlertAction =
                         UIAlertAction(title: "ポイント変換ページへ",style: .destructive,handler:{
@@ -65,6 +64,7 @@ extension MessageViewController {
                             let multiple = storyboard.instantiateViewController(withIdentifier: "pointChange")
                             multiple.modalPresentationStyle = .fullScreen
                             //ここが実際に移動するコードとなります
+                            self.dismiss(animated: true, completion: nil)
                             self.present(multiple, animated: false, completion: nil)
                         })
                     
@@ -83,6 +83,9 @@ extension MessageViewController {
 
                 } else {
                     print("1111111111111111")
+                    self.point = self.point - 100
+                    self.userDefaults.set(Int(self.point), forKey: "point")
+                    
                     let message = JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text)
                     //メッセージの送信処理を完了する(画面上にメッセージが表示される)
                     self.finishReceivingMessage(animated: true)
@@ -107,24 +110,24 @@ extension MessageViewController {
                     post1Ref.setValue(post1)
                     self.finishSendingMessage(animated: true)
                 }
-                //キーボードを閉じる
-                self.view.endEditing(true)
-            })
-        
-        // Cancel のaction
-        let cancelAction:UIAlertAction =
-            UIAlertAction(title: "キャンセル",style: .cancel,handler:{
-            (action:UIAlertAction!) -> Void in
-            // 処理
-                print("キャンセル")
-            })
-        
-        // actionを追加
-        alertController.addAction(cancelAction)
-        alertController.addAction(defaultAction)
-        
-        // UIAlertControllerの起動
-        present(alertController, animated: true, completion: nil)
+//                //キーボードを閉じる
+//                self.view.endEditing(true)
+//            })
+//
+//        // Cancel のaction
+//        let cancelAction:UIAlertAction =
+//            UIAlertAction(title: "キャンセル",style: .cancel,handler:{
+//            (action:UIAlertAction!) -> Void in
+//            // 処理
+//                print("キャンセル")
+//            })
+//
+//        // actionを追加
+//        alertController.addAction(cancelAction)
+//        alertController.addAction(defaultAction)
+//
+//        // UIAlertControllerの起動
+//        present(alertController, animated: true, completion: nil)
     }
 
     
@@ -140,13 +143,10 @@ extension MessageViewController {
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         
-        query["point"] = "10000"
+        query["point"] = "100"
         query["last_message"] = self.last_message
         query["room_code"] = self.roomId
         //リクエスト実行
-
-        self.point = String(Int(self.point)! - Int(query["point"]!)!)
-
         if( !requestMessageModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
@@ -347,10 +347,23 @@ extension MessageViewController {
         }
         super.viewDidLoad()
         self.roomId = self.message_users["room_code"]!
-        self.point = self.message_users["point"]!
+//        self.point = self.message_users["point"]!
 
         self.senderId = self.message_users["user_id"]
         self.senderDisplayName = self.message_users["user_name"]
+
+print("MMMMMMMMMMMEEEEEE")
+print(self.roomId)
+//print(self.point)
+print(self.senderId)
+print(self.senderDisplayName)
+                        self.userDefaults.set(Int(self.message_users["point"]!), forKey: "point")
+                        print("送信する")
+                        self.point = self.userDefaults.object(forKey: "point") as! Int
+
+        print(self.point)
+
+
         //タブバー非表示
         tabBarController?.tabBar.isHidden = true
         // アバターの設定
@@ -359,6 +372,15 @@ extension MessageViewController {
         // メッセージ取得の関数（真下）呼び出し
         self.messages = getMessages()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        print("メッセージ3")
+        super.viewDidAppear(animated)
+        //タブバー非表示
+        tabBarController?.tabBar.isHidden = true
+    }
+
+
 }
 
 extension MessageViewController {

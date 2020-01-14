@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class PreferredGroupListViewController: UIViewController, UITableViewDelegate , UITableViewDataSource {
 
@@ -14,6 +16,9 @@ class PreferredGroupListViewController: UIViewController, UITableViewDelegate , 
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiGroupRequestList> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+    private var requestAlamofire: Alamofire.Request?;
+
     var group_id: Int = Int()
     var ActivityIndicator: UIActivityIndicatorView!
 
@@ -168,6 +173,24 @@ class PreferredGroupListViewController: UIViewController, UITableViewDelegate , 
     @IBAction func GroupEventDelete(_ sender: Any) {
         print("GGGGGGGG")
         print(self.group_id)
+
+
+
+        // ActivityIndicatorを作成＆中央に配置
+        self.ActivityIndicator = UIActivityIndicatorView()
+        self.ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        self.ActivityIndicator.center = self.view.center
+        // クルクルをストップした時に非表示する
+        self.ActivityIndicator.hidesWhenStopped = true
+        // 色を設定
+        self.ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+        //Viewに追加
+        self.view.addSubview(self.ActivityIndicator)
+        self.ActivityIndicator.startAnimating()
+
+
+
+        self.requestDeleteGroup(group_id:group_id)
     }
     
     
@@ -184,19 +207,73 @@ class PreferredGroupListViewController: UIViewController, UITableViewDelegate , 
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
-        
         query["user_id"] = String(user_id)
         query["group_id"] = String(self.group_id)
         query["status"] = status
         query["type"] = "2"
-        print("リリリリリリリリリリリリリリリリr")
-        print(query)
-        
-        //リクエスト実行
         if( !requestPreferredGroupListModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
     }
+
+    
+        func requestDeleteGroup(group_id: Int) {
+            print("APIへリクエスト（ユーザー取得")
+            let requestUrl: String = ApiConfig.REQUEST_URL_API_RECRUITMENT_DELETE_GROUP;
+            //パラメーター
+            var query: Dictionary<String,String> = Dictionary<String,String>();
+            var headers: [String : String] = [:]
+            query["group_id"] = String(group_id)
+
+            var api_key = userDefaults.object(forKey: "api_token") as? String
+            if ((api_key) != nil) {
+                headers = [
+                    "Accept" : "application/json",
+                    "Authorization" : "Bearer " + api_key!,
+                    "Content-Type" : "application/x-www-form-urlencoded"
+                ]
+            }
+
+            self.requestAlamofire = Alamofire.request(requestUrl, method: .post, parameters: query, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
+                switch response.result {
+                case .success:
+                    var json:JSON;
+                    do{
+                        //レスポンスデータを解析
+                        json = try SwiftyJSON.JSON(data: response.data!);
+                    } catch {
+                        // error
+                        print("json error: \(error.localizedDescription)");
+    //                     self.onFaild(response as AnyObject);
+                        break;
+                    }
+                    print("取得した値はここにきて")
+                    print(json)
+
+                    self.ActivityIndicator.stopAnimating()
+                    self.dismiss(animated: true, completion: nil)
+                case .failure:
+                    //  リクエスト失敗 or キャンセル時
+                    let alert = UIAlertController(title: "設定", message: "失敗しました。", preferredStyle: .alert)
+                    self.present(alert, animated: true, completion: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                            alert.dismiss(animated: true, completion: nil)
+                        })
+                    })
+                    return;
+                }
+            }
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -227,18 +304,11 @@ extension PreferredGroupListViewController : PreferredGroupListModelDelegate {
     func onFailed(model: PreferredGroupListModel) {
         print("こちら/usersearch/UserSearchViewのonFailed")
     }
-
+    
     func onError(model: PreferredGroupListModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="152"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="151.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="152"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="79N-uG-3kU">
@@ -56,14 +54,6 @@
                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UGb-ZD-ixM">
-                        <rect key="frame" x="290" y="0.0" width="30" height="30"/>
-                        <color key="backgroundColor" red="0.99878019090000003" green="0.19209468360000001" blue="0.59625893829999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="30" id="DIu-bP-kLy"/>
-                            <constraint firstAttribute="height" constant="30" id="TY8-ff-qAs"/>
-                        </constraints>
-                    </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sc3-fV-o66">
                         <rect key="frame" x="109" y="109" width="103" height="27"/>
                         <constraints>
@@ -75,18 +65,25 @@
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
                     </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nP0-p1-hNe">
+                        <rect key="frame" x="268" y="0.0" width="52" height="52"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="52" id="Bzc-Oe-WMe"/>
+                            <constraint firstAttribute="width" constant="52" id="yVr-Uv-qA0"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="CC7-bg-I46" firstAttribute="top" secondItem="ngH-ZB-lmQ" secondAttribute="bottom" constant="3" id="9fQ-a1-NQk"/>
-                    <constraint firstAttribute="trailing" secondItem="UGb-ZD-ixM" secondAttribute="trailing" id="AbT-3C-osZ"/>
                     <constraint firstItem="NMd-4t-zRT" firstAttribute="leading" secondItem="79N-uG-3kU" secondAttribute="trailing" constant="10" id="Cku-DI-1Eq"/>
                     <constraint firstItem="79N-uG-3kU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="9" id="NFR-5J-tpZ"/>
                     <constraint firstItem="ngH-ZB-lmQ" firstAttribute="leading" secondItem="79N-uG-3kU" secondAttribute="trailing" constant="10" id="Njd-j5-zc0"/>
-                    <constraint firstItem="UGb-ZD-ixM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="SCy-xd-stv"/>
                     <constraint firstItem="DNr-TU-t5C" firstAttribute="top" secondItem="CC7-bg-I46" secondAttribute="bottom" constant="3" id="SMq-3e-CHy"/>
                     <constraint firstItem="79N-uG-3kU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="VUU-nE-Q2j"/>
                     <constraint firstItem="ngH-ZB-lmQ" firstAttribute="top" secondItem="NMd-4t-zRT" secondAttribute="bottom" constant="3" id="XUK-yF-pqI"/>
+                    <constraint firstItem="nP0-p1-hNe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="biL-Sj-t6T"/>
                     <constraint firstItem="NMd-4t-zRT" firstAttribute="top" secondItem="GhU-dc-AdX" secondAttribute="bottom" constant="3" id="cnY-VU-Ybh"/>
+                    <constraint firstAttribute="trailing" secondItem="nP0-p1-hNe" secondAttribute="trailing" id="hYu-ej-DBe"/>
                     <constraint firstItem="GhU-dc-AdX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="jaD-Se-lpx"/>
                     <constraint firstItem="DNr-TU-t5C" firstAttribute="leading" secondItem="79N-uG-3kU" secondAttribute="trailing" constant="10" id="oDr-0y-jCt"/>
                     <constraint firstItem="GhU-dc-AdX" firstAttribute="leading" secondItem="79N-uG-3kU" secondAttribute="trailing" constant="10" id="on5-SW-qHq"/>
@@ -98,7 +95,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="groupFlag" destination="UGb-ZD-ixM" id="8g2-DK-DSB"/>
+                <outlet property="groupFlag" destination="nP0-p1-hNe" id="cGS-Gb-hN1"/>
                 <outlet property="groupTestImage" destination="79N-uG-3kU" id="bwA-HJ-GFs"/>
                 <outlet property="joinButton" destination="Sc3-fV-o66" id="zRr-bn-WdX"/>
                 <outlet property="joinNumber" destination="ngH-ZB-lmQ" id="7Fh-TK-Hhg"/>

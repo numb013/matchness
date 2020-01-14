@@ -22,17 +22,20 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var pickerBottom: NSLayoutConstraint!
     @IBOutlet weak var datePickerView: UIDatePicker!
     @IBOutlet weak var pickerView: UIPickerView!
+    var select_pcker_list: [Int] = [0, 0, 0, 0, 0, 0, 0, 0]
 
     var ActivityIndicator: UIActivityIndicatorView!
     var setDateviewTime = ""
     var vi = UIView()
     var isDate = Date()
+    var start_date = ""
     var selectPicker: Int = 0
     var selectPickerItem: Int = 0
     var pcker_list: [String] = [""]
-
+    var selectRow = 0
     var setDay = Date()
     var cellCount: Int = 0
+//    var errorData: Dictionary<String, ApiErrorAlert> = [:]
     var dataSource: Dictionary<String, ApiUserDate> = [:]
     var dataSourceOrder: Array<String> = []
     private var requestAlamofire: Alamofire.Request?;
@@ -43,8 +46,8 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
     var user_id = ""
     var profileImage:UIImage = UIImage()
 
-
     //IDをキーにしてデータを保持
+    public var errorData: Dictionary<String, ApiErrorAlert> = [String: ApiErrorAlert]();
     public var responseData: Dictionary<String, ApiProfileData> = [String: ApiProfileData]();
     
     override func viewDidLoad() {
@@ -414,7 +417,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
         if indexPath.section == 1 {
             if indexPath.row == 0 {
                 let cell = profileAddTableView.dequeueReusableCell(withIdentifier: "TextFiledTableViewCell") as! TextFiledTableViewCell
-
                 cell.title?.text = "ニックネーム"
                 cell.textFiled.delegate = self
                 cell.textFiled.tag = 0
@@ -424,8 +426,7 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             if indexPath.row == 1 {
                 let cell = profileAddTableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-print("職業職業職業職業職業職業職業職業職業")
-print(myData?.work)
+                self.select_pcker_list[indexPath.row] = myData?.work ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "職業"
                 cell.detail?.text = ApiConfig.WORK_LIST[myData?.work ?? 0]
@@ -433,7 +434,7 @@ print(myData?.work)
             }
             if indexPath.row == 2 {
                 let cell = profileAddTableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
+                self.select_pcker_list[indexPath.row] = myData?.prefecture_id ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "居住地"
                 cell.detail?.text = ApiConfig.PREFECTURE_LIST[myData?.prefecture_id ?? 0]
@@ -448,9 +449,7 @@ print(myData?.work)
                 let dateFormater = DateFormatter()
                 dateFormater.locale = Locale(identifier: "ja_JP")
                 dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-
-                self.responseData["0"]?.birthday = dateFormater.string(from: self.isDate)
-                let date = dateFormater.date(from: self.responseData["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
+                let date = dateFormater.date(from: self.responseData["0"]?.birthday ?? dateFormater.string(from: self.isDate))
                 print("タイム444444444")
                 print(date)
                 print("誕生日誕生日誕生日")
@@ -462,6 +461,7 @@ print(myData?.work)
             
             if indexPath.row == 4 {
                 let cell = profileAddTableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
+                self.select_pcker_list[indexPath.row] = myData?.fitness_parts_id ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "痩せたい部位"
                 cell.detail?.text = ApiConfig.FITNESS_LIST[myData?.fitness_parts_id ?? 0]
@@ -469,7 +469,7 @@ print(myData?.work)
             }
             if indexPath.row == 5 {
                 let cell = profileAddTableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
+                self.select_pcker_list[indexPath.row] = myData?.weight ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "体重(非公開)"
                 cell.detail?.text = ApiConfig.WEIGHT_LIST[myData?.weight ?? 0]
@@ -478,7 +478,7 @@ print(myData?.work)
             
             if indexPath.row == 6 {
                 let cell = profileAddTableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
+                self.select_pcker_list[indexPath.row] = myData?.sex ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "性別"
                 cell.detail?.text = ApiConfig.SEX_LIST[myData?.sex ?? 0]
@@ -487,10 +487,10 @@ print(myData?.work)
             
             if indexPath.row == 7 {
                 let cell = profileAddTableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
+                self.select_pcker_list[indexPath.row] = myData?.blood_type ?? 0
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 cell.title?.text = "血液型"
-                cell.detail?.text = ApiConfig.BLOOD_LIST[myData?.blood_type ?? 2]
+                cell.detail?.text = ApiConfig.BLOOD_LIST[myData?.blood_type ?? 0]
                 return cell
             }
         }
@@ -510,26 +510,32 @@ print(myData?.work)
         if indexPath.row == 1 {
             self.selectPicker = 1
             self.pcker_list = ApiConfig.WORK_LIST
+            self.selectRow = self.responseData["0"]?.work ?? 0
         }
         if indexPath.row == 2 {
             self.selectPicker = 2
             self.pcker_list = ApiConfig.PREFECTURE_LIST
+            self.selectRow = self.responseData["0"]?.prefecture_id ?? 0
         }
         if indexPath.row == 4 {
             self.selectPicker = 4
             self.pcker_list = ApiConfig.FITNESS_LIST
+            self.selectRow = self.responseData["0"]?.fitness_parts_id ?? 0
         }
         if indexPath.row == 5 {
             self.selectPicker = 5
             self.pcker_list = ApiConfig.WEIGHT_LIST
+            self.selectRow = self.responseData["0"]?.weight ?? 0
         }
         if indexPath.row == 6 {
             self.selectPicker = 6
             self.pcker_list = ApiConfig.SEX_LIST
+            self.selectRow = self.responseData["0"]?.sex ?? 0
         }
         if indexPath.row == 7 {
             self.selectPicker = 7
             self.pcker_list = ApiConfig.BLOOD_LIST
+            self.selectRow = self.responseData["0"]?.blood_type ?? 0
         }
         
         print(indexPath.section)
@@ -540,11 +546,12 @@ print(myData?.work)
             let dateFormater = DateFormatter()
             dateFormater.locale = Locale(identifier: "ja_JP")
             dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
-            let date = dateFormater.date(from: self.responseData["0"]?.birthday ?? "2016-10-03 03:12:12 +0000")
+            let date = dateFormater.date(from: self.responseData["0"]?.birthday ?? "2000-01-01 03:12:12 +0000")
             datePickerView.date = date!
             print("デートピッカーーーーーーーー")
             datePickerPush()
         } else {
+            pickerView.selectRow(self.selectRow, inComponent: 0, animated: false)
             self.pickerView.reloadAllComponents()
             PickerPush()
         }
@@ -558,32 +565,27 @@ print(myData?.work)
         if self.selectPicker == 0 {
 
         }
+        
         if self.selectPicker == 1 {
-            print("YYYUYUYUYUYUYUYUYUYUYUYUYUYUYUY")
-            print(self.selectPickerItem)
-
-            self.responseData["0"]?.work = self.selectPickerItem
-            print("IOIOIOIOIOIOIOIOIOIO")
-            print(self.responseData["0"]?.work)
-
+            self.responseData["0"]?.work = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 2 {
-            self.responseData["0"]?.prefecture_id = self.selectPickerItem
+            self.responseData["0"]?.prefecture_id = self.select_pcker_list[self.selectPicker] ?? 0
         }
-        if self.selectPicker == 3 {
-            self.responseData["0"]?.work = self.selectPickerItem
-        }
+//        if self.selectPicker == 3 {
+//            self.responseData["0"]?.fitness_parts_id = self.select_pcker_list[self.selectPicker] ?? 0
+//        }
         if self.selectPicker == 4 {
-            self.responseData["0"]?.fitness_parts_id = self.selectPickerItem
+            self.responseData["0"]?.fitness_parts_id = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 5 {
-            self.responseData["0"]?.weight = self.selectPickerItem
+            self.responseData["0"]?.weight = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 6 {
-            self.responseData["0"]?.sex = self.selectPickerItem
+            self.responseData["0"]?.sex = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 7 {
-            self.responseData["0"]?.blood_type = self.selectPickerItem
+            self.responseData["0"]?.blood_type = self.select_pcker_list[self.selectPicker] ?? 0
         }
 
         profileAddTableView.reloadData()
@@ -658,15 +660,22 @@ print("2222222222222222")
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
 print("333333333333333")
-            print(self.pcker_list)
-        print(row)
-        return self.pcker_list[row]
+print(self.pcker_list)
+print(row)
+        if (self.pcker_list.count > row) {
+            return self.pcker_list[row]
+        } else {
+            return ""
+        }
+
     }
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.selectPickerItem = row
         print("選択ピッカー選択ピッカー選択ピッカー")
+        print(self.selectPicker)
+        print(row)
+        self.select_pcker_list[self.selectPicker] = row
     }
     
     
@@ -759,8 +768,6 @@ print("333333333333333")
         query["weight"] = String(self.responseData["0"]?.weight ?? 0)
         query["prefecture_id"] = String(self.responseData["0"]?.prefecture_id ?? 0)
 
-       
-
         //リクエスト実行
         if( !requestProfileAddModel.requestApi(url: requestUrl, addQuery: query) ){
             
@@ -790,22 +797,16 @@ extension ProfileAddViewController : ProfileAddModelDelegate {
     func onComplete(model: ProfileAddModel, count: Int) {
         var count: Int = 0;
         self.userDefaults.set("1", forKey: "login_step_2")
-        performSegue(withIdentifier: "toRegistComp", sender: nil)
+        performSegue(withIdentifier: "start", sender: nil)
     }
     func onFailed(model: ProfileAddModel) {
         print("こちら/ProfileAddModel/ProfileAddModeliewのonFailed")
     }
+
     func onError(model: ProfileAddModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
+
 }

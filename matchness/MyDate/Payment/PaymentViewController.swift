@@ -17,7 +17,7 @@ class PaymentViewController: UIViewController {
     var paymentIntentClientSecret: String?
     private var requestAlamofire: Alamofire.Request?;
     var publishableKey = ""
-
+    var ActivityIndicator: UIActivityIndicatorView!
     var amount:String = String()
     var pay_point_id:String = String()
     var customer_status: String = String()
@@ -66,6 +66,7 @@ class PaymentViewController: UIViewController {
             view.rightAnchor.constraint(equalToSystemSpacingAfter: stackView.rightAnchor, multiplier: 2),
             stackView.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 30),
         ])
+        print("購入１")
         startCheckout()
     }
 
@@ -80,6 +81,7 @@ class PaymentViewController: UIViewController {
             if restartDemo {
                 alert.addAction(UIAlertAction(title: "Restart demo", style: .cancel) { _ in
                     self.cardTextField.clear()
+                    print("購入２")
                     self.startCheckout()
                 })
             }
@@ -113,8 +115,23 @@ class PaymentViewController: UIViewController {
 
     @objc
     func pay() {
+print("決済決済決済決済決済決済決済")
+        // ActivityIndicatorを作成＆中央に配置
+        ActivityIndicator = UIActivityIndicatorView()
+        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        ActivityIndicator.center = self.view.center
+        // クルクルをストップした時に非表示する
+        ActivityIndicator.hidesWhenStopped = true
+        // 色を設定
+        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+        //Viewに追加
+        self.view.addSubview(ActivityIndicator)
+        ActivityIndicator.startAnimating()
+
+
         guard let paymentIntentClientSecret = paymentIntentClientSecret else {
             print("11111")
+            ActivityIndicator.stopAnimating()
             return;
         }
         print("22222")
@@ -138,7 +155,7 @@ class PaymentViewController: UIViewController {
                 break
             case .succeeded:
 //                self.displayAlert(title: "Payment succeeded", message: paymentIntent?.description ?? "", restartDemo: true)
-
+                self.ActivityIndicator.stopAnimating()
                 self.apiPointUpdate()
                 
                 
@@ -163,13 +180,14 @@ class PaymentViewController: UIViewController {
                         (action:UIAlertAction!) -> Void in
                         // 処理
                         print("キャンセル")
+                        self.dismiss(animated: true, completion: nil)
 //                        self.dismiss(animated: true, completion: nil)
-                        let storyboard: UIStoryboard = self.storyboard!
-                        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-                        let multiple = storyboard.instantiateViewController(withIdentifier: "pointChange")
-                        multiple.modalPresentationStyle = .fullScreen
-                        //ここが実際に移動するコードとなります
-                        self.present(multiple, animated: false, completion: nil)
+//                        let storyboard: UIStoryboard = self.storyboard!
+//                        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+//                        let multiple = storyboard.instantiateViewController(withIdentifier: "pointChange")
+//                        multiple.modalPresentationStyle = .fullScreen
+//                        //ここが実際に移動するコードとなります
+//                        self.present(multiple, animated: false, completion: nil)
                     })
                 
                 alertController.addAction(defaultAction)
@@ -225,7 +243,7 @@ class PaymentViewController: UIViewController {
             customer_status = self.userDefaults.object(forKey: "customer_status") as! String
         }
         
-        query["customer_status"] = customer_status
+        query["customer_status"] = ""
         var headers: [String : String] = [:]
         var api_key = userDefaults.object(forKey: "api_token") as? String
         print("apiエーピーあい")

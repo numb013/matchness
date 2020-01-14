@@ -20,7 +20,8 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var progressViewBar: MBCircularProgressBarView!
     @IBOutlet weak var myPoint: UILabel!
     var ActivityIndicator: UIActivityIndicatorView!
-
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+    let userDefaults = UserDefaults.standard
     var dataSource: Dictionary<String, ApiMyData> = [:]
     var dataSourceOrder: Array<String> = []
     var cellCount: Int = 0
@@ -36,7 +37,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     var step_1: [Double] = []
     
     let topMenu = ["AAA", "BBB", "CCC"]
-    let systemMenu = ["足あと", "もらったいいね", "プロフィール", "お気に入り", "ポイント交換", "お知らせ", "ブロック", "設定", "退会", "ポイント履歴", "マイデータ", "決済"]
+    let systemMenu = ["足あと", "もらったいいね", "プロフィール", "お気に入り", "ポイント交換", "お知らせ", "ブロック", "設定", "退会", "ポイント購入履歴", "マイデータ", "決済"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,6 +95,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.weight = detail!.weight!
         print("detaildetaildetaildetaildetail")
         print(detail)
+        self.userDefaults.set(Int(detail!.point!), forKey: "point")
     }
 //    override func viewDidAppear(_ animated: Bool) {
 //
@@ -321,7 +323,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
 
         if (indexPath.row == 11) {
             let storyboard: UIStoryboard = self.storyboard!
-            let multiple = storyboard.instantiateViewController(withIdentifier: "payment")
+            let multiple = storyboard.instantiateViewController(withIdentifier: "paymentEdit")
             multiple.modalPresentationStyle = .fullScreen
             self.present(multiple, animated: false, completion: nil)
         }
@@ -486,17 +488,9 @@ extension MyDataViewController : MyDataModelDelegate {
     }
 
     func onError(model: MyDataModel) {
-        ActivityIndicator.stopAnimating()
-        let alertController:UIAlertController = UIAlertController(title:"サーバーエラー",message: "アプリを再起動してください",preferredStyle: .alert)
-        // Default のaction
-        let defaultAction:UIAlertAction = UIAlertAction(title: "アラートを閉じる",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                //  self.dismiss(animated: true, completion: nil)
-            })
-        alertController.addAction(defaultAction)
-        // UIAlertControllerの起動
-        self.present(alertController, animated: true, completion: nil)
+        print("modelmodelmodelmodel")
+        self.errorData = model.errorData;
+        Alert.common(alertNum: self.errorData, viewController: self)
     }
     
 }

@@ -20,17 +20,21 @@ pod 'Charts'
 pod 'EAIntroView'
 
 #メッセージ
-pod 'JSQMessagesViewController'
-#pod 'JSQMessagesViewController', :git => 'https://github.com/Ariandr/#JSQMessagesViewController.git', :branch => 'master', :inhibit_warnings => true
-#pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'
+#pod 'JSQMessagesViewController'
+#pod 'JSQMessagesViewController', :git => 'https://github.com/Tulleb/JSQMessagesViewController.git', :branch => 'develop', :inhibit_warnings => true
+pod 'JSQMessagesViewController', :git => 'https://github.com/Ariandr/JSQMessagesViewController.git', :branch => 'master', :inhibit_warnings => true
 pod 'Firebase/Core'
 pod 'FacebookCore'
 pod 'FirebaseDatabase'
 pod 'FirebaseStorage'
 pod 'SDWebImage'
 pod 'FirebaseUI/Storage'
-pod 'FirebaseMessaging'
+pod 'Firebase/Messaging'
 
+# add the Firebase pod for Google Analytics
+pod 'Firebase/Analytics'
+# add pods for any other desired Firebase products
+# https://firebase.google.com/docs/ios/setup#available-pods
 
 pod 'FBSDKLoginKit'
 pod 'HydraAsync'

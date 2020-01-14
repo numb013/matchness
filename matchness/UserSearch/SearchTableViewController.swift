@@ -23,14 +23,16 @@ class SearchTableViewController: UIViewController, UITableViewDelegate, UITableV
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiUserDate> = [:]
     var dataSourceOrder: Array<String> = []
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+    var select_pcker_list: [Int] = [0, 0, 0, 0, 0, 0, 0, 0]
 
+    
     var freeword = ""
     var work: Int = 0
     var prefecture_id: Int = 0
     var blood_type: Int = 0
     var fitness_parts_id: Int = 0
     var search_age_id: Int = 0
-
     var editType: Int = 0
     var selectRow = 0
 
@@ -45,6 +47,9 @@ class SearchTableViewController: UIViewController, UITableViewDelegate, UITableV
         pickerView.showsSelectionIndicator = true
         if ((self.userDefaults.object(forKey: "searchFreeword")) != nil) {
             self.freeword = (self.userDefaults.object(forKey: "searchFreeword") as? String)!
+print("SSSSSSSSSSSSS")
+print(self.freeword)
+
         }
         if ((self.userDefaults.object(forKey: "searchWork")) != nil) {
             self.work = Int((self.userDefaults.object(forKey: "searchWork") as? String)!)!
@@ -91,7 +96,7 @@ print(work)
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         header.tintColor = #colorLiteral(red: 0.9499146342, green: 0.9500735402, blue: 0.9498936534, alpha: 1)
-        header.textLabel?.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        header.textLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         header.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
     }
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -112,7 +117,7 @@ print(work)
                 cell.title?.text = "フリーワード"
                 cell.textFiled.delegate = self
                 cell.textFiled.tag = 0
-                cell.textFiled?.text = myData?.name
+                cell.textFiled?.text = self.freeword
                 return cell
             }
             
@@ -215,19 +220,19 @@ print(work)
         print(self.selectPickerItem)
 
         if self.selectPicker == 1 {
-            self.work = self.selectPickerItem
+            self.work = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 2 {
-            self.prefecture_id = self.selectPickerItem
+            self.prefecture_id = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 3 {
-            self.fitness_parts_id = self.selectPickerItem
+            self.fitness_parts_id = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 4 {
-            self.blood_type = self.selectPickerItem
+            self.blood_type = self.select_pcker_list[self.selectPicker] ?? 0
         }
         if self.selectPicker == 5 {
-            self.search_age_id = self.selectPickerItem
+            self.search_age_id = self.select_pcker_list[self.selectPicker] ?? 0
         }
 
         dismissPicker()
@@ -271,15 +276,18 @@ print(work)
     // UIPickerViewに表示する配列
     func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
         print("p3p3p3p3p3")
-        return self.pcker_list[row]
+        if (self.pcker_list.count > row) {
+            return self.pcker_list[row]
+        } else {
+            return ""
+        }
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-
-        print(row)
-
-        self.selectPickerItem = row
         print("選択ピッカー選択ピッカー選択ピッカー")
+        print(self.selectPicker)
+        print(row)
+        self.select_pcker_list[self.selectPicker] = row
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -315,7 +323,21 @@ print(work)
         return true
     }
 
-    
+    @IBAction func searchResetButton(_ sender: Any) {
+        print("リセットリセットリセット")
+        userDefaults.removeObject(forKey: "searchFreeword")
+        self.freeword = ""
+        userDefaults.removeObject(forKey: "searchWork")
+        self.work = 0
+        userDefaults.removeObject(forKey: "searchPrefectureId")
+        self.prefecture_id = 0
+        userDefaults.removeObject(forKey: "searchBloodType")
+        self.blood_type = 0
+        userDefaults.removeObject(forKey: "searchFitnessPartsId")
+        self.fitness_parts_id = 0
+        self.select_pcker_list = [0, 0, 0, 0, 0, 0, 0, 0]
+        tableView.reloadData()
+    }
     
     @IBAction func searchButton(_ sender: Any) {
         print("編集ボタン！！！！")
@@ -350,13 +372,21 @@ print(work)
         nextVC.blood_type = String(self.blood_type)
         nextVC.prefecture_id = String(self.prefecture_id)
 
-        
-        UserDefaults.standard.set(self.freeword, forKey: "searchFreeword")
-        UserDefaults.standard.set(String(self.work), forKey: "searchWork")
-        UserDefaults.standard.set(String(self.fitness_parts_id), forKey: "searchFitnessPartsId")
-        UserDefaults.standard.set(String(self.blood_type), forKey: "searchBloodType")
-        UserDefaults.standard.set(String(self.prefecture_id), forKey: "searchPrefectureId")
-        
+        if (self.freeword != nil) {
+            UserDefaults.standard.set(self.freeword, forKey: "searchFreeword")
+        }
+        if (self.work != nil) {
+            UserDefaults.standard.set(String(self.work), forKey: "searchWork")
+        }
+        if (self.fitness_parts_id != nil) {
+            UserDefaults.standard.set(String(self.fitness_parts_id), forKey: "searchFitnessPartsId")
+        }
+        if (self.blood_type != nil) {
+            UserDefaults.standard.set(String(self.blood_type), forKey: "searchBloodType")
+        }
+        if (self.prefecture_id != nil) {
+            UserDefaults.standard.set(String(self.prefecture_id), forKey: "searchPrefectureId")
+        }
 //        self.present(nextVC, animated: false, completion: nil)
 //        self.navigationController?.pushViewController(nextVC, animated: true)
         self.navigationController?.popViewController(animated: true)
@@ -382,79 +412,3 @@ print(work)
      
     
 }
-
-//
-//extension SearchTableViewController : UserSearchModelDelegate {
-//
-//    func onStart(model: UserSearchModel) {
-//        print("こちら/UserDetail/UserDetailViewのonStart")
-//    }
-//    func onComplete(model: UserSearchModel, count: Int) {
-//        print("UserDetail着てきてきてきて")
-//        //更新用データを設定
-//        self.dataSource = model.responseData;
-//        self.dataSourceOrder = model.responseDataOrder;
-//
-//        print(self.dataSourceOrder)
-//        print("UserDetail耳耳耳意味耳みm")
-//        print(self.dataSource)
-//        print(self.dataSource["0"]?.name)
-//        print(self.dataSource["0"]?.work)
-//
-//        //一つもなかったら
-//        //        if( dataSourceOrder.isEmpty ){
-//        //            return;
-//        //        }
-//
-//        //cellの件数更新
-//        self.cellCount = dataSourceOrder.count;
-//        //        self.cellCount = 10;
-//
-//
-//
-//        //
-//        var count: Int = 0;
-//        //        for(key, code) in dataSourceOrder.enumerated() {
-//        //            count+=1;
-//        //            if let jenre: ApiUserDateParam = dataSource[code] {
-//        //                //取得したデータを元にコレクションを再構築＆更新
-//        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-//        //            }
-//        //        }
-//
-//
-//        if self.editType == 1 {
-//        print("更新")
-//        let alertController:UIAlertController =
-//            UIAlertController(title:"プロフィールが更新されました",message: "プロフィールが更新されました",preferredStyle: .alert)
-//        // Default のaction
-//        let defaultAction:UIAlertAction =
-//            UIAlertAction(title: "更新されました",style: .destructive,handler:{
-//                (action:UIAlertAction!) -> Void in
-//                // 処理
-//                print("更新されました")
-//            })
-//        // Cancel のaction
-//        let cancelAction:UIAlertAction =
-//            UIAlertAction(title: "閉じる",style: .cancel,handler:{
-//                (action:UIAlertAction!) -> Void in
-//                // 処理
-//                print("キャンセル")
-//            })
-//        // actionを追加
-//        alertController.addAction(cancelAction)
-//        alertController.addAction(defaultAction)
-//        // UIAlertControllerの起動
-//        present(alertController, animated: true, completion: nil)
-//        }
-//
-//
-////        tableView.reloadData()
-//
-//
-//    }
-//    func onFailed(model: UserSearchModel) {
-//        print("こちら/UserSearchModel/UserDetailViewのonFailed")
-//    }
-//
-//}
