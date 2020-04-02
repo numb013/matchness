@@ -19,8 +19,6 @@ public struct ApiSetting: CustomDebugStringConvertible {
     public var foot_notice: Int? = nil;
     public var match_notice: Int? = nil;
     
-    
-    
 //    public var images: Array<String> = Array<String>();
 //    public var categorySubId: Array<String> = Array<String>();
 //    public var tagId: Array<String> = Array<String>();

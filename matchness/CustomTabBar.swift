@@ -13,44 +13,30 @@ class CustomTabBar: UITabBar {
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         var sizeThatFits = super.sizeThatFits(size)
-
-
         switch (UIScreen.main.nativeBounds.height) {
         case 480:
-            // iPhone
-            // iPhone 3G
-            // iPhone 3GS
+            // iPhone,3G,3GS
             height_bar = 100
             print("heigh_1")
             break
         case 960:
-            // iPhone 4
-            // iPhone 4S
+            // iPhone 4,4S
             print("heigh_2")
             break
         case 1136:
-            // iPhone 5
-            // iPhone 5s
-            // iPhone 5c
-            // iPhone SE
+            // iPhone 5,5s,5c,SE
             print("heigh_3")
             height_bar = 50
             break
         case 1334:
-            // iPhone 6
-            // iPhone 6s
-            // iPhone 7
-            // iPhone 8
+            // iPhone 6,6s,7,8
             print("heigh_4")
-            height_bar = 80
+            height_bar = 60
             break
         case 2208:
-            // iPhone 6 Plus
-            // iPhone 6s Plus
-            // iPhone 7 Plus
-            // iPhone 8 Plus
+            // iPhone 6 Plus,6s Plus,7 Plus,8 Plus
             print("heigh_5")
-            height_bar = 60
+            height_bar = 70
             break
         case 2436:
             //iPhone X

@@ -9,7 +9,7 @@
 import UIKit
 import PagingMenuController
 
-class GroupViewController: UIViewController {
+class GroupViewController: baseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // PagingMenuController追加
@@ -75,6 +75,11 @@ class GroupViewController: UIViewController {
         NSLog("GroupViewController#backFromGroupEventAddView")
     }
 
+    @IBAction func groupSearch(_ sender: Any) {
+        print("検索検索検索検索検索")
+        self.performSegue(withIdentifier: "groupSearch", sender: nil)
+    }
+        
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -133,5 +138,9 @@ private struct PagingMenuOptions: PagingMenuControllerCustomizable {
             return .text(title: MenuItemText(text: "参加済       ", color: UIColor.white, selectedColor: UIColor.white))
         }
     }
+    
+    
+    
+    
     
 }

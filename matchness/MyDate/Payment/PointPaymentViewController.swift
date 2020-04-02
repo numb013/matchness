@@ -21,8 +21,10 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
     var errorData: Dictionary<String, ApiErrorAlert> = [:]
 
     private var requestAlamofire: Alamofire.Request?;
-    var ActivityIndicator: UIActivityIndicatorView!
-
+//    var ActivityIndicator: UIActivityIndicatorView!
+    var activityIndicatorView = UIActivityIndicatorView()
+    
+    
     var selectRow = 0
     var isLoading:Bool = false
     var page_no = "1"
@@ -30,7 +32,7 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
     var amount:String = String()
     var pay_point_id:String = String()
     var customer_status: String = String()
-
+    let image_url: String = ApiConfig.REQUEST_URL_IMEGE;
     var card_no = ""
     var card_company = ""
 
@@ -42,6 +44,13 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
         self.tableView.register(UINib(nibName: "pointPaymentTableViewCell", bundle: nil), forCellReuseIdentifier: "pointPaymentTableViewCell")
         self.tableView.register(UINib(nibName: "PointExplanationTableViewCell", bundle: nil), forCellReuseIdentifier: "PointExplanationTableViewCell")
         // Do any additional setup after loading the view.
+
+        //        view.backgroundColor = .lightGray
+        activityIndicatorView.center = view.center
+        activityIndicatorView.style = .whiteLarge
+        activityIndicatorView.color = .purple
+        view.addSubview(activityIndicatorView)
+        
         apiRequest()
     }
 
@@ -80,7 +89,7 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "aaa")
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")
 
         if (indexPath.row + 1 == self.cellCount + 1) {
             print("せえと2222222222")
@@ -106,12 +115,15 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
 
             cell.amount.text = point_pay.amount
             cell.point.text = point_pay.point
-    //        var number = Int.random(in: 1 ... 18)
-            cell.pointPaymentImage.image = UIImage(named: "new1")
+
+            if indexPath.row % 2 == 0 {
+                cell.point.textColor = #colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1)
+                cell.unit.textColor = #colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1)
+            }
+
+            cell.pointPaymentImage.image = UIImage(named: "paybuttom")
             cell.pointPaymentImage.isUserInteractionEnabled = true
             var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTap(_:)))
-    //        recognizer.targetUserId = pointPaymentList[indexPath.row]
-
 
             recognizer.amount = point_pay.amount
             recognizer.pay_point_id = point_pay.id
@@ -124,10 +136,8 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
         return cell
     }
     
+    
     @objc func onTap(_ sender: MyTapGestureRecognizer) {
-
-        print("YYYYYYYYYYYYYY")
-
         self.amount = sender.amount!
         self.pay_point_id = sender.pay_point_id!
         if (self.userDefaults.object(forKey: "customer_status") == nil) {
@@ -148,21 +158,18 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
             let defaultAction:UIAlertAction =
                 UIAlertAction(title: "購入する",style: .destructive,handler:{
                     (action:UIAlertAction!) -> Void in
-                    // 処理
-                    //  self.dismiss(animated: true, completion: nil)
 
-                    // ActivityIndicatorを作成＆中央に配置
-                    self.ActivityIndicator = UIActivityIndicatorView()
-                    self.ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-                    self.ActivityIndicator.center = self.view.center
-                    // クルクルをストップした時に非表示する
-                    self.ActivityIndicator.hidesWhenStopped = true
-                    // 色を設定
-                    self.ActivityIndicator.style = UIActivityIndicatorView.Style.gray
-                    //Viewに追加
-                    self.view.addSubview(self.ActivityIndicator)
-                    self.ActivityIndicator.startAnimating()
-
+                    self.activityIndicatorView.startAnimating()
+                    DispatchQueue.global(qos: .default).async {
+                        // 非同期処理などを実行
+                        Thread.sleep(forTimeInterval: 5)
+                        // 非同期処理などが終了したらメインスレッドでアニメーション終了
+                        DispatchQueue.main.async {
+                            // アニメーション終了
+                            self.activityIndicatorView.stopAnimating()
+                        }
+                    }
+                    
                     self.customer_status = self.userDefaults.object(forKey: "customer_status") as! String
                     self.pay()
 
@@ -250,7 +257,8 @@ class PointPaymentViewController: UIViewController, UITableViewDelegate , UITabl
                 print("取得した値はここにきて")
                 print(json)
 
-                self.ActivityIndicator.stopAnimating()
+//                self.ActivityIndicator.stopAnimating()
+                self.activityIndicatorView.stopAnimating()
 
                 self.payalert()
                 self.dismiss(animated: true, completion: nil)

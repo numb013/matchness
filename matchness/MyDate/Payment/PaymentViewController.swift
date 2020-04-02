@@ -17,11 +17,15 @@ class PaymentViewController: UIViewController {
     var paymentIntentClientSecret: String?
     private var requestAlamofire: Alamofire.Request?;
     var publishableKey = ""
-    var ActivityIndicator: UIActivityIndicatorView!
+//    var ActivityIndicator: UIActivityIndicatorView!
+    var activityIndicatorView = UIActivityIndicatorView()
+
     var amount:String = String()
     var pay_point_id:String = String()
     var customer_status: String = String()
     var group_id: Int = Int()
+
+    let label = UILabel()
     
     public var responseData: Dictionary<String, ApiPayment> = [String: ApiPayment]();
     
@@ -34,10 +38,16 @@ class PaymentViewController: UIViewController {
         button.layer.cornerRadius = 5
         button.backgroundColor = .systemBlue
         button.titleLabel?.font = UIFont.systemFont(ofSize: 22)
-        button.setTitle("Pay", for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 300, height: 100)
+        button.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8470588235)
+        button.setTitle("購入する", for: .normal)
         button.addTarget(self, action: #selector(pay), for: .touchUpInside)
         return button
     }()
+//    lazy var payImage: UIImageView = {
+//        let testImage = UIImageView(image: UIImage(named: "1"))
+//        return testImage
+//    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,24 +58,45 @@ class PaymentViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
 
+        
         let navBar = UINavigationBar()
         //xとyで位置を、widthとheightで幅と高さを指定する
-        navBar.frame = CGRect(x: 0, y: 30, width: 375, height: 230)
+        navBar.frame = CGRect(x: 0, y: 30, width: 420, height: 230)
         //ナビゲーションアイテムのタイトルを設定
         let navItem : UINavigationItem = UINavigationItem(title: "クレジット決済")
         //ナビゲーションバー右のボタンを設定
         navItem.leftBarButtonItem = UIBarButtonItem(title: "戻る", style: UIBarButtonItem.Style.plain, target: self, action:#selector(self.myAction))
         //ナビゲーションバーにアイテムを追加
         navBar.pushItem(navItem, animated: true)
-
         //Viewにナビゲーションバーを追加
         self.view.addSubview(navBar)
+        
         
         NSLayoutConstraint.activate([
             stackView.leftAnchor.constraint(equalToSystemSpacingAfter: view.leftAnchor, multiplier: 2),
             view.rightAnchor.constraint(equalToSystemSpacingAfter: stackView.rightAnchor, multiplier: 2),
-            stackView.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 30),
+            stackView.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 15)
         ])
+
+        
+        let title = UILabel()
+        title.text = "金運をアップさせる特におすすめの方角は 「西・北・東北」が良いとされています。\n\n西には金運を呼び寄せる方角になります。\n北には金運を育てる方角になります。\n東北には投資など財産を動かす方角になります。\n\nそれぞれの方角にラッキーカラーのアイテムを置くとより運気をアップ出来るでしょう。"
+
+        title.frame = CGRect(x:(self.view.bounds.width-360)/2,y:75,width: 360,height:550)
+        
+        title.textAlignment = .left
+        title.numberOfLines = 0
+//        title.center = self.view.center
+        title.lineBreakMode = .byWordWrapping
+        title.textColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        self.view.addSubview(title)
+        
+        
+        view.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
+        activityIndicatorView.center = view.center
+        activityIndicatorView.style = .whiteLarge
+        activityIndicatorView.color = .purple
+        view.addSubview(activityIndicatorView)
         print("購入１")
         startCheckout()
     }
@@ -115,23 +146,22 @@ class PaymentViewController: UIViewController {
 
     @objc
     func pay() {
-print("決済決済決済決済決済決済決済")
-        // ActivityIndicatorを作成＆中央に配置
-        ActivityIndicator = UIActivityIndicatorView()
-        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        ActivityIndicator.center = self.view.center
-        // クルクルをストップした時に非表示する
-        ActivityIndicator.hidesWhenStopped = true
-        // 色を設定
-        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
-        //Viewに追加
-        self.view.addSubview(ActivityIndicator)
-        ActivityIndicator.startAnimating()
-
-
+        print("決済決済決済決済決済決済決済")
+        activityIndicatorView.startAnimating()
+        DispatchQueue.global(qos: .default).async {
+            // 非同期処理などを実行
+            Thread.sleep(forTimeInterval: 5)
+            // 非同期処理などが終了したらメインスレッドでアニメーション終了
+            DispatchQueue.main.async {
+                // アニメーション終了
+                self.activityIndicatorView.stopAnimating()
+            }
+        }
+        
         guard let paymentIntentClientSecret = paymentIntentClientSecret else {
             print("11111")
-            ActivityIndicator.stopAnimating()
+//            ActivityIndicator.stopAnimating()
+            self.activityIndicatorView.stopAnimating()
             return;
         }
         print("22222")
@@ -148,16 +178,20 @@ print("決済決済決済決済決済決済決済")
         paymentHandler.confirmPayment(withParams: paymentIntentParams, authenticationContext: self) { (status, paymentIntent, error) in
             switch (status) {
             case .failed:
-                self.displayAlert(title: "Payment failed", message: error?.localizedDescription ?? "")
+//                self.ActivityIndicator.stopAnimating()
+                self.activityIndicatorView.stopAnimating()
+                self.displayAlert(title: "購入に失敗しました", message: error?.localizedDescription ?? "")
                 break
             case .canceled:
-                self.displayAlert(title: "Payment canceled", message: error?.localizedDescription ?? "")
+//                self.ActivityIndicator.stopAnimating()
+                self.activityIndicatorView.stopAnimating()
+                self.displayAlert(title: "購入がキャンセルされました", message: error?.localizedDescription ?? "")
                 break
             case .succeeded:
 //                self.displayAlert(title: "Payment succeeded", message: paymentIntent?.description ?? "", restartDemo: true)
-                self.ActivityIndicator.stopAnimating()
+//                self.ActivityIndicator.stopAnimating()
+                self.activityIndicatorView.stopAnimating()
                 self.apiPointUpdate()
-                
                 
                 let alertController:UIAlertController =
                     UIAlertController(title:"クレジットカードを登録しますか？",message: "次回から入力なしでポイントの購入ができます",preferredStyle: .alert)
@@ -203,8 +237,6 @@ print("決済決済決済決済決済決済決済")
         }
     }
 
-
-    
     func payalert() {
         // アラート作成
         print("アラートアラートアラートアラートアラート")
@@ -220,13 +252,10 @@ print("決済決済決済決済決済決済決済")
                 multiple.modalPresentationStyle = .fullScreen
                 //ここが実際に移動するコードとなります
                 self.present(multiple, animated: false, completion: nil)
-
             })
         })
     }
 
-    
-    
     // 初回購入チェック
     func startCheckout() {
         /****************
@@ -376,15 +405,7 @@ print("決済決済決済決済決済決済決済")
             }
         }
     }
-
-
-
-
-
-
 }
-
-
 
 extension PaymentViewController: STPAuthenticationContext {
     func authenticationPresentingViewController() -> UIViewController {

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreMotion
+import HealthKit
 
 class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -15,8 +15,9 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak internal var peopleNumber: UILabel!
     @IBOutlet weak internal var rank: UILabel!
     @IBOutlet weak internal var stepNumber: UILabel!
+    @IBOutlet weak var ChatButtom: UIButton!
+    
     @IBOutlet weak internal var groupEvent: UICollectionView!
-    var ActivityIndicator: UIActivityIndicatorView!
     var group_step:Int = 0
     
     var dataSource: Dictionary<String, ApiGroupEvent> = [:]
@@ -26,62 +27,120 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
     var cellCount: Int = 0
     let now = Date()
     var group_param = [String:Any]()
-    let stepInstance = TodayStep()
-    let pedometer:CMPedometer = CMPedometer()//プロパティでCMPedometerをインスタンス化。
+    let dateFormatter = DateFormatter()
+    let store = HKHealthStore()
+    let image_url: String = ApiConfig.REQUEST_URL_IMEGE;
+
+//    let pedometer:CMPedometer = CMPedometer()//プロパティでCMPedometerをインスタンス化。
     
     override func viewDidLoad() {
         super.viewDidLoad()
         groupEvent.delegate = self
         groupEvent.dataSource = self
+        if HKHealthStore.isHealthDataAvailable() {
+            let readDataTypes: Set<HKObjectType> = [
+             HKObjectType.quantityType(forIdentifier:HKQuantityTypeIdentifier.stepCount)!,
+             HKObjectType.quantityType(forIdentifier:HKQuantityTypeIdentifier.distanceWalkingRunning)!
+            ]
+            // 許可されているかどうかを確認
+            store.requestAuthorization(toShare: nil, read: readDataTypes as? Set<HKObjectType>) {
+                (success, error) -> Void in
+                print(success)
+                print("success")
+            }
+        } else{
+            Alert.helthError(alertNum: self.errorData, viewController: self)
+        }
+
         self.groupEvent.register(UINib(nibName: "GroupEventCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "groupCell")
-        getGroupStep_1(progress_day: group_param["progress_day"] as! Int)
+//        getGroupStep_1(progress_day: group_param["progress_day"] as! Int)
+        getStepDate()
     }
 
     func viewMain() {
         print("メインメインメインメインメイン")
-        print(dataSource["0"])
+        print(dataSource["0"]?.status)
         rank.text = dataSource["0"]!.rank! + "位"
         eventTime.text = dataSource["0"]?.event_time
         peopleNumber.text = dataSource["0"]?.event_peple
         stepNumber.text = dataSource["0"]?.step
+        if dataSource["0"]?.status == 2 {
+            ChatButtom.isEnabled = false
+        }
     }
 
-    func getGroupStep_1(progress_day:Int) -> Int {
-        print("きて流きて流きて流きて流")
-        print(progress_day)
-        //歩数が取得できるかどうかチェックしてます
-        if(!CMPedometer.isStepCountingAvailable()) {
-            print("クラスクラスcannot get stepcount")
-        }
+    
+    func getStepDate() {
+        print("イベントグループイベントグループイベントグループ")
         
-        let calendar = Calendar(identifier: .gregorian)
-        let from = Date(timeInterval: TimeInterval(-60*60*24*progress_day), since: now)
-        var component = NSCalendar.current.dateComponents([.year, .month, .day], from: from)
+        getDayStep { (result) in
+            DispatchQueue.main.async {
+                print(result)
+                self.group_step = Int(result)
+                self.apiRequestGroupEvent()
+                // self.progressViewBar.value = (CGFloat(Double(result) / 10000)*100)
+            }
+        }
+    }
+
+    // 今日の歩数を取得するための関数
+    func getDayStep(completion: @escaping (Double) -> Void) {
+
+        let dateFormater = DateFormatter()
+        dateFormater.locale = Locale(identifier: "ja_JP")
+        dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+
+        let startdate = dateFormater.date(from: group_param["start"] as! String)
+        var component = NSCalendar.current.dateComponents([.year, .month, .day], from: startdate!)
         component.hour = 0
         component.minute = 0
         component.second = 0
         let start:NSDate = NSCalendar.current.date(from:component)! as NSDate
-        //XX月XX日23時59分59秒に設定したものをendにいれる
-        print("startDatestartDatestartDatestartDate")
+
+        print("GGGGGGGGGGGGGG")
+        print(startdate)
         print(start)
-        print(Date())
+
         
-        // onetime
-        pedometer.queryPedometerData(from: start as Date, to: Date()) { (data, error) in
-            guard let data = data else { return }
-            DispatchQueue.main.async {
-                print("歩数歩数歩数は\(data.numberOfSteps)")
-                print(data.numberOfSteps)
-                print(data)
-                self.group_step = Int(data.numberOfSteps)
-                self.apiRequestGroupEvent()
+        
+        let enddate = dateFormater.date(from: group_param["end"] as! String)
+        var component_end = NSCalendar.current.dateComponents([.year, .month, .day], from: enddate!)
+        //XX月XX日23時59分59秒に設定したものをendにいれる
+        component_end.hour = 23
+        component_end.minute = 59
+        component_end.second = 59
+        let end:NSDate = NSCalendar.current.date(from:component_end)! as NSDate
+
+        let type = HKSampleType.quantityType(forIdentifier: .stepCount)!
+        let predicate = HKQuery.predicateForSamples(withStart: start as Date, end: end as Date, options: .strictStartDate)
+        let query = HKStatisticsQuery(quantityType: type, quantitySamplePredicate: predicate, options: .separateBySource) { (query, data, error) in
+            if let sources = data?.sources?.filter({ $0.bundleIdentifier.hasPrefix("com.apple.health") }) {
+                let sourcesPredicate = HKQuery.predicateForObjects(from: Set(sources))
+                let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, sourcesPredicate])
+                let query = HKStatisticsQuery(quantityType: type,
+                                              quantitySamplePredicate: predicate,
+                                              options: .cumulativeSum)
+                { (query, statistics, error) in
+                    var value: Double = 0
+                    if error != nil {
+                        print("something went wrong")
+                    } else if let quantity = statistics?.sumQuantity() {
+                        print("歩数歩数歩数歩数歩数歩数歩数歩数")
+                        value = quantity.doubleValue(for: HKUnit.count())
+                        completion(value)
+                    }
+                }
+                self.store.execute(query)
             }
         }
-        return self.group_step
+        store.execute(query)
     }
 
-    
     func apiRequestGroupEvent() {
+
+
+print("イベントグループ取得取得取得取得")
+
         /****************
          APIへリクエスト（ユーザー取得）
          *****************/
@@ -92,21 +151,8 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
         let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_GROUP_EVENT;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
-        var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
-        
-        print("queryqueryquery")
-        query["user_id"] = matchness_user_id
         query["group_id"] = group_param["group_id"] as! String
-        
-        print(group_param)
-        //var total_step = getGroupStep_1(progress_day:group_param["progress_day"] as! Int)
-        
         query["total_step"] = String(self.group_step)
-        
-        print("total_steptotal_steptotal_steptotal_step")
-        print(query)
-        print("アウトアウトアウトアウトアウトr")
-        
         //リクエスト実行
         if( !requestGroupModel.requestApi(url: requestUrl, addQuery: query) ){
 
@@ -124,8 +170,16 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
 
         var group_event = dataSource["0"]!.group_event[indexPath.row]
 
-        var number = Int.random(in: 1 ... 18)
-        cell.userImage.image = UIImage(named: "\(number)")
+
+        if (group_event.profile_image == nil) {
+            cell.userImage.image = UIImage(named: "no_image")
+        } else {
+            let profileImageURL = image_url + group_event.profile_image!
+            let url = NSURL(string: profileImageURL);
+            let imageData = NSData(contentsOf: url! as URL) //もし、画像が存在しない可能性がある場合は、ifで存在チェック
+            cell.userImage.image = UIImage(data:imageData! as Data)
+        }
+        
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.clipsToBounds = true
         cell.userImage.layer.cornerRadius =  cell.userImage.frame.height / 2
@@ -135,7 +189,7 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
         cell.userImage.addGestureRecognizer(recognizer)
         
 
-        let userStep = Int.random(in: 5000 ... 120000)
+        
         cell.lastLoginTime.textColor = UIColor.white
         cell.userInfo.textColor = UIColor.white
         cell.userStep.textColor = UIColor.white
@@ -143,17 +197,9 @@ class GroupEventViewController: UIViewController, UICollectionViewDelegate, UICo
 
         let dateFormater = DateFormatter()
         dateFormater.locale = Locale(identifier: "ja_JP")
-
-        dateFormater.dateFormat = "yyyy-MM-dd HH:mm"
-
-print("ログイン時間ログイン時間ログイン時間")
-
-        let date = dateFormater.date(from: "2000-01-01 03:12:12 +0000")
-        print(group_event.action_datetime)
-        print(group_event)
-        print(date)
-
-
+        dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        let date = dateFormater.date(from: group_event.action_datetime as! String)
+        dateFormater.dateFormat = "MM月dd日 HH時mm分"
         let date_text = dateFormater.string(from: date ?? Date())
         
         cell.lastLoginTime.text = "ログイン：" + date_text
@@ -164,7 +210,7 @@ print("ログイン時間ログイン時間ログイン時間")
         cell.userStep.text = group_event.step
         cell.contentView.addSubview(label)
         
-        if userStep < 50000 {
+        if Int(group_event.step ?? "0")! < 15000 {
             cell.backgroundColor = UIColor(red: 0.0, green: 0.6, blue: 0.8, alpha: 1.0)
         } else {
             cell.backgroundColor = UIColor(red: 254/255, green: 0, blue: 124/255, alpha: 1)

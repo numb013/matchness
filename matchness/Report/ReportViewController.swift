@@ -10,12 +10,14 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate, UITextFieldDelegate {
 
     let userDefaults = UserDefaults.standard
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var pickerBottom: NSLayoutConstraint!
+    @IBOutlet weak var user_name: UILabel!
+    
     private var requestAlamofire: Alamofire.Request?;
     var selectPicker: Int = 0
     var selectPickerItem: Int = 0
@@ -23,9 +25,10 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var selectRow = 0
     var title_text = ""
     var report_type_1 = 0
-    var target_id = 0
+    var report_param = [String:Any]()
     var vi = UIView()
-    
+    var myTextView = UITextView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,13 +40,21 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
         
         self.tableView.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
-        self.tableView.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")
+//        self.tableView.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")
         self.tableView.register(UINib(nibName: "ButtonTableViewCell", bundle: nil), forCellReuseIdentifier: "ButtonTableViewCell")
 
         pickerView.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
+//        self.user_name.text = report_param["target_name"] as! String
+        view.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureObserver()  //Notification発行
+    }
+
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
@@ -96,14 +107,29 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         if indexPath.section == 1 {
             if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "TextAreaTableViewCell") as! TextAreaTableViewCell
-                cell.textLabel!.numberOfLines = 0
-                cell.selectionStyle = UITableViewCell.SelectionStyle.none
-                cell.textArea.delegate = self
-                cell.textArea.tag = 1
-                cell.textArea?.font = UIFont.systemFont(ofSize: 14)
-//                cell.textArea!.text = myData?.profile_text
-                cell.textArea!.text = ""
+                let width1 = self.view.frame.width - 20
+                myTextView.frame = CGRect(x:((self.view.bounds.width-width1)/2),y:10, width:width1,height:130)
+                myTextView.layer.masksToBounds = true
+                myTextView.layer.cornerRadius = 3.0
+                myTextView.layer.borderWidth = 1
+                myTextView.layer.borderColor = #colorLiteral(red: 0.7948118448, green: 0.7900883555, blue: 0.7984435558, alpha: 1)
+                myTextView.textAlignment = NSTextAlignment.left
+
+
+                let custombar = UIView(frame: CGRect(x:0, y:0,width:(UIScreen.main.bounds.size.width),height:40))
+                custombar.backgroundColor = UIColor.groupTableViewBackground
+                let commitBtn = UIButton(frame: CGRect(x:(UIScreen.main.bounds.size.width)-80,y:0,width:80,height:40))
+                commitBtn.setTitle("閉じる", for: .normal)
+                commitBtn.setTitleColor(UIColor.blue, for:.normal)
+                commitBtn.addTarget(self, action:#selector(ProfileEditViewController.onClickCommitButton), for: .touchUpInside)
+                custombar.addSubview(commitBtn)
+                myTextView.inputAccessoryView = custombar
+                myTextView.keyboardType = .default
+                myTextView.delegate = self
+
+
+                cell.addSubview(myTextView)
+
                 return cell
             }
         }
@@ -136,6 +162,9 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         dismissPicker()
         if indexPath.section == 0 {
             if indexPath.row == 0 {
+                print("通報通報通報通報通報通報通報")
+                print(ApiConfig.REPORT_LIST)
+                
             self.selectPicker = 1
             self.pcker_list = ApiConfig.REPORT_LIST
 //            self.selectRow = 0
@@ -169,7 +198,7 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         print("ピッカーーーーーーーー")
         self.view.endEditing(true)
         UIView.animate(withDuration: 0.5,animations: {
-            self.pickerBottom.constant = -180
+            self.pickerBottom.constant = -250
             self.pickerView.updateConstraints()
             self.tableView.updateConstraints()
             self.view.layoutIfNeeded()
@@ -196,7 +225,8 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return self.pcker_list.count
     }
     // UIPickerViewに表示する配列
-    func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String {
+        
         print("p3p3p3p3p3")
         print(self.pcker_list)
         return self.pcker_list[row]
@@ -239,6 +269,12 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.view.endEditing(true)
     }
     
+    @objc func onClickCommitButton (sender: UIButton) {
+        if(myTextView.isFirstResponder){
+            myTextView.resignFirstResponder()
+        }
+    }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
         var tag = textField.tag
@@ -254,6 +290,38 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         textField.resignFirstResponder()
         return true
     }
+
+    /// Notification発行
+    func configureObserver() {
+        let notification = NotificationCenter.default
+        notification.addObserver(self, selector: #selector(keyboardWillShow(_:)),
+                                 name: UIResponder.keyboardWillShowNotification, object: nil)
+        notification.addObserver(self, selector: #selector(keyboardWillHide(_:)),
+                                 name: UIResponder.keyboardWillHideNotification, object: nil)
+        print("Notificationを発行")
+    }
+
+    /// キーボードが表示時に画面をずらす。
+    @objc func keyboardWillShow(_ notification: Notification?) {
+        guard let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue,
+            let duration = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+        UIView.animate(withDuration: duration) {
+            let transform = CGAffineTransform(translationX: 0, y: -(rect.size.height))
+            self.view.transform = transform
+        }
+        print("keyboardWillShowを実行")
+    }
+
+    /// キーボードが降りたら画面を戻す
+    @objc func keyboardWillHide(_ notification: Notification?) {
+        guard let duration = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? TimeInterval else { return }
+        UIView.animate(withDuration: duration) {
+            self.view.transform = CGAffineTransform.identity
+        }
+        print("keyboardWillHideを実行")
+    }
+    
+    
     
     @IBAction func addButton(_ sender: Any) {
         print("ハッスルクエスト")
@@ -264,9 +332,9 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let requestUrl: String = ApiConfig.REQUEST_URL_API_ADD_REPORT;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
-        query["target_id"] = String(self.target_id)
+        query["target_id"] = report_param["target_id"] as! String
         query["report_type_1"] = String(self.report_type_1)
-        query["text"] = self.title_text
+        query["text"] = myTextView.text
         var headers: [String : String] = [:]
 
         var api_key = userDefaults.object(forKey: "api_token") as? String
@@ -300,9 +368,9 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //                     self.onFaild(response as AnyObject);
                     break;
                 }
-                print("取得した値はここにきて")
+                print("取得した値はここにきて(通報)")
                 print(json)
-                self.dismiss(animated: true)
+                
 //                self.dismiss(animated: true, completion: nil)
                 print("！！！！！！！！！！")
                 
@@ -313,9 +381,10 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     // アラートを閉じる
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                         alert.dismiss(animated: true, completion: nil)
+                        self.dismiss(animated: true)
                     })
                 })
-
+//                self.dismiss(animated: true)
             case .failure:
                 //  リクエスト失敗 or キャンセル時
                 print("リクエスト失敗 or キャンセル時")

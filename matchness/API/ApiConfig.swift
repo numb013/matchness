@@ -20,12 +20,10 @@ public struct ApiConfig {
      let SITE_BASIC_AUTHENTICATION_ACCOUNT_ID: String = "k11025";
      let SITE_BASIC_AUTHENTICATION_ACCOUNT_PASSWORD: String = "52011k";
      */
-    #if DEBUG
-    static var SITE_DOMAIN: String = "604e5af9.ngrok.io";
-    #else
-    static var SITE_DOMAIN: String = "604e5af9.ngrok.io";
-    #endif
+//    static var SITE_DOMAIN: String = "popokatsu.com";
+    static var SITE_DOMAIN: String = "9b520736.ngrok.io";
 
+    
     //
     static let SITE_BASE_URL: String = "https://" + SITE_DOMAIN;
     static let REQUEST_URL_API: String = SITE_BASE_URL + "/api";
@@ -34,17 +32,30 @@ public struct ApiConfig {
     static let REQUEST_URL_API_USER_SEARCH: String = REQUEST_URL_API + "/user/search";
     //ユーザー詳細
     static let REQUEST_URL_API_USER_DETAIL: String = REQUEST_URL_API + "/user/detail";
+    //プロフィール取得
+    static let REQUEST_URL_API_USER_INFO: String = REQUEST_URL_API + "/user/user_info";
+
+    static let REQUEST_URL_API_MY_PAGE: String = REQUEST_URL_API + "/user/my_page";
+
+    
+    
     //ユーザー作成
     static let REQUEST_URL_API_USER_ADD: String = REQUEST_URL_API + "/user/add";
     //プロフィール編集
     static let REQUEST_URL_API_USER_PROFILE_EDIT: String = REQUEST_URL_API + "/user/profile_edit";
+    //プロフィール編集
+    static let REQUEST_URL_API_USER_PROFILE_UPDATE: String = REQUEST_URL_API + "/user/profile_update";
+    
     //マイデータ
     static let REQUEST_URL_API_ME: String = REQUEST_URL_API + "/user/me";
-
-    static let REQUEST_URL_API_USER_INFO: String = REQUEST_URL_API + "/user/user_info";
+//
+//    static let REQUEST_URL_API_USER_INFO: String = REQUEST_URL_API + "/user/user_info";
 
     static let REQUEST_URL_API_POINT_UPDATE: String = REQUEST_URL_API + "/user/point_update";
+    
+    static let REQUEST_URL_API_USER_DELETE: String = REQUEST_URL_API + "/user/user_delete";
 
+    static let REQUEST_URL_IMEGE: String = "https://storage.googleapis.com/popokatsu-content/"
     
     
     //足跡
@@ -53,6 +64,8 @@ public struct ApiConfig {
     static let REQUEST_URL_API_MY_FOOTPRINT: String = REQUEST_URL_API + "/footprint/my_footprint";
     //いいね
     static let REQUEST_URL_API_ADD_LIKE: String = REQUEST_URL_API + "/like/create_like";
+    //もらったいいね
+    static let REQUEST_URL_API_SEECT_GET_LIKE: String = REQUEST_URL_API + "/like/select_get_like";
     //グループ取得
     static let REQUEST_URL_API_SELECT_GROUP: String = REQUEST_URL_API + "/select_group";
     static let REQUEST_URL_API_ADD_GROUP: String = REQUEST_URL_API + "/create_group";
@@ -78,6 +91,8 @@ public struct ApiConfig {
 
     static let REQUEST_URL_API_ADD_GROUP_CHAT: String = REQUEST_URL_API + "/create_group_chat";
     static let REQUEST_URL_API_SELECT_GROUP_CHAT: String = REQUEST_URL_API + "/select_group_chat";
+    static let REQUEST_URL_API_SEARCH_GROUP: String = REQUEST_URL_API + "/search_group";
+    
 
     static let REQUEST_URL_API_SELECT_NOTICE: String = REQUEST_URL_API + "/select_Notice";
     static let REQUEST_URL_API_SELECT_NOTICE_TEXT_BODY: String = REQUEST_URL_API + "/select_Notice_text_body";
@@ -97,12 +112,12 @@ public struct ApiConfig {
     static let REQUEST_URL_API_SELECT_PAYMENT_EDIT_LIST: String = REQUEST_URL_API + "/select_payment_edit_list";
     static let REQUEST_URL_API_PAYMENT_DELETE: String = REQUEST_URL_API + "/payment_delete";
 
-    
     static let REQUEST_URL_API_SELECT_POINT_PURCHASE: String = REQUEST_URL_API + "/select_point_purchase";
     static let REQUEST_URL_API_POINT_CHECK: String = REQUEST_URL_API + "/point_check";
+    static let REQUEST_URL_API_BASE_PARAM: String = REQUEST_URL_API + "/base_param";
 
-    
-    
+    static let REQUEST_URL_API_GROUP_EVENT_START: String = REQUEST_URL_API + "/group_event_start";
+
     static let WORK_LIST: [String] = ["未選択", "クリエイティブ", "コンピューター","出版", "放送", "流通", "金融", "医療・福祉", "教育・語学", "国家・自治体", "旅行関係", "料理関係", "動物・自然", "オフィス", "サービス", "エンターテイメント", "美容・ファッション", "建築・インテリア", "モノづくり", "交通機関", "冠婚葬祭", "自由業", "学生"]
 
     static let PREFECTURE_LIST: [String] = ["未選択", "北海道","青森","岩手","秋田","宮城","山形","福島","新潟","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","長野","山梨","静岡","岐阜","愛知","富山","石川","福井","滋賀","三重","京都","奈良","和歌山","大阪","兵庫","岡山","鳥取","島根","広島","山口","香川","愛媛","徳島","高知","福岡","佐賀","大分","長崎","熊本","宮崎","鹿児島","沖縄","海外"]
@@ -111,11 +126,15 @@ public struct ApiConfig {
     static let SEX_LIST: [String] = ["未選択", "女性", "男性", "ジェンダレス"]
     static let BLOOD_LIST: [String] = ["未選択", "A型","B型","O型","AB型"]
     
-    static let EVENT_PEPLE_LIST: [String] = ["4","5","6","7"," 8"]
+    static let EVENT_PEPLE_LIST: [String] = ["2","4","5","6","7"," 8"]
     static let EVENT_START_TYPE: [String] = ["未選択", "集まり次第","主催者決定"]
     static let EVENT_TYPE_LIST: [String] = ["こだわらない","男性のみ","女性のみ"]
+    static let MASTER_FLG_LIST: [String] = ["未選択","主催グループのみ"]
+    static let REQUEST_FLG_LIST: [String] = ["未選択","参加希望中のみ"]
+    static let RANK_LIST: [String] = ["スタンダード","ブロンズ","シルバー", "ゴールド","プラチナ"]
     static let EVENT_PRESENT_POINT: [String] = ["100","200","300","400","500","600","700","800","900","1000"]
-    static let EVENT_PERIOD_LIST: [String] = ["2","3","4","5","6","7", "14"]
+    static let EVENT_PERIOD_LIST: [String] = ["2","3","4","5","6","7","14"]
+
     static let REPORT_LIST: [String] = ["誹謗中傷や暴言","営業・求人行為","商用利用目的","ビジネスへの勧誘","他サイトの「サクラ」","登録写真が芸能人画像","ストーカー行為","その他"]
     static let SEARCH_AGE_LIST: [String] = ["未選択","18〜24","25〜29","30〜34","35〜39","40〜44","45〜49"]
 

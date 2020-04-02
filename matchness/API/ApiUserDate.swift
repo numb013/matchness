@@ -15,6 +15,7 @@ import SwiftyJSON;
  */
 public struct ApiUserDate: CustomDebugStringConvertible {
     public var id: Int? = nil;
+    public var hash_id: String? = nil;
     public var name: String? = nil;
     public var work: Int? = nil;
     public var profile_text: String? = nil;
@@ -28,6 +29,7 @@ public struct ApiUserDate: CustomDebugStringConvertible {
     public var last_login_flag: Int? = nil;
     public var created_flag: Int? = nil;
     public var weight: Int? = nil;
+    public var profile_image: String? = nil;
 
 //    public var images: Array<String> = Array<String>();
 //    public var categorySubId: Array<String> = Array<String>();
@@ -63,6 +65,10 @@ public struct ApiUserDate: CustomDebugStringConvertible {
         //String => String
         if let id = item["id"].int {
             self.id = id;
+        }
+        //String => String
+        if let hash_id = item["hash_id"].string {
+            self.hash_id = hash_id;
         }
         //String => String
         if let name = item["name"].string {
@@ -104,12 +110,18 @@ public struct ApiUserDate: CustomDebugStringConvertible {
         if let weight = item["weight"].int {
             self.weight = weight;
         }
+
         if let last_login_flag = item["last_login_flag"].int {
             self.last_login_flag = last_login_flag;
         }
         if let created_flag = item["created_flag"].int {
             self.created_flag = created_flag;
         }
+        //String => String
+        if let profile_image = item["profile_image"].string {
+            self.profile_image = profile_image;
+        }
+        
 //        if let prefecture_id = item["prefecture_id"].string {
 //            self.prefecture_id = prefecture_id;
 //        }
@@ -145,6 +157,7 @@ public struct ApiUserDate: CustomDebugStringConvertible {
         get{
             var string:String = "ApiUserDate::\(#function)\n";
             string += "id => \(String(describing: self.id))\n";
+            string += "hash_id => \(String(describing: self.hash_id))\n";
             string += "name => \(String(describing: self.name))\n";
             string += "work => \(String(describing: self.work))\n";
             string += "profile_text => \(String(describing: self.profile_text))\n";
@@ -158,6 +171,7 @@ public struct ApiUserDate: CustomDebugStringConvertible {
             string += "weight => \(String(describing: self.weight))\n";
             string += "last_login_flag => \(String(describing: self.last_login_flag))\n";
             string += "created_flag => \(String(describing: self.created_flag))\n";
+            string += "profile_image => \(String(describing: self.profile_image))\n";
             return string;
         }
     }

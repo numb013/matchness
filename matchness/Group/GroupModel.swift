@@ -82,7 +82,7 @@ class GroupModel: NSObject {
         //
         var params:[String: String] = condition.queryParams;
         //ページ番号
-        params["page"] = String(self.page);
+//        params["page"] = String(self.page);
         //
 //        params["action"] = String("search");
         //件数
@@ -97,9 +97,10 @@ class GroupModel: NSObject {
             }
         }
 
-        
-        self.page = Int(params["page"]!)!
+        print("paramsparamsparamsparamsparamsparamsparamsparamsparams")
         print(params)
+        self.page = Int(params["page"]!)!
+
         
         if let request: ApiRequest = ApiRequest(delegate: self) {
             self.request = request;
@@ -141,9 +142,9 @@ extension GroupModel : ApiRequestDelegate {
     public func onParse(_ json: JSON){
         
         var key1 = 0;
-        print("44444444444444444")
+        print("ページページページページページページページ")
         print(page)
-        print(responseDataOrder)
+//        print(responseDataOrder)
         responseDataOrder = array1
         responseData = array2
         
@@ -152,25 +153,26 @@ extension GroupModel : ApiRequestDelegate {
             let data: ApiGroupList? = ApiGroupList(json: json);
             if (page != 1) {
                 key1 = Int(key)! + Int(page) * Int(8) - Int(8)
+
+                print("key2key2key2key1key2")
+                print(key1)
+
             } else {
                 key1 = Int(key)!
             }
+print("オーどあーオーどあーオーどあーオーどあー")
+print(responseDataOrder)
             //並び順を保持
             responseDataOrder.append(String(key1));
-            print("33333333333333333")
-            print(key1)
-            print(data)
+            print(responseDataOrder)
+
+
             responseData[String(key1)] = data;
         }
-        
         page += 1;
-        
-        print(responseData)
-        
+        print("pagepagepage")
+        print(page)
     }
-    
-    
-    
     
     public func onComplete(){
         self.delegate?.onComplete(model: self, count: responseData.count);
@@ -184,7 +186,7 @@ extension GroupModel : ApiRequestDelegate {
 
     public func onFinally(){
         //ページを進める
-        self.page += 1;
+//        self.page += 1;
         //リクエスト回数を増やす
         self.requestApiCount += 1;
         //リクエスト完了

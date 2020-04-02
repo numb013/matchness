@@ -11,17 +11,18 @@ import XLPagerTabStrip
 
 class CahtSecondViewController: baseViewController, IndicatorInfoProvider, UITableViewDelegate , UITableViewDataSource {
     //ここがボタンのタイトルに利用されます
-    var itemInfo: IndicatorInfo = "マッチング"
-    let stepInstance = TodayStep()
-    
+    var itemInfo: IndicatorInfo = "マッチング"    
     var cellCount: Int = 0
     var dataSource: Dictionary<String, ApiMessage> = [:]
     var dataSourceOrder: Array<String> = []
     var errorData: Dictionary<String, ApiErrorAlert> = [:]
     let dateFormater = DateFormatter()
     @IBOutlet weak var ChatTableView: UITableView!
-    var ActivityIndicator: UIActivityIndicatorView!
-    
+    let image_url: String = ApiConfig.REQUEST_URL_IMEGE;
+    var page_no = "1"
+    var isLoading:Bool = false
+    var isUpdate = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         ChatTableView.delegate = self
@@ -30,7 +31,6 @@ class CahtSecondViewController: baseViewController, IndicatorInfoProvider, UITab
         self.ChatTableView.register(UINib(nibName: "ChatTableViewCell", bundle: nil), forCellReuseIdentifier: "ChatTableViewCell")
         self.ChatTableView.register(UINib(nibName: "NotDataTableViewCell", bundle: nil), forCellReuseIdentifier: "NotDataTableViewCell")
 
-        
         // Do any additional setup after loading the view.
         apiRequest()
     }
@@ -57,19 +57,18 @@ class CahtSecondViewController: baseViewController, IndicatorInfoProvider, UITab
         let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_MATCHE;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
-        var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
-        
-        query["user_id"] = matchness_user_id
         query["status"] = "0"
+
+        var array1: [String] = []
+        var array2: Dictionary<String, ApiMessage> = [:]
+
         //リクエスト実行
         if( !requestCahtFirstModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
     }
 
-    var page_no = "1"
-    var isLoading:Bool = false
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         print(self.isLoading)
         print("EEWEWEEEEEEEEEEEEEEEEEE")
@@ -84,11 +83,12 @@ class CahtSecondViewController: baseViewController, IndicatorInfoProvider, UITab
             print("更新")
             apiRequest()
         }
-        
-        if (!self.isLoading && scrollView.contentOffset.y >= ChatTableView.contentSize.height - self.ChatTableView.bounds.size.height) {
-            self.isLoading = true
-            print("無限スクロール無限スクロール無限スクロール")
-            apiRequest()
+        if (!self.isUpdate) {
+            if (!self.isLoading && scrollView.contentOffset.y >= ChatTableView.contentSize.height - self.ChatTableView.bounds.size.height) {
+                self.isLoading = true
+                print("無限スクロール無限スクロール無限スクロール")
+                apiRequest()
+            }
         }
     }
     
@@ -108,19 +108,24 @@ class CahtSecondViewController: baseViewController, IndicatorInfoProvider, UITab
             var message = self.dataSource["0"]!.message[indexPath.row]
             let cell = ChatTableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell") as! ChatTableViewCell
             cell.ChatName.text = message.target_name
-
             
             dateFormater.locale = Locale(identifier: "ja_JP")
-            dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
+//            dateFormater.dateFormat = "yyyy/MM/dd HH:mm:ss"
             let date = dateFormater.date(from: message.created_at!)
             dateFormater.dateFormat = "yyyy年MM月dd日"
             let date_text = dateFormater.string(from: date ?? Date())
             cell.ChatDate.text = String(date_text)
-
             cell.ChatMessage.text = "マッチングしました。"
 
-            var number = Int.random(in: 1 ... 18)
-            cell.ChatImage.image = UIImage(named: "\(number)")
+            if (message.profile_image == nil) {
+                cell.ChatImage.image = UIImage(named: "no_image")
+            } else {
+                let profileImageURL = image_url + (message.profile_image!)
+                let url = NSURL(string: profileImageURL);
+                let imageData = NSData(contentsOf: url! as URL) //もし、画像が存在しない可能性がある場合は、ifで存在チェック
+                cell.ChatImage.image = UIImage(data:imageData! as Data)
+            }
+
             cell.ChatImage.isUserInteractionEnabled = true
             var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTapImage(_:)))
             recognizer.targetUserId = self.dataSource["0"]!.id
@@ -148,8 +153,6 @@ class CahtSecondViewController: baseViewController, IndicatorInfoProvider, UITab
         self.present(nextVC, animated: true, completion: nil)
     }
 
-    
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
@@ -170,7 +173,13 @@ class CahtSecondViewController: baseViewController, IndicatorInfoProvider, UITab
             "user_id":String(self.dataSource["0"]!.id!),
             "user_name":self.dataSource["0"]!.name!,
             "point":self.dataSource["0"]!.point!,
+            "my_image":self.dataSource["0"]!.profile_image!,
+            "target_imag":users.profile_image!,
         ]
+
+print("セカンド送信送信送信送信送信送信送信")
+print(message_users)
+
         self.performSegue(withIdentifier: "toMessage", sender: message_users)
     }
     
@@ -209,24 +218,18 @@ extension CahtSecondViewController : CahtFirstModelDelegate {
         //cellの件数更新
         self.cellCount = dataSource["0"]!.message.count;
         
-        print("路オロロロロロロロロ路r")
-        self.page_no = String(model.page);
-        print(self.page_no)
-        print("ががががががががが")
-        print(self.dataSource)
-        print(self.dataSourceOrder)
-        
-        
-        //
-        var count: Int = 0;
-        //        for(key, code) in dataSourceOrder.enumerated() {
-        //            count+=1;
-        //            if let jenre: ApiUserDateParam = dataSource[code] {
-        //                //取得したデータを元にコレクションを再構築＆更新
-        //                mapMenuView.addTagGroup(model: model, jenre: jenre);
-        //            }
-        //        }
-        self.isLoading = false
+        if (Int(self.page_no)! > 3 && self.cellCount == dataSourceOrder.count) {
+            self.isLoading = false
+            self.isUpdate = true
+        } else {
+            self.page_no = String(model.page);
+
+            print("グループページページページページ")
+            print(self.page_no)
+
+            var count: Int = 0;
+            self.isLoading = false
+        }
         ChatTableView.reloadData()
     }
     func onFailed(model: CahtFirstModel) {

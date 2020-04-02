@@ -16,8 +16,8 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
 
     @IBOutlet weak var userDetail: UICollectionView!
     @IBOutlet weak var navigationBar: UINavigationBar!
-    var ActivityIndicator: UIActivityIndicatorView!
-    
+
+    var activityIndicatorView = UIActivityIndicatorView()
     let navBarHeight : CGFloat = 164.0
     let userDefaults = UserDefaults.standard
     var cellCount: Int = 0
@@ -28,78 +28,42 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
     var dataSourceOrder: Array<String> = []
     var page_no = "1"
     var isLoading:Bool = false
+    var isUpdate:Bool = false
 
     var freeword = ""
     var work: String? = nil
     var prefecture_id: String? = nil
     var blood_type: String? = nil
+    var sex: String? = nil
     var fitness_parts_id: String? = nil
-    
+    let image_url: String = ApiConfig.REQUEST_URL_IMEGE;
+
     override func viewDidLoad() {
-     
-//        var airports: [String: String] = ["YYZ": "いいねしたんだよー", "DUB": "Dublin"]
-//        Alert.common(alertNum: airports, viewController: self)
-//        print("AAAAAAAAAA")
-//        //画面遷移
-//        let storyboard: UIStoryboard = self.storyboard!
-//        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-//        let multiple = storyboard.instantiateViewController(withIdentifier: "pointPayment")
-//        multiple.modalPresentationStyle = .fullScreen
-//        //ここが実際に移動するコードとなります
-//        self.present(multiple, animated: true, completion: nil)
-//        画面遷移
-//                performSegue(withIdentifier: "payment", sender: self)
-
-        print("チェックチェックチェックチェック")
-        print(AccessToken.current)
-
-//        tabBarController?.tabBar.isHidden = true
-        
-        if let _ = AccessToken.current {
-            print("ログイン済み")
-        } else {
-            userDefaults.removeObject(forKey: "api_token")
-            userDefaults.removeObject(forKey: "login_type")
-
-            print("みログイン")
-            // 画面遷移
-            let storyboard: UIStoryboard = self.storyboard!
-            // ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-            let multiple = storyboard.instantiateViewController(withIdentifier: "fblogin") as! FBLoginViewController
-            multiple.modalPresentationStyle = .fullScreen
-            // ここが実際に移動するコードとなります
-            self.present(multiple, animated: false, completion: nil)
-        }
         super.viewDidLoad()
         userDetail.delegate = self
         userDetail.dataSource = self
 
+        view.backgroundColor = .lightGray
+        activityIndicatorView.center = view.center
+        activityIndicatorView.style = .whiteLarge
+        activityIndicatorView.color = .purple
+        view.addSubview(activityIndicatorView)
+        
         self.userDetail.register(UINib(nibName: "UserSearchCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "userDetailCell")
         // Do any additional setup after loading the view.
         apiRequest()
         //タブバー表示
         tabBarController?.tabBar.isHidden = false
+
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        if (segue.identifier == "Modal") {
-            guard let ModalVC = segue.destination as? ModalViewController else {
-                return
-            }
-
-            ModalVC.modalPresentationStyle = .overCurrentContext
-            ModalVC.view.backgroundColor = UIColor(red:0.94, green:0.94, blue:0.96, alpha:0.5)
-
-        }
-    }
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         print("ここにこに")
         super.viewWillAppear(animated)
         //タブバー表示
         tabBarController?.tabBar.isHidden = false
     }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("こっちにも恋")
@@ -111,51 +75,44 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
         var dataSource: Dictionary<String, ApiUserDate> = [:]
         var errorData: Dictionary<String, ApiErrorAlert> = [:]
 
-        // ActivityIndicatorを作成＆中央に配置
-        ActivityIndicator = UIActivityIndicatorView()
-        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        ActivityIndicator.center = self.view.center
-        // クルクルをストップした時に非表示する
-        ActivityIndicator.hidesWhenStopped = true
-        // 色を設定
-        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
-        //Viewに追加
-        self.view.addSubview(ActivityIndicator)
-        ActivityIndicator.startAnimating()
-
+        activityIndicatorView.startAnimating()
+        DispatchQueue.global(qos: .default).async {
+            // 非同期処理などを実行
+            Thread.sleep(forTimeInterval: 5)
+            // 非同期処理などが終了したらメインスレッドでアニメーション終了
+            DispatchQueue.main.async {
+                // アニメーション終了
+                self.activityIndicatorView.stopAnimating()
+            }
+        }
         apiRequest()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(self.isLoading)
-        print("EEWEWEEEEEEEEEEEEEEEEEE")
-        print(scrollView.contentOffset.y)
-        print(userDetail.contentSize.height - self.userDetail.bounds.size.height)
-        
         if (!self.isLoading && scrollView.contentOffset.y  < -67.5) {
             self.isLoading = true
-            self.page_no = "1"
+            self.page_no = "0"
             self.dataSourceOrder = []
             var dataSource: Dictionary<String, ApiUserDate> = [:]
-            print("更新")
-            // ActivityIndicatorを作成＆中央に配置
-            ActivityIndicator = UIActivityIndicatorView()
-            ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-            ActivityIndicator.center = self.view.center
-            // クルクルをストップした時に非表示する
-            ActivityIndicator.hidesWhenStopped = true
-            // 色を設定
-            ActivityIndicator.style = UIActivityIndicatorView.Style.gray
-            //Viewに追加
-            self.view.addSubview(ActivityIndicator)
-            ActivityIndicator.startAnimating()
+            print("更新更新更新更新更新")
+            activityIndicatorView.startAnimating()
+            DispatchQueue.global(qos: .default).async {
+                // 非同期処理などを実行
+                Thread.sleep(forTimeInterval: 5)
+                // 非同期処理などが終了したらメインスレッドでアニメーション終了
+                DispatchQueue.main.async {
+                    // アニメーション終了
+                    self.activityIndicatorView.stopAnimating()
+                }
+            }
             apiRequest()
         }
-        
-        if (!self.isLoading && scrollView.contentOffset.y + 2  >= userDetail.contentSize.height - self.userDetail.bounds.size.height) {
-            self.isLoading = true
-            print("無限スクロール無限スクロール無限スクロール")
-            apiRequest()
+        if (!self.isUpdate) {
+            if (!self.isLoading && scrollView.contentOffset.y + 2  >= userDetail.contentSize.height - self.userDetail.bounds.size.height) {
+                self.isLoading = true
+                print("無限スクロール無限スクロール無限スクロール")
+                apiRequest()
+            }
         }
     }
     
@@ -171,10 +128,6 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
         let requestUrl: String = ApiConfig.REQUEST_URL_API_USER_SEARCH;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
-
-        print("午後午後午後午後午後ごg")
-//        self.page_no = String(model.page);
-        print(page_no)
         requestUserSearchModel.array1 = self.dataSourceOrder
         requestUserSearchModel.array2 = self.dataSource
         //リクエスト実行
@@ -184,13 +137,9 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
         query["work"] = userDefaults.object(forKey: "searchWork") as? String
         query["prefecture_id"] = userDefaults.object(forKey: "searchFitnessPartsId") as? String
         query["blood_type"] = userDefaults.object(forKey: "searchBloodType") as? String
+        query["sex"] = userDefaults.object(forKey: "searchSex") as? String
         query["fitness_parts_id"] = userDefaults.object(forKey: "searchPrefectureId") as? String
         
-        
-        print("検索ーーーーーーーーーーー")
-        print(query)
-        
-
         if( !requestUserSearchModel.requestApi(url: requestUrl, addQuery: query) ){
             
         }
@@ -200,11 +149,8 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionView, forRowAt indexPath: IndexPath) {
         // 下から５件くらいになったらリフレッシュ
         guard collectionView.cellForItem(at: IndexPath(row: collectionView.numberOfItems(inSection: 0)-5, section: 0)) != nil else {
-            print("下下下下下下下下下下下下下下下下")
-
             return
         }
-       print("したしたしたしたしたしたした")
     }
 
     //データの個数を返すメソッド
@@ -215,38 +161,25 @@ class UserSearchViewController: baseViewController,UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
         var search = self.dataSource[String(indexPath.row)]
-
-print("VVVVVVVVVVVVV")
-print(search)
-        
-        
-        
         let cell : UserSearchCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "userDetailCell", for: indexPath as IndexPath) as! UserSearchCollectionViewCell
 
         if (search != nil) {
     //        cell.agearea.text = self.dataSource[String(indexPath.row)]?.work
             cell.agearea.text = search?.name
-            
-            cell.job.text = "痩せたい部位:" + ApiConfig.FITNESS_LIST[search!.fitness_parts_id!]
+            cell.job.text = "痩せたい箇所:" + ApiConfig.FITNESS_LIST[search!.fitness_parts_id!]
             cell.tag = search?.id! ?? 0
 
-            var number = Int.random(in: 1 ... 18)
-            cell.imageView.image = UIImage(named: "\(number)")
-
-    //        //urlでの画像の表示
-    //        let url = NSURL(string:"http://k.yimg.jp/images/top/sp2/cmn/logo-ns-131205.png")
-    //        let req = NSURLRequest(url:url! as URL)
-    //        NSURLConnection.sendAsynchronousRequest(req as URLRequest, queue:OperationQueue.main){(res, data, err) in
-    //            let image = UIImage(data:data!)
-    //             cell.imageView.image = image
-    //        }
+            if (search?.profile_image == nil) {
+                cell.imageView.image = UIImage(named: "no_image")
+            } else {
+                let profileImageURL = image_url + search!.profile_image!
+                let url = NSURL(string: profileImageURL);
+                let imageData = NSData(contentsOf: url! as URL) //もし、画像が存在しない可能性がある場合は、ifで存在チェック
+                cell.imageView.image = UIImage(data:imageData! as Data)
+            }
 
             cell.new_flag.isHidden = true
-            print(search)
-
-            
             if (search?.created_flag != nil) {
                 if (search!.created_flag! == 1) {
                     cell.new_flag.image = UIImage(named: "new2")
@@ -262,7 +195,6 @@ print(search)
                 }
             }
             
-            
             if (search?.last_login_flag != nil) {
                 if (search!.last_login_flag! == 1) {
                     cell.new_flag.image = UIImage(named: "new1")
@@ -277,7 +209,6 @@ print(search)
                     cell.new_flag.isHidden = false
                 }
             }
-            
         }
 
         return cell
@@ -294,29 +225,29 @@ print(search)
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCell = collectionView.cellForItem(at: indexPath)
         let user_id = selectedCell?.tag ?? 0
-//        self.performSegue(withIdentifier: "toUserDetail", sender: user_id)
-        //画面遷移
-        let storyboard: UIStoryboard = self.storyboard!
-        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-        let nextVC = storyboard.instantiateViewController(withIdentifier: "toUserDetail") as! UserDetailViewController
-        nextVC.modalPresentationStyle = .fullScreen
-        nextVC.user_id = user_id
-        //ここが実際に移動するコードとなります
-        self.present(nextVC, animated: true, completion: nil)
+        self.performSegue(withIdentifier: "toDetail", sender: user_id)
+
+
+
+////        self.performSegue(withIdentifier: "toSearch", sender: user_id)
+//        //画面遷移
+//        let storyboard: UIStoryboard = self.storyboard!
+//        //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
+//        let nextVC = storyboard.instantiateViewController(withIdentifier: "toUserDetail") as! UserDetailViewController
+//        nextVC.modalPresentationStyle = .fullScreen
+//        nextVC.user_id = user_id
+//        //ここが実際に移動するコードとなります
+//        self.present(nextVC, animated: true, completion: nil)
     }
 
-//    override func prepare(for segue: UIStoryboardSegue, sender: (Any)?) {
-//        if segue.identifier == "toUserDetail" {
-//            print("ユーザー詳細遷移前")
-//            print(sender)
-//            let udc:UserDetailViewController = segue.destination as! UserDetailViewController
-//            udc.user_id = sender as! Int
-//        }
-//    }
-
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        if segue.identifier == "toDetail" {
+            let udc:UserDetailViewController = segue.destination as! UserDetailViewController
+            udc.user_id = sender as! Int
+        }
+    }
+        
     @IBAction func searchButton(_ sender: Any) {
-        print("検索検索検索検索検索")
         self.performSegue(withIdentifier: "searchButton", sender: nil)
     }
     
@@ -352,26 +283,20 @@ extension UserSearchViewController : UserSearchModelDelegate {
         print("こちら/usersearch/UserSearchViewのonStart")
     }
     func onComplete(model: UserSearchModel, count: Int) {
-        print("着てきてきてきて")
         //更新用データを設定
         self.dataSource = model.responseData;
         self.dataSourceOrder = model.responseDataOrder;
-
-        print(self.dataSourceOrder)
-        print("耳耳耳意味耳みm")
-        //cellの件数更新
-        self.cellCount = dataSourceOrder.count;
-
-        print("路オロロロロロロロロ路r")
-        self.page_no = String(model.page);
-        print(self.page_no)
-        print("ががががががががが")
-        print(self.dataSource)
-        print(self.dataSourceOrder)
-
-        var count: Int = 0;
-        self.isLoading = false
-        ActivityIndicator.stopAnimating()
+        if (Int(self.page_no)! > 3 && self.cellCount == dataSourceOrder.count) {
+            self.isLoading = false
+            self.isUpdate = true
+        } else {
+            self.cellCount = dataSourceOrder.count;
+            self.page_no = String(model.page);
+            print(self.page_no)
+            var count: Int = 0;
+            self.isLoading = false
+        }
+        self.activityIndicatorView.stopAnimating()
         userDetail.reloadData()
     }
     func onFailed(model: UserSearchModel) {
@@ -382,7 +307,8 @@ extension UserSearchViewController : UserSearchModelDelegate {
         print("modelmodelmodelmodel")
         self.errorData = model.errorData;
         Alert.common(alertNum: self.errorData, viewController: self)
-        ActivityIndicator.stopAnimating()
+//        ActivityIndicator.stopAnimating()
+        activityIndicatorView.stopAnimating()
     }
 }
 

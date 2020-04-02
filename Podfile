@@ -30,6 +30,9 @@ pod 'FirebaseStorage'
 pod 'SDWebImage'
 pod 'FirebaseUI/Storage'
 pod 'Firebase/Messaging'
+pod 'GoogleSignIn'
+pod 'GoogleAPIClientForREST/Drive', '~> 1.2.1'
+pod 'GTMAppAuth'
 
 # add the Firebase pod for Google Analytics
 pod 'Firebase/Analytics'
@@ -45,6 +48,12 @@ pod 'Stripe'
 pod 'Alamofire', '4.4'
 pod 'SwiftyJSON', '4.0'
 
+pod 'OneSignal', '>= 2.11.2', '< 3.0'
+
+target 'OneSignalNotificationServiceExtension' do
+  pod 'OneSignal', '>= 2.11.2', '< 3.0'
+end
+
   target 'matchnessTests' do
     inherit! :search_paths
     # Pods for testing
@@ -54,5 +63,13 @@ pod 'SwiftyJSON', '4.0'
     inherit! :search_paths
     # Pods for testing
   end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
+    end
+  end
+end
 
 end

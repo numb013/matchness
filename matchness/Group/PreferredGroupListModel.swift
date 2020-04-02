@@ -50,7 +50,7 @@ class PreferredGroupListModel: NSObject {
     public var responseDataOrder: Array<String> = Array<String>();
         //IDをキーにしてデータを保持
     public var errorData: Dictionary<String, ApiErrorAlert> = [String: ApiErrorAlert]();
-    public var responseData: Dictionary<String, ApiGroupRequestList> = [String: ApiGroupRequestList]();
+    public var responseData: Dictionary<String, ApiGroupRequest> = [String: ApiGroupRequest]();
 
     var request_mode: String!;
 
@@ -115,13 +115,13 @@ class PreferredGroupListModel: NSObject {
 
     /*
      */
-    func getData(row: Int) -> ApiGroupRequestList? {
+    func getData(row: Int) -> ApiGroupRequest? {
         let count: Int = row + 1;
         if( count > responseDataOrder.count || responseDataOrder.isEmpty ){
             return nil;
         }
         let key: String = responseDataOrder[row];
-        if let info: ApiGroupRequestList = responseData[key] {
+        if let info: ApiGroupRequest = responseData[key] {
             return info;
         }
         return nil;
@@ -140,9 +140,9 @@ extension PreferredGroupListModel : ApiRequestDelegate {
         let recommend: JSON = items["list"];
         for (key, item):(String, JSON) in json {
             //データを変換
-            let data: ApiGroupRequestList? = ApiGroupRequestList(json: item);
+            let data: ApiGroupRequest? = ApiGroupRequest(json: item);
             //Optionalチェック
-            guard let info: ApiGroupRequestList = data else {
+            guard let info: ApiGroupRequest = data else {
                 continue;
             }
             print(info)

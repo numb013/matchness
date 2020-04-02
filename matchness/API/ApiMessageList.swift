@@ -20,6 +20,7 @@ public struct ApiMessageList: CustomDebugStringConvertible {
     public var target_id: String? = nil;
     public var target_name: String? = nil;
     public var last_message: String? = nil;
+    public var profile_image: String? = nil;
     public var created_at: String? = nil;
 
     
@@ -70,6 +71,10 @@ public struct ApiMessageList: CustomDebugStringConvertible {
             self.last_message = last_message;
         }
 
+        if let profile_image = item["profile_image"].string {
+            self.profile_image = profile_image;
+        }
+
         //String => String
         if let created_at = item["created_at"].string {
             self.created_at = created_at;
@@ -89,6 +94,7 @@ public struct ApiMessageList: CustomDebugStringConvertible {
             string += "target_name => \(String(describing: self.target_name))\n";
             string += "target_id => \(String(describing: self.target_id))\n";
             string += "last_message => \(String(describing: self.last_message))\n";
+            string += "profile_image => \(String(describing: self.profile_image))\n";
             string += "created_at => \(String(describing: self.created_at))\n";
             return string;
         }

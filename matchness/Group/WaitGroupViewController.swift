@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableViewDataSource {
 
     @IBOutlet weak var WaitGroup: UITableView!
@@ -17,9 +15,20 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
     var dataSource: Dictionary<String, ApiGroupList> = [:]
     var dataSourceOrder: Array<String> = []
     var errorData: Dictionary<String, ApiErrorAlert> = [:]
-
+    
+    var isLoading:Bool = false
+    var isUpdate = false
+    var page_no = "1"
     var group_id: Int = 0
-    var ActivityIndicator: UIActivityIndicatorView!
+    let image_url: String = ApiConfig.REQUEST_URL_IMEGE;
+
+    var group_freeword = ""
+    var event_peple: String? = nil
+    var event_period: String? = nil
+    var present_point: String? = nil
+    var master_flag: String? = nil
+    var request_flag: String? = nil
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +39,8 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        print("YYYYYYYYYYYYYYYY")
+        print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
+        self.isLoading = true
         super.viewDidAppear(animated)
         //タブバー表示
         tabBarController?.tabBar.isHidden = false
@@ -38,35 +48,38 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
 
 
     override func viewWillAppear(_ animated: Bool) {
-        print("ここにこに")
+        print("BBBBBBBBBBBBBBBBBBBBBBBBBBBB")
+        self.isLoading = true
+        self.page_no = "1"
+        self.dataSourceOrder = []
+        var dataSource: Dictionary<String, ApiGroupList> = [:]
         super.viewWillAppear(animated)
         apiRequest()
     }
 
-
-
-    var isLoading:Bool = false
-    var page_no = "1"
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("QQQQQQ更新更新更新更新更新更新更新更新更新更新更新")
         print(self.isLoading)
-        print("EEWEWEEEEEEEEEEEEEEEEEE")
-        print(scrollView.contentOffset.y)
-        print(WaitGroup.contentSize.height - self.WaitGroup.bounds.size.height)
-        
+//        print("EEWEWEEEEEEEEEEEEEEEEEE")
+//        print(scrollView.contentOffset.y)
+//        print(WaitGroup.contentSize.height - self.WaitGroup.bounds.size.height)
+//
         if (!self.isLoading && scrollView.contentOffset.y  < -67.5) {
             self.isLoading = true
             self.page_no = "1"
             self.dataSourceOrder = []
             var dataSource: Dictionary<String, ApiGroupList> = [:]
-            print("更新")
+            print("更新更新更新更新更新更新更新更新更新更新更新")
             apiRequest()
         }
         
-        if (!self.isLoading && scrollView.contentOffset.y  >= WaitGroup.contentSize.height - self.WaitGroup.bounds.size.height) {
-            self.isLoading = true
-            print("グループ無限スクロール無限スクロール無限スクロール")
-            apiRequest()
+        if (!self.isUpdate) {
+            if (!self.isLoading && scrollView.contentOffset.y  >= WaitGroup.contentSize.height - self.WaitGroup.bounds.size.height) {
+                self.isLoading = true
+                print("グループ無限スクロール無限スクロール無限スクロール")
+                apiRequest()
+            }
         }
     }
     
@@ -80,13 +93,32 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         let requestGroupModel = GroupModel();
         requestGroupModel.delegate = self as! GroupModelDelegate;
         //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_GROUP;
+//        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_GROUP;
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_SEARCH_GROUP;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
-        var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
-        
-        query["user_id"] = matchness_user_id
         query["status"] = "0"
+        query["page"] = self.page_no
+
+        
+        query["freeword"] = userDefaults.object(forKey: "searchGroupFreeword") as? String
+        query["event_peple"] = userDefaults.object(forKey: "searchEventPeple") as? String
+        query["event_period"] = userDefaults.object(forKey: "searchEventPeriod") as? String
+        query["present_point"] = userDefaults.object(forKey: "searchPresentPoint") as? String
+        query["master_flag"] = userDefaults.object(forKey: "searchMasterFlag") as? String
+        query["request_flag"] = userDefaults.object(forKey: "searchRequestFlag") as? String
+        
+        
+        
+        requestGroupModel.array1 = self.dataSourceOrder
+        requestGroupModel.array2 = self.dataSource
+
+print(self.dataSourceOrder)
+print(requestGroupModel.array1)
+        
+        
+        print("リクエスト実行")
+        print(query)
         //リクエスト実行
         if( !requestGroupModel.requestApi(url: requestUrl, addQuery: query) ){
             
@@ -111,7 +143,7 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         cell.titel.text = "タイトル : " + waitGroup!.title!
         cell.period.text = "開催期間 : " + ApiConfig.EVENT_PERIOD_LIST[(waitGroup!.event_period)!] + "日"
         cell.joinNumber.text = "参加人数 : " +  ApiConfig.EVENT_PEPLE_LIST[(waitGroup?.event_peple)!] + "人"
-        cell.startType.text = "開始 : " +  ApiConfig.EVENT_START_TYPE[(waitGroup?.start_type)!]
+//        cell.startType.text = "開始 : " +  (waitGroup?.event_start!)!
         cell.presentPoint.text = "賞金 : " +  ApiConfig.EVENT_PRESENT_POINT[(waitGroup?.present_point)!] + "P"
 
         cell.groupFlag.image = UIImage(named: "new3")
@@ -124,7 +156,7 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
             var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTap(_:)))
             recognizer.targetString = "3"
             recognizer.targetGroupId = waitGroup!.id
-            cell.joinButton.layer.backgroundColor = #colorLiteral(red: 0.0163966082, green: 0.5516188145, blue: 0.6297279, alpha: 1)
+            cell.joinButton.layer.backgroundColor = #colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1)
             cell.joinButton.addGestureRecognizer(recognizer)
         } else {
             if (number_button == 1) {
@@ -147,8 +179,15 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         //cell.joinButton.layer.backgroundColor = UIColor(red: 254/255, green: 0, blue: 124/255, alpha: 1).cgColor
         cell.joinButton.layer.cornerRadius = 5.0 //丸みを数値で変更できます
 
-        var number = Int.random(in: 1 ... 18)
-        cell.groupTestImage.image = UIImage(named: "\(number)")
+        if (waitGroup?.profile_image == nil) {
+            cell.groupTestImage.image = UIImage(named: "no_image")
+        } else {
+            let profileImageURL = image_url + (waitGroup?.profile_image!)!
+            let url = NSURL(string: profileImageURL);
+            let imageData = NSData(contentsOf: url! as URL) //もし、画像が存在しない可能性がある場合は、ifで存在チェック
+            cell.groupTestImage.image = UIImage(data:imageData! as Data)
+        }
+
         cell.groupTestImage.isUserInteractionEnabled = true
         var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTapImage(_:)))
         recognizer.targetUserId = waitGroup?.master_id
@@ -192,10 +231,10 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
                 })
             // Cancel のaction
             let cancelAction:UIAlertAction =
-                UIAlertAction(title: "キャンセル",style: .cancel,handler:{
+                UIAlertAction(title: "閉じる",style: .cancel,handler:{
                     (action:UIAlertAction!) -> Void in
                     // 処理
-                    print("キャンセル")
+                    print("閉じる")
                 })
             // actionを追加
             alertController.addAction(cancelAction)
@@ -236,7 +275,6 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         return 160
     }
 
-
     func requestJoin(status: String) {
         /****************
          APIへリクエスト（ユーザー取得）
@@ -248,16 +286,10 @@ class WaitGroupViewController: UIViewController, UITableViewDelegate , UITableVi
         let requestUrl: String = ApiConfig.REQUEST_URL_API_REQUEST_GROUP_EVENT;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
-        var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
-        
-        query["user_id"] = matchness_user_id
         query["group_id"] = String(self.group_id)
         query["status"] = status
         query["type"] = "1"
-
-print("リリリリリリリリリリリリリリリリr")
-print(query)
-
+        query["page"] = "1"
         //リクエスト実行
         if( !requestGroupModel.requestApi(url: requestUrl, addQuery: query) ){
             
@@ -279,21 +311,31 @@ extension WaitGroupViewController : GroupModelDelegate {
         self.dataSource = model.responseData;
         self.dataSourceOrder = model.responseDataOrder;
         
-        print(self.dataSourceOrder)
+
         print("耳耳耳意味耳みm")
+        print(self.dataSourceOrder)
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
-        
-        print("路オロロロロロロロロ路r")
-        self.page_no = String(model.page);
-        print(self.page_no)
-        print("ががががががががが")
-        print(self.dataSource)
-        print(self.dataSourceOrder)
-        
-        var count: Int = 0;
 
-        self.isLoading = false
+        
+        print("グループカウントカウントカウントカウントカウント")
+        print(self.page_no)
+        print(dataSourceOrder.count)
+        print(self.cellCount)
+        
+        
+        if (Int(self.page_no)! > 3 && self.cellCount == dataSourceOrder.count) {
+            self.isLoading = false
+            self.isUpdate = true
+        } else {
+            self.page_no = String(model.page);
+
+            print("グループページページページページ")
+            print(self.page_no)
+
+            var count: Int = 0;
+            self.isLoading = false
+        }
         WaitGroup.reloadData()
     }
     func onFailed(model: GroupModel) {

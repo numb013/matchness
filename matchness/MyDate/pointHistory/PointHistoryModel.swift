@@ -52,6 +52,10 @@ class PointHistoryModel: NSObject {
     public var errorData: Dictionary<String, ApiErrorAlert> = [String: ApiErrorAlert]();
     public var responseData: Dictionary<String, ApiPintHistoryList> = [String: ApiPintHistoryList]();
     
+    var array1: [String] = []
+    var array2: Dictionary<String, ApiPintHistoryList> = [:]
+
+    
     var request_mode: String!;
     
     func requestApi(url: String, addQuery query: Dictionary<String,String>! = nil) -> Bool {

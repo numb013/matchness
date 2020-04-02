@@ -21,6 +21,7 @@ public struct ApiGroupEventList: CustomDebugStringConvertible {
     public var name: String? = nil;
     public var age: String? = nil;
     public var prefecture_id: Int? = nil;
+    public var profile_image: String? = nil;
 
     /*
      デフォルトイニシャライザ
@@ -66,6 +67,9 @@ public struct ApiGroupEventList: CustomDebugStringConvertible {
         if let prefecture_id = item["prefecture_id"].int {
             self.prefecture_id = prefecture_id;
         }
+        if let profile_image = item["profile_image"].string {
+            self.profile_image = profile_image;
+        }
         return true;
     }
 
@@ -78,6 +82,7 @@ public struct ApiGroupEventList: CustomDebugStringConvertible {
             string += "name => \(String(describing: self.name))\n";
             string += "age => \(String(describing: self.age))\n";
             string += "prefecture_id => \(String(describing: self.prefecture_id))\n";
+            string += "profile_image => \(String(describing: self.profile_image))\n";
             return string;
         }
     }

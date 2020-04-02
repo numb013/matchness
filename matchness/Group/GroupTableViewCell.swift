@@ -15,7 +15,7 @@ class GroupTableViewCell: UITableViewCell {
     @IBOutlet weak var titel: UILabel!//タイトル
     @IBOutlet weak var period: UILabel!//期間
     @IBOutlet weak var joinNumber: UILabel!//参加人数
-    @IBOutlet weak var startType: UILabel!//始め方
+
     @IBOutlet weak var presentPoint: UILabel!//プレゼント
 
     @IBOutlet weak var joinButton: UIButton!

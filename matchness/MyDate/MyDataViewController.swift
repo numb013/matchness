@@ -9,8 +9,9 @@
 import UIKit
 import CoreMotion
 import MBCircularProgressBar
+import HealthKit
 
-class MyDataViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+class MyDataViewController: baseViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
 
     @IBOutlet weak var UserImage: UIImageView!
     @IBOutlet weak var UserName: UILabel!
@@ -19,14 +20,14 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet var stepCountLabel: UIButton!
     @IBOutlet weak var progressViewBar: MBCircularProgressBarView!
     @IBOutlet weak var myPoint: UILabel!
-    var ActivityIndicator: UIActivityIndicatorView!
+    let image_url: String = ApiConfig.REQUEST_URL_IMEGE;
+
+    @IBOutlet weak var rankLabel: UILabel!
     var errorData: Dictionary<String, ApiErrorAlert> = [:]
     let userDefaults = UserDefaults.standard
     var dataSource: Dictionary<String, ApiMyData> = [:]
     var dataSourceOrder: Array<String> = []
     var cellCount: Int = 0
-
-//    var weight = Int()
     var weight = 0
 
     var times: [String]!
@@ -35,9 +36,12 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     var day = 0
     var counter = 0.0
     var step_1: [Double] = []
+    var month_step = 0
+    let store = HKHealthStore()
+    
     
     let topMenu = ["AAA", "BBB", "CCC"]
-    let systemMenu = ["足あと", "もらったいいね", "プロフィール", "お気に入り", "ポイント交換", "お知らせ", "ブロック", "設定", "退会", "ポイント購入履歴", "マイデータ", "決済"]
+    let systemMenu = ["足あと", "もらったいいね", "プロフィール", "お気に入り", "ポイント交換", "お知らせ", "ブロック", "設定", "ポイント購入履歴", "マイデータ"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,23 +49,22 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         Menu.delegate = self
         Menu.dataSource = self
         
-        var number = Int.random(in: 1 ... 2)
-        UserImage.image = UIImage(named: "\(number)")
+//        var number = Int.random(in: 1 ... 2)
+//        UserImage.image = UIImage(named: "no_image")
         UserName.text = ""
         UserJob.text = ""
         getStepDate()
-        // Do any additional setup after loading the view.
-
+        getStepMonthDate()
         if let tabBarItem = self.tabBarController?.tabBar.items?[3] as? UITabBarItem {
             tabBarItem.badgeValue = nil
         }
-
         apiRequest()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("マイページ戻りマイページ戻りマイページ戻りマイページ戻り")
+        getStepMonthDate()
         apiRequest()
     }
 
@@ -73,11 +76,12 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         let requestMyDataModel = MyDataModel();
         requestMyDataModel.delegate = self as! MyDataModelDelegate;
         //リクエスト先
-        let requestUrl: String = ApiConfig.REQUEST_URL_API_ME;
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_MY_PAGE;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var api_key = userDefaults.object(forKey: "api_token") as? String
         query["api_token"] = api_key
+        query["step"] = String(self.month_step)
         //リクエスト実行
         if( !requestMyDataModel.requestApi(url: requestUrl, addQuery: query) ){
             
@@ -87,28 +91,59 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
     func returnView() {
         var detail = self.dataSource["0"]
 
-        var number = Int.random(in: 1 ... 2)
-        UserImage.image = UIImage(named: "\(number)")
-        UserName.text = detail?.name
-        UserJob.text = ApiConfig.WORK_LIST[(detail?.work ?? 0)!]
-        myPoint.text = detail?.point
-        self.weight = detail!.weight!
-        print("detaildetaildetaildetaildetail")
-        print(detail)
-        self.userDefaults.set(Int(detail!.point!), forKey: "point")
-    }
-//    override func viewDidAppear(_ animated: Bool) {
-//
-//    }
-    
-    
-    let pedometer:CMPedometer = CMPedometer()//プロパティでCMPedometerをインスタンス化。
 
-    func getStepDate() {
-        //歩数が取得できるかどうかチェックしてます
-        if(!CMPedometer.isStepCountingAvailable()) {
-            print("cannot get stepcount")
+print("detaildetaildetaildetaildetaildetaildetail")
+print(detail)
+
+        if (detail?.profile_image == nil) {
+            UserImage.image = UIImage(named: "no_image")
+        } else {
+            let profileImageURL = image_url + (detail?.profile_image!)!
+            let url = NSURL(string: profileImageURL);
+            let imageData = NSData(contentsOf: url! as URL) //もし、画像が存在しない可能性がある場合は、ifで存在チェック
+            UserImage.image = UIImage(data:imageData! as Data)
         }
+
+        if detail != nil {
+            UserName.text = detail?.name
+            UserJob.text = ApiConfig.FITNESS_LIST[(detail?.fitness_parts_id ?? 0)!]
+            myPoint.text = detail?.point
+            rankLabel.text = ApiConfig.RANK_LIST[(detail?.rank ?? 0)!]
+            self.weight = detail!.weight! ?? 4
+
+            print("detaildetaildetaildetaildetail")
+            print(detail)
+            self.userDefaults.set(Int(detail!.point!), forKey: "point")
+        }
+
+    }
+
+    
+    func getStepDate() {
+        getDayStep { (result) in
+            DispatchQueue.main.async {
+//                self.stepCountLabel.text = "\(result)"
+                self.stepCountLabel.setTitle("\(Int(result))", for: .normal)
+
+                print("1月月月月月月月月")
+                print(result)
+
+                self.progressViewBar.value = (CGFloat(Double(result) / 10000)*100)
+            }
+        }
+    }
+
+    func getStepMonthDate() {
+        getMonthStep { (result) in
+            DispatchQueue.main.async {
+                self.month_step = Int(result)
+            }
+        }
+    }
+
+    
+    // 今日の歩数を取得するための関数
+    func getDayStep(completion: @escaping (Double) -> Void) {
         let from = Date(timeInterval: TimeInterval(-60*60*24*day), since: now)
         dateFormatter.dateFormat = "yyyy年MM月dd日"
         let selectDate =  dateFormatter.string(from: from)
@@ -122,31 +157,94 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         component.minute = 59
         component.second = 59
         let end:NSDate = NSCalendar.current.date(from:component)! as NSDate
-        //現在を取得してます。
-        let to = Date()
-        
-        pedometer.queryPedometerData(from: start as Date, to: end as Date) { (data, error) in
-            guard let data = data else { return }
-            DispatchQueue.main.async {
-                var step = data.numberOfSteps
-                var distance = data.distance
-                
-                var distance_data = (Double(distance!) / 1000)
-                var distance_para = round(distance_data*10)/10
-                self.stepCountLabel.setTitle("\(data.numberOfSteps)", for: .normal)
 
-                self.progressViewBar.value = (CGFloat(Double(step) / 10000)*100)
-                
-                print("歩数は\(data.numberOfSteps)")
-                print("距離は\(data.distance))") // 距離
-                print("登った回数\((data.floorsAscended))") // 上った回数
-                print("降った回数\(data.floorsDescended))")
-                
-                //self.progressViewBar2.value = (CGFloat(Double(step) / 10000)*100)
+
+        let type = HKSampleType.quantityType(forIdentifier: .stepCount)!
+        let predicate = HKQuery.predicateForSamples(withStart: start as Date, end: end as Date, options: .strictStartDate)
+        let query = HKStatisticsQuery(quantityType: type, quantitySamplePredicate: predicate, options: .separateBySource) { (query, data, error) in
+            if let sources = data?.sources?.filter({ $0.bundleIdentifier.hasPrefix("com.apple.health") }) {
+                let sourcesPredicate = HKQuery.predicateForObjects(from: Set(sources))
+                let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, sourcesPredicate])
+                let query = HKStatisticsQuery(quantityType: type,
+                                              quantitySamplePredicate: predicate,
+                                              options: .cumulativeSum)
+                { (query, statistics, error) in
+                    var value: Double = 0
+                    if error != nil {
+                        print("something went wrong")
+                    } else if let quantity = statistics?.sumQuantity() {
+                        print("歩数歩数歩数歩数歩数歩数歩数歩数")
+                        value = quantity.doubleValue(for: HKUnit.count())
+                        completion(value)
+                    }
+                }
+                self.store.execute(query)
             }
         }
+        store.execute(query)
     }
 
+    
+    // 今日の歩数を取得するための関数
+    func getMonthStep(completion: @escaping (Double) -> Void) {
+//        let from = Date(timeInterval: TimeInterval(-60*60*24*day), since: now)
+//        dateFormatter.dateFormat = "yyyy年MM月dd日"
+//        let selectDate =  dateFormatter.string(from: from)
+//        var component = NSCalendar.current.dateComponents([.year, .month, .day], from: from)
+//        component.hour = 0
+//        component.minute = 0
+//        component.second = 0
+//        let start:NSDate = NSCalendar.current.date(from:component)! as NSDate
+//        //XX月XX日23時59分59秒に設定したものをendにいれる
+//        component.hour = 23
+//        component.minute = 59
+//        component.second = 59
+//        let end:NSDate = NSCalendar.current.date(from:component)! as NSDate
+
+        
+        let calendar = Calendar.current
+
+        // 月初
+        var comps = calendar.dateComponents([.year, .month], from: self.now)
+        let start = calendar.date(from: comps)
+
+        // 月末
+        var add = DateComponents(month: 1, day: -1)
+        let end = calendar.date(byAdding: add, to: start!)
+
+        print("月初月初月初月初")
+        print(start)
+
+        print("月末月末月末月末")
+        print(end)
+        
+
+        let type = HKSampleType.quantityType(forIdentifier: .stepCount)!
+        let predicate = HKQuery.predicateForSamples(withStart: start! as Date, end: end! as Date, options: .strictStartDate)
+        let query = HKStatisticsQuery(quantityType: type, quantitySamplePredicate: predicate, options: .separateBySource) { (query, data, error) in
+            if let sources = data?.sources?.filter({ $0.bundleIdentifier.hasPrefix("com.apple.health") }) {
+                let sourcesPredicate = HKQuery.predicateForObjects(from: Set(sources))
+                let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, sourcesPredicate])
+                let query = HKStatisticsQuery(quantityType: type,
+                                              quantitySamplePredicate: predicate,
+                                              options: .cumulativeSum)
+                { (query, statistics, error) in
+                    var value: Double = 0
+                    if error != nil {
+                        print("something went wrong")
+                    } else if let quantity = statistics?.sumQuantity() {
+                        print("歩数歩数歩数歩数歩数歩数歩数歩数")
+                        value = quantity.doubleValue(for: HKUnit.count())
+                        completion(value)
+                    }
+                }
+                self.store.execute(query)
+            }
+        }
+        store.execute(query)
+    }
+    
+    
     
     //データの個数を返すメソッド
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
@@ -156,30 +254,53 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
         //コレクションビューから識別子「TestCell」のセルを取得する。
         let cell = Menu.dequeueReusableCell(withReuseIdentifier: "TestCell", for: indexPath as IndexPath) as UICollectionViewCell
-        //セルの背景色をランダムに設定する。
-        //cell.contentView.backgroundColor = UIColor(red: 102/256, green: 255/256, blue: 255/256, alpha: 0.1)
 
         // Tag番号を使ってLabelのインスタンス生成
         let label = cell.contentView.viewWithTag(2) as! UILabel
         label.text = systemMenu[indexPath.row]
 
-                // Tag番号を使ってImageViewのインスタンス生成
+        // Tag番号を使ってImageViewのインスタンス生成
         let imageView = cell.contentView.viewWithTag(1) as! UIImageView
 
+        let badge = cell.contentView.viewWithTag(3) as! UILabel
+        badge.layer.cornerRadius = 13.0// 角の半径
+        badge.clipsToBounds = true// この設定を入れないと角丸にならない
+        
         if indexPath.row == 0 {
             let cellImage = UIImage(named: "foot")
             imageView.image = cellImage
+            var count = userDefaults.object(forKey: "footprint") as! Int?
+            if count != 0 {
+                badge.text = String(count ?? 0)
+                badge.backgroundColor = UIColor.red
+            } else {
+                badge.text = ""
+                badge.backgroundColor = UIColor.clear
+            }
+
         }
         if indexPath.row == 1 {
             let cellImage = UIImage(named: "like")
             imageView.image = cellImage
+
+            var count = userDefaults.object(forKey: "like") as! Int?
+            if count != 0 {
+                badge.text = String(count ?? 0)
+                badge.backgroundColor = UIColor.red
+            } else {
+                badge.text = ""
+                badge.backgroundColor = UIColor.clear
+            }
         }
         if indexPath.row == 2 {
             let cellImage = UIImage(named: "prolile")
             imageView.image = cellImage
+
+            badge.text = ""
+            badge.backgroundColor = UIColor.clear
+
         }
         if indexPath.row == 3 {
             let cellImage = UIImage(named: "favorite")
@@ -192,31 +313,52 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         if indexPath.row == 5 {
             let cellImage = UIImage(named: "notice")
             imageView.image = cellImage
+
+            var count = userDefaults.object(forKey: "notice") as! Int?
+            if count != 0 {
+                badge.text = String(count ?? 0)
+                badge.backgroundColor = UIColor.red
+            } else {
+                badge.text = ""
+                badge.backgroundColor = UIColor.clear
+            }
+
         }
         if indexPath.row == 6 {
             let cellImage = UIImage(named: "block")
             imageView.image = cellImage
+            badge.text = ""
+            badge.backgroundColor = UIColor.clear
         }
         if indexPath.row == 7 {
             let cellImage = UIImage(named: "setting")
             imageView.image = cellImage
         }
+//        if indexPath.row == 8 {
+//            let cellImage = UIImage(named: "out")
+//            imageView.image = cellImage
+//        }
         if indexPath.row == 8 {
-            let cellImage = UIImage(named: "out")
-            imageView.image = cellImage
-        }
-        if indexPath.row == 9 {
             let cellImage = UIImage(named: "history")
             imageView.image = cellImage
         }
-        if indexPath.row == 10 {
+        if indexPath.row == 9 {
             let cellImage = UIImage(named: "stepdata")
             imageView.image = cellImage
         }
-        if indexPath.row == 11 {
-            let cellImage = UIImage(named: "stepdata")
-            imageView.image = cellImage
+
+//        if indexPath.row == 11 {
+//            let cellImage = UIImage(named: "stepdata")
+//            imageView.image = cellImage
+//        }
+
+        if indexPath.row != 0 && indexPath.row != 1 && indexPath.row != 5 {
+            badge.text = ""
+            badge.backgroundColor = UIColor.clear
         }
+        
+
+
         // 画像配列の番号で指定された要素の名前の画像をUIImageとする
         // UIImageをUIImageViewのimageとして設定
 
@@ -249,11 +391,6 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
 
         if (indexPath.row == 2) {
-//            let storyboard: UIStoryboard = self.storyboard!
-//            //ここで移動先のstoryboardを選択(今回の場合は先ほどsecondと名付けたのでそれを書きます)
-//            let multiple = storyboard.instantiateViewController(withIdentifier: "toProfileEdit")
-//            //ここが実際に移動するコードとなります
-//            self.present(multiple, animated: true, completion: nil)
             performSegue(withIdentifier: "toProfiletoProfile", sender: self)
         }
         if (indexPath.row == 4) {
@@ -279,66 +416,41 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
             let multiple = storyboard.instantiateViewController(withIdentifier: "menutable")
             multiple.modalPresentationStyle = .fullScreen
             self.present(multiple, animated: false, completion: nil)
-//            let storyboard: UIStoryboard = self.storyboard!
-//            let multiple = storyboard.instantiateViewController(withIdentifier: "toSettingEdit")
-//            multiple.modalPresentationStyle = .fullScreen
-//            self.present(multiple, animated: false, completion: nil)
         }
-
+//
+//        if (indexPath.row == 8) {
+//            let alertController:UIAlertController =
+//                UIAlertController(title:"退会する",message: "本当に退会しますか？",preferredStyle: .alert)
+//            let defaultAction:UIAlertAction =
+//                UIAlertAction(title: "退会する",style: .destructive,handler:{
+//                (action:UIAlertAction!) -> Void in
+//                    print("退会する")
+//                    self.userDeletApi()
+//                })
+//            let cancelAction:UIAlertAction =
+//                UIAlertAction(title: "キャンセル",style: .cancel,handler:{
+//                (action:UIAlertAction!) -> Void in
+//                    print("キャンセル")
+//                })
+//            alertController.addAction(cancelAction)
+//            alertController.addAction(defaultAction)
+//            present(alertController, animated: true, completion: nil)
+//        }
 
         if (indexPath.row == 8) {
-            let alertController:UIAlertController =
-                UIAlertController(title:"退会する",message: "本当に退会しますか？",preferredStyle: .alert)
-            let defaultAction:UIAlertAction =
-                UIAlertAction(title: "退会する",style: .destructive,handler:{
-                (action:UIAlertAction!) -> Void in
-                    print("退会する")
-                    self.pushAction()
-                })
-            let cancelAction:UIAlertAction =
-                UIAlertAction(title: "キャンセル",style: .cancel,handler:{
-                (action:UIAlertAction!) -> Void in
-                    print("キャンセル")
-                })
-            alertController.addAction(cancelAction)
-            alertController.addAction(defaultAction)
-            present(alertController, animated: true, completion: nil)
-        }
-
-        if (indexPath.row == 9) {
             let storyboard: UIStoryboard = self.storyboard!
             let multiple = storyboard.instantiateViewController(withIdentifier: "toPointHistory")
             multiple.modalPresentationStyle = .fullScreen
             self.present(multiple, animated: false, completion: nil)
         }
 
-        if (indexPath.row == 10) {
+        if (indexPath.row == 9) {
             let storyboard: UIStoryboard = self.storyboard!
             let multiple = storyboard.instantiateViewController(withIdentifier: "toMyData") as! MyDateStepViewController
             multiple.modalPresentationStyle = .fullScreen
             multiple.weight = self.weight
             self.present(multiple, animated: true, completion: nil)
         }
-
-
-        if (indexPath.row == 11) {
-            let storyboard: UIStoryboard = self.storyboard!
-            let multiple = storyboard.instantiateViewController(withIdentifier: "paymentEdit")
-            multiple.modalPresentationStyle = .fullScreen
-            self.present(multiple, animated: false, completion: nil)
-        }
-
-        
-//    if (indexPath.row == 12) {
-//        let storyboard: UIStoryboard = self.storyboard!
-//        let multiple = storyboard.instantiateViewController(withIdentifier: "menutable")
-//        multiple.modalPresentationStyle = .fullScreen
-//        self.present(multiple, animated: false, completion: nil)
-//    }
-        
-
-        // SubViewController へ遷移するために Segue を呼び出す
-            //performSegue(withIdentifier: "toSubViewController",sender: nil)
     }
     
     
@@ -354,28 +466,10 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.present(multiple, animated: true, completion: nil)
     }
     
-    func pushAction() {
-        let uiAlertControl = UIAlertController(title: "Photo", message: "Photo of the Day", preferredStyle: .alert)
-        let uiImageAlertAction = UIAlertAction(title: "", style: .default, handler: nil)
-        let image = UIImage(named: "alert")
-        uiImageAlertAction.setValue(image?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), forKey: "image")
-
-        uiAlertControl.addAction(uiImageAlertAction)
-        // Cancel のaction
-        let cancelAction:UIAlertAction =
-            UIAlertAction(title: "キャンセル",style: .cancel,handler:{
-                (action:UIAlertAction!) -> Void in
-                // 処理
-                print("キャンセル")
-                self.pushAction_1()
-            })
-        // actionを追加
-        uiAlertControl.addAction(cancelAction)
-
-        let height:NSLayoutConstraint = NSLayoutConstraint(item: uiAlertControl.view!, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 480)
-        uiAlertControl.view.addConstraint(height)
-        self.present(uiAlertControl, animated: true, completion: nil)
-    }
+    
+    
+    
+    
     func pushAction_1() {
         let uiAlertControl = UIAlertController(title: "Photo", message: "Photo of the Day", preferredStyle: .alert)
         let uiImageAlertAction = UIAlertAction(title: "", style: .default, handler: nil)
@@ -398,12 +492,7 @@ class MyDataViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.present(uiAlertControl, animated: true, completion: nil)
     }
     
-    
-    
-    
     @IBAction func toMyDeataStep(_ sender: Any) {
-        
-        
     }
     
     @IBAction func backFromPlaninputView(segue:UIStoryboardSegue){

@@ -51,7 +51,6 @@ class UserSearchModel: NSObject {
     public var errorData: Dictionary<String, ApiErrorAlert> = [String: ApiErrorAlert]();
     public var responseData: Dictionary<String, ApiUserDate> = [String: ApiUserDate]();
 
-
     var array1: [String] = []
     var array2: Dictionary<String, ApiUserDate> = [:]
 
@@ -97,10 +96,10 @@ class UserSearchModel: NSObject {
         }
 
         print("サーチサーチサーチ")
-        print(self.page)
-        print(self.requestApiCount)
-        print(self.isRequest)
-        print(self.array1)
+//        print(self.page)
+//        print(self.requestApiCount)
+//        print(self.isRequest)
+//        print(self.array1)
 
         self.page = Int(params["page"]!)!
         print(params)
@@ -150,7 +149,11 @@ extension UserSearchModel : ApiRequestDelegate {
             //データを変換
             let data: ApiUserDate? = ApiUserDate(json: json);
             if (page != 1) {
-                key1 = Int(key)! + Int(page) * Int(8) - Int(8)
+                key1 = Int(key)! + Int(page) * Int(30) - Int(30)
+
+                print("key1key1key1key1key1")
+                print(key1)
+
             } else {
                 key1 = Int(key)!
             }
@@ -159,9 +162,9 @@ extension UserSearchModel : ApiRequestDelegate {
             responseData[String(key1)] = data;
         }
 
-print("れれれれれれれれれれr")
-print(responseDataOrder)
-print(responseData)
+//print("れれれれれれれれれれr")
+//print(responseDataOrder)
+//print(responseData)
 
         page += 1;
     }
@@ -178,7 +181,7 @@ print(responseData)
 
     public func onFinally(){
         print("onFinallyきてるかい？？？")
-        print(responseData)
+//        print(responseData)
         //ページを進める
         //リクエスト回数を増やす
         self.requestApiCount += 1;

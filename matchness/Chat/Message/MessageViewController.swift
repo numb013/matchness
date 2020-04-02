@@ -23,6 +23,10 @@ class MessageViewController: JSQMessagesViewController, UIImagePickerControllerD
     var roomId = String()
     var point = Int()
     var last_message = String()
+    var my_image = String()
+    var target_imag = String()
+    let image_url: String = ApiConfig.REQUEST_URL_IMEGE;
+
     var incomingBubble: JSQMessagesBubbleImage!
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingAvatar: JSQMessagesAvatarImage!
@@ -48,10 +52,10 @@ extension MessageViewController {
 
 print(self.point)
 
-                if self.point < 100 {
+                if self.point < 50 {
 
                     let alertController:UIAlertController =
-                        UIAlertController(title:"メッセージを送信",message: "メッセージを送信には100pt必要です",preferredStyle: .alert)
+                        UIAlertController(title:"メッセージを送信",message: "メッセージを送信には50pt必要です",preferredStyle: .alert)
                     // Default のaction
                     let defaultAction:UIAlertAction =
                         UIAlertAction(title: "ポイント変換ページへ",style: .destructive,handler:{
@@ -83,7 +87,7 @@ print(self.point)
 
                 } else {
                     print("1111111111111111")
-                    self.point = self.point - 100
+                    self.point = self.point - 50
                     self.userDefaults.set(Int(self.point), forKey: "point")
                     
                     let message = JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text)
@@ -143,7 +147,7 @@ print(self.point)
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
         
-        query["point"] = "100"
+        query["point"] = "50"
         query["last_message"] = self.last_message
         query["room_code"] = self.roomId
         //リクエスト実行
@@ -346,29 +350,37 @@ extension MessageViewController {
             }
         }
         super.viewDidLoad()
-        self.roomId = self.message_users["room_code"]!
-//        self.point = self.message_users["point"]!
 
+
+print("メッセージメッセージメッセージメッセージメッセージメッセージ")
+print(self.message_users)
+
+
+        self.roomId = self.message_users["room_code"]!
         self.senderId = self.message_users["user_id"]
         self.senderDisplayName = self.message_users["user_name"]
 
-print("MMMMMMMMMMMEEEEEE")
-print(self.roomId)
-//print(self.point)
-print(self.senderId)
-print(self.senderDisplayName)
-                        self.userDefaults.set(Int(self.message_users["point"]!), forKey: "point")
-                        print("送信する")
-                        self.point = self.userDefaults.object(forKey: "point") as! Int
+        self.my_image = self.message_users["my_image"]!
+        self.target_imag = self.message_users["target_imag"]!
 
-        print(self.point)
-
+        self.userDefaults.set(Int(self.message_users["point"]!), forKey: "point")
+        print("送信する")
+        self.point = self.userDefaults.object(forKey: "point") as! Int
 
         //タブバー非表示
         tabBarController?.tabBar.isHidden = true
         // アバターの設定
-        self.incomingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "1")!, diameter: 64)
-        self.outgoingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "1")!, diameter: 64)
+        //相手
+        let profileImageURL = image_url + self.target_imag
+        let url = NSURL(string: profileImageURL);
+        let imageData = NSData(contentsOf: url! as URL) //もし、画像が存在しない可能性がある場合は、ifで存在チェック
+        self.incomingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(data:imageData! as Data)!, diameter: 64)
+
+        //自分
+        let profileImageURL_1 = image_url + self.my_image
+        let url_1 = NSURL(string: profileImageURL_1);
+        let imageData_1 = NSData(contentsOf: url_1! as URL) //もし、画像が存在しない可能性がある場合は、ifで存在チェック
+        self.outgoingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(data:imageData_1! as Data)!, diameter: 64)
         // メッセージ取得の関数（真下）呼び出し
         self.messages = getMessages()
     }
@@ -397,7 +409,7 @@ extension MessageViewController {
             let sender = snapshotValue["from"] as! String
             let name = snapshotValue["name"] as! String
             let storage = Storage.storage()
-            let host = "gs://messagefire-9801c.appspot.com/"
+            let host = "gs://popo-katsu-266622.appspot.com"
             switch mediaType {
             case "image":
                 var photoItem = JSQPhotoMediaItem(image: nil)

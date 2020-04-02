@@ -13,6 +13,8 @@ class pointPaymentTableViewCell: UITableViewCell {
     @IBOutlet weak var point: UILabel!
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var pointPaymentImage: UIImageView!
+    
+    @IBOutlet weak var unit: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

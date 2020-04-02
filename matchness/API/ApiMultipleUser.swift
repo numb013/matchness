@@ -18,8 +18,10 @@ public struct ApiMultipleUser: CustomDebugStringConvertible {
     public var name: String? = nil;
     public var user_id: Int? = nil;
     public var target_id: Int? = nil;
-    public var work: Int? = nil;
+    public var confirmed: Int? = nil;
+    public var prefecture_id: Int? = nil;
     public var updated_at: String? = nil;
+    public var profile_image: String? = nil;
 
     /*
      デフォルトイニシャライザ
@@ -56,16 +58,28 @@ public struct ApiMultipleUser: CustomDebugStringConvertible {
             self.name = name;
         }
         //String => String
-        if let work = item["work"].int {
-            self.work = work;
+        if let prefecture_id = item["prefecture_id"].int {
+            self.prefecture_id = prefecture_id;
+        }
+        //String => String
+        if let user_id = item["user_id"].int {
+            self.user_id = user_id;
         }
         //String => String
         if let target_id = item["target_id"].int {
             self.target_id = target_id;
         }
         //String => String
+        if let confirmed = item["confirmed"].int {
+            self.confirmed = confirmed;
+        }
+        //String => String
         if let updated_at = item["updated_at"].string {
             self.updated_at = updated_at;
+        }
+        //String => String
+        if let profile_image = item["profile_image"].string {
+            self.profile_image = profile_image;
         }
         return true;
         
@@ -78,10 +92,12 @@ public struct ApiMultipleUser: CustomDebugStringConvertible {
             var string:String = "ApiMultipleUser::\(#function)\n";
             string += "id => \(String(describing: self.id))\n";
             string += "name => \(String(describing: self.name))\n";
-            string += "work => \(String(describing: self.work))\n";
+            string += "prefecture_id => \(String(describing: self.prefecture_id))\n";
             string += "user_id => \(String(describing: self.user_id))\n";
             string += "target_id => \(String(describing: self.target_id))\n";
+            string += "confirmed => \(String(describing: self.confirmed))\n";
             string += "updated_at => \(String(describing: self.updated_at))\n";
+            string += "profile_image => \(String(describing: self.profile_image))\n";
             return string;
         }
     }

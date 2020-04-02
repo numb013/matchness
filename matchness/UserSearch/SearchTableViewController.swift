@@ -21,21 +21,17 @@ class SearchTableViewController: UIViewController, UITableViewDelegate, UITableV
     var selectPickerItem: Int = 0
     var pcker_list: [String] = []
     var cellCount: Int = 0
-    var dataSource: Dictionary<String, ApiUserDate> = [:]
-    var dataSourceOrder: Array<String> = []
-    var errorData: Dictionary<String, ApiErrorAlert> = [:]
     var select_pcker_list: [Int] = [0, 0, 0, 0, 0, 0, 0, 0]
-
-    
     var freeword = ""
     var work: Int = 0
     var prefecture_id: Int = 0
     var blood_type: Int = 0
     var fitness_parts_id: Int = 0
     var search_age_id: Int = 0
+    var sex: Int = 0
     var editType: Int = 0
     var selectRow = 0
-
+    var device = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,22 +59,35 @@ print(self.freeword)
         if ((self.userDefaults.object(forKey: "searchFitnessPartsId")) != nil) {
             self.fitness_parts_id = Int((self.userDefaults.object(forKey: "searchFitnessPartsId") as? String)!)!
         }
-
+        if ((self.userDefaults.object(forKey: "searchSex")) != nil) {
+            self.sex = Int((self.userDefaults.object(forKey: "searchSex") as? String)!)!
+        }
 //        self.work = Int((self.userDefaults.object(forKey: "searchWork") as? String)!)!
 //        self.prefecture_id = Int((self.userDefaults.object(forKey: "searchPrefectureId") as? String)!)!
 //        self.blood_type = Int((self.userDefaults.object(forKey: "searchBloodType") as? String)!)!
 //        self.fitness_parts_id = Int((self.userDefaults.object(forKey: "searchFitnessPartsId") as? String)!)!
 
-print("workworkworkworkworkworkwork")
-print(work)
-
         self.tableView.register(UINib(nibName: "ProfileEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfileEditTableViewCell")
 
-        self.tableView.register(UINib(nibName: "TextFiledTableViewCell", bundle: nil), forCellReuseIdentifier: "TextFiledTableViewCell")
+        switch (UIScreen.main.nativeBounds.height) {
+        case 2436:
+            //iPhone X
+            self.device = 2
+            print("heigh_6")
+            break
+        case 1792:
+            //iPhone XR
+            self.device = 3
+            break
+        case 2688:
+            //iPhone XR
+            self.device = 3
+            break
+        default:
+            self.device = 1
+            break
+        }
 
-        self.tableView.register(UINib(nibName: "TextAreaTableViewCell", bundle: nil), forCellReuseIdentifier: "TextAreaTableViewCell")
-
-        self.tableView.register(UINib(nibName: "ProfilImageTableViewCell", bundle: nil), forCellReuseIdentifier: "ProfilImageTableViewCell")
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -86,12 +95,12 @@ print(work)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 10
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return ""
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return ""
+//    }
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
@@ -99,62 +108,43 @@ print(work)
         header.textLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         header.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
     }
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 35
-    }
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        pickerView.delegate   = self
+        pickerView.dataSource = self
+
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "profileCell")
 
-        print("こいいいいいい")
-        print(self.dataSource)
-        var myData = self.dataSource["0"]
-
+        print("0000000000")
         if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "TextFiledTableViewCell") as! TextFiledTableViewCell
 
-                cell.title?.text = "フリーワード"
-                cell.textFiled.delegate = self
-                cell.textFiled.tag = 0
-                cell.textFiled?.text = self.freeword
+            
+            if indexPath.row == 0 {
+
+print("5555555555")
+
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
+
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                cell.title?.text = "性別"
+                cell.detail?.text = ApiConfig.SEX_LIST[self.sex ?? Int((userDefaults.object(forKey: "searchSex") as? String)!)!]
                 return cell
             }
-            
             if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "職業"
-                cell.detail?.text = ApiConfig.WORK_LIST[self.work ?? Int((userDefaults.object(forKey: "searchWork") as? String)!)!]
-                return cell
-            }
-            if indexPath.row == 2 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
-                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "居住地"
-                cell.detail?.text = ApiConfig.PREFECTURE_LIST[self.prefecture_id ?? 0]
-                return cell
-            }
-            if indexPath.row == 3 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
-
-                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "痩せたい部位"
+                cell.title?.text = "痩せたい箇所"
                 cell.detail?.text = ApiConfig.FITNESS_LIST[self.fitness_parts_id ?? Int((userDefaults.object(forKey: "searchFitnessPartsId") as? String)!)!]
                 return cell
             }
-            
-            if indexPath.row == 4 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
+            if indexPath.row == 2 {
 
-                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell.title?.text = "血液型"
-                cell.detail?.text = ApiConfig.BLOOD_LIST[self.blood_type ?? Int((userDefaults.object(forKey: "searchBloodType") as? String)!)!]
-                return cell
-            }
-            if indexPath.row == 5 {
+
+print("66666666666")
+
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
 
                 cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
@@ -162,7 +152,33 @@ print(work)
                 cell.detail?.text = ApiConfig.SEARCH_AGE_LIST[self.search_age_id ?? Int((userDefaults.object(forKey: "searchBloodType") as? String)!)!]
                 return cell
             }
+            if indexPath.row == 3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
+
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                cell.title?.text = "職業"
+                cell.detail?.text = ApiConfig.WORK_LIST[self.work ?? Int((userDefaults.object(forKey: "searchWork") as? String)!)!]
+                return cell
+            }
+            if indexPath.row == 4 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
+
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                cell.title?.text = "居住地"
+                cell.detail?.text = ApiConfig.PREFECTURE_LIST[self.prefecture_id ?? 0]
+                return cell
+            }
+
+            if indexPath.row == 5 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileEditTableViewCell") as! ProfileEditTableViewCell
+
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                cell.title?.text = "血液型"
+                cell.detail?.text = ApiConfig.BLOOD_LIST[self.blood_type ?? Int((userDefaults.object(forKey: "searchBloodType") as? String)!)!]
+                return cell
+            }
         }
+
         return cell
     }
 
@@ -170,33 +186,40 @@ print(work)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("タップ")
         print(indexPath.row)
-
         dismissPicker()
+        if indexPath.row == 0 {
+            self.selectPicker = 0
+            self.pcker_list = ApiConfig.SEX_LIST
+            self.selectRow = self.sex ?? 0
+        }
         if indexPath.row == 1 {
             self.selectPicker = 1
-            self.pcker_list = ApiConfig.WORK_LIST
-            self.selectRow = self.work ?? 0
-        }
-        if indexPath.row == 2 {
-            self.selectPicker = 2
-            self.pcker_list = ApiConfig.PREFECTURE_LIST
-            self.selectRow = self.prefecture_id ?? 0
-        }
-        if indexPath.row == 3 {
-            self.selectPicker = 3
             self.pcker_list = ApiConfig.FITNESS_LIST
             self.selectRow = self.fitness_parts_id ?? 0
         }
-        if indexPath.row == 4 {
-            self.selectPicker = 4
-            self.pcker_list = ApiConfig.BLOOD_LIST
-            self.selectRow = self.blood_type ?? 0
-        }
-        if indexPath.row == 5 {
-            self.selectPicker = 5
+        if indexPath.row == 2 {
+            self.selectPicker = 2
             self.pcker_list = ApiConfig.SEARCH_AGE_LIST
             self.selectRow = self.search_age_id ?? 0
         }
+        if indexPath.row == 3 {
+            self.selectPicker = 3
+            self.pcker_list = ApiConfig.WORK_LIST
+            self.selectRow = self.work ?? 0
+        }
+        if indexPath.row == 4 {
+            self.selectPicker = 4
+            self.pcker_list = ApiConfig.PREFECTURE_LIST
+            self.selectRow = self.prefecture_id ?? 0
+        }
+
+        if indexPath.row == 5 {
+            self.selectPicker = 5
+            self.pcker_list = ApiConfig.BLOOD_LIST
+            self.selectRow = self.blood_type ?? 0
+        }
+
+
 
         pickerView.selectRow(self.selectRow, inComponent: 0, animated: false)
         print(indexPath.section)
@@ -211,29 +234,36 @@ print(work)
         return 60
     }
 
-
+    func aaaa() {
+        print("22222222222")
+        tableView.reloadData()
+    }
 
     @IBAction func pickerSelectButton(_ sender: Any) {
         print("セレクトピッカーセレクトピッカーbbbb")
         print("セレクトピッカー")
         print(self.selectPicker)
         print(self.selectPickerItem)
-
+        if self.selectPicker == 0 {
+            self.sex = self.select_pcker_list[self.selectPicker] ?? 0
+        }
         if self.selectPicker == 1 {
-            self.work = self.select_pcker_list[self.selectPicker] ?? 0
-        }
-        if self.selectPicker == 2 {
-            self.prefecture_id = self.select_pcker_list[self.selectPicker] ?? 0
-        }
-        if self.selectPicker == 3 {
             self.fitness_parts_id = self.select_pcker_list[self.selectPicker] ?? 0
         }
-        if self.selectPicker == 4 {
-            self.blood_type = self.select_pcker_list[self.selectPicker] ?? 0
-        }
-        if self.selectPicker == 5 {
+        if self.selectPicker == 2 {
             self.search_age_id = self.select_pcker_list[self.selectPicker] ?? 0
         }
+        if self.selectPicker == 3 {
+            self.work = self.select_pcker_list[self.selectPicker] ?? 0
+        }
+        if self.selectPicker == 4 {
+            self.prefecture_id = self.select_pcker_list[self.selectPicker] ?? 0
+        }
+
+        if self.selectPicker == 5 {
+            self.blood_type = self.select_pcker_list[self.selectPicker] ?? 0
+        }
+
 
         dismissPicker()
         tableView.reloadData()
@@ -248,7 +278,14 @@ print(work)
         print("ピッカーーーーーーーー")
         self.view.endEditing(true)
         UIView.animate(withDuration: 0.5,animations: {
-            self.pickerBottom.constant = -120
+            //1:ノーマル 2:XR
+            if self.device == 2 {
+                self.pickerBottom.constant = -180
+            } else if self.device == 3 {
+                self.pickerBottom.constant = -120
+            } else {
+                self.pickerBottom.constant = -300
+            }
             self.pickerView.updateConstraints()
             self.tableView.updateConstraints()
             self.view.layoutIfNeeded()
@@ -274,15 +311,20 @@ print(work)
         return self.pcker_list.count
     }
     // UIPickerViewに表示する配列
-    func pickerView(_ pickerView: UIPickerView,titleForRow row: Int,forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         print("p3p3p3p3p3")
         if (self.pcker_list.count > row) {
+            print(self.pcker_list[row])
             return self.pcker_list[row]
         } else {
+            print("ヌルヌルヌルヌルヌルヌル")
             return ""
         }
     }
 
+    
+    
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("選択ピッカー選択ピッカー選択ピッカー")
         print(self.selectPicker)
@@ -327,21 +369,29 @@ print(work)
         print("リセットリセットリセット")
         userDefaults.removeObject(forKey: "searchFreeword")
         self.freeword = ""
+
         userDefaults.removeObject(forKey: "searchWork")
         self.work = 0
+
         userDefaults.removeObject(forKey: "searchPrefectureId")
         self.prefecture_id = 0
+
         userDefaults.removeObject(forKey: "searchBloodType")
         self.blood_type = 0
+
         userDefaults.removeObject(forKey: "searchFitnessPartsId")
         self.fitness_parts_id = 0
+
+        userDefaults.removeObject(forKey: "searchSex")
+        self.sex = 0
+
         self.select_pcker_list = [0, 0, 0, 0, 0, 0, 0, 0]
         tableView.reloadData()
     }
     
     @IBAction func searchButton(_ sender: Any) {
         print("編集ボタン！！！！")
-        print(self.dataSource["0"])
+
         print("編集ボタン??????")
 //        self.editType = 1
 //        /****************
@@ -359,9 +409,8 @@ print(work)
         query["work"] = String(self.work ?? 0)
         query["fitness_parts_id"] = String(self.fitness_parts_id ?? 0)
         query["blood_type"] = String(self.blood_type ?? 0)
+        query["sex"] = String(self.sex ?? 0)
         query["prefecture_id"] = String(self.prefecture_id ?? 0)
-
-
         
         let storyboard: UIStoryboard = self.storyboard!
         let nextVC = storyboard.instantiateViewController(withIdentifier: "userSearch") as! UserSearchViewController
@@ -370,8 +419,13 @@ print(work)
         nextVC.work = String(self.work)
         nextVC.fitness_parts_id = String(self.fitness_parts_id)
         nextVC.blood_type = String(self.blood_type)
+        nextVC.sex = String(self.sex)
         nextVC.prefecture_id = String(self.prefecture_id)
 
+print("検索検索検索検索検索検索検索検索")
+print(query)
+        
+        
         if (self.freeword != nil) {
             UserDefaults.standard.set(self.freeword, forKey: "searchFreeword")
         }
@@ -386,6 +440,9 @@ print(work)
         }
         if (self.prefecture_id != nil) {
             UserDefaults.standard.set(String(self.prefecture_id), forKey: "searchPrefectureId")
+        }
+        if (self.sex != nil) {
+            UserDefaults.standard.set(String(self.sex), forKey: "searchSex")
         }
 //        self.present(nextVC, animated: false, completion: nil)
 //        self.navigationController?.pushViewController(nextVC, animated: true)

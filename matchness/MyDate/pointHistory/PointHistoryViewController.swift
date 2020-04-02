@@ -20,7 +20,6 @@ class PointHistoryViewController: UIViewController, UITableViewDelegate, UITable
     var pont: Int = 0
     var notice_id: Int = 0
     var selectRow = 0
-    var ActivityIndicator: UIActivityIndicatorView!
 
     @IBOutlet weak var myPoint: UILabel!    
     override func viewDidLoad() {
@@ -43,6 +42,11 @@ class PointHistoryViewController: UIViewController, UITableViewDelegate, UITable
         var query: Dictionary<String,String> = Dictionary<String,String>();
         var api_key = userDefaults.object(forKey: "api_token") as? String
         query["api_token"] = api_key
+
+        requestPointHistoryModel.array1 = self.dataSourceOrder
+        requestPointHistoryModel.array2 = self.dataSource
+
+
         //リクエスト実行
         if( !requestPointHistoryModel.requestApi(url: requestUrl, addQuery: query) ){
             

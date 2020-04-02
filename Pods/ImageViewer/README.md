@@ -31,7 +31,7 @@ github "MailOnline/ImageViewer"
 For a detailed example, see the [Example](https://github.com/MailOnline/ImageViewer/tree/master/Example)!
 
 ```swift
-// Show the ImageViewer with with the first item
+// Show the ImageViewer with the first item
 self.presentImageGallery(GalleryViewController(startIndex: 0, itemsDataSource: self))
 
 // The GalleryItemsDataSource provides the items to show
@@ -55,6 +55,7 @@ If you use earlier version of Swift - refer to the table below:
 
 | Swift version | ImageViewer version               |
 | ------------- | --------------------------------- |
+| 5.x           | >= 6.0                            |
 | 4.x           | >= 5.0                            |
 | 3.x           | 4.0                               |
 | 2.3           | 3.1 [⚠️](CHANGELOG.md#version-31) |

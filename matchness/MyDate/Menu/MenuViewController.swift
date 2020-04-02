@@ -7,79 +7,90 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class MenuViewController: UIViewController {
 
-
     @IBOutlet weak var menuTableView: UITableView!
 
-        var status = ""
-        var swich_status:Bool = true
-        var cellCount: Int = 0
-        var dataSource: Dictionary<String, ApiSetting> = [:]
-        var errorData: Dictionary<String, ApiErrorAlert> = [:]
+    var status = ""
+    var swich_status:Bool = true
+    var cellCount: Int = 0
+    var dataSource: Dictionary<String, ApiSetting> = [:]
+    var errorData: Dictionary<String, ApiErrorAlert> = [:]
+    private var requestAlamofire: Alamofire.Request?;
+    var dataSourceOrder: Array<String> = []
+//    var ActivityIndicator: UIActivityIndicatorView!
+    var activityIndicatorView = UIActivityIndicatorView()
 
-        var dataSourceOrder: Array<String> = []
-        var ActivityIndicator: UIActivityIndicatorView!
-    
-        private var sections: [Section] = [
-            Section(title: "通知設定",values: [("MEN", false),("WOMEN", false),("KIDS", false)],expanded: true),
-            Section(title: "初めての方",values: [("POPO-KATSUとは？", false),("POPO-KATSUで出来る事", false)],expanded: true),
-            Section(title: "よくある質問",values: [
-                ("このアプリは無料ですか？", false),
-                ("歩数はどうやって取得？", false),
-                ("カロリーの計算は？", false),
-            ],expanded: true),
-            Section(title: "グループについて",values: [
-                ("グループの作り方", false),
-                ("グループの使い方", false),
-                ("グループで出来る事", false),
-            ],expanded: true),
-            Section(title: "ポイントについて",values: [("ポイントの貯め方", false),("何をすればポイントを消費する", false),("ポイント購入について", false)],expanded: true),
-            Section(title: "メッセージついて",values: [("ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー", false)],expanded: true),
-        ]
+    private var sections: [Section] = [
+        Section(title: "通知設定",values: [("MEN", false),("WOMEN", false),("KIDS", false)],expanded: true),
+        Section(title: "初めての方",values: [
+            ("POPO-KATSUとは？", false),
+            ("グループ", false),
+            ("POPO-KATSUポイント", false),
+            ("メッセージについて", false),
 
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            self.menuTableView.estimatedRowHeight = 150
-            self.menuTableView.rowHeight = UITableView.automaticDimension
-            setupTableView()
+        ],expanded: true),
+        Section(title: "よくある質問",values: [
+            ("このアプリは無料ですか？", false),
+            ("歩数はどうやって取得？", false),
+            ("カロリーの計算は？", false),
+            ("何をすればポイントを消費する", false),
+        ],expanded: true),
+        Section(title: "退会について",values: [
+            ("退会についての説明", false),
+            ("退会する", false),
+        ],expanded: true),
+        Section(title: "その他",values: [("利用規約", false),("ポイント利用規約", false),("プライバシーポリシー", false),("お問い合わせ", false)],expanded: true),
 
-            // ActivityIndicatorを作成＆中央に配置
-            ActivityIndicator = UIActivityIndicatorView()
-            ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-            ActivityIndicator.center = self.view.center
-            // クルクルをストップした時に非表示する
-            ActivityIndicator.hidesWhenStopped = true
-            // 色を設定
-            ActivityIndicator.style = UIActivityIndicatorView.Style.gray
-            //Viewに追加
-            self.view.addSubview(ActivityIndicator)
-            ActivityIndicator.startAnimating()
-            
-            
-            /****************
-             APIへリクエスト（ユーザー取得）
-             *****************/
-            //ロジック生成
-            let requestSettingEditModel = SettingEditModel();
-            requestSettingEditModel.delegate = self as! SettingEditModelDelegate;
-            //リクエスト先
-            let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_SETTING;
-            //パラメーター
-            var query: Dictionary<String,String> = Dictionary<String,String>();
-            //リクエスト実行
-            if( !requestSettingEditModel.requestApi(url: requestUrl, addQuery: query) ){
-                
+    ]
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.menuTableView.estimatedRowHeight = 150
+        self.menuTableView.rowHeight = UITableView.automaticDimension
+        setupTableView()
+        
+        view.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
+        activityIndicatorView.center = view.center
+        activityIndicatorView.style = .whiteLarge
+        activityIndicatorView.color = .purple
+        view.addSubview(activityIndicatorView)
+        
+        activityIndicatorView.startAnimating()
+        DispatchQueue.global(qos: .default).async {
+            // 非同期処理などを実行
+            Thread.sleep(forTimeInterval: 5)
+            // 非同期処理などが終了したらメインスレッドでアニメーション終了
+            DispatchQueue.main.async {
+                // アニメーション終了
+                self.activityIndicatorView.stopAnimating()
             }
-            print("マイデータ")
         }
+        /****************
+         APIへリクエスト（ユーザー取得）
+         *****************/
+        //ロジック生成
+        let requestSettingEditModel = SettingEditModel();
+        requestSettingEditModel.delegate = self as! SettingEditModelDelegate;
+        //リクエスト先
+        let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_SETTING;
+        //パラメーター
+        var query: Dictionary<String,String> = Dictionary<String,String>();
+        //リクエスト実行
+        if( !requestSettingEditModel.requestApi(url: requestUrl, addQuery: query) ){
+            
+        }
+        print("マイデータ")
+    }
 
-        private func setupTableView() {
-            menuTableView.dataSource = self
-            menuTableView.delegate = self
-            menuTableView.register(MenuTableViewCell.self, forCellReuseIdentifier: "cell")
-        }
+    private func setupTableView() {
+        menuTableView.dataSource = self
+        menuTableView.delegate = self
+        menuTableView.register(MenuTableViewCell.self, forCellReuseIdentifier: "cell")
+    }
 }
 
     extension MenuViewController: UITableViewDataSource {
@@ -91,18 +102,14 @@ class MenuViewController: UIViewController {
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             if (section == 0) {
                 return 3
+            } else if (section == 4) {
+                return 4
             } else {
                 return sections[section].values.count
             }
             return 2
         }
 
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            print("タップ")
-            print(indexPath.row)
-            print("たっぷりなたっぷりなたっぷりな");
-        }
-        
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
             var mySetting = self.dataSource["0"]
@@ -195,27 +202,25 @@ class MenuViewController: UIViewController {
                 return cell
             }
             if (indexPath.section == 4) {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
-                cell.titleLabel.numberOfLines=0
-                cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
-                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                return cell
+                let cell = UITableViewCell(style: .default, reuseIdentifier: "myCell")
+                if indexPath.row == 0 {
+//                    cell.titleLabel.numberOfLines=0
+                    cell.textLabel?.text = sections[indexPath.section].values[indexPath.row].title
+                    return cell
+                }
+                if indexPath.row == 1 {
+                    cell.textLabel?.text = sections[indexPath.section].values[indexPath.row].title
+                    return cell
+                }
+                if indexPath.row == 2 {
+                    cell.textLabel?.text = sections[indexPath.section].values[indexPath.row].title
+                    return cell
+                }
+                if indexPath.row == 3 {
+                    cell.textLabel?.text = sections[indexPath.section].values[indexPath.row].title
+                    return cell
+                }
             }
-
-            if (indexPath.section == 5) {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
-                cell.titleLabel.numberOfLines=0
-                cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
-//                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                return cell
-            }
-            
-            //            if (indexPath.section == 5) {
-//                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
-//                cell.titleLabel.numberOfLines=0
-//                cell.titleLabel.text = sections[indexPath.section].values[indexPath.row].title
-//                return cell
-//            }
 //            if (indexPath.section == 6) {
 //                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MenuTableViewCell
 //                cell.titleLabel.numberOfLines=0
@@ -233,19 +238,163 @@ class MenuViewController: UIViewController {
             return cell
         }
 
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            print("タップ")
+            print(indexPath.section)
+            print("/")
+
+            if (indexPath.section == 3) {
+                if (indexPath.row == 1) {
+                    let alertController:UIAlertController =
+                        UIAlertController(title:"退会する",message: "本当に退会しますか？",preferredStyle: .alert)
+                    let defaultAction:UIAlertAction =
+                        UIAlertAction(title: "退会する",style: .destructive,handler:{
+                        (action:UIAlertAction!) -> Void in
+                            print("退会する")
+                            self.userDeletApi()
+                        })
+                    let cancelAction:UIAlertAction =
+                        UIAlertAction(title: "キャンセル",style: .cancel,handler:{
+                        (action:UIAlertAction!) -> Void in
+                            print("キャンセル")
+                        })
+                    alertController.addAction(cancelAction)
+                    alertController.addAction(defaultAction)
+                    present(alertController, animated: true, completion: nil)
+                }
+            } else {
+                print(indexPath.row)
+                let storyboard: UIStoryboard = self.storyboard!
+                let nextVC = storyboard.instantiateViewController(withIdentifier: "webView") as! WebViewViewController
+                nextVC.modalPresentationStyle = .fullScreen
+                nextVC.webType = String(indexPath.section) + String(indexPath.row)
+                self.present(nextVC, animated: true, completion: nil)
+            }
+
+        }
+        
         //スイッチのテーブルが変更されたときに呼ばれる
         @objc func fundlSwitch(_ sender: UISwitch) {
             print("スイッチスイッチスイッチスイッチスイッチ")
             print(sender.tag)
             print(sender.isOn)
-        //    settingApi(sender.tag, sender.isOn)
+            settingApi(sender.tag, sender.isOn)
         }
+    
+        func settingApi(_ status1:Int, _ status2:Bool) {
+            print("APIへリクエスト（ユーザー取得")
+            let requestUrl: String = ApiConfig.REQUEST_URL_API_EDIT_SETTING;
+            //パラメーター
+            var query: Dictionary<String,String> = Dictionary<String,String>();
+
+            if (status2 == false) {
+                self.status = "0"
+            } else {
+                self.status = "1"
+            }
+
+            if (status1 == 0) {
+                query["message_notice"] = self.status
+            }
+            if (status1 == 1) {
+                query["group_notice"] = self.status
+            }
+            if (status1 == 2) {
+                query["foot_notice"] = self.status
+            }
+            if (status1 == 3) {
+                query["match_notice"] = self.status
+            }
+
+            var headers: [String : String] = [:]
+
+            var api_key = userDefaults.object(forKey: "api_token") as? String
+            if ((api_key) != nil) {
+                headers = [
+                    "Accept" : "application/json",
+                    "Authorization" : "Bearer " + api_key!,
+                    "Content-Type" : "application/x-www-form-urlencoded"
+                ]
+            }
+
+    print("SDSDSDSDSDSDSDSDSDSDSDSDS")
+    print(requestUrl)
+
+            self.requestAlamofire = Alamofire.request(requestUrl, method: .post, parameters: query, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
+                switch response.result {
+                case .success:
+                    var json:JSON;
+                    do{
+                        //レスポンスデータを解析
+                        json = try SwiftyJSON.JSON(data: response.data!);
+                    } catch {
+                        // error
+                        print("json error: \(error.localizedDescription)");
+        //                     self.onFaild(response as AnyObject);
+                        break;
+                    }
+                    print("取得した値はここにきて")
+                    print(json)
+
+//                    self.ActivityIndicator.stopAnimating()
+                    self.activityIndicatorView.stopAnimating()
+//                    self.dismiss(animated: true, completion: nil)
+                case .failure:
+                    //  リクエスト失敗 or キャンセル時
+                    let alert = UIAlertController(title: "設定", message: "失敗しました。", preferredStyle: .alert)
+                    self.present(alert, animated: true, completion: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                            alert.dismiss(animated: true, completion: nil)
+                        })
+                    })
+                    return;
+                }
+            }
+        }
+
+        func userDeletApi() {
+            /****************
+             APIへリクエスト（ユーザー取得）
+             *****************/
+            //ロジック生成
+            let requestMyDataModel = MyDataModel();
+            requestMyDataModel.delegate = self as! MyDataModelDelegate;
+            //リクエスト先
+            let requestUrl: String = ApiConfig.REQUEST_URL_API_USER_DELETE;
+            //パラメーター
+            var query: Dictionary<String,String> = Dictionary<String,String>();
+            query["status"] = "0"
+            //リクエスト実行
+            if( !requestMyDataModel.requestApi(url: requestUrl, addQuery: query) ){
+                
+            }
+
+            userDefaults.removeObject(forKey: "api_token")
+            userDefaults.removeObject(forKey: "login_type")
+            userDefaults.removeObject(forKey: "login_step_1")
+            userDefaults.removeObject(forKey: "profileImageURL")
+            userDefaults.removeObject(forKey: "login_step_2")
+            userDefaults.removeObject(forKey: "searchWork")
+            userDefaults.removeObject(forKey: "prefecture_id")
+            userDefaults.removeObject(forKey: "blood_type")
+            userDefaults.removeObject(forKey: "fitness_parts_id")
+            userDefaults.removeObject(forKey: "matchness_user_id")
+            userDefaults.removeObject(forKey: "point")
+            
+            let storyboard: UIStoryboard = self.storyboard!
+            let multiple = storyboard.instantiateViewController(withIdentifier: "fblogin")
+            multiple.modalPresentationStyle = .fullScreen
+            self.present(multiple, animated: false, completion: nil)
+        }
+
+
+
 
 }
 
 extension MenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath.section == 0) {
+        if (indexPath.section == 0 || indexPath.section == 4) {
             return UITableView.automaticDimension
         }
         if sections[indexPath.section].expanded {
@@ -273,6 +422,9 @@ extension MenuViewController: UITableViewDelegate {
     }
 
 
+    @IBAction func backFromMenuView(segue:UIStoryboardSegue){
+        NSLog("ReportViewController#backFromMenuView")
+    }
 
 }
 
@@ -294,7 +446,8 @@ extension MenuViewController : SettingEditModelDelegate {
 
 print("設定設定設定設定設定")
 print(self.dataSource)
-        ActivityIndicator.stopAnimating()
+//        ActivityIndicator.stopAnimating()
+        self.activityIndicatorView.stopAnimating()
         menuTableView.reloadData()
     }
     func onFailed(model: SettingEditModel) {

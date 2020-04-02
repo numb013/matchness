@@ -11,7 +11,7 @@
 
 #import "PKPaymentAuthorizationViewController+Stripe_Blocks.h"
 #import "STPAddCardViewController+Private.h"
-#import "STPCustomerContext.h"
+#import "STPCustomerContext+Private.h"
 #import "STPDispatchFunctions.h"
 #import "STPPaymentConfiguration+Private.h"
 #import "STPPaymentContext+Private.h"
@@ -41,7 +41,6 @@ typedef NS_ENUM(NSUInteger, STPPaymentContextState) {
     @property (nonatomic) STPPaymentConfiguration *configuration;
     @property (nonatomic) STPTheme *theme;
     @property (nonatomic) id<STPBackendAPIAdapter> apiAdapter;
-    @property (nonatomic) STPAPIClient *apiClient;
     @property (nonatomic) STPPromise<STPPaymentOptionTuple *> *loadingPromise;
 
     // these wrap hostViewController's promises because the hostVC is nil at init-time
@@ -96,7 +95,7 @@ typedef NS_ENUM(NSUInteger, STPPaymentContextState) {
         _theme = theme;
         _willAppearPromise = [STPVoidPromise new];
         _didAppearPromise = [STPVoidPromise new];
-        _apiClient = [[STPAPIClient alloc] initWithPublishableKey:configuration.publishableKey];
+        _apiClient = [STPAPIClient sharedClient];
         _paymentCurrency = @"USD";
         _paymentCountry = @"US";
         _paymentAmountModel = [[STPPaymentContextAmountModel alloc] initWithAmount:0];
@@ -157,8 +156,18 @@ typedef NS_ENUM(NSUInteger, STPPaymentContextState) {
                         [strongSelf2.loadingPromise fail:error];
                         return;
                     }
-                    STPPaymentOptionTuple *paymentTuple = [STPPaymentOptionTuple tupleFilteredForUIWithPaymentMethods:paymentMethods selectedPaymentMethod:strongSelf2.defaultPaymentMethod configuration:strongSelf2.configuration];
-                    [strongSelf2.loadingPromise succeed:paymentTuple];
+
+                    if (self.defaultPaymentMethod == nil && [strongSelf2.apiAdapter isKindOfClass:[STPCustomerContext class]]) {
+                        // Retrieve the last selected payment method saved by STPCustomerContext
+                        [((STPCustomerContext *)strongSelf2.apiAdapter) retrieveLastSelectedPaymentMethodIDForCustomerWithCompletion:^(NSString * _Nullable paymentMethodID, NSError * _Nullable __unused _) {
+                            __strong typeof(self) strongSelf3 = weakSelf;
+                            STPPaymentOptionTuple *paymentTuple = [STPPaymentOptionTuple tupleFilteredForUIWithPaymentMethods:paymentMethods selectedPaymentMethod:paymentMethodID configuration:strongSelf3.configuration];
+                            [strongSelf3.loadingPromise succeed:paymentTuple];
+                        }];
+                    } else {
+                        STPPaymentOptionTuple *paymentTuple = [STPPaymentOptionTuple tupleFilteredForUIWithPaymentMethods:paymentMethods selectedPaymentMethod:self.defaultPaymentMethod configuration:strongSelf2.configuration];
+                        [strongSelf2.loadingPromise succeed:paymentTuple];
+                    }
                 });
             }];
         });

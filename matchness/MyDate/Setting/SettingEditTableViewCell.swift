@@ -17,7 +17,6 @@ class SettingEditTableViewCell: UITableViewCell {
 
     
     @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var detail: UILabel!
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

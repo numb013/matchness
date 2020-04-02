@@ -29,6 +29,7 @@ public struct ApiProfileData: CustomDebugStringConvertible {
     public var point: Int? = nil;
     public var prefecture_id: Int? = nil;
     public var weight: Int? = nil;
+    public var is_user: Int? = nil;
     /*
      デフォルトイニシャライザ
      失敗可能イニシャライザ init?
@@ -107,6 +108,10 @@ public struct ApiProfileData: CustomDebugStringConvertible {
         if let weight = item["weight"].int {
             self.weight = weight;
         }
+        if let is_user = item["is_user"].int {
+            self.is_user = is_user;
+        }
+        
         return true;
     }
     
@@ -127,6 +132,7 @@ public struct ApiProfileData: CustomDebugStringConvertible {
             string += "point => \(String(describing: self.point))\n";
             string += "prefecture_id => \(String(describing: self.prefecture_id))\n";
             string += "weight => \(String(describing: self.weight))\n";
+            string += "is_user => \(String(describing: self.is_user))\n";
             return string;
         }
     }

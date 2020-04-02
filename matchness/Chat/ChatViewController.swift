@@ -27,8 +27,24 @@ class ChatViewController: ButtonBarPagerTabStripViewController {
         if let tabBarItem = self.tabBarController?.tabBar.items?[2] as? UITabBarItem {
             tabBarItem.badgeValue = nil
         }
+
+        //タブバー表示
+        tabBarController?.tabBar.isHidden = false
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        print("ここにこに")
+        super.viewWillAppear(animated)
+        //タブバー表示
+        tabBarController?.tabBar.isHidden = false
+    }
+override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    print("こっちにも恋")
+    //タブバー表示
+    tabBarController?.tabBar.isHidden = false
+}
+
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         //管理されるViewControllerを返す処理
         let firstVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "First")

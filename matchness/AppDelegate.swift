@@ -16,51 +16,54 @@ import SwiftyJSON
 import FacebookCore //in theory is just this one
 import FBSDKCoreKit
 import FBSDKShareKit
-
+import GoogleSignIn
 import Stripe
 
 let userDefaults = UserDefaults.standard
-
+import OneSignal
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-//    var backgroundTaskID : UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier(rawValue: 0)
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         var api_key = userDefaults.object(forKey: "api_token") as? String
-
+        // Client IDを設定する
+        GIDSignIn.sharedInstance()?.clientID = "806178990139-ei082f93503lki48k1us1i88rk9pu6bb.apps.googleusercontent.com"
+        //        return true
         
 //        self.window = UIWindow(frame: UIScreen.main.bounds)
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let initialViewController = storyboard.instantiateViewController(withIdentifier: "messageChat")
+//        let initialViewController = storyboard.instantiateViewController(withIdentifier: "comp")
 //        //rootViewControllerに入れる
 //        self.window?.rootViewController = initialViewController
 //        //表示
 //        self.window?.makeKeyAndVisible()
 //        return true
-        
-        if #available(iOS 10.0, *) {
-            // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
 
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(
-                options: authOptions,
-                completionHandler: {_, _ in })
-        } else {
-            let settings: UIUserNotificationSettings =
-                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-        }
-        
-        application.registerForRemoteNotifications()
+        //START OneSignal initialization code
+        let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
+
+        // Replace 'YOUR_APP_ID' with your OneSignal App ID.
+        OneSignal.initWithLaunchOptions(launchOptions,
+        appId: "4346e763-bb7b-49c4-a900-0a78328b3c2a",
+        handleNotificationAction: nil,
+        settings: onesignalInitSettings)
+
+        OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification;
+
+        // Recommend moving the below line to prompt for push after informing the user about
+        //   how your app will use them.
+        OneSignal.promptForPushNotifications(userResponse: { accepted in
+        print("User accepted notifications: \(accepted)")
+        })
+        //END OneSignal initializataion code
+
         Stripe.setDefaultPublishableKey("pk_test_9ctOhFy7xdS9cYXFudRC4Smh001imsNQzB")
 
         if (api_key == nil || api_key == "") {
-
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewController = storyboard.instantiateViewController(withIdentifier: "fblogin")
@@ -71,12 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         
-        
         var login_step_2 = userDefaults.object(forKey: "login_step_2") as? String
 
-//        print("aaaaaaaチェックチェックチェックチェックチェックチェック")
-//        print(login_step_2)
-//
         if (login_step_2 == nil) {
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -155,6 +154,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
       // TODO: If necessary send token to application server.
       // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+    
+
+    // 追加する
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        // GIDSignInのhandle()を呼び、返り値がtrueであればtrueを返す
+        if GIDSignIn.sharedInstance()!.handle(url) {
+            return true
+        }
+        return false
     }
     
     

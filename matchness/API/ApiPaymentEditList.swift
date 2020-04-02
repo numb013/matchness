@@ -18,7 +18,8 @@ public struct ApiPaymentEditList: CustomDebugStringConvertible {
     public var card_no: String? = nil;
     public var card_company: String? = nil;
     public var expiration_date: String? = nil;
-    
+    public var profile_image: String? = nil;
+
     /*
      デフォルトイニシャライザ
      失敗可能イニシャライザ init?
@@ -63,6 +64,10 @@ public struct ApiPaymentEditList: CustomDebugStringConvertible {
         if let expiration_date = item["expiration_date"].int {
         self.expiration_date = String(expiration_date);
         }
+        //String => String
+        if let profile_image = item["profile_image"].string {
+        self.profile_image = String(profile_image);
+        }
 
         return true;
     }
@@ -76,6 +81,7 @@ public struct ApiPaymentEditList: CustomDebugStringConvertible {
             string += "card_no => \(String(describing: self.card_no))\n";
             string += "card_company => \(String(describing: self.card_company))\n";
             string += "expiration_date => \(String(describing: self.expiration_date))\n";
+            string += "profile_image => \(String(describing: self.profile_image))\n";
             return string;
         }
     }

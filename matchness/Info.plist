@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>matchness</string>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,6 +24,14 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb2403045116443173</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.806178990139-ei082f93503lki48k1us1i88rk9pu6bb</string>
 			</array>
 		</dict>
 	</array>
@@ -57,6 +65,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>許可せんとcamera使えまへんで </string>
+	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
+	<string>ヘルスケアのデータを取得してもいいでしょうか？</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>ヘルスケアのデータを取得してもいいでしょうか？</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>ヘルスケアのデータを取得してもいいでしょうか？</string>
 	<key>NSMotionUsageDescription</key>
 	<string>歩数を取得</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
@@ -64,6 +78,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
@@ -82,11 +97,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
-	<string>ヘルスケアのデータを取得してもいいでしょうか？</string>
-	<key>NSHealthShareUsageDescription</key>
-	<string>ヘルスケアのデータを取得してもいいでしょうか？</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>ヘルスケアのデータを取得してもいいでしょうか？</string>
 </dict>
 </plist>

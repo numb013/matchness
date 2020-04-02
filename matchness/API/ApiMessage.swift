@@ -18,6 +18,7 @@ public struct ApiMessage: CustomDebugStringConvertible {
     public var id: Int? = nil;
     public var name: String? = nil;
     public var point: String? = nil;
+    public var profile_image: String? = nil;
     public var message: Array<ApiMessageList> = Array<ApiMessageList>();
     
     /*
@@ -57,7 +58,11 @@ public struct ApiMessage: CustomDebugStringConvertible {
         if let point = item["point"].int {
             self.point = String(point);
         }
-
+        //String => String
+        if let profile_image = item["profile_image"].string {
+            self.profile_image = profile_image;
+        }
+        
         if let message = item["message"].array {
             for info: JSON in message {
                 //データを変換
@@ -107,6 +112,7 @@ public struct ApiMessage: CustomDebugStringConvertible {
             string += "id => \(String(describing: self.id))\n";
             string += "name => \(String(describing: self.name))\n";
             string += "point => \(String(describing: self.point))\n";
+            string += "profile_image => \(String(describing: self.profile_image))\n";
             string += "message => \(String(describing: self.message))\n";
             return string;
         }

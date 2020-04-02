@@ -38,7 +38,6 @@ class SettingEditViewController: UIViewController, UITableViewDelegate, UITableV
         UserSettingTable.dataSource = self
         // Do any additional setup after loading the view.
 
-        
         // ActivityIndicatorを作成＆中央に配置
         ActivityIndicator = UIActivityIndicatorView()
         ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)

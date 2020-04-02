@@ -9,26 +9,47 @@
 import UIKit
 
 class EndGroupViewController: UIViewController, UITableViewDelegate , UITableViewDataSource {
-    
-
+    var group_id: Int = 0
     var cellCount: Int = 0
+    var progress_day:Int = 0
     var dataSource: Dictionary<String, ApiGroupList> = [:]
     var dataSourceOrder: Array<String> = []
     var errorData: Dictionary<String, ApiErrorAlert> = [:]
-
+    let image_url: String = ApiConfig.REQUEST_URL_IMEGE;
     @IBOutlet weak var EndGroup: UITableView!
-    var ActivityIndicator: UIActivityIndicatorView!
     
+    var isLoading:Bool = false
+    var isUpdate = false
+    var page_no = "1"
+
     override func viewDidLoad() {
         super.viewDidLoad()
         EndGroup.delegate = self
         EndGroup.dataSource = self
         self.EndGroup.register(UINib(nibName: "GroupTableViewCell", bundle: nil), forCellReuseIdentifier: "GroupTableViewCell")
-
         apiRequest()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
+        self.isLoading = true
+        super.viewDidAppear(animated)
+        //タブバー表示
+        tabBarController?.tabBar.isHidden = false
+    }
 
+
+    override func viewWillAppear(_ animated: Bool) {
+        print("BBBBBBBBBBBBBBBBBBBBBBBBBBBB")
+        self.isLoading = true
+        self.page_no = "1"
+        self.dataSourceOrder = []
+        var dataSource: Dictionary<String, ApiGroupList> = [:]
+        super.viewWillAppear(animated)
+        apiRequest()
+    }
+    
+    
     func apiRequest() {
         /****************
          APIへリクエスト（ユーザー取得）
@@ -40,10 +61,12 @@ class EndGroupViewController: UIViewController, UITableViewDelegate , UITableVie
         let requestUrl: String = ApiConfig.REQUEST_URL_API_SELECT_JOIN_AND_END_GROUP;
         //パラメーター
         var query: Dictionary<String,String> = Dictionary<String,String>();
-        var matchness_user_id = userDefaults.object(forKey: "matchness_user_id") as? String
-        
-        query["user_id"] = matchness_user_id
         query["status"] = "2"
+        query["page"] = page_no
+
+        requestGroupModel.array1 = self.dataSourceOrder
+        requestGroupModel.array2 = self.dataSource
+
         //リクエスト実行
         if( !requestGroupModel.requestApi(url: requestUrl, addQuery: query) ){
             
@@ -51,9 +74,7 @@ class EndGroupViewController: UIViewController, UITableViewDelegate , UITableVie
 
     }
     
-    
-    var isLoading:Bool = false
-    var page_no = "1"
+
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         print(self.isLoading)
@@ -69,11 +90,12 @@ class EndGroupViewController: UIViewController, UITableViewDelegate , UITableVie
             print("更新")
             apiRequest()
         }
-        
-        if (!self.isLoading && scrollView.contentOffset.y  >= EndGroup.contentSize.height - self.EndGroup.bounds.size.height) {
-            self.isLoading = true
-            print("グループ無限スクロール無限スクロール無限スクロール")
-            apiRequest()
+        if (!self.isUpdate) {
+            if (!self.isLoading && scrollView.contentOffset.y  >= EndGroup.contentSize.height - self.EndGroup.bounds.size.height) {
+                self.isLoading = true
+                print("グループ無限スクロール無限スクロール無限スクロール")
+                apiRequest()
+            }
         }
     }
 
@@ -95,22 +117,40 @@ class EndGroupViewController: UIViewController, UITableViewDelegate , UITableVie
         cell.titel.text = "タイトル : " + eventGroup!.title!
         cell.period.text = "開催期間 : " + ApiConfig.EVENT_PERIOD_LIST[(eventGroup!.event_period)!] + "日"
         cell.joinNumber.text = "参加人数 : " +  ApiConfig.EVENT_PEPLE_LIST[(eventGroup?.event_peple)!] + "人"
-        cell.startType.text = "開始 : " +  ApiConfig.EVENT_START_TYPE[(eventGroup?.start_type)!]
+//        cell.startType.text = "開始 : " +  ApiConfig.EVENT_START_TYPE[(eventGroup?.start_type)!]
         cell.presentPoint.text = "参加人数 : " +  ApiConfig.EVENT_PRESENT_POINT[(eventGroup?.present_point)!] + "point"
 
 
+        
+        cell.joinButton.setTitle("参加済", for: .normal)
+        cell.joinButton.layer.backgroundColor = UIColor(red: 0.0, green: 0.6, blue: 0.8, alpha: 1.0).cgColor
+        cell.joinButton.layer.cornerRadius = 5.0 //丸みを数値で変更できます
+        var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTap(_:)))
+        recognizer.targetString = String(indexPath.row)
+        recognizer.targetGroupId = eventGroup!.id
+        cell.joinButton.layer.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        cell.joinButton.addGestureRecognizer(recognizer)
+        
+        
 //        var number = Int.random(in: 1 ... 18)
 //        cell.groupTestImage.image = UIImage(named: "\(number)")
 //        cell.joinButton.setTitle("参加済", for: .normal)
 //        cell.joinButton.layer.backgroundColor = UIColor.gray.cgColor
 //        cell.joinButton.layer.cornerRadius = 5.0 //丸みを数値で変更できます
+        
+        if (eventGroup?.profile_image == nil) {
+            cell.groupTestImage.image = UIImage(named: "no_image")
+        } else {
+            let profileImageURL = image_url + (eventGroup?.profile_image!)!
+            let url = NSURL(string: profileImageURL);
+            let imageData = NSData(contentsOf: url! as URL) //もし、画像が存在しない可能性がある場合は、ifで存在チェック
+            cell.groupTestImage.image = UIImage(data:imageData! as Data)
+        }
 
-        var number = Int.random(in: 1 ... 18)
-        cell.groupTestImage.image = UIImage(named: "\(number)")
         cell.groupTestImage.isUserInteractionEnabled = true
-        var recognizer = MyTapGestureRecognizer(target: self, action: #selector(self.onTapImage(_:)))
-        recognizer.targetUserId = eventGroup?.master_id
-        cell.groupTestImage.addGestureRecognizer(recognizer)
+        var recognizer_1 = MyTapGestureRecognizer(target: self, action: #selector(self.onTapImage(_:)))
+        recognizer_1.targetUserId = eventGroup?.master_id
+        cell.groupTestImage.addGestureRecognizer(recognizer_1)
 
         return cell
     }
@@ -123,6 +163,33 @@ class EndGroupViewController: UIViewController, UITableViewDelegate , UITableVie
         nextVC.modalPresentationStyle = .fullScreen
         self.present(nextVC, animated: true, completion: nil)
     }
+
+    
+    @objc func onTap(_ sender: MyTapGestureRecognizer) {
+
+
+print(self.dataSource[sender.targetString!])
+
+
+        self.group_id = sender.targetGroupId!
+        self.progress_day = Int(sender.targetString!)!
+        print("イベントイベントイベントイベントイベント")
+        print(group_id)
+        let group_param:[String:Any] = [
+            "group_id":String(self.group_id),
+            "start": self.dataSource[sender.targetString!]?.event_start,
+            "end": self.dataSource[sender.targetString!]?.event_end
+        ]
+        print(group_param)
+        self.performSegue(withIdentifier: "toGroupEvent", sender: group_param)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! GroupEventViewController
+        vc.group_param = sender as! [String : Any]
+    }
+
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -155,16 +222,18 @@ extension EndGroupViewController : GroupModelDelegate {
         //cellの件数更新
         self.cellCount = dataSourceOrder.count;
         
-        print("路オロロロロロロロロ路r")
-        self.page_no = String(model.page);
-        print(self.page_no)
-        print("ががががががががが")
-        print(self.dataSource)
-        print(self.dataSourceOrder)
-        
-        var count: Int = 0;
-        
-        self.isLoading = false
+        if (Int(self.page_no)! > 3 && self.cellCount == dataSourceOrder.count) {
+            self.isLoading = false
+            self.isUpdate = true
+        } else {
+            self.page_no = String(model.page);
+
+            print("グループページページページページ")
+            print(self.page_no)
+
+            var count: Int = 0;
+            self.isLoading = false
+        }
         
         EndGroup.reloadData()
     }

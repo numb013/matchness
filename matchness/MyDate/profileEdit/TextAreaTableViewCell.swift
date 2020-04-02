@@ -10,7 +10,8 @@ import UIKit
 
 class TextAreaTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var textArea: UITextField!
+    @IBOutlet weak var textArea: UITextView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

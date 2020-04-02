@@ -16,8 +16,8 @@ class PaymentEditViewController: UIViewController, UITableViewDelegate , UITable
     var errorData: Dictionary<String, ApiErrorAlert> = [:]
     var cellCount: Int = 0
     var status:Int = 0
-    var ActivityIndicator: UIActivityIndicatorView!
     var card_id : String = "0"
+    let image_url: String = ApiConfig.REQUEST_URL_IMEGE;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,9 +66,19 @@ print(status)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PaymentEditTableViewCell") as! PaymentEditTableViewCell
         var multiple = self.dataSource[String(indexPath.row)]
-        var number = Int.random(in: 1 ... 18)
-        cell.company_img.image = UIImage(named: "\(number)")
-//            cell.createTime.text = multiple?.expiration_date! ?? "aaaa"
+
+
+        if (multiple?.profile_image == nil) {
+            cell.company_img.image = UIImage(named: "no_image")
+        } else {
+            let profileImageURL = image_url + ((multiple?.profile_image!)!)
+            let url = NSURL(string: profileImageURL);
+            let imageData = NSData(contentsOf: url! as URL) //もし、画像が存在しない可能性がある場合は、ifで存在チェック
+            cell.company_img.image = UIImage(data:imageData! as Data)
+        }
+        
+        
+        // cell.createTime.text = multiple?.expiration_date! ?? "aaaa"
 
         cell.card_company.text = multiple?.card_company
         cell.card_no.text = multiple?.card_no

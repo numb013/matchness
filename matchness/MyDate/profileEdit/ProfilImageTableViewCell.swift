@@ -11,11 +11,10 @@ import UIKit
 class ProfilImageTableViewCell: UITableViewCell {
 
     @IBOutlet weak var mainImage: UIImageView!
-    @IBOutlet weak var image_1: UIImageView!
-    @IBOutlet weak var image_2: UIImageView!
-    @IBOutlet weak var image_3: UIImageView!
-    @IBOutlet weak var image_4: UIImageView!
-
+//    @IBOutlet weak var image_1: UIImageView!
+//    @IBOutlet weak var image_2: UIImageView!
+//    @IBOutlet weak var image_3: UIImageView!
+//    @IBOutlet weak var image_4: UIImageView!
 
 
     override func awakeFromNib() {

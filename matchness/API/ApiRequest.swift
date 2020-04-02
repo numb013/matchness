@@ -57,9 +57,9 @@ class ApiRequest {
     }
 
     public func request(url url: String, params params:[String: String], method method: HTTPMethod = .get){
-        print("YLLRequest.request AAAAAA(APIリクエストの場所)AAAAAA");
-        print("url : " + url);
-        print(params);
+//        print("YLLRequest.request AAAAAA(APIリクエストの場所)AAAAAA");
+//        print("url : " + url);
+//        print(params);
 
         var api_key = userDefaults.object(forKey: "api_token") as? String
         /*
@@ -83,11 +83,11 @@ print(api_key)
 
         self.requestAlamofire = Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON{ response in
 
-            print("リクエストRRRRRRRRRRRRRRRRRR")
-            print(url)
-            print(method)
-            print(params)
-            print("リクエストBBBBBBBBBBBBBBBBBBBBB")
+//            print("リクエストRRRRRRRRRRRRRRRRRR")
+//            print(url)
+//            print(method)
+//            print(params)
+//            print("リクエストBBBBBBBBBBBBBBBBBBBBB")
 
             switch response.result {
             case .success:
@@ -106,15 +106,16 @@ print(api_key)
                 print(url)
                 if (
                     url == ApiConfig.REQUEST_URL_API_ADD_LIKE ||
-//                    url == ApiConfig.REQUEST_URL_API_SEND_MESSAGE ||
+//                  url == ApiConfig.REQUEST_URL_API_SEND_MESSAGE ||
                     url == ApiConfig.REQUEST_URL_API_ADD_FAVORITE_BLOCK ||
-                    url == ApiConfig.REQUEST_URL_API_PAYMENT_DELETE
+                    url == ApiConfig.REQUEST_URL_API_PAYMENT_DELETE ||
+                    url == ApiConfig.REQUEST_URL_API_USER_DELETE
                     ) {
                     self.onFaild(response as AnyObject);
                     break;
                 }
                 print("取得した値はここにきて")
-                print(json)
+//                print(json)
                 let items: JSON = json;
                 let status: JSON = items["status"];
                 print(status)
@@ -128,7 +129,7 @@ print(api_key)
                 self.onComplete();
             case .failure:
                 //  リクエスト失敗 or キャンセル時
-                print("リクエスト失敗 or キャンセル時")
+                print("リクエスト失敗 or キャンセル時!")
                 print(response)
                   self.onFaild(response as AnyObject);
                 return;

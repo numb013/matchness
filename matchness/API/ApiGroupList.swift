@@ -25,9 +25,12 @@ public struct ApiGroupList: CustomDebugStringConvertible {
     public var event_type: Int? = 0;
     public var event_start: String? = nil;
     public var event_end: String? = nil;
+    public var last_login: String? = nil;
     public var progress_day: Int? = 0;
     public var request_status: Int? = 0;
     public var master_group: Int? = 0;
+    public var profile_image: String? = nil;
+
     /*
      デフォルトイニシャライザ
      失敗可能イニシャライザ init?
@@ -100,6 +103,11 @@ public struct ApiGroupList: CustomDebugStringConvertible {
             self.event_end = event_end;
         }
         //String => String
+        if let last_login = item["last_login"].string {
+            self.last_login = last_login;
+        }
+
+        //String => String
         if let progress_day = item["progress_day"].int {
             self.progress_day = progress_day;
         }
@@ -110,6 +118,10 @@ public struct ApiGroupList: CustomDebugStringConvertible {
         //String => String
         if let master_group = item["master_group"].int {
             self.master_group = master_group;
+        }
+        //String => String
+        if let profile_image = item["profile_image"].string {
+            self.profile_image = profile_image;
         }
 
         return true;
@@ -133,9 +145,11 @@ public struct ApiGroupList: CustomDebugStringConvertible {
             string += "event_type => \(String(describing: self.event_type))\n";
             string += "event_start => \(String(describing: self.event_start))\n";
             string += "event_end => \(String(describing: self.event_end))\n";
+            string += "last_login => \(String(describing: self.last_login))\n";
             string += "progress_day => \(String(describing: self.progress_day))\n";
             string += "request_status => \(String(describing: self.request_status))\n";
             string += "master_group => \(String(describing: self.master_group))\n";
+            string += "profile_image => \(String(describing: self.profile_image))\n";
             return string;
         }
     }

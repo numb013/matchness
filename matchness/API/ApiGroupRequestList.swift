@@ -18,6 +18,7 @@ public struct ApiGroupRequestList: CustomDebugStringConvertible {
     public var name: String? = nil;
     public var age: String? = nil;
     public var status: Int? = nil;
+    public var profile_image: String? = nil;
     /*
      デフォルトイニシャライザ
      失敗可能イニシャライザ init?
@@ -60,6 +61,11 @@ public struct ApiGroupRequestList: CustomDebugStringConvertible {
         if let status = item["status"].int {
             self.status = status;
         }
+        //String => String
+        if let profile_image = item["profile_image"].string {
+            self.profile_image = profile_image;
+        }
+
         return true;
     }
 
@@ -73,6 +79,7 @@ public struct ApiGroupRequestList: CustomDebugStringConvertible {
             string += "name => \(String(describing: self.name))\n";
             string += "age => \(String(describing: self.age))\n";
             string += "status => \(String(describing: self.status))\n";
+            string += "profile_image => \(String(describing: self.profile_image))\n";
             return string;
         }
     }

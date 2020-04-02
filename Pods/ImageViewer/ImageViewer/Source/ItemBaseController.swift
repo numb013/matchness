@@ -304,7 +304,7 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
         let currentVelocity = recognizer.velocity(in: self.view)
         let currentTouchPoint = recognizer.translation(in: view)
 
-        if swipingToDismiss == nil { swipingToDismiss = (fabs(currentVelocity.x) > fabs(currentVelocity.y)) ? .horizontal : .vertical }
+        if swipingToDismiss == nil { swipingToDismiss = (abs(currentVelocity.x) > abs(currentVelocity.y)) ? .horizontal : .vertical }
         guard let swipingToDismissInProgress = swipingToDismiss else { return }
 
         switch recognizer.state {
@@ -617,12 +617,12 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
         case .horizontal:
 
             distanceToEdge = (scrollView.bounds.width / 2) + (itemView.bounds.width / 2)
-            percentDistance = fabs(scrollView.contentOffset.x / distanceToEdge)
+            percentDistance = abs(scrollView.contentOffset.x / distanceToEdge)
 
         case .vertical:
 
             distanceToEdge = (scrollView.bounds.height / 2) + (itemView.bounds.height / 2)
-            percentDistance = fabs(scrollView.contentOffset.y / distanceToEdge)
+            percentDistance = abs(scrollView.contentOffset.y / distanceToEdge)
         }
 
         if let delegate = self.delegate {

@@ -16,10 +16,11 @@ import SwiftyJSON;
 public struct ApiUserDetailDate: CustomDebugStringConvertible {
 
     public var id: Int? = nil;
+    public var hash_id: String? = nil;
     public var name: String? = nil;
     public var work: Int? = nil;
     public var profile_text: String? = nil;
-    public var age: Int? = nil;
+    public var age: String? = nil;
     public var sex: Int? = nil;
     public var birthday: String? = nil;
     public var fitness_parts_id: Int? = nil;
@@ -29,6 +30,15 @@ public struct ApiUserDetailDate: CustomDebugStringConvertible {
     public var prefecture_id: Int? = nil;
     public var is_like: Int? = nil;
     public var is_matche: Int? = nil;
+    public var profile_image: Array<ApiProfileImage> = Array<ApiProfileImage>();
+    public var room_code: String? = nil;
+    public var my_id: Int? = nil;
+    public var my_name: String? = nil;
+    public var my_point: Int? = nil;
+    public var my_profile_image: String? = nil;
+    public var target_imag: String? = nil;
+    public var favorite_block_status: Int? = nil;
+
     //    public var images: Array<String> = Array<String>();
 //    public var categorySubId: Array<String> = Array<String>();
 //    public var tagId: Array<String> = Array<String>();
@@ -64,6 +74,12 @@ public struct ApiUserDetailDate: CustomDebugStringConvertible {
         if let id = item["id"].int {
             self.id = id;
         }
+
+        //String => String
+        if let hash_id = item["hash_id"].string {
+            self.hash_id = hash_id;
+        }
+
         //String => String
         if let name = item["name"].string {
             self.name = name;
@@ -78,7 +94,7 @@ public struct ApiUserDetailDate: CustomDebugStringConvertible {
         }
         //String => String
         if let age = item["age"].int {
-            self.age = age;
+            self.age = String(age);
         }
         //Int => Int
         if let sex = item["sex"].int {
@@ -111,7 +127,47 @@ public struct ApiUserDetailDate: CustomDebugStringConvertible {
         if let is_matche = item["is_matche"].int {
             self.is_matche = is_matche;
         }
+        //String => String
+        if let room_code = item["room_code"].string {
+            self.room_code = room_code;
+        }
+        //Int => Int
+        if let my_id = item["my_id"].int {
+            self.my_id = my_id;
+        }
+        //String => String
+        if let my_name = item["my_name"].string {
+            self.my_name = my_name;
+        }
+        //String => String
+        if let my_point = item["my_point"].int {
+            self.my_point = my_point;
+        }
+        //String => String
+        if let my_profile_image = item["my_profile_image"].string {
+            self.my_profile_image = my_profile_image;
+        }
+        //String => String
+        if let target_imag = item["target_imag"].string {
+            self.target_imag = target_imag;
+        }
+        if let favorite_block_status = item["favorite_block_status"].int {
+            self.favorite_block_status = favorite_block_status;
+        }
 
+
+        if let profile_image: Array = item["profile_image"].array {
+            //
+            for info: JSON in profile_image {
+                //データを変換
+                guard let image: ApiProfileImage = ApiProfileImage(json: info) else {
+                    continue;
+                }
+                //
+                self.profile_image.append(image);
+            }
+        }
+        
 //        if let prefecture_id = item["prefecture_id"].string {
 //            self.prefecture_id = prefecture_id;
 //        }
@@ -147,6 +203,7 @@ public struct ApiUserDetailDate: CustomDebugStringConvertible {
         get{
             var string:String = "ApiUserDate::\(#function)\n";
             string += "id => \(String(describing: self.id))\n";
+            string += "hash_id => \(String(describing: self.hash_id))\n";
             string += "name => \(String(describing: self.name))\n";
             string += "work => \(String(describing: self.work))\n";
             string += "profile_text => \(String(describing: self.profile_text))\n";
@@ -160,8 +217,17 @@ public struct ApiUserDetailDate: CustomDebugStringConvertible {
             string += "prefecture_id => \(String(describing: self.prefecture_id))\n";
             string += "is_like => \(String(describing: self.is_like))\n";
             string += "is_matche => \(String(describing: self.is_matche))\n";
+            string += "profile_image => \(String(describing: self.profile_image))\n";
+            string += "room_code => \(String(describing: self.room_code))\n";
+            string += "my_id => \(String(describing: self.my_id))\n";
+            string += "my_name => \(String(describing: self.my_name))\n";
+            string += "my_point => \(String(describing: self.my_point))\n";
+            string += "my_profile_image => \(String(describing: self.my_profile_image))\n";
+            string += "target_imag => \(String(describing: self.target_imag))\n";
+            string += "favorite_block_status => \(String(describing: self.favorite_block_status))\n";
             return string;
         }
     }
     
 }
+

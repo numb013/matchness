@@ -18,7 +18,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class STPAddCardViewController;
+@class STPAddCardViewController, STPAPIClient;
 @protocol STPAddCardViewControllerDelegate;
 
 /** This view controller contains a credit card entry form that the user can fill out. On submission, it will use the Stripe API to convert the user's card details to a Stripe token. It renders a right bar button item that submits the form, so it must be shown inside a `UINavigationController`.
@@ -57,6 +57,13 @@ NS_ASSUME_NONNULL_BEGIN
  to be sized and positioned properly.
  */
 @property (nonatomic, strong, nullable) UIView *customFooterView;
+
+/**
+ The API Client to use to make requests.
+ 
+ Defaults to [STPAPIClient sharedClient]
+ */
+@property (nonatomic, strong) STPAPIClient *apiClient;
 
 /**
  Use init: or initWithConfiguration:theme:
@@ -109,6 +116,24 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addCardViewController:(STPAddCardViewController *)addCardViewController
        didCreatePaymentMethod:(STPPaymentMethod *)paymentMethod
                    completion:(STPErrorBlock)completion;
+
+# pragma mark - Deprecated
+
+/**
+  This method is deprecated as of v16.0.0 (https://github.com/stripe/stripe-ios/blob/master/MIGRATING.md#migrating-from-versions--1600).
+  To use this class, migrate your integration from Charges to PaymentIntents. See https://stripe.com/docs/payments/payment-intents/migration/charges#read
+ */
+- (void)addCardViewController:(STPAddCardViewController *)addCardViewController
+               didCreateToken:(STPToken *)token
+                   completion:(STPErrorBlock)completion __attribute__((deprecated("Use addCardViewController:didCreatePaymentMethod:completion: instead and migrate your integration to PaymentIntents. See https://stripe.com/docs/payments/payment-intents/migration/charges#read", "addCardViewController:didCreatePaymentMethod:completion:")));
+
+/**
+ This method is deprecated as of v16.0.0 (https://github.com/stripe/stripe-ios/blob/master/MIGRATING.md#migrating-from-versions--1600).
+ To use this class, migrate your integration from Charges to PaymentIntents. See https://stripe.com/docs/payments/payment-intents/migration/charges#read
+*/
+- (void)addCardViewController:(STPAddCardViewController *)addCardViewController
+              didCreateSource:(STPSource *)source
+                   completion:(STPErrorBlock)completion __attribute__((deprecated("Use addCardViewController:didCreatePaymentMethod:completion: instead and migrate your integration to PaymentIntents. See https://stripe.com/docs/payments/payment-intents/migration/charges#read", "addCardViewController:didCreatePaymentMethod:completion:")));
 
 @end
 

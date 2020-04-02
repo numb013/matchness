@@ -12,7 +12,6 @@ class NoticeDetailViewController: UIViewController{
 
     let userDefaults = UserDefaults.standard
     var notice_id = Int()
-    var ActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var noticeDetail: UITextView!
     
