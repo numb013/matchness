@@ -171,8 +171,6 @@ class ProfileAddViewController: UIViewController, UITableViewDelegate, UITableVi
             self.userDefaults.set("1", forKey: "login_step_1")
         }
 
-
-                
         print("通ってる？？？")
 
         profileAddTableView.delegate = self
@@ -997,7 +995,6 @@ print(row)
         }
     }
     
-    
     @IBAction func profileEdit(_ sender: Any) {
 
         activityIndicatorView.startAnimating()
@@ -1034,7 +1031,6 @@ print(row)
         query["weight"] = String(self.responseData["0"]?.weight ?? 4)
         query["prefecture_id"] = String(self.responseData["0"]?.prefecture_id ?? 0)
         query["image_main"] = self.image_main
-
         
         if (query["image_main"] == "") {
             self.validate = 3

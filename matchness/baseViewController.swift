@@ -26,6 +26,40 @@ class baseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+
+        let types = UIApplication.shared.enabledRemoteNotificationTypes()
+        print("通知を通知を通知を通知を")
+        print(types)
+        print(UIRemoteNotificationType.self)
+
+//        if types == UIRemoteNotificationType.None {
+//            // push notification disabled
+//            return false
+//        }else{
+//            // push notification enable
+//            return true
+//        }
+
+
+        let osVersion = UIDevice.current.systemVersion
+print("通知バーしょん")
+print(osVersion)
+        updateUI()
+
+
+//        if osVersion < "8.0" {
+//
+//        }else{
+//            if UIApplication.shared.isRegisteredForRemoteNotifications {
+//                //通知が許可されている！！！！！
+//                print("通知が許可されている通知が許可されている通知が許可されている")
+//            }else{
+//               //設定画面への誘導など
+//                print("通知が無無無無無無無無")
+//            }
+//        }
+
         apiNoticeRequest()
     }
 
@@ -100,4 +134,25 @@ class baseViewController: UIViewController {
     }
     */
 
+    func updateUI() {
+        guard let types = UIApplication.shared.currentUserNotificationSettings?.types else {
+            print("000000")
+            return
+        }
+        switch types {
+        case [.badge, .alert]:
+            print("11111")
+        case [.badge]:
+            print("22222")
+        case []:
+            print("33333")
+        default:
+            print(types)
+            print("Handle the default case") //TODO
+        }
+    }
+    
+    
+    
 }
+
